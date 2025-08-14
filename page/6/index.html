@@ -577,120 +577,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%85%B3%E9%94%AE%E5%AD%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%85%B3%E9%94%AE%E5%AD%97/" class="post-title-link" itemprop="url">【css】属性关键字</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="inherit"><a href="#inherit" class="headerlink" title="inherit"></a>inherit</h2><p>继承，从IE8开始支持</p>
-<h2 id="initial"><a href="#initial" class="headerlink" title="initial"></a>initial</h2><p>初始值关键字，把当前css属性的计算值还原为css语法中规定的初始值</p>
-<p>注：并不是将其还原为浏览器默认的初始值</p>
-<h2 id="unset"><a href="#unset" class="headerlink" title="unset"></a>unset</h2><p>如果当前使用的css属性是具有继承特性的，例如color，那么就和inherit表现一致</p>
-<p>如果当时使用的css属性没有继承特性，那么就表现和initial一致</p>
-<h2 id="revert"><a href="#revert" class="headerlink" title="revert"></a>revert</h2><p>当前元素还原为浏览器内置的样式</p>
-<h2 id="all"><a href="#all" class="headerlink" title="all"></a>all</h2><p>all属性可以重置除unicode-bidi、direction以及css自定义属性外的所有css属性。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">all</span>：initial ｜inherit ｜unset｜revert</span><br></pre></td></tr></table></figure>
-
-<h2 id="fit-content"><a href="#fit-content" class="headerlink" title="fit-content"></a>fit-content</h2><p>用子元素的宽高来确定当前元素的数据。</p>
-<h2 id="min-content"><a href="#min-content" class="headerlink" title="min-content"></a>min-content</h2><p>最小内容宽度或首选最小宽度</p>
-<h3 id="替换元素"><a href="#替换元素" class="headerlink" title="替换元素"></a>替换元素</h3><p>min-content手当前元素内容自身的宽度。</p>
-<h3 id="CJK文字"><a href="#CJK文字" class="headerlink" title="CJK文字"></a>CJK文字</h3><p>如果是没有标点的中文，那么min-content是单个汉字的宽度</p>
-<p>如果是包含避头标点（，。？、！等）或者避尾标点（“（等），且line-break不是anywhere的中文，那么min-content是包含标点字符的宽度</p>
-<h3 id="非GJK文字"><a href="#非GJK文字" class="headerlink" title="非GJK文字"></a>非GJK文字</h3><p>min-content是由字符单元的宽度决定的，所有连续的英文字母、数字和标点都被认为是一个字符单元，直到遇到中断字符</p>
-<h3 id="最终的首选最小宽度"><a href="#最终的首选最小宽度" class="headerlink" title="最终的首选最小宽度"></a>最终的首选最小宽度</h3><p>是所有内部子元素中最大的那个首选最小宽度值</p>
-<h2 id="max-content"><a href="#max-content" class="headerlink" title="max-content"></a>max-content</h2><p>最大内容宽度</p>
-<h2 id="stretch、available、fill-available"><a href="#stretch、available、fill-available" class="headerlink" title="stretch、available、fill-available"></a>stretch、available、fill-available</h2><p>都是让元素尺寸自动填满可用空间</p>
-<ul>
-<li>stretch</li>
-</ul>
-<p>弹性拉伸，替换之前的fill- available和available</p>
-<ul>
-<li>available</li>
-</ul>
-<p>可用空间，firefox的关键字，需加上-moz-前缀</p>
-<ul>
-<li>fill-avaiable</li>
-</ul>
-<p>填充可用空间，需配合-webkit-私有前缀</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E6%B5%81%E5%90%91%E4%BF%AE%E6%94%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -886,6 +772,120 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%85%B3%E9%94%AE%E5%AD%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%85%B3%E9%94%AE%E5%AD%97/" class="post-title-link" itemprop="url">【css】属性关键字</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="inherit"><a href="#inherit" class="headerlink" title="inherit"></a>inherit</h2><p>继承，从IE8开始支持</p>
+<h2 id="initial"><a href="#initial" class="headerlink" title="initial"></a>initial</h2><p>初始值关键字，把当前css属性的计算值还原为css语法中规定的初始值</p>
+<p>注：并不是将其还原为浏览器默认的初始值</p>
+<h2 id="unset"><a href="#unset" class="headerlink" title="unset"></a>unset</h2><p>如果当前使用的css属性是具有继承特性的，例如color，那么就和inherit表现一致</p>
+<p>如果当时使用的css属性没有继承特性，那么就表现和initial一致</p>
+<h2 id="revert"><a href="#revert" class="headerlink" title="revert"></a>revert</h2><p>当前元素还原为浏览器内置的样式</p>
+<h2 id="all"><a href="#all" class="headerlink" title="all"></a>all</h2><p>all属性可以重置除unicode-bidi、direction以及css自定义属性外的所有css属性。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">all</span>：initial ｜inherit ｜unset｜revert</span><br></pre></td></tr></table></figure>
+
+<h2 id="fit-content"><a href="#fit-content" class="headerlink" title="fit-content"></a>fit-content</h2><p>用子元素的宽高来确定当前元素的数据。</p>
+<h2 id="min-content"><a href="#min-content" class="headerlink" title="min-content"></a>min-content</h2><p>最小内容宽度或首选最小宽度</p>
+<h3 id="替换元素"><a href="#替换元素" class="headerlink" title="替换元素"></a>替换元素</h3><p>min-content手当前元素内容自身的宽度。</p>
+<h3 id="CJK文字"><a href="#CJK文字" class="headerlink" title="CJK文字"></a>CJK文字</h3><p>如果是没有标点的中文，那么min-content是单个汉字的宽度</p>
+<p>如果是包含避头标点（，。？、！等）或者避尾标点（“（等），且line-break不是anywhere的中文，那么min-content是包含标点字符的宽度</p>
+<h3 id="非GJK文字"><a href="#非GJK文字" class="headerlink" title="非GJK文字"></a>非GJK文字</h3><p>min-content是由字符单元的宽度决定的，所有连续的英文字母、数字和标点都被认为是一个字符单元，直到遇到中断字符</p>
+<h3 id="最终的首选最小宽度"><a href="#最终的首选最小宽度" class="headerlink" title="最终的首选最小宽度"></a>最终的首选最小宽度</h3><p>是所有内部子元素中最大的那个首选最小宽度值</p>
+<h2 id="max-content"><a href="#max-content" class="headerlink" title="max-content"></a>max-content</h2><p>最大内容宽度</p>
+<h2 id="stretch、available、fill-available"><a href="#stretch、available、fill-available" class="headerlink" title="stretch、available、fill-available"></a>stretch、available、fill-available</h2><p>都是让元素尺寸自动填满可用空间</p>
+<ul>
+<li>stretch</li>
+</ul>
+<p>弹性拉伸，替换之前的fill- available和available</p>
+<ul>
+<li>available</li>
+</ul>
+<p>可用空间，firefox的关键字，需加上-moz-前缀</p>
+<ul>
+<li>fill-avaiable</li>
+</ul>
+<p>填充可用空间，需配合-webkit-私有前缀</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E5%8F%96%E5%80%BC%E8%A7%84%E5%88%99/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -960,6 +960,104 @@
 <h3 id="源码顺序"><a href="#源码顺序" class="headerlink" title="源码顺序"></a>源码顺序</h3><p>样式在样式表里的声明顺序</p>
 <h2 id="inherit和initial"><a href="#inherit和initial" class="headerlink" title="inherit和initial"></a>inherit和initial</h2><h3 id="inherit"><a href="#inherit" class="headerlink" title="inherit"></a>inherit</h3><p>继承父级的值</p>
 <h3 id="initial"><a href="#initial" class="headerlink" title="initial"></a>initial</h3><p>撤销设定的样式属性，回归到这个属性的初始值</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95vuex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95vuex/" class="post-title-link" itemprop="url">【vueTest】测试vuex</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-08-14 11:18:06 / Modified: 11:20:28" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/VueTest/" itemprop="url" rel="index"><span itemprop="name">VueTest</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="文件分开测试"><a href="#文件分开测试" class="headerlink" title="文件分开测试"></a>文件分开测试</h1><p>需要将 getter、mutations 分成不同的文件。</p>
+<p>在测试文件内，传递一个假数据给 vuex，然后拿到经过处理后的数据，去判断是否符合预期</p>
+<h2 id="getter"><a href="#getter" class="headerlink" title="getter"></a>getter</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">test</span>(<span class="string">&quot;getter&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> name = <span class="string">&quot;啦啦啦啦&quot;</span>;</span><br><span class="line">  <span class="keyword">const</span> origin_name = &#123;</span><br><span class="line">    name,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">const</span> data = getter.<span class="title function_">getter_name</span>(origin_name);</span><br><span class="line">  <span class="title function_">expect</span>(data).<span class="title function_">toBe</span>(name);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="mutation-测试"><a href="#mutation-测试" class="headerlink" title="mutation 测试"></a>mutation 测试</h2><p>mutation 内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">mutation_name</span>(<span class="params">state, val</span>)&#123;</span><br><span class="line">    state.<span class="property">name</span> = val</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试文件内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">test</span>(<span class="string">&quot;mutation&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> new_name = <span class="string">&quot;啦啦啦啦&quot;</span>;</span><br><span class="line">  <span class="comment">//   创建一个假的state存储对象</span></span><br><span class="line">  <span class="keyword">const</span> origin_name = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;哇哇哇&quot;</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">//   调用方法，修改内容</span></span><br><span class="line">  mutations.<span class="title function_">mutation_name</span>(origin_name, new_name);</span><br><span class="line">  <span class="title function_">expect</span>(origin_name.<span class="property">name</span>).<span class="title function_">toBe</span>(new_name);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>origin_name 的 name 变为了 new_name 的内容</p>
+<h2 id="action"><a href="#action" class="headerlink" title="action"></a>action</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; flushPromises &#125; <span class="keyword">from</span> <span class="string">&quot;@vue/test-utils&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; httpTest1 &#125; <span class="keyword">from</span> <span class="string">&quot;./mock&quot;</span>;</span><br><span class="line">jest.<span class="title function_">mock</span>(<span class="string">&quot;./mock.js&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&quot;action&quot;</span>, <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">  expect.<span class="title function_">assertions</span>(<span class="number">1</span>);</span><br><span class="line">  <span class="keyword">const</span> name = <span class="string">&quot;哈哈哈&quot;</span>;</span><br><span class="line">  <span class="comment">// 创建一个假的上下文</span></span><br><span class="line">  <span class="keyword">const</span> ctx = &#123;</span><br><span class="line">    <span class="attr">commit</span>: jest.<span class="title function_">fn</span>(),</span><br><span class="line">  &#125;;</span><br><span class="line">  httpTest1.<span class="title function_">mockImplemntationNoce</span>(<span class="function">(<span class="params">calledWith</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>();</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">//  调用actions</span></span><br><span class="line">  action.<span class="title function_">action_state_name</span>(ctx, name);</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">flushPromises</span>();</span><br><span class="line">  <span class="comment">//  判断是否调用对应的mutation</span></span><br><span class="line">  <span class="title function_">expect</span>(ctx.<span class="property">commit</span>).<span class="title function_">toHaveBeenCalledWith</span>(<span class="string">&quot;mutation_name&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>actions 测试流程比 mutation 和 getter 复杂,因为涉及到请求和调用 commit,所以需要去模拟一个 mock,以此来拦截数据.</p>
+<p>通过创建一个假的上下文,传给 action,以此来判断是否调用了 mutation</p>
+<h1 id="放在一个-Store"><a href="#放在一个-Store" class="headerlink" title="放在一个 Store"></a>放在一个 Store</h1><p>在beforeEach中,创建一个store,那么在此之后的测试代码中,每次都会调用这个beforeEach的函数,以便每个测试都有一个全新的store</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> localStore, store;</span><br><span class="line"><span class="title function_">test</span>(<span class="string">&quot;store&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">beforeEach</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    localStore = &#123;</span><br><span class="line">      <span class="attr">getters</span>: &#123;</span><br><span class="line">        <span class="attr">getter_age</span>: jest.<span class="title function_">fn</span>(),</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">mutations</span>: &#123;</span><br><span class="line">        <span class="attr">mutation_age</span>: jest.<span class="title function_">fn</span>(),</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;;</span><br><span class="line">    store = <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title class_">Store</span>(localStore);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&quot;vue&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;localStore&quot;</span>, localStore);</span><br><span class="line"><span class="comment">//   组件可以通过$store拿到测试的vuex数据</span></span><br><span class="line">  <span class="title function_">shallowMount</span>(componentName, &#123;</span><br><span class="line">    <span class="attr">$store</span>: localStore,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h1 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h1><h2 id="分开写"><a href="#分开写" class="headerlink" title="分开写"></a>分开写</h2><p>需要模拟许多vuex方法,可能使测试通过,但是实际的测试还是不正确,因为完全是由外部传入的state</p>
+<h2 id="一起写"><a href="#一起写" class="headerlink" title="一起写"></a>一起写</h2><p>测试不够具体,如果测试失败,那么排查问题比较困难</p>
 
       
     </div>
@@ -1120,104 +1218,6 @@
 <h2 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h2><h3 id="修改输入框内容"><a href="#修改输入框内容" class="headerlink" title="修改输入框内容"></a>修改输入框内容</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方式1</span></span><br><span class="line">el.<span class="title function_">find</span>(<span class="string">&quot;input&quot;</span>).<span class="property">value</span> = <span class="string">&quot;测试输入内容&quot;</span>;</span><br><span class="line">el.<span class="title function_">find</span>(<span class="string">&quot;input&quot;</span>).<span class="title function_">trigger</span>(<span class="string">&quot;change&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方式2</span></span><br><span class="line">el.<span class="title function_">find</span>(<span class="string">&quot;input&quot;</span>).<span class="title function_">setValue</span>(<span class="string">&quot;测试输入内容&quot;</span>);</span><br></pre></td></tr></table></figure>
 
 <h3 id="单选框"><a href="#单选框" class="headerlink" title="单选框"></a>单选框</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方式1</span></span><br><span class="line">el.<span class="property">checked</span> = <span class="literal">true</span>;</span><br><span class="line"><span class="comment">// 方式2</span></span><br><span class="line">el.<span class="title function_">setChecked</span>();</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95vuex/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95vuex/" class="post-title-link" itemprop="url">【vueTest】测试vuex</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2025-08-14 11:18:06 / Modified: 11:20:28" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/VueTest/" itemprop="url" rel="index"><span itemprop="name">VueTest</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="文件分开测试"><a href="#文件分开测试" class="headerlink" title="文件分开测试"></a>文件分开测试</h1><p>需要将 getter、mutations 分成不同的文件。</p>
-<p>在测试文件内，传递一个假数据给 vuex，然后拿到经过处理后的数据，去判断是否符合预期</p>
-<h2 id="getter"><a href="#getter" class="headerlink" title="getter"></a>getter</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">test</span>(<span class="string">&quot;getter&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> name = <span class="string">&quot;啦啦啦啦&quot;</span>;</span><br><span class="line">  <span class="keyword">const</span> origin_name = &#123;</span><br><span class="line">    name,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">const</span> data = getter.<span class="title function_">getter_name</span>(origin_name);</span><br><span class="line">  <span class="title function_">expect</span>(data).<span class="title function_">toBe</span>(name);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h2 id="mutation-测试"><a href="#mutation-测试" class="headerlink" title="mutation 测试"></a>mutation 测试</h2><p>mutation 内容</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">mutation_name</span>(<span class="params">state, val</span>)&#123;</span><br><span class="line">    state.<span class="property">name</span> = val</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>测试文件内容</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">test</span>(<span class="string">&quot;mutation&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> new_name = <span class="string">&quot;啦啦啦啦&quot;</span>;</span><br><span class="line">  <span class="comment">//   创建一个假的state存储对象</span></span><br><span class="line">  <span class="keyword">const</span> origin_name = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;哇哇哇&quot;</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">//   调用方法，修改内容</span></span><br><span class="line">  mutations.<span class="title function_">mutation_name</span>(origin_name, new_name);</span><br><span class="line">  <span class="title function_">expect</span>(origin_name.<span class="property">name</span>).<span class="title function_">toBe</span>(new_name);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>origin_name 的 name 变为了 new_name 的内容</p>
-<h2 id="action"><a href="#action" class="headerlink" title="action"></a>action</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; flushPromises &#125; <span class="keyword">from</span> <span class="string">&quot;@vue/test-utils&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; httpTest1 &#125; <span class="keyword">from</span> <span class="string">&quot;./mock&quot;</span>;</span><br><span class="line">jest.<span class="title function_">mock</span>(<span class="string">&quot;./mock.js&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&quot;action&quot;</span>, <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">  expect.<span class="title function_">assertions</span>(<span class="number">1</span>);</span><br><span class="line">  <span class="keyword">const</span> name = <span class="string">&quot;哈哈哈&quot;</span>;</span><br><span class="line">  <span class="comment">// 创建一个假的上下文</span></span><br><span class="line">  <span class="keyword">const</span> ctx = &#123;</span><br><span class="line">    <span class="attr">commit</span>: jest.<span class="title function_">fn</span>(),</span><br><span class="line">  &#125;;</span><br><span class="line">  httpTest1.<span class="title function_">mockImplemntationNoce</span>(<span class="function">(<span class="params">calledWith</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>();</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">//  调用actions</span></span><br><span class="line">  action.<span class="title function_">action_state_name</span>(ctx, name);</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">flushPromises</span>();</span><br><span class="line">  <span class="comment">//  判断是否调用对应的mutation</span></span><br><span class="line">  <span class="title function_">expect</span>(ctx.<span class="property">commit</span>).<span class="title function_">toHaveBeenCalledWith</span>(<span class="string">&quot;mutation_name&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>actions 测试流程比 mutation 和 getter 复杂,因为涉及到请求和调用 commit,所以需要去模拟一个 mock,以此来拦截数据.</p>
-<p>通过创建一个假的上下文,传给 action,以此来判断是否调用了 mutation</p>
-<h1 id="放在一个-Store"><a href="#放在一个-Store" class="headerlink" title="放在一个 Store"></a>放在一个 Store</h1><p>在beforeEach中,创建一个store,那么在此之后的测试代码中,每次都会调用这个beforeEach的函数,以便每个测试都有一个全新的store</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> localStore, store;</span><br><span class="line"><span class="title function_">test</span>(<span class="string">&quot;store&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">beforeEach</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    localStore = &#123;</span><br><span class="line">      <span class="attr">getters</span>: &#123;</span><br><span class="line">        <span class="attr">getter_age</span>: jest.<span class="title function_">fn</span>(),</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">mutations</span>: &#123;</span><br><span class="line">        <span class="attr">mutation_age</span>: jest.<span class="title function_">fn</span>(),</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;;</span><br><span class="line">    store = <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title class_">Store</span>(localStore);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&quot;vue&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;localStore&quot;</span>, localStore);</span><br><span class="line"><span class="comment">//   组件可以通过$store拿到测试的vuex数据</span></span><br><span class="line">  <span class="title function_">shallowMount</span>(componentName, &#123;</span><br><span class="line">    <span class="attr">$store</span>: localStore,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h1 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h1><h2 id="分开写"><a href="#分开写" class="headerlink" title="分开写"></a>分开写</h2><p>需要模拟许多vuex方法,可能使测试通过,但是实际的测试还是不正确,因为完全是由外部传入的state</p>
-<h2 id="一起写"><a href="#一起写" class="headerlink" title="一起写"></a>一起写</h2><p>测试不够具体,如果测试失败,那么排查问题比较困难</p>
 
       
     </div>

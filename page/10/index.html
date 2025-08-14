@@ -1035,138 +1035,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/" class="post-title-link" itemprop="url">【css】border-raduis</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="border-raduis"><a href="#border-raduis" class="headerlink" title="border-raduis"></a>border-raduis</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><ul>
-<li>只有一个值</li>
-</ul>
-<p>表示圆角属性作用在全部四个角上</p>
-<ul>
-<li>有两个值</li>
-</ul>
-<p>第一个作用于左上角和右下角，第二个作用于右上角和左下角</p>
-<ul>
-<li>三个值</li>
-</ul>
-<p>第一个作用于左上角，第二个作用于右上角和左下角，第三个作用于右下角</p>
-<ul>
-<li>四个值</li>
-</ul>
-<p>按照顺时针的方向，左上、右上、右下、左下</p>
-<h3 id="水平半径和垂直半径"><a href="#水平半径和垂直半径" class="headerlink" title="水平半径和垂直半径"></a>水平半径和垂直半径</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-left</span>-<span class="attribute">top</span>-radius: <span class="number">10px</span> <span class="number">20px</span></span><br><span class="line">border-raduis：<span class="number">10px</span> / <span class="number">20px</span></span><br></pre></td></tr></table></figure>
-<p>表示圆角是水平半径为10px，垂直半径为20px的椭圆产生的</p>
-<h3 id="重叠曲线"><a href="#重叠曲线" class="headerlink" title="重叠曲线"></a>重叠曲线</h3><p>f&#x3D;min(Lh&#x2F;Sh, Lv&#x2F;Sv)</p>
-<p>S为半径之和，L为元素宽高，h和v表示方向，f为计算值。</p>
-<p>Lh：元素宽</p>
-<p>Sh：垂直方向的半径和</p>
-<p>Lv：元素高度</p>
-<p>Sv：水平方向的半径和</p>
-<p>如果f计算值小于1，那么所有圆角半径都乘以f</p>
-<p>eg：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-top</span>-<span class="attribute">left</span>-raduis：<span class="number">30px</span> <span class="number">100%</span>；</span><br><span class="line"><span class="attribute">border-bottom</span>-<span class="attribute">left</span>-raduis：<span class="number">30px</span> <span class="number">100%</span>；</span><br><span class="line"><span class="attribute">width</span>：<span class="number">150px</span>；</span><br><span class="line"><span class="attribute">height</span>：<span class="number">100px</span>；</span><br></pre></td></tr></table></figure>
-<p>左上角和左下角的垂直半径是100%（元素高），水平半径是30px<br>f&#x3D;min（150&#x2F;60，100&#x2F;200）&#x3D;0.5</p>
-<p>所以渲染结果为</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-top</span>-<span class="attribute">left</span>-raduis：<span class="number">15px</span> <span class="number">50%</span>；</span><br><span class="line"><span class="attribute">border-bottom</span>-<span class="attribute">left</span>-raduis：<span class="number">15px</span> <span class="number">50%</span>；</span><br></pre></td></tr></table></figure>
-
-<h2 id="渲染细节"><a href="#渲染细节" class="headerlink" title="渲染细节"></a>渲染细节</h2><p>如果元素设置了border边框，则圆角半径会被分为内半径和外半径</p>
-<ul>
-<li><p>padding边缘的圆角大小为设置的border- radius - 边框厚度</p>
-</li>
-<li><p>如果相邻两侧边框厚度不同，则圆角大小将在较厚和较薄边界之间显示平滑过度</p>
-</li>
-<li><p>圆角边框的连接线和直角边框连接线位置一致，但是角度有所不同</p>
-</li>
-<li><p>border-raduis不支持负值</p>
-</li>
-<li><p>圆角以外的区域不可点击，无法响应click事件</p>
-</li>
-<li><p>borser-radius没有继承性</p>
-</li>
-<li><p>支持transition过渡效果，支持animation动画效果</p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91contain/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1320,6 +1188,138 @@
 <h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/contain">MDN-contain</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiaonian8/p/14932371.html">CSS新特性contain的语法、作用及使用场景</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.w3cplus.com/css/deep-dive-into-css-contain.html">初探CSS的容器模块</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/" class="post-title-link" itemprop="url">【css】border-raduis</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="border-raduis"><a href="#border-raduis" class="headerlink" title="border-raduis"></a>border-raduis</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><ul>
+<li>只有一个值</li>
+</ul>
+<p>表示圆角属性作用在全部四个角上</p>
+<ul>
+<li>有两个值</li>
+</ul>
+<p>第一个作用于左上角和右下角，第二个作用于右上角和左下角</p>
+<ul>
+<li>三个值</li>
+</ul>
+<p>第一个作用于左上角，第二个作用于右上角和左下角，第三个作用于右下角</p>
+<ul>
+<li>四个值</li>
+</ul>
+<p>按照顺时针的方向，左上、右上、右下、左下</p>
+<h3 id="水平半径和垂直半径"><a href="#水平半径和垂直半径" class="headerlink" title="水平半径和垂直半径"></a>水平半径和垂直半径</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-left</span>-<span class="attribute">top</span>-radius: <span class="number">10px</span> <span class="number">20px</span></span><br><span class="line">border-raduis：<span class="number">10px</span> / <span class="number">20px</span></span><br></pre></td></tr></table></figure>
+<p>表示圆角是水平半径为10px，垂直半径为20px的椭圆产生的</p>
+<h3 id="重叠曲线"><a href="#重叠曲线" class="headerlink" title="重叠曲线"></a>重叠曲线</h3><p>f&#x3D;min(Lh&#x2F;Sh, Lv&#x2F;Sv)</p>
+<p>S为半径之和，L为元素宽高，h和v表示方向，f为计算值。</p>
+<p>Lh：元素宽</p>
+<p>Sh：垂直方向的半径和</p>
+<p>Lv：元素高度</p>
+<p>Sv：水平方向的半径和</p>
+<p>如果f计算值小于1，那么所有圆角半径都乘以f</p>
+<p>eg：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-top</span>-<span class="attribute">left</span>-raduis：<span class="number">30px</span> <span class="number">100%</span>；</span><br><span class="line"><span class="attribute">border-bottom</span>-<span class="attribute">left</span>-raduis：<span class="number">30px</span> <span class="number">100%</span>；</span><br><span class="line"><span class="attribute">width</span>：<span class="number">150px</span>；</span><br><span class="line"><span class="attribute">height</span>：<span class="number">100px</span>；</span><br></pre></td></tr></table></figure>
+<p>左上角和左下角的垂直半径是100%（元素高），水平半径是30px<br>f&#x3D;min（150&#x2F;60，100&#x2F;200）&#x3D;0.5</p>
+<p>所以渲染结果为</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-top</span>-<span class="attribute">left</span>-raduis：<span class="number">15px</span> <span class="number">50%</span>；</span><br><span class="line"><span class="attribute">border-bottom</span>-<span class="attribute">left</span>-raduis：<span class="number">15px</span> <span class="number">50%</span>；</span><br></pre></td></tr></table></figure>
+
+<h2 id="渲染细节"><a href="#渲染细节" class="headerlink" title="渲染细节"></a>渲染细节</h2><p>如果元素设置了border边框，则圆角半径会被分为内半径和外半径</p>
+<ul>
+<li><p>padding边缘的圆角大小为设置的border- radius - 边框厚度</p>
+</li>
+<li><p>如果相邻两侧边框厚度不同，则圆角大小将在较厚和较薄边界之间显示平滑过度</p>
+</li>
+<li><p>圆角边框的连接线和直角边框连接线位置一致，但是角度有所不同</p>
+</li>
+<li><p>border-raduis不支持负值</p>
+</li>
+<li><p>圆角以外的区域不可点击，无法响应click事件</p>
+</li>
+<li><p>borser-radius没有继承性</p>
+</li>
+<li><p>支持transition过渡效果，支持animation动画效果</p>
+</li>
+</ul>
 
       
     </div>
