@@ -245,7 +245,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/React/%E3%80%90React%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmebduivv001gpwfmbezrff0l" data-title="记录" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/React/%E3%80%90React%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmebelnts000wn8fm1jct6irk" data-title="记录" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -328,7 +328,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/React/%E3%80%90React%E3%80%91hooks/" data-id="cmebduivt0019pwfm9qz0gh3z" data-title="hooks" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/React/%E3%80%90React%E3%80%91hooks/" data-id="cmebelntq000tn8fm85e3eprb" data-title="hooks" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -478,7 +478,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/PWA/%E3%80%90pwa%E3%80%91Service%20Worker/" data-id="cmebduivm000upwfm9wdue43g" data-title="【pwa】Service Worker" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/PWA/%E3%80%90pwa%E3%80%91Service%20Worker/" data-id="cmebelntu0011n8fme2iv8n1b" data-title="【pwa】Service Worker" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -600,7 +600,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/PWA/%E3%80%90pwa%E3%80%91mainifest/" data-id="cmebduivq0012pwfmcmq8gwfg" data-title="【pwa】mainifest" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/PWA/%E3%80%90pwa%E3%80%91mainifest/" data-id="cmebelntt000zn8fm1qq8ap0y" data-title="【pwa】mainifest" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -886,10 +886,126 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/PWA/%E3%80%90pwa%E3%80%91pwa%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/" data-id="cmebduivs0016pwfmg5ywcv67" data-title="【pwa】pwa功能模块" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/PWA/%E3%80%90pwa%E3%80%91pwa%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/" data-id="cmebelntv0014n8fm8qysezgh" data-title="【pwa】pwa功能模块" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-JavaScript/【JS】记录小点" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/JavaScript/%E3%80%90JS%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.336Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JS/">JS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/JavaScript/%E3%80%90JS%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/">【JS】记录小点</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Object-is、-和"><a href="#Object-is、-和" class="headerlink" title="Object.is、&#x3D;&#x3D;和&#x3D;&#x3D;&#x3D;"></a>Object.is、&#x3D;&#x3D;和&#x3D;&#x3D;&#x3D;</h3><p>判断两个值是否相等，满足其中一项条件则返回true</p>
+<ul>
+<li><p>&#x3D;&#x3D; </p>
+<ul>
+<li><p>相同类型的数据</p>
+<ul>
+<li>数组&#x2F;对象： 判断引用地址是否相同</li>
+<li>字符串：判断相同的字符且顺序相同</li>
+<li>数字：+0和-0相等；任何一个NaN不等（两个NaN不等）；值相同相等</li>
+<li>Boolean： 相同时相等</li>
+<li>BigInt：值相同相等</li>
+<li>Simple：引用相同符号相等</li>
+</ul>
+</li>
+<li><p>不相同的数据类型</p>
+<ul>
+<li>undefined&#x2F;null：undefined和null相等，其他任意类型都不相等</li>
+<li>对象：非引用类型&#x2F;symbol比较时，会先把对象通过<code>valueOf()</code>转换一下，然后再进行比较</li>
+<li>boolean：如果另一个是数字，那么把布尔值转为数字，true-&gt;1，false-&gt;0</li>
+<li>number和string：number转为string，转换失败导致NaN，而导致结果为false</li>
+<li>number与BigInt：按数值进行比较，如果数字是+∞或者NaN，返回false</li>
+<li>string与BigInt：使用与BigInt()构造函数相同的算法将string转为BigInt，然后进行比较</li>
+</ul>
+</li>
+<li><p>document.all<br>  在比较中被视为undefined，因此<code>document.all == null</code>&#x2F;<code>document.all == undefined</code>为true</p>
+</li>
+</ul>
+</li>
+<li><p>&#x3D;&#x3D;&#x3D;</p>
+<p>  不会进行数据格式转换</p>
+<ul>
+<li>数据类型不同：返回false</li>
+<li>都是对象时：比较引用地址是否相同</li>
+<li>null !&#x3D;&#x3D; undefined</li>
+<li>NaN与任意一个都不相等，包括NaN，即NaN !&#x3D;&#x3D; NaN为true</li>
+<li>数字：+0与-0相等</li>
+</ul>
+</li>
+<li><p>Object.is</p>
+<ul>
+<li>都是undefined</li>
+<li>都是null</li>
+<li>都是true或者false</li>
+<li>都是长度相同、字符相同、顺序相同的字符串</li>
+<li>数据&#x2F;对象引用的是同一个地址</li>
+<li>BigInt：有相同的数值</li>
+<li>Symbol：引用相同的symbol值</li>
+<li>都是数字且<ul>
+<li>都是+0</li>
+<li>都是-0</li>
+<li>都是NaN</li>
+<li>有相同的值且非零且不是NaN</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Object.is()与&#x3D;&#x3D;&#x3D;区别：</p>
+<ul>
+<li>+0和-0：Object.is()把+0和-0判断为相等，&#x3D;&#x3D;&#x3D;把-0和+0判断为不相等</li>
+<li>NaN： Object.is()把NaN判断为相等，&#x3D;&#x3D;&#x3D;把NaN判断为不相等</li>
+</ul>
+<p>Object.is()与&#x3D;&#x3D;区别：</p>
+<p>不会进行数据类型转换</p>
+<h3 id="WeakMap、Map"><a href="#WeakMap、Map" class="headerlink" title="WeakMap、Map"></a>WeakMap、Map</h3><p>Map和Object类似，object的键只能是字符串或者Sysmbol，而Map的键可以是任意类型，且顺序是按照插入顺序储存和迭代的。</p>
+<p>而WeakMap和Map类似，只是WeakMap的键只能是object，且其对object的引用是弱引用(当键引用不存在时，对象会被垃圾回收)。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> map = <span class="keyword">new</span> <span class="title class_">Map</span>()</span><br><span class="line"><span class="keyword">const</span> weakmap = <span class="keyword">new</span> <span class="title class_">WeakMap</span>()</span><br><span class="line">;(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> foo = &#123; <span class="attr">foo</span>: <span class="number">1</span>&#125;</span><br><span class="line">    <span class="keyword">const</span> bar = &#123; <span class="attr">bar</span>: <span class="number">2</span>&#125;</span><br><span class="line">    map.<span class="title function_">set</span>(foo, <span class="number">1</span>)</span><br><span class="line">    weakmap.<span class="title function_">set</span>(bar, <span class="number">2</span>)</span><br><span class="line">&#125;)();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(map)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(weakmap)</span><br></pre></td></tr></table></figure>
+
+<p>这里的输出结果为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Map</span>(<span class="number">1</span>) &#123;&#123;…&#125; =&gt; <span class="number">1</span>&#125;[[<span class="title class_">Entries</span>]]<span class="number">0</span>: &#123;<span class="function"><span class="params">Object</span> =&gt;</span> <span class="number">1</span>&#125;<span class="attr">key</span>: &#123;<span class="attr">foo</span>: <span class="number">1</span>&#125;<span class="attr">value</span>: 1<span class="attr">size</span>: <span class="number">1</span>[[<span class="title class_">Prototype</span>]]: <span class="title class_">Map</span></span><br><span class="line"><span class="title class_">WeakMap</span> &#123; <span class="language-xml"><span class="tag">&lt;<span class="name">items</span> <span class="attr">unknown</span>&gt;</span> &#125; </span></span><br></pre></td></tr></table></figure>
+
+<p>因为weakmap的键bar在函数执行后没有被引用的地方，因此会被回收掉，所以在后续输出的时候，weakmap是bar这个键了</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/JavaScript/%E3%80%90JS%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmebelnti000cn8fmhzi4fhnq" data-title="【JS】记录小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
     </footer>
   </div>
   
@@ -1072,123 +1188,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/JavaScript/%E5%B0%8F%E7%82%B9/" data-id="cmebduivo000xpwfmcfz13oli" data-title="【js】小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-JavaScript/【JS】记录小点" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/JavaScript/%E3%80%90JS%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.336Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/JS/">JS</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/JavaScript/%E3%80%90JS%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/">【JS】记录小点</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="Object-is、-和"><a href="#Object-is、-和" class="headerlink" title="Object.is、&#x3D;&#x3D;和&#x3D;&#x3D;&#x3D;"></a>Object.is、&#x3D;&#x3D;和&#x3D;&#x3D;&#x3D;</h3><p>判断两个值是否相等，满足其中一项条件则返回true</p>
-<ul>
-<li><p>&#x3D;&#x3D; </p>
-<ul>
-<li><p>相同类型的数据</p>
-<ul>
-<li>数组&#x2F;对象： 判断引用地址是否相同</li>
-<li>字符串：判断相同的字符且顺序相同</li>
-<li>数字：+0和-0相等；任何一个NaN不等（两个NaN不等）；值相同相等</li>
-<li>Boolean： 相同时相等</li>
-<li>BigInt：值相同相等</li>
-<li>Simple：引用相同符号相等</li>
-</ul>
-</li>
-<li><p>不相同的数据类型</p>
-<ul>
-<li>undefined&#x2F;null：undefined和null相等，其他任意类型都不相等</li>
-<li>对象：非引用类型&#x2F;symbol比较时，会先把对象通过<code>valueOf()</code>转换一下，然后再进行比较</li>
-<li>boolean：如果另一个是数字，那么把布尔值转为数字，true-&gt;1，false-&gt;0</li>
-<li>number和string：number转为string，转换失败导致NaN，而导致结果为false</li>
-<li>number与BigInt：按数值进行比较，如果数字是+∞或者NaN，返回false</li>
-<li>string与BigInt：使用与BigInt()构造函数相同的算法将string转为BigInt，然后进行比较</li>
-</ul>
-</li>
-<li><p>document.all<br>  在比较中被视为undefined，因此<code>document.all == null</code>&#x2F;<code>document.all == undefined</code>为true</p>
-</li>
-</ul>
-</li>
-<li><p>&#x3D;&#x3D;&#x3D;</p>
-<p>  不会进行数据格式转换</p>
-<ul>
-<li>数据类型不同：返回false</li>
-<li>都是对象时：比较引用地址是否相同</li>
-<li>null !&#x3D;&#x3D; undefined</li>
-<li>NaN与任意一个都不相等，包括NaN，即NaN !&#x3D;&#x3D; NaN为true</li>
-<li>数字：+0与-0相等</li>
-</ul>
-</li>
-<li><p>Object.is</p>
-<ul>
-<li>都是undefined</li>
-<li>都是null</li>
-<li>都是true或者false</li>
-<li>都是长度相同、字符相同、顺序相同的字符串</li>
-<li>数据&#x2F;对象引用的是同一个地址</li>
-<li>BigInt：有相同的数值</li>
-<li>Symbol：引用相同的symbol值</li>
-<li>都是数字且<ul>
-<li>都是+0</li>
-<li>都是-0</li>
-<li>都是NaN</li>
-<li>有相同的值且非零且不是NaN</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>Object.is()与&#x3D;&#x3D;&#x3D;区别：</p>
-<ul>
-<li>+0和-0：Object.is()把+0和-0判断为相等，&#x3D;&#x3D;&#x3D;把-0和+0判断为不相等</li>
-<li>NaN： Object.is()把NaN判断为相等，&#x3D;&#x3D;&#x3D;把NaN判断为不相等</li>
-</ul>
-<p>Object.is()与&#x3D;&#x3D;区别：</p>
-<p>不会进行数据类型转换</p>
-<h3 id="WeakMap、Map"><a href="#WeakMap、Map" class="headerlink" title="WeakMap、Map"></a>WeakMap、Map</h3><p>Map和Object类似，object的键只能是字符串或者Sysmbol，而Map的键可以是任意类型，且顺序是按照插入顺序储存和迭代的。</p>
-<p>而WeakMap和Map类似，只是WeakMap的键只能是object，且其对object的引用是弱引用(当键引用不存在时，对象会被垃圾回收)。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> map = <span class="keyword">new</span> <span class="title class_">Map</span>()</span><br><span class="line"><span class="keyword">const</span> weakmap = <span class="keyword">new</span> <span class="title class_">WeakMap</span>()</span><br><span class="line">;(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> foo = &#123; <span class="attr">foo</span>: <span class="number">1</span>&#125;</span><br><span class="line">    <span class="keyword">const</span> bar = &#123; <span class="attr">bar</span>: <span class="number">2</span>&#125;</span><br><span class="line">    map.<span class="title function_">set</span>(foo, <span class="number">1</span>)</span><br><span class="line">    weakmap.<span class="title function_">set</span>(bar, <span class="number">2</span>)</span><br><span class="line">&#125;)();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(map)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(weakmap)</span><br></pre></td></tr></table></figure>
-
-<p>这里的输出结果为：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Map</span>(<span class="number">1</span>) &#123;&#123;…&#125; =&gt; <span class="number">1</span>&#125;[[<span class="title class_">Entries</span>]]<span class="number">0</span>: &#123;<span class="function"><span class="params">Object</span> =&gt;</span> <span class="number">1</span>&#125;<span class="attr">key</span>: &#123;<span class="attr">foo</span>: <span class="number">1</span>&#125;<span class="attr">value</span>: 1<span class="attr">size</span>: <span class="number">1</span>[[<span class="title class_">Prototype</span>]]: <span class="title class_">Map</span></span><br><span class="line"><span class="title class_">WeakMap</span> &#123; <span class="language-xml"><span class="tag">&lt;<span class="name">items</span> <span class="attr">unknown</span>&gt;</span> &#125; </span></span><br></pre></td></tr></table></figure>
-
-<p>因为weakmap的键bar在函数执行后没有被引用的地方，因此会被回收掉，所以在后续输出的时候，weakmap是bar这个键了</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/JavaScript/%E3%80%90JS%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmebduivr0013pwfmfn4283r4" data-title="【JS】记录小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/JavaScript/%E5%B0%8F%E7%82%B9/" data-id="cmebelntj000gn8fm5jkufn6s" data-title="【js】小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1299,7 +1299,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/JavaScript/%E3%80%90JS%E3%80%91%E4%BF%AE%E9%A5%B0%E5%99%A8/" data-id="cmebduivp000ypwfm9bjlcxg4" data-title="【js】修饰器（Decorator）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/JavaScript/%E3%80%90JS%E3%80%91%E4%BF%AE%E9%A5%B0%E5%99%A8/" data-id="cmebelntg000bn8fm2ivy2v50" data-title="【js】修饰器（Decorator）" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1452,7 +1452,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/HTTP/%E3%80%90Htpp%E3%80%91header/" data-id="cmebduiva0007pwfm9ahc24fa" data-title="【Htpp】header" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/HTTP/%E3%80%90Htpp%E3%80%91header/" data-id="cmebelnup002ln8fm7czkbt7w" data-title="【Htpp】header" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1466,9 +1466,9 @@
 
 
   
-    <article id="post-HTTP/【http】队头阻塞" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-HTTP/【前端缓存】随机数位置区别" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2025/08/14/HTTP/%E3%80%90http%E3%80%91%E9%98%9F%E5%A4%B4%E9%98%BB%E5%A1%9E/" class="article-date">
+    <a href="/2025/08/14/HTTP/%E3%80%90%E5%89%8D%E7%AB%AF%E7%BC%93%E5%AD%98%E3%80%91%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%88%AB/" class="article-date">
   <time class="dt-published" datetime="2025-08-14T03:18:06.271Z" itemprop="datePublished">2025-08-14</time>
 </a>
     
@@ -1484,7 +1484,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/HTTP/%E3%80%90http%E3%80%91%E9%98%9F%E5%A4%B4%E9%98%BB%E5%A1%9E/">【Htpp】队头阻塞</a>
+      <a class="p-name article-title" href="/2025/08/14/HTTP/%E3%80%90%E5%89%8D%E7%AB%AF%E7%BC%93%E5%AD%98%E3%80%91%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%88%AB/">【前端缓存】随机数位置区别</a>
     </h1>
   
 
@@ -1492,116 +1492,69 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="http1队头阻塞"><a href="#http1队头阻塞" class="headerlink" title="http1队头阻塞"></a>http1队头阻塞</h2><p>除了TCP的本身限制外，http1的先进先出（FIFO）的设计导致的。即浏览器在发送了请求后，必须按照发送顺序获取到相应的响应结果。例如请求A、请求B按顺序发送，请求A需要1s响应，请求B需要0.1s响应，即使B请求响应更加快速，但是浏览器依旧需要等待A的响应才能获取到B的响应。这就是http1的队头阻塞</p>
-<h3 id="FIFO"><a href="#FIFO" class="headerlink" title="FIFO"></a>FIFO</h3><h4 id="使用原因"><a href="#使用原因" class="headerlink" title="使用原因"></a>使用原因</h4><ul>
-<li><p>简化协议实现</p>
-<p>  http1设计在早期互联网，顺序处理模型更加简单，减少协议复杂性</p>
+        <h2 id="文件随机数存放位置区别"><a href="#文件随机数存放位置区别" class="headerlink" title="文件随机数存放位置区别"></a>文件随机数存放位置区别</h2><h3 id="文件url-随机数"><a href="#文件url-随机数" class="headerlink" title="文件url+?+随机数"></a>文件url+?+随机数</h3><ul>
+<li><p><code>https://xxx?v=1.x.x</code></p>
+<p>一般用于版本号对应的文件</p>
 </li>
-<li><p>避免资源竞争</p>
-<p>  顺序处理可以避免服务器或客户端因并发处理多个请求导致数据混乱</p>
-</li>
-<li><p>兼容性</p>
-<p>  早期浏览器和服务器对并发有限制，因此使用FIFO是权衡之后的结果</p>
+<li><p><code>https://xxx?c=s45sdf</code></p>
+<p>一般用于文件内容生成的hash值</p>
 </li>
 </ul>
-<h4 id="表现"><a href="#表现" class="headerlink" title="表现"></a>表现</h4><p>请求顺序化和相应顺序化</p>
-<h4 id="导致问题"><a href="#导致问题" class="headerlink" title="导致问题"></a>导致问题</h4><ul>
-<li><p>队头阻塞</p>
-</li>
-<li><p>性能问题</p>
-<p>  高并发情况下，FIFO机制会导致连接利用率低下，无法充分利用带宽</p>
-</li>
-</ul>
-<h4 id="改进尝试"><a href="#改进尝试" class="headerlink" title="改进尝试"></a>改进尝试</h4><p>管道化：允许客户端在未接受响应是连续发送多个请求</p>
+<h3 id="文件名-hash值"><a href="#文件名-hash值" class="headerlink" title="文件名+hash值"></a>文件名+hash值</h3><p><code>https://xxxs45sdf</code></p>
+<p>hash值一般由文件内容生成</p>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>以上两种存放位置都可以使浏览器获取最新的文件，而不是走缓存拿文件</p>
+<p>当前主流的一般是用文件名+hash值的形式。原因如下</p>
+<blockquote>
+<p>一般发版时，是有html文件和js、css文件的。<br />浏览器首先去请求html文件，html嵌入了js、css等其他文件。<br />那么在请求html和js、css等文件的这个时间差内，如果采用第一种方式(文件url+?+随机数)，就容易出现问题</p>
+</blockquote>
 <ul>
-<li><p>缺点</p>
+<li><p>如果先发html文件，再发js、css等文件</p>
 <ul>
-<li>响应必须按顺序返回</li>
-<li>服务器实现复杂，且易因队头阻塞导致性能问题</li>
-<li>浏览器默认禁用管道话</li>
-</ul>
+<li><p>客户请求时，浏览器不会走缓存，会去取最新的文件。</p>
+</li>
+<li><p>但是可能这个时候取的js、css文件还是老的文件。那么就导致客户端下次再去请求时，走的其实是缓存。</p>
 </li>
 </ul>
-<p>因此管道化实际并未解决队头阻塞问题</p>
-<h2 id="http2"><a href="#http2" class="headerlink" title="http2"></a>http2</h2><h3 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h3><ul>
-<li><p>二进制分帧</p>
-<p>  http2中引入了二进制分帧的概念，即将请求的参数及数据全部分解为一个一个的二进制格式帧，这样可以提升传输和解析的效率。</p>
 </li>
-<li><p>多路复用</p>
-<p>  流是一组双向的帧序列，每个流都有一个唯一的标识符，并且可以在同一个连接中并发传输多个流，可以最大程度实现多路复用</p>
-<p>  一个流可以由多个帧组成，这些帧按顺序发送，接收方根据流标识符将其重新组合为完整的请求或响应</p>
-</li>
-</ul>
-<p>因此多个http可以同时并发传输或者交错传输，从而减少队头阻塞</p>
-<h3 id="帧"><a href="#帧" class="headerlink" title="帧"></a>帧</h3><h4 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h4><p>每个帧有一个固定头部（9字节），包括：</p>
+<li><p>先发js、css等文件，再发html文件</p>
 <ul>
-<li><p>长度：Length</p>
-<p>  帧负载长度，由24位3个字节大小表示</p>
+<li><p>对于有缓存的用户不会造成影响。</p>
 </li>
-<li><p>类型：Type</p>
-<p>  帧类型，说明格式及其语义，用8位1个字节表示</p>
-</li>
-<li><p>标志：Flags</p>
-<p>  指示帧的特定属性或状态，用8位1个字节表示</p>
-</li>
-<li><p>流标识符：Stream Identifier</p>
-<p>  表示该帧关联的流，用31为表示，上限为2^31</p>
-</li>
-<li><p>帧数据</p>
-<p>  传输的数据内容Payload由帧类型决定</p>
-</li>
-<li><p>R<br>  1位保留字段，未定义，以0x0结尾</p>
+<li><p>但是对于无缓存的用户，拿取数据时，会拿取到最新的js、css等文件，那么最直观的影响可能是页面样式问题。但当html发布成功后，页面会恢复正常</p>
 </li>
 </ul>
-<h4 id="帧类型"><a href="#帧类型" class="headerlink" title="帧类型"></a>帧类型</h4><p>Pad Length：填充字节长度<br>E：标识流是否为独占，设置PRIORITY时才有值<br>Stream Dependency：流的依赖流，设置PRIORITY时才有值<br>Weight：流优先级权重，设置PRIORITY时才有值<br>Header Block Fragment：Header块片段<br>Padding：填充字节长度</p>
+</li>
+<li><p>对于异步加载的情况</p>
 <ul>
-<li><p>DATA帧</p>
-<p>  数据帧主要存储http2数据报文，包含8位填充字节+填充字节长度（PADDED）标记位true时说明由填充字节+Data具体传输的数据</p>
+<li><p>代码发布后，用户在使用过程中，进入了一个新路由</p>
 </li>
-<li><p>HEADER帧</p>
-<p>  包含Pad Length（填充字节长度）+E（标识流是否为独占，设置PRIORITY时才有值）+Stream Dependency（流的依赖流，设置PRIORITY时才有值）+ Weight（流优先级权重，设置PRIORITY时才有值）+ Header Block Fragment（Header块片段）+ Padding（填充字节长度）</p>
-</li>
-<li><p>PROIRITY帧</p>
-<p>  发送流的优先级，包含E+Stream Dependency+Weight</p>
-</li>
-<li><p>RST_STREAM帧</p>
-<p>  当发送错误或取消时，用于终止一个流，包含Error Code，32位错误代码，说明错误原因</p>
-</li>
-<li><p>SETTINGS帧</p>
-<p>  用于传达连接端点之间的配置参数，标为ACK&#x3D;0表示被对等的SETTINGS帧使用，不为0时表示FRAME_SIZE_ERROR连接错误</p>
-</li>
-<li><p>PUSH_PROMISE帧</p>
-<p>  服务端向客户端推送的帧，客户端可以返回RST_STREAM拒绝</p>
-</li>
-<li><p>PING帧</p>
-<p>  心跳监测，测量发送往还时间，确定连接是否正常，ACK&#x3D;0表示PING帧响应，1表示PING帧</p>
-</li>
-<li><p>GOAWAY帧</p>
-<p>  用于关闭连接或发出错误，允许停止接受新的流并完成前面的流处理</p>
-<p>  包括R+Last Stream Id + Error Code + Addictional Debug Data</p>
-</li>
-<li><p>WINDOW_UPDATE帧</p>
-<p>  用于连接和流的流量控制</p>
-</li>
-<li><p>CONTINUATION帧</p>
-<p>  一种持续帧，用于继续传输Header头块片段。通常Header块比较大，在HEADERS、PUSH_PROMISE、CONTINUATION帧之后继续传输</p>
+<li><p>在新路由页面，获取的是最新的代码文件，但是在进入之前，获取的是老代码文件，那么这里就会导致新老代码文件交替，容易出现问题</p>
 </li>
 </ul>
-<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>http2只解决了应用层的问题，但是由于其还是基于tcp的，因此tcp硬伤的队头阻塞依旧存在</p>
-<p>tcp由于“可靠传输”而包含的按序到达的机制，使得http2的队头阻塞问题仍然存在</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/huansky/p/14420723.html">HTTP 1.x 学习笔记 —— Web 性能权威指南</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/330300133">关于队头阻塞（Head-of-Line blocking），看这一篇就足够了</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_63951768/article/details/144917352">HTTP1.1 对头阻塞和 HTTP2 中对其的解决措施</a></p>
+</li>
+</ul>
+<p>因此，采用文件名+hash的方式，无论是先发html还是js、css文件，由于是直接通过文件名去获取的，那么就不会产生上述问题。</p>
+<ul>
+<li><p>先发js、css等文件</p>
+<ul>
+<li>由于文件名不同，由于文件名已经不一样了，所以不会覆盖掉之前存在的资源文件，客户端依旧可以安全的访问。</li>
+</ul>
+</li>
+<li><p>再发html文件</p>
+<ul>
+<li>因为js、css等文件已经发布完毕了，那么当html更新了之后，再获取的js、css等文件就已经是最新的了</li>
+</ul>
+</li>
+</ul>
+<h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><p><a target="_blank" rel="noopener" href="https://github.com/fouber/blog/issues/6">大公司里怎样开发和部署前端代码</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/HTTP/%E3%80%90http%E3%80%91%E9%98%9F%E5%A4%B4%E9%98%BB%E5%A1%9E/" data-id="cmebduivf000ipwfmfyt0bsmk" data-title="【Htpp】队头阻塞" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/HTTP/%E3%80%90%E5%89%8D%E7%AB%AF%E7%BC%93%E5%AD%98%E3%80%91%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%88%AB/" data-id="cmebelnup002nn8fmdckld0in" data-title="【前端缓存】随机数位置区别" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/http/" rel="tag">http</a></li></ul>
-
     </footer>
   </div>
   
@@ -1625,7 +1578,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HTTP/">HTTP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PWA/">PWA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Typescript/">Typescript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VueTest/">VueTest</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web3/">Web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/axios-%E6%BA%90%E7%A0%81/">axios 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vuex-%E6%BA%90%E7%A0%81/">vuex 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web3/">web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webAssembly/">webAssembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webwork/">webwork</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/">业务场景</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/">扩展阅读</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/">额外内容</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PWA/">PWA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Typescript/">Typescript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VueTest/">VueTest</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web3/">Web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/axios-%E6%BA%90%E7%A0%81/">axios 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vuex-%E6%BA%90%E7%A0%81/">vuex 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web3/">web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webAssembly/">webAssembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webwork/">webwork</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/">业务场景</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/">扩展阅读</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/">额外内容</a></li></ul>
     </div>
   </div>
 
