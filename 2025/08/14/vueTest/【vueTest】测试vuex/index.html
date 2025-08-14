@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="文件分开测试需要将 getter、mutations 分成不同的文件。 在测试文件内，传递一个假数据给 vuex，然后拿到经过处理后的数据，去判断是否符合预期 getter12345678test(&quot;getter&quot;, () &#x3D;&gt; &#123;  const name &#x3D; &quot;啦啦啦啦&quot;;  const origin_name &#x3D; &#123;    na">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【vueTest】测试vuex">
+<meta property="og:url" content="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95vuex/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="文件分开测试需要将 getter、mutations 分成不同的文件。 在测试文件内，传递一个假数据给 vuex，然后拿到经过处理后的数据，去判断是否符合预期 getter12345678test(&quot;getter&quot;, () &#x3D;&gt; &#123;  const name &#x3D; &quot;啦啦啦啦&quot;;  const origin_name &#x3D; &#123;    na">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T03:18:06.571Z">
+<meta property="article:modified_time" content="2025-08-14T03:20:28.843Z">
+<meta property="article:author" content="yangxin">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95vuex/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95vuex/","path":"2025/08/14/vueTest/【vueTest】测试vuex/","title":"【vueTest】测试vuex"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【vueTest】测试vuex | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%88%86%E5%BC%80%E6%B5%8B%E8%AF%95"><span class="nav-number">1.</span> <span class="nav-text">文件分开测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#getter"><span class="nav-number">1.1.</span> <span class="nav-text">getter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mutation-%E6%B5%8B%E8%AF%95"><span class="nav-number">1.2.</span> <span class="nav-text">mutation 测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#action"><span class="nav-number">1.3.</span> <span class="nav-text">action</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%94%BE%E5%9C%A8%E4%B8%80%E4%B8%AA-Store"><span class="nav-number">2.</span> <span class="nav-text">放在一个 Store</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text">缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%BC%80%E5%86%99"><span class="nav-number">3.1.</span> <span class="nav-text">分开写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%B5%B7%E5%86%99"><span class="nav-number">3.2.</span> <span class="nav-text">一起写</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95vuex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【vueTest】测试vuex | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【vueTest】测试vuex
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-08-14 11:18:06 / Modified: 11:20:28" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/VueTest/" itemprop="url" rel="index"><span itemprop="name">VueTest</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="文件分开测试"><a href="#文件分开测试" class="headerlink" title="文件分开测试"></a>文件分开测试</h1><p>需要将 getter、mutations 分成不同的文件。</p>
+<p>在测试文件内，传递一个假数据给 vuex，然后拿到经过处理后的数据，去判断是否符合预期</p>
+<h2 id="getter"><a href="#getter" class="headerlink" title="getter"></a>getter</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">test</span>(<span class="string">&quot;getter&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> name = <span class="string">&quot;啦啦啦啦&quot;</span>;</span><br><span class="line">  <span class="keyword">const</span> origin_name = &#123;</span><br><span class="line">    name,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">const</span> data = getter.<span class="title function_">getter_name</span>(origin_name);</span><br><span class="line">  <span class="title function_">expect</span>(data).<span class="title function_">toBe</span>(name);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="mutation-测试"><a href="#mutation-测试" class="headerlink" title="mutation 测试"></a>mutation 测试</h2><p>mutation 内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">mutation_name</span>(<span class="params">state, val</span>)&#123;</span><br><span class="line">    state.<span class="property">name</span> = val</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试文件内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">test</span>(<span class="string">&quot;mutation&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> new_name = <span class="string">&quot;啦啦啦啦&quot;</span>;</span><br><span class="line">  <span class="comment">//   创建一个假的state存储对象</span></span><br><span class="line">  <span class="keyword">const</span> origin_name = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;哇哇哇&quot;</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">//   调用方法，修改内容</span></span><br><span class="line">  mutations.<span class="title function_">mutation_name</span>(origin_name, new_name);</span><br><span class="line">  <span class="title function_">expect</span>(origin_name.<span class="property">name</span>).<span class="title function_">toBe</span>(new_name);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>origin_name 的 name 变为了 new_name 的内容</p>
+<h2 id="action"><a href="#action" class="headerlink" title="action"></a>action</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; flushPromises &#125; <span class="keyword">from</span> <span class="string">&quot;@vue/test-utils&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; httpTest1 &#125; <span class="keyword">from</span> <span class="string">&quot;./mock&quot;</span>;</span><br><span class="line">jest.<span class="title function_">mock</span>(<span class="string">&quot;./mock.js&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&quot;action&quot;</span>, <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">  expect.<span class="title function_">assertions</span>(<span class="number">1</span>);</span><br><span class="line">  <span class="keyword">const</span> name = <span class="string">&quot;哈哈哈&quot;</span>;</span><br><span class="line">  <span class="comment">// 创建一个假的上下文</span></span><br><span class="line">  <span class="keyword">const</span> ctx = &#123;</span><br><span class="line">    <span class="attr">commit</span>: jest.<span class="title function_">fn</span>(),</span><br><span class="line">  &#125;;</span><br><span class="line">  httpTest1.<span class="title function_">mockImplemntationNoce</span>(<span class="function">(<span class="params">calledWith</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>();</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">//  调用actions</span></span><br><span class="line">  action.<span class="title function_">action_state_name</span>(ctx, name);</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">flushPromises</span>();</span><br><span class="line">  <span class="comment">//  判断是否调用对应的mutation</span></span><br><span class="line">  <span class="title function_">expect</span>(ctx.<span class="property">commit</span>).<span class="title function_">toHaveBeenCalledWith</span>(<span class="string">&quot;mutation_name&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>actions 测试流程比 mutation 和 getter 复杂,因为涉及到请求和调用 commit,所以需要去模拟一个 mock,以此来拦截数据.</p>
+<p>通过创建一个假的上下文,传给 action,以此来判断是否调用了 mutation</p>
+<h1 id="放在一个-Store"><a href="#放在一个-Store" class="headerlink" title="放在一个 Store"></a>放在一个 Store</h1><p>在beforeEach中,创建一个store,那么在此之后的测试代码中,每次都会调用这个beforeEach的函数,以便每个测试都有一个全新的store</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> localStore, store;</span><br><span class="line"><span class="title function_">test</span>(<span class="string">&quot;store&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">beforeEach</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    localStore = &#123;</span><br><span class="line">      <span class="attr">getters</span>: &#123;</span><br><span class="line">        <span class="attr">getter_age</span>: jest.<span class="title function_">fn</span>(),</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">mutations</span>: &#123;</span><br><span class="line">        <span class="attr">mutation_age</span>: jest.<span class="title function_">fn</span>(),</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;;</span><br><span class="line">    store = <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title class_">Store</span>(localStore);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&quot;vue&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;localStore&quot;</span>, localStore);</span><br><span class="line"><span class="comment">//   组件可以通过$store拿到测试的vuex数据</span></span><br><span class="line">  <span class="title function_">shallowMount</span>(componentName, &#123;</span><br><span class="line">    <span class="attr">$store</span>: localStore,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h1 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h1><h2 id="分开写"><a href="#分开写" class="headerlink" title="分开写"></a>分开写</h2><p>需要模拟许多vuex方法,可能使测试通过,但是实际的测试还是不正确,因为完全是由外部传入的state</p>
+<h2 id="一起写"><a href="#一起写" class="headerlink" title="一起写"></a>一起写</h2><p>测试不够具体,如果测试失败,那么排查问题比较困难</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E5%BF%AB%E7%85%A7%E5%92%8C%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95/" rel="prev" title="【vueTest】快照和端到端测试">
+                  <i class="fa fa-angle-left"></i> 【vueTest】快照和端到端测试
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95/" rel="next" title="【vueTest】测试方法">
+                  【vueTest】测试方法 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="【css】滚动贴合scroll-snap-type作用可以设置滚动贴合的方向和方式。 属性 none   没有贴合点的效果  x&#x2F;y 或者 inline&#x2F;block  x:    可以设置水平轴上的捕捉位置  y:    可以设置垂直轴上的捕捉位置  block   可以设置块状元素排列一个滚动方向的捕捉位置，默认文档流指的是垂直方向  inline   可以设置内联状元素排列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【css】滚动贴合">
+<meta property="og:url" content="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E6%BB%9A%E5%8A%A8%E8%B4%B4%E5%90%88/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="【css】滚动贴合scroll-snap-type作用可以设置滚动贴合的方向和方式。 属性 none   没有贴合点的效果  x&#x2F;y 或者 inline&#x2F;block  x:    可以设置水平轴上的捕捉位置  y:    可以设置垂直轴上的捕捉位置  block   可以设置块状元素排列一个滚动方向的捕捉位置，默认文档流指的是垂直方向  inline   可以设置内联状元素排列">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/15/pC5wZWV.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/15/pC5wnQU.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/15/pC5wuyF.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/15/pC5woYq.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/15/pC5wHpV.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/15/pC5wblT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/15/pC5rEBF.png">
+<meta property="article:published_time" content="2025-08-14T03:18:06.190Z">
+<meta property="article:modified_time" content="2025-03-06T09:08:26.516Z">
+<meta property="article:author" content="yangxin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2023/07/15/pC5wZWV.png">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E6%BB%9A%E5%8A%A8%E8%B4%B4%E5%90%88/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E6%BB%9A%E5%8A%A8%E8%B4%B4%E5%90%88/","path":"2025/08/14/css/【css】滚动贴合/","title":"【css】滚动贴合"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【css】滚动贴合 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%90css%E3%80%91%E6%BB%9A%E5%8A%A8%E8%B4%B4%E5%90%88"><span class="nav-number">1.</span> <span class="nav-text">【css】滚动贴合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#scroll-snap-type"><span class="nav-number">1.1.</span> <span class="nav-text">scroll-snap-type</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8"><span class="nav-number">1.1.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7"><span class="nav-number">1.1.2.</span> <span class="nav-text">属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scroll-snap-align"><span class="nav-number">1.2.</span> <span class="nav-text">scroll-snap-align</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scroll-margin-scroll-padding"><span class="nav-number">1.3.</span> <span class="nav-text">scroll-margin &#x2F; scroll-padding</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8-2"><span class="nav-number">1.3.1.</span> <span class="nav-text">作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scroll-behavior"><span class="nav-number">1.4.</span> <span class="nav-text">scroll-behavior</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8-3"><span class="nav-number">1.4.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7-2"><span class="nav-number">1.4.2.</span> <span class="nav-text">属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#overscroll-behavior"><span class="nav-number">1.5.</span> <span class="nav-text">overscroll-behavior</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8-4"><span class="nav-number">1.5.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7-3"><span class="nav-number">1.5.2.</span> <span class="nav-text">属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%BC%E5%AE%B9%E6%80%A7"><span class="nav-number">1.6.</span> <span class="nav-text">兼容性</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E6%BB%9A%E5%8A%A8%E8%B4%B4%E5%90%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【css】滚动贴合 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【css】滚动贴合
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="【css】滚动贴合"><a href="#【css】滚动贴合" class="headerlink" title="【css】滚动贴合"></a>【css】滚动贴合</h1><h2 id="scroll-snap-type"><a href="#scroll-snap-type" class="headerlink" title="scroll-snap-type"></a>scroll-snap-type</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>可以设置滚动贴合的方向和方式。</p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><ul>
+<li><p><code>none</code></p>
+<p>  没有贴合点的效果</p>
+</li>
+<li><p><code>x</code>&#x2F;<code>y</code> 或者 <code>inline</code>&#x2F;<code>block</code></p>
+<ul>
+<li><p><code>x</code>: </p>
+<p>  可以设置水平轴上的捕捉位置</p>
+</li>
+<li><p><code>y</code>: </p>
+<p>  可以设置垂直轴上的捕捉位置</p>
+</li>
+<li><p><code>block</code></p>
+<p>  可以设置块状元素排列一个滚动方向的捕捉位置，默认文档流指的是垂直方向</p>
+</li>
+<li><p><code>inline</code></p>
+<p>  可以设置内联状元素排列一个滚动方向的捕捉位置，默认文档流指的是水平方向</p>
+</li>
+</ul>
+<p>  在默认文档流的情况下，这<code>x</code>和<code>inline</code>, <code>y</code>和<code>block</code>的表现都是一样的。但其实际上还是有区别的</p>
+<blockquote>
+<p><code>x</code>和<code>y</code>是物理轴，x对应于水平滚动，y对应于垂直滚动。</p>
+</blockquote>
+<blockquote>
+<p><code>block</code>和<code>inline</code>是逻辑轴，block对应于垂直滚动，inline对应于水平滚动。</p>
+</blockquote>
+<p>  在改变文档流(<code>writing-mode</code>)之后，那么<code>x</code>和<code>inline</code>的表现就会不一致了。</p>
+<p>  <font color=red>普通</font>文档流的情况下，设置的<code>x</code>属性，贴合属性的<font color=red>生效</font><br>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pC5wZWV"><img src="https://s1.ax1x.com/2023/07/15/pC5wZWV.png" alt="pC5wZWV.png"></a></p>
+<p>  <font color=red>改变</font>文档流的情况下，设置的<code>x</code>属性，贴合属性的<font color=red>不生效</font><br>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pC5wnQU"><img src="https://s1.ax1x.com/2023/07/15/pC5wnQU.png" alt="pC5wnQU.png"></a></p>
+<p>  <font color=red>改变</font>文档流的情况下，设置的<code>inline</code>属性，贴合属性的<font color=red>生效</font><br>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pC5wuyF"><img src="https://s1.ax1x.com/2023/07/15/pC5wuyF.png" alt="pC5wuyF.png"></a></p>
+</li>
+<li><p><code>both</code></p>
+<p> 滚动容器会独立捕捉到其两个轴上的位置（可能会捕捉到每个轴上的不同元素）</p>
+<p> 不管是正常文档流和改变文档流后，都会被捕获</p>
+</li>
+<li><p><code>mandatory</code>和<code>proximity</code></p>
+<ul>
+<li><p><code>mandatory</code>    </p>
+<p>  滚动操作结束后，滚动容器必须对齐到最近的一个滚动捕捉点。无论用户滚动的距离有多远，都会强制对齐到最近的捕捉点。这种模式下，用户不能停在两个捕捉点之间。</p>
+</li>
+<li><p><code>proximity</code><br>  当滚动操作结束后，只有当最近的滚动捕捉点在一定范围内时，滚动容器才会对齐到该捕捉点。如果最近的捕捉点距离太远，用户可以停在两个捕捉点之间。</p>
+</li>
+</ul>
+<p>  所以，<code>mandatory</code>比<code>proximity</code>更严格，它会强制滚动容器对齐到最近的滚动捕捉点，而<code>proximity</code>则允许用户在两个滚动捕捉点之间停下。</p>
+</li>
+</ul>
+<h2 id="scroll-snap-align"><a href="#scroll-snap-align" class="headerlink" title="scroll-snap-align"></a>scroll-snap-align</h2><h3 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h3><p>用于子元素的属性，设置其捕获点</p>
+<h3 id="属性-1"><a href="#属性-1" class="headerlink" title="属性"></a>属性</h3><ul>
+<li><p><code>start</code></p>
+<p>  设置捕获点为元素的起始位置</p>
+<p>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pC5woYq"><img src="https://s1.ax1x.com/2023/07/15/pC5woYq.png" alt="pC5woYq.png"></a></p>
+</li>
+<li><p><code>center</code></p>
+<p>  设置捕获点是元素居中</p>
+<p>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pC5wHpV"><img src="https://s1.ax1x.com/2023/07/15/pC5wHpV.png" alt="pC5wHpV.png"></a></p>
+</li>
+<li><p><code>start</code></p>
+<p>  设置捕获点为元素的结束位置</p>
+<p>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pC5wblT"><img src="https://s1.ax1x.com/2023/07/15/pC5wblT.png" alt="pC5wblT.png"></a></p>
+</li>
+</ul>
+<h2 id="scroll-margin-scroll-padding"><a href="#scroll-margin-scroll-padding" class="headerlink" title="scroll-margin &#x2F; scroll-padding"></a>scroll-margin &#x2F; scroll-padding</h2><h3 id="作用-2"><a href="#作用-2" class="headerlink" title="作用"></a>作用</h3><p>可以设置贴合间距</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pC5rEBF"><img src="https://s1.ax1x.com/2023/07/15/pC5rEBF.png" alt="pC5rEBF.png"></a></p>
+<p><code>scroll-margin</code>是作用于子元素的，而<code>scroll-margin</code>是父元素才生效的。这两个属性和<code>margin</code>&#x2F;<code>padding</code>一样，可以设置例如<code>scroll-margin-top</code>这些属性用于不同方向的样式</p>
+<h2 id="scroll-behavior"><a href="#scroll-behavior" class="headerlink" title="scroll-behavior"></a>scroll-behavior</h2><h3 id="作用-3"><a href="#作用-3" class="headerlink" title="作用"></a>作用</h3><p>可以设置滚动时是否需要显示动画</p>
+<h3 id="属性-2"><a href="#属性-2" class="headerlink" title="属性"></a>属性</h3><ul>
+<li><p><code>auto</code></p>
+<p>  默认值，表示滚动行为立即跳转到目标位置，没有过渡效果</p>
+</li>
+<li><p><code>smooth</code></p>
+<p>  滚动行为会平滑地过渡到目标位置，产生一种动画效果。</p>
+</li>
+</ul>
+<h2 id="overscroll-behavior"><a href="#overscroll-behavior" class="headerlink" title="overscroll-behavior"></a><code>overscroll-behavior</code></h2><h3 id="作用-4"><a href="#作用-4" class="headerlink" title="作用"></a>作用</h3><p>用于控制页面在滚动到底部或顶部时的行为。即如果子元素滚动到最底部后继续滚动，是否需要连带父元素滚动</p>
+<h3 id="属性-3"><a href="#属性-3" class="headerlink" title="属性"></a>属性</h3><ul>
+<li><p><code>auto</code></p>
+<p>  允许滚动行为传播到父元素</p>
+</li>
+<li><p><code>contain</code></p>
+<p>  防止滚动行为传播到父元素，但允许页面的弹性滚动效果（比如在移动设备上，滚动到底部时页面会稍微弹一下）</p>
+</li>
+<li><p><code>none</code></p>
+<p>  不允许滚动行为传播到父元素</p>
+</li>
+</ul>
+<h2 id="兼容性"><a href="#兼容性" class="headerlink" title="兼容性"></a>兼容性</h2><ol>
+<li><p><code>scroll-snap-type</code> 和 <code>scroll-snap-align</code>：这两个属性在所有主流浏览器中都得到了支持，包括 Firefox、Chrome、Edge、Opera 和 Safari。</p>
+</li>
+<li><p><code>scroll-margin</code>：这个属性在 Firefox 和 Chrome（包括基于 Chromium 的浏览器如 Edge 和 Opera）中得到了支持，但在 Safari 中的支持情况不太理想。</p>
+</li>
+<li><p><code>overscroll-behavior</code>和<code>scroll-behavior</code>：这个属性在 Firefox 和 Chrome（包括基于 Chromium 的浏览器如 Edge 和 Opera）中得到了很好的支持，但在 Safari 中尚未被支持。</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/css/%E3%80%90css%E3%80%91BFC/" rel="prev" title="【css】BFC">
+                  <i class="fa fa-angle-left"></i> 【css】BFC
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/css/%E3%80%90css%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" rel="next" title="【css】记录小点">
+                  【css】记录小点 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

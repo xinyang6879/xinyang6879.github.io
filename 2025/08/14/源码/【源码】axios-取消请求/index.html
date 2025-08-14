@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="使用方法1234567891011121314151617const CancelToken &#x3D; axios.CancelToken;const source &#x3D; CancelToken.source();axios  .get(&quot;&#x2F;get&#x2F;server&quot;, &#123;    cancelToken: source.token,  &#125;)  .catch(func">
+<meta property="og:type" content="article">
+<meta property="og:title" content="axios取消请求原理">
+<meta property="og:url" content="http://example.com/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91axios-%E5%8F%96%E6%B6%88%E8%AF%B7%E6%B1%82/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="使用方法1234567891011121314151617const CancelToken &#x3D; axios.CancelToken;const source &#x3D; CancelToken.source();axios  .get(&quot;&#x2F;get&#x2F;server&quot;, &#123;    cancelToken: source.token,  &#125;)  .catch(func">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s21.ax1x.com/2024/04/07/pFqWBin.png">
+<meta property="og:image" content="https://s21.ax1x.com/2024/04/07/pFqWrR0.png">
+<meta property="article:published_time" content="2025-08-14T03:18:33.934Z">
+<meta property="article:modified_time" content="2025-03-06T09:08:26.524Z">
+<meta property="article:author" content="yangxin">
+<meta property="article:tag" content="axios 源码">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s21.ax1x.com/2024/04/07/pFqWBin.png">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91axios-%E5%8F%96%E6%B6%88%E8%AF%B7%E6%B1%82/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91axios-%E5%8F%96%E6%B6%88%E8%AF%B7%E6%B1%82/","path":"2025/08/14/源码/【源码】axios-取消请求/","title":"axios取消请求原理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>axios取消请求原理 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%96%E6%B6%88%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">取消类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CancelToken"><span class="nav-number">2.1.</span> <span class="nav-text">CancelToken</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%96%E6%B6%88%E8%B0%83%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">取消调用流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E9%93%BE"><span class="nav-number">4.</span> <span class="nav-text">参链</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91axios-%E5%8F%96%E6%B6%88%E8%AF%B7%E6%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="axios取消请求原理 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          axios取消请求原理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:33" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:33+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/axios-%E6%BA%90%E7%A0%81/" itemprop="url" rel="index"><span itemprop="name">axios 源码</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://imgse.com/i/pFqWBin"><img src="https://s21.ax1x.com/2024/04/07/pFqWBin.png" alt="pFqWBin.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pFqWrR0"><img src="https://s21.ax1x.com/2024/04/07/pFqWrR0.png" alt="pFqWrR0.png"></a></p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">CancelToken</span> = axios.<span class="property">CancelToken</span>;</span><br><span class="line"><span class="keyword">const</span> source = <span class="title class_">CancelToken</span>.<span class="title function_">source</span>();</span><br><span class="line"></span><br><span class="line">axios</span><br><span class="line">  .<span class="title function_">get</span>(<span class="string">&quot;/get/server&quot;</span>, &#123;</span><br><span class="line">    <span class="attr">cancelToken</span>: source.<span class="property">token</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="keyword">function</span> (<span class="params">err</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (axios.<span class="title function_">isCancel</span>(err)) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;请求取消&quot;</span>, err.<span class="property">message</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// handle error</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 取消函数。</span></span><br><span class="line">source.<span class="title function_">cancel</span>(<span class="string">&quot;调用cancel方法&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="取消类"><a href="#取消类" class="headerlink" title="取消类"></a>取消类</h2><h3 id="CancelToken"><a href="#CancelToken" class="headerlink" title="CancelToken"></a>CancelToken</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// /lib/cancel/CancelToken.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">CancelToken</span>(<span class="params">executor</span>) &#123;</span><br><span class="line">  <span class="comment">// executor传入的函数，参数是取消函数，调用这个参数可以直接取消请求</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> executor !== <span class="string">&quot;function&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">TypeError</span>(<span class="string">&quot;executor must be a function.&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> resolvePromise;</span><br><span class="line">  <span class="comment">// 实例化一个Promise</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">promise</span> = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> <span class="title function_">promiseExecutor</span>(<span class="params">resolve</span>) &#123;</span><br><span class="line">    resolvePromise = resolve;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> token = <span class="variable language_">this</span>;</span><br><span class="line">  <span class="comment">// 如果执行了取消，那么就执行监听取消的函数</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">promise</span>.<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params">cancel</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!token.<span class="property">_listeners</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> i;</span><br><span class="line">    <span class="keyword">var</span> l = token.<span class="property">_listeners</span>.<span class="property">length</span>;</span><br><span class="line">    <span class="comment">// 循环执行</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; l; i++) &#123;</span><br><span class="line">      token.<span class="property">_listeners</span>[i](cancel);</span><br><span class="line">    &#125;</span><br><span class="line">    token.<span class="property">_listeners</span> = <span class="literal">null</span>;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 这个没有在axios里面看到使用过，猜测应该是之前老axios遗留代码</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">promise</span>.<span class="property">then</span> = <span class="keyword">function</span> (<span class="params">onfulfilled</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> _resolve;</span><br><span class="line">    <span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve</span>) &#123;</span><br><span class="line">      token.<span class="title function_">subscribe</span>(resolve);</span><br><span class="line">      _resolve = resolve;</span><br><span class="line">    &#125;).<span class="title function_">then</span>(onfulfilled);</span><br><span class="line"></span><br><span class="line">    promise.<span class="property">cancel</span> = <span class="keyword">function</span> <span class="title function_">reject</span>(<span class="params"></span>) &#123;</span><br><span class="line">      token.<span class="title function_">unsubscribe</span>(_resolve);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> promise;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">// 执行传入的函数，当source.cancel时，就执行这个回调</span></span><br><span class="line">  <span class="title function_">executor</span>(<span class="keyword">function</span> <span class="title function_">cancel</span>(<span class="params">message</span>) &#123;</span><br><span class="line">    <span class="comment">// 如果已经有reason，那么表示是已经取消请求了</span></span><br><span class="line">    <span class="keyword">if</span> (token.<span class="property">reason</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 把CanceledError实例作为一个reason，并且把message作为reason的message</span></span><br><span class="line">    token.<span class="property">reason</span> = <span class="keyword">new</span> <span class="title class_">CanceledError</span>(message);</span><br><span class="line">    <span class="comment">// 执行this.promise.then()的回调</span></span><br><span class="line">    <span class="title function_">resolvePromise</span>(token.<span class="property">reason</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 判断是否已经取消，因为只有reason有值时，才表示已经取消请求了</span></span><br><span class="line"><span class="comment"> * 如果已经取消请求，那么直接抛出错误，走入catch</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title class_">CancelToken</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">throwIfRequested</span> = <span class="keyword">function</span> <span class="title function_">throwIfRequested</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">reason</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="variable language_">this</span>.<span class="property">reason</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 添加取消监听函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">CancelToken</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">subscribe</span> = <span class="keyword">function</span> <span class="title function_">subscribe</span>(<span class="params">listener</span>) &#123;</span><br><span class="line">  <span class="comment">// 如果已经执行取消，那么就直接执行监听函数</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">reason</span>) &#123;</span><br><span class="line">    <span class="title function_">listener</span>(<span class="variable language_">this</span>.<span class="property">reason</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 将监听函数加入数组中</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">_listeners</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_listeners</span>.<span class="title function_">push</span>(listener);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_listeners</span> = [listener];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 删除监听函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title class_">CancelToken</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">unsubscribe</span> = <span class="keyword">function</span> <span class="title function_">unsubscribe</span>(<span class="params">listener</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">_listeners</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> index = <span class="variable language_">this</span>.<span class="property">_listeners</span>.<span class="title function_">indexOf</span>(listener);</span><br><span class="line">  <span class="keyword">if</span> (index !== -<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_listeners</span>.<span class="title function_">splice</span>(index, <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns an object that contains a new `CancelToken` and a function that, when called,</span></span><br><span class="line"><span class="comment"> * cancels the `CancelToken`.</span></span><br><span class="line"><span class="comment"> * 调用创建取消token的函数，返回一个对象，包含一个取消token和一个取消函数</span></span><br><span class="line"><span class="comment"> * token是返回的函数实例，即可以直接访问函数内部</span></span><br><span class="line"><span class="comment"> * cancel是在CancelToken里面执行executor时，里面包裹的回调函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title class_">CancelToken</span>.<span class="property">source</span> = <span class="keyword">function</span> <span class="title function_">source</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> cancel;</span><br><span class="line">  <span class="comment">// 创建一个实例</span></span><br><span class="line">  <span class="keyword">var</span> token = <span class="keyword">new</span> <span class="title class_">CancelToken</span>(<span class="keyword">function</span> <span class="title function_">executor</span>(<span class="params">c</span>) &#123;</span><br><span class="line">    cancel = c;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// 返回实例和取消调用的函数</span></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">token</span>: token,</span><br><span class="line">    <span class="attr">cancel</span>: cancel,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title class_">CancelToken</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="取消调用流程"><a href="#取消调用流程" class="headerlink" title="取消调用流程"></a>取消调用流程</h2><p>以下是以浏览器的流程为示例</p>
+<ul>
+<li><p><code>dispatchRequest</code>中判断一次此请求是否确认取消</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// /lib/core/dispatchRequest.js</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">throwIfCancellationRequested</span>(<span class="params">config</span>) &#123;</span><br><span class="line">  <span class="comment">// 如果有cancelToken，那么表示这个请求是可被取消的，调用cancelToken的请求取消报错即可结束</span></span><br><span class="line">  <span class="keyword">if</span> (config.<span class="property">cancelToken</span>) &#123;</span><br><span class="line">    config.<span class="property">cancelToken</span>.<span class="title function_">throwIfRequested</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (config.<span class="property">signal</span> &amp;&amp; config.<span class="property">signal</span>.<span class="property">aborted</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">CanceledError</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 xhr 文件中，进行取消监听函数的添加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果配置列表里有cancelToken，那么表示需要走取消监听</span></span><br><span class="line"><span class="comment">// /lib/adapters/xhr</span></span><br><span class="line"><span class="keyword">if</span> (config.<span class="property">cancelToken</span> || config.<span class="property">signal</span>) &#123;</span><br><span class="line">    <span class="comment">// 取消函数的回调</span></span><br><span class="line">    onCanceled = <span class="keyword">function</span>(<span class="params">cancel</span>) &#123;</span><br><span class="line">      <span class="comment">// 如果这个请求已经进行完成了,那么就不走后面的函数</span></span><br><span class="line">      <span class="keyword">if</span> (!request) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 如果这个请求还没有结束或者取消,那么就使请求回调走入catch中</span></span><br><span class="line">      <span class="title function_">reject</span>(!cancel || (cancel &amp;&amp; cancel.<span class="property">type</span>) ? <span class="keyword">new</span> <span class="title class_">CanceledError</span>() : cancel);</span><br><span class="line">      <span class="comment">// 取消请求.调用xhr的取消</span></span><br><span class="line">      request.<span class="title function_">abort</span>();</span><br><span class="line">      <span class="comment">// 表明请求已经结束,防止重复取消</span></span><br><span class="line">      request = <span class="literal">null</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// 如果有cancelToken,那么就添加取消函数</span></span><br><span class="line">    config.<span class="property">cancelToken</span> &amp;&amp; config.<span class="property">cancelToken</span>.<span class="title function_">subscribe</span>(onCanceled);</span><br><span class="line">   <span class="comment">// 这个是针对于fetch的取消处理</span></span><br><span class="line">    <span class="keyword">if</span> (config.<span class="property">signal</span>) &#123;</span><br><span class="line">      config.<span class="property">signal</span>.<span class="property">aborted</span> ? <span class="title function_">onCanceled</span>() : config.<span class="property">signal</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;abort&#x27;</span>, onCanceled);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>onCanceled</code>这个函数的执行是在调用<code>source.cancel()</code>执行的</p>
+</li>
+<li><p>请求结束后,在 xhr 的<code>onloadend</code>&#x2F;<code>onreadystatechange</code>也进行了处理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 请求结束之后的回调,不管是失败还是成功都会执行</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">done</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 如果有cancelToken,那么就取消监听订阅的这个函数</span></span><br><span class="line">  <span class="keyword">if</span> (config.<span class="property">cancelToken</span>) &#123;</span><br><span class="line">    config.<span class="property">cancelToken</span>.<span class="title function_">unsubscribe</span>(onCanceled);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// fetch则是取消监听取消的函数</span></span><br><span class="line">  <span class="keyword">if</span> (config.<span class="property">signal</span>) &#123;</span><br><span class="line">    config.<span class="property">signal</span>.<span class="title function_">removeEventListener</span>(<span class="string">&quot;abort&quot;</span>, onCanceled);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (<span class="string">&quot;onloadend&quot;</span> <span class="keyword">in</span> request) &#123;</span><br><span class="line">  <span class="comment">// Use onloadend if available</span></span><br><span class="line">  request.<span class="property">onloadend</span> = onloadend;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(onloadend);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">onloadend</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 如果请求已经取消,那么直接结束就行</span></span><br><span class="line">  <span class="keyword">if</span> (!request) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> responseHeaders =</span><br><span class="line">    <span class="string">&quot;getAllResponseHeaders&quot;</span> <span class="keyword">in</span> request</span><br><span class="line">      ? <span class="title function_">parseHeaders</span>(request.<span class="title function_">getAllResponseHeaders</span>())</span><br><span class="line">      : <span class="literal">null</span>;</span><br><span class="line">  <span class="keyword">var</span> responseData =</span><br><span class="line">    !responseType || responseType === <span class="string">&quot;text&quot;</span> || responseType === <span class="string">&quot;json&quot;</span></span><br><span class="line">      ? request.<span class="property">responseText</span></span><br><span class="line">      : request.<span class="property">response</span>;</span><br><span class="line">  <span class="keyword">var</span> response = &#123;</span><br><span class="line">    <span class="attr">data</span>: responseData,</span><br><span class="line">    <span class="attr">status</span>: request.<span class="property">status</span>,</span><br><span class="line">    <span class="attr">statusText</span>: request.<span class="property">statusText</span>,</span><br><span class="line">    <span class="attr">headers</span>: responseHeaders,</span><br><span class="line">    <span class="attr">config</span>: config,</span><br><span class="line">    <span class="attr">request</span>: request,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">// 用请求结果去进行判断</span></span><br><span class="line">  <span class="title function_">settle</span>(</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">_resolve</span>(<span class="params">value</span>) &#123;</span><br><span class="line">      <span class="title function_">resolve</span>(value);</span><br><span class="line">      <span class="title function_">done</span>();</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">_reject</span>(<span class="params">err</span>) &#123;</span><br><span class="line">      <span class="title function_">reject</span>(err);</span><br><span class="line">      <span class="title function_">done</span>();</span><br><span class="line">    &#125;,</span><br><span class="line">    response</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// /lib/core/settle.js</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">settle</span>(<span class="params">resolve, reject, response</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> validateStatus = response.<span class="property">config</span>.<span class="property">validateStatus</span>;</span><br><span class="line">  <span class="comment">// 如果请求返回状态是合理的,那么就直接resolve</span></span><br><span class="line">  <span class="keyword">if</span> (</span><br><span class="line">    !response.<span class="property">status</span> ||</span><br><span class="line">    !validateStatus ||</span><br><span class="line">    <span class="title function_">validateStatus</span>(response.<span class="property">status</span>)</span><br><span class="line">  ) &#123;</span><br><span class="line">    <span class="title function_">resolve</span>(response);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="title function_">reject</span>(</span><br><span class="line">      <span class="keyword">new</span> <span class="title class_">AxiosError</span>(</span><br><span class="line">        <span class="string">&quot;Request failed with status code &quot;</span> + response.<span class="property">status</span>,</span><br><span class="line">        [<span class="title class_">AxiosError</span>.<span class="property">ERR_BAD_REQUEST</span>, <span class="title class_">AxiosError</span>.<span class="property">ERR_BAD_RESPONSE</span>][</span><br><span class="line">          <span class="title class_">Math</span>.<span class="title function_">floor</span>(response.<span class="property">status</span> / <span class="number">100</span>) - <span class="number">4</span></span><br><span class="line">        ],</span><br><span class="line">        response.<span class="property">config</span>,</span><br><span class="line">        response.<span class="property">request</span>,</span><br><span class="line">        response</span><br><span class="line">      )</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>请求结束后,在<code>dispatchRequest</code>中,也有相对于取消请求的处理</p>
+<p>其实和开始请求之前的逻辑一样</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="title function_">adapter</span>(config).<span class="title function_">then</span>(<span class="keyword">function</span> <span class="title function_">onAdapterResolution</span>(<span class="params">response</span>) &#123;</span><br><span class="line">  <span class="title function_">throwIfCancellationRequested</span>(config);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>总结: </p>
+<ul>
+<li><p>对于请求开始前和结束后,都是在<code>dispatchRequest</code>文件中调用<code>cancelToken.throwIfRequested()</code>进行请求取消的</p>
+</li>
+<li><p>对于已经开始请求的,分为两个</p>
+<ul>
+<li><p>请求结果还未返回: 调用<code>cancelToken.subscribe()</code>进行请求取消回调的<strong>添加</strong></p>
+</li>
+<li><p>请求结果已经返回: 调用<code>cancelToken.unsubscribe()</code>进行请求取消回调的<strong>删除</strong></p>
+</li>
+<li><p>取消请求回调具体是在外部调用<code>source.cancel</code>进行的,因此会存在请求结果前或者请求结果返回后都存在的情况</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7284417436752265277?searchId=202403261358326BBE4B654AB52795AB71">五分钟！让你彻底搞懂axios的请求取消原理！附源码分析</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA5MjQwMzQyNw==&mid=2650744604&idx=1&sn=51d8d865c9848fd59f7763f5fb9ce789&chksm=88662490bf11ad86061ae76ff71a1177eeddab02c38d046eecd0e1ad25dc16f7591f91e9e3b2&scene=21#wechat_redirect">学习 axios 源码整体架构，打造属于自己的请求库</a></p>
+<p>注:由于这篇文章时间较久,所以里面对于xhr的取消处理是之前的流程,和现在的最新版本不一致</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/AbortController">AbortController</a></p>
+<p>针对于fetch的取消请求处理控制器</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/axios-%E6%BA%90%E7%A0%81/" rel="tag"># axios 源码</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%B8%B2%E6%9F%93/" rel="prev" title="大数据渲染">
+                  <i class="fa fa-angle-left"></i> 大数据渲染
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91axios-%E6%8B%A6%E6%88%AA%E5%99%A8/" rel="next" title="axios拦截器原理">
+                  axios拦截器原理 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

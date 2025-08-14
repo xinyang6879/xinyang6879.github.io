@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="useMemo 和 React.memo 优化组件的区别react 中，如果父组件的状态更新了，那么也会导致子组件也会重新渲染，从头开始渲染一次子组件（若无其他优化手段的情况下 useMemo 和 React.memo 都可以用于缓存组件，当父组件的状态变化时，如果不涉及到其子组件对应条件修改时，对应的子组件是会重新跳过渲染的 React.memo 缓存的是组件渲染结果，useMemo 缓存的是计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录">
+<meta property="og:url" content="http://example.com/2025/08/14/React/%E3%80%90React%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="useMemo 和 React.memo 优化组件的区别react 中，如果父组件的状态更新了，那么也会导致子组件也会重新渲染，从头开始渲染一次子组件（若无其他优化手段的情况下 useMemo 和 React.memo 都可以用于缓存组件，当父组件的状态变化时，如果不涉及到其子组件对应条件修改时，对应的子组件是会重新跳过渲染的 React.memo 缓存的是组件渲染结果，useMemo 缓存的是计">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T03:18:06.419Z">
+<meta property="article:modified_time" content="2025-07-25T08:31:30.914Z">
+<meta property="article:author" content="yangxin">
+<meta property="article:tag" content="react">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/React/%E3%80%90React%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/React/%E3%80%90React%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/","path":"2025/08/14/React/【React】记录小点/","title":"记录"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>记录 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#useMemo-%E5%92%8C-React-memo-%E4%BC%98%E5%8C%96%E7%BB%84%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">useMemo 和 React.memo 优化组件的区别</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/React/%E3%80%90React%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="记录 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          记录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-07-25 16:31:30" itemprop="dateModified" datetime="2025-07-25T16:31:30+08:00">2025-07-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/react/" itemprop="url" rel="index"><span itemprop="name">react</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="useMemo-和-React-memo-优化组件的区别"><a href="#useMemo-和-React-memo-优化组件的区别" class="headerlink" title="useMemo 和 React.memo 优化组件的区别"></a>useMemo 和 React.memo 优化组件的区别</h2><p>react 中，如果父组件的状态更新了，那么也会导致子组件也会重新渲染，从头开始渲染一次子组件（若无其他优化手段的情况下</p>
+<p>useMemo 和 React.memo 都可以用于缓存组件，当父组件的状态变化时，如果不涉及到其子组件对应条件修改时，对应的子组件是会重新跳过渲染的</p>
+<p>React.memo 缓存的是组件渲染结果，useMemo 缓存的是计算结果。</p>
+<ul>
+<li><p>React.memo</p>
+<p>包装组件，在 props 未变化时跳过重新渲染</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">MemoizedComponent</span> = <span class="title class_">React</span>.<span class="title function_">memo</span>(</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">MyComponent</span>(<span class="params">props</span>) &#123;</span><br><span class="line">    <span class="comment">/* 使用 props 渲染 */</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">/* 可选的自定义比较函数 */</span></span><br><span class="line">  <span class="function">(<span class="params">prevProps, nextProps</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 返回 true 表示 props 相等（跳过渲染）</span></span><br><span class="line">    <span class="comment">// 返回 false 表示 props 不同（需要渲染）</span></span><br><span class="line">    <span class="keyword">return</span> prevProps.<span class="property">value</span> === nextProps.<span class="property">value</span>;</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>useMemo</p>
+<p>缓存计算结果，只有当依赖项变化时才重新计算</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> memoizedValue = <span class="title function_">useMemo</span>(</span><br><span class="line">  <span class="function">() =&gt;</span> <span class="language-xml"><span class="tag">&lt;<span class="name">Text</span>&gt;</span>&#123;a&#125;<span class="tag">&lt;/<span class="name">Text</span>&gt;</span></span>,</span><br><span class="line">  [a, b] <span class="comment">// 依赖项数组</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
+<li><p>对比</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>React.memo</th>
+<th>useMemo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>本质</td>
+<td>缓存 JSX 元素</td>
+<td>包装组件</td>
+</tr>
+<tr>
+<td>类型</td>
+<td>高阶组件 (HOC)</td>
+<td>React Hook</td>
+</tr>
+<tr>
+<td>作用对象</td>
+<td>整个组件</td>
+<td>单个值&#x2F;计算结果</td>
+</tr>
+<tr>
+<td>优化级别</td>
+<td>父组件内部优化</td>
+<td>子组件自身优化</td>
+</tr>
+<tr>
+<td>主要用途</td>
+<td>防止不必要的组件重新渲染</td>
+<td>避免昂贵的重复计算</td>
+</tr>
+<tr>
+<td>触发条件</td>
+<td>当 props 改变时</td>
+<td>当依赖项改变时</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>记忆化组件</td>
+<td>记忆化值</td>
+</tr>
+<tr>
+<td>使用位置</td>
+<td>组件定义处</td>
+<td>组件内部</td>
+</tr>
+<tr>
+<td>优化级别</td>
+<td>组件级别</td>
+<td>计算级别</td>
+</tr>
+<tr>
+<td>重新执行是否状态重置</td>
+<td>❌（不会导致状态重置</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>影响范围</td>
+<td>仅影响当前使用位置</td>
+<td>影响所有使用该组件的地方</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>场景推荐</p>
+<ul>
+<li>useMemo<ul>
+<li>避免大规模组件树重复渲染</li>
+<li>保持组件引用稳定</li>
+<li>条件渲染优化</li>
+</ul>
+</li>
+<li>React.memo<ul>
+<li>纯展示组件优化</li>
+<li>防止props未变的重新渲染</li>
+<li>自定义比较逻辑</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐方式</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>纯展示组件</td>
+<td>React.memo</td>
+<td>保持状态，响应props变化</td>
+</tr>
+<tr>
+<td>大型列表项渲染</td>
+<td>useMemo(() &#x3D;&gt; &lt;&gt;)</td>
+<td>避免重复创建大量元素</td>
+</tr>
+<tr>
+<td>需要保持内部状态的组件</td>
+<td>React.memo</td>
+<td>防止状态意外重置</td>
+</tr>
+<tr>
+<td>需要稳定引用的组件（如动画）</td>
+<td>useMemo(() &#x3D;&gt; &lt;&gt;)</td>
+<td>确保组件引用不变</td>
+</tr>
+<tr>
+<td>条件渲染的昂贵组件</td>
+<td>useMemo(() &#x3D;&gt; &lt;&gt;)</td>
+<td>避免重复挂载&#x2F;卸载开销</td>
+</tr>
+<tr>
+<td>需要深度比较props的组件</td>
+<td>React.memo + 比较函数</td>
+<td>自定义比较逻辑更灵活</td>
+</tr>
+</tbody></table>
+<p>  优化组件的创建过程时 → 使用 useMemo(() &#x3D;&gt; <Component />)</p>
+<p>  想优化组件的渲染行为时 → 使用 React.memo(Component)</p>
+</li>
+<li><p>useMemo会导致状态重置</p>
+</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// React 内部伪代码</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">reconcileChildren</span>(<span class="params">parentFiber</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (parentFiber.<span class="property">alternate</span> === <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="comment">// 首次渲染：挂载新组件</span></span><br><span class="line">    <span class="keyword">const</span> newFiber = <span class="title function_">createFiberFromElement</span>(element);</span><br><span class="line">    parentFiber.<span class="property">child</span> = newFiber;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 更新：比较新旧元素</span></span><br><span class="line">    <span class="keyword">const</span> oldFiber = parentFiber.<span class="property">alternate</span>.<span class="property">child</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (oldFiber.<span class="property">elementType</span> === element.<span class="property">type</span>) &#123;</span><br><span class="line">      <span class="comment">// 类型相同：复用 Fiber（保持状态）</span></span><br><span class="line">      <span class="title function_">reuseFiber</span>(oldFiber, element);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 类型不同：创建新 Fiber（重置状态）</span></span><br><span class="line">      <span class="keyword">const</span> newFiber = <span class="title function_">createFiberFromElement</span>(element);</span><br><span class="line">      parentFiber.<span class="property">child</span> = newFiber;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当依赖项变化时，返回的是新 React 元素</li>
+<li>React 比较新旧元素时发现 element.type 相同但 element !&#x3D;&#x3D; oldFiber.element</li>
+<li>React 将其视为新组件实例，创建新 Fiber 节点 → 状态重置</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/react/" rel="tag"># react</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/React/%E3%80%90React%E3%80%91hooks/" rel="prev" title="hooks">
+                  <i class="fa fa-angle-left"></i> hooks
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/Typescript/%E3%80%90TS%E3%80%91%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95/" rel="next" title="【TS】内置方法">
+                  【TS】内置方法 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

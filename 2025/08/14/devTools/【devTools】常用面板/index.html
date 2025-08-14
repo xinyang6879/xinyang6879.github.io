@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="【devTools】常用面板Elements面板将元素存入变量 右击  选择store as global variable  通过$0、$1…获取对应的元素    console面板自动合并相似信息Group similar message in console，浏览器默认开启的  Hide network隐藏网络的错误提示信息 preserve log页面跳转时保留console信息 show">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【devTools】常用面板">
+<meta property="og:url" content="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91%E5%B8%B8%E7%94%A8%E9%9D%A2%E6%9D%BF/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="【devTools】常用面板Elements面板将元素存入变量 右击  选择store as global variable  通过$0、$1…获取对应的元素    console面板自动合并相似信息Group similar message in console，浏览器默认开启的  Hide network隐藏网络的错误提示信息 preserve log页面跳转时保留console信息 show">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVIrHH.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVoeqe.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVoGM8.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVosMT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVofiR.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVo4Rx.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVooQK.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVXADP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVXrb6.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVXR8H.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVjISJ.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVj7O1.png">
+<meta property="article:published_time" content="2025-08-14T03:18:06.214Z">
+<meta property="article:modified_time" content="2025-03-06T09:08:26.519Z">
+<meta property="article:author" content="yangxin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2023/06/11/pCVIrHH.png">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91%E5%B8%B8%E7%94%A8%E9%9D%A2%E6%9D%BF/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91%E5%B8%B8%E7%94%A8%E9%9D%A2%E6%9D%BF/","path":"2025/08/14/devTools/【devTools】常用面板/","title":"【devTools】常用面板"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【devTools】常用面板 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%90devTools%E3%80%91%E5%B8%B8%E7%94%A8%E9%9D%A2%E6%9D%BF"><span class="nav-number">1.</span> <span class="nav-text">【devTools】常用面板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Elements%E9%9D%A2%E6%9D%BF"><span class="nav-number">1.1.</span> <span class="nav-text">Elements面板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E5%85%83%E7%B4%A0%E5%AD%98%E5%85%A5%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.1.</span> <span class="nav-text">将元素存入变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#console%E9%9D%A2%E6%9D%BF"><span class="nav-number">1.2.</span> <span class="nav-text">console面板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%90%88%E5%B9%B6%E7%9B%B8%E4%BC%BC%E4%BF%A1%E6%81%AF"><span class="nav-number">1.2.1.</span> <span class="nav-text">自动合并相似信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hide-network"><span class="nav-number">1.2.2.</span> <span class="nav-text">Hide network</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#preserve-log"><span class="nav-number">1.2.3.</span> <span class="nav-text">preserve log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#show-timestamps"><span class="nav-number">1.2.4.</span> <span class="nav-text">show timestamps</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.2.5.</span> <span class="nav-text">$_</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%92%8C"><span class="nav-number">1.2.6.</span> <span class="nav-text">$和$$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x"><span class="nav-number">1.2.7.</span> <span class="nav-text">$x</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#debug"><span class="nav-number">1.2.8.</span> <span class="nav-text">debug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#monitor"><span class="nav-number">1.2.9.</span> <span class="nav-text">monitor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#monitroEvents"><span class="nav-number">1.2.10.</span> <span class="nav-text">monitroEvents</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getEventListeners"><span class="nav-number">1.2.11.</span> <span class="nav-text">getEventListeners</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#queryObjects"><span class="nav-number">1.2.12.</span> <span class="nav-text">queryObjects</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#source%E9%9D%A2%E6%9D%BF"><span class="nav-number">1.3.</span> <span class="nav-text">source面板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FileSystem"><span class="nav-number">1.3.1.</span> <span class="nav-text">FileSystem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#overrides"><span class="nav-number">1.3.2.</span> <span class="nav-text">overrides</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%AD%E7%82%B9"><span class="nav-number">1.3.3.</span> <span class="nav-text">断点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E6%96%AD%E7%82%B9"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">条件断点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%AD%E7%82%B9%E6%89%93%E5%8D%B0%E4%BF%A1%E6%81%AF%EF%BC%8CLogpoint"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">断点打印信息，Logpoint</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dom%E6%96%AD%E7%82%B9"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">dom断点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E6%96%AD%E7%82%B9"><span class="nav-number">1.3.3.4.</span> <span class="nav-text">请求断点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E5%99%A8%E6%96%AD%E7%82%B9"><span class="nav-number">1.3.3.5.</span> <span class="nav-text">事件监听器断点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%BD%E7%95%A5%E8%BF%9B%E5%85%A5%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.3.6.</span> <span class="nav-text">忽略进入文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NetWork"><span class="nav-number">1.4.</span> <span class="nav-text">NetWork</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%8C%BA%E5%9F%9F"><span class="nav-number">1.4.1.</span> <span class="nav-text">设置区域</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91%E5%B8%B8%E7%94%A8%E9%9D%A2%E6%9D%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【devTools】常用面板 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【devTools】常用面板
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">浏览器</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="【devTools】常用面板"><a href="#【devTools】常用面板" class="headerlink" title="【devTools】常用面板"></a>【devTools】常用面板</h1><h2 id="Elements面板"><a href="#Elements面板" class="headerlink" title="Elements面板"></a>Elements面板</h2><h3 id="将元素存入变量"><a href="#将元素存入变量" class="headerlink" title="将元素存入变量"></a>将元素存入变量</h3><ul>
+<li><p>右击</p>
+</li>
+<li><p>选择store as global variable</p>
+</li>
+<li><p>通过$0、$1…获取对应的元素</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVIrHH"><img src="https://s1.ax1x.com/2023/06/11/pCVIrHH.png" alt="pCVIrHH.png"></a></p>
+<h2 id="console面板"><a href="#console面板" class="headerlink" title="console面板"></a>console面板</h2><h3 id="自动合并相似信息"><a href="#自动合并相似信息" class="headerlink" title="自动合并相似信息"></a>自动合并相似信息</h3><p>Group similar message in console，浏览器默认开启的</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVoeqe"><img src="https://s1.ax1x.com/2023/06/11/pCVoeqe.png" alt="pCVoeqe.png"></a></p>
+<h3 id="Hide-network"><a href="#Hide-network" class="headerlink" title="Hide network"></a>Hide network</h3><p>隐藏网络的错误提示信息</p>
+<h3 id="preserve-log"><a href="#preserve-log" class="headerlink" title="preserve log"></a>preserve log</h3><p>页面跳转时保留console信息</p>
+<h3 id="show-timestamps"><a href="#show-timestamps" class="headerlink" title="show timestamps"></a>show timestamps</h3><p>打印时，会默认输入每一行信息的时间</p>
+<p>打开：devtools右上角设置按钮，perferces下show timestamps</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVoGM8"><img src="https://s1.ax1x.com/2023/06/11/pCVoGM8.png" alt="pCVoGM8.png"></a></p>
+<h3 id=""><a href="#" class="headerlink" title="$_"></a>$_</h3><p>作用：获取最近一次的执行结果</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVosMT"><img src="https://s1.ax1x.com/2023/06/11/pCVosMT.png" alt="pCVosMT.png"></a></p>
+<h3 id="和"><a href="#和" class="headerlink" title="$和$$"></a>$和$$</h3><p><code>$</code>：document.querySelector</p>
+<p><code>$$</code>: document.querySelectorAll</p>
+<h3 id="x"><a href="#x" class="headerlink" title="$x"></a>$x</h3><p>可以使用xpath选择元素。</p>
+<p>eg：$x(“&#x2F;html&#x2F;body&#x2F;div”)</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVofiR"><img src="https://s1.ax1x.com/2023/06/11/pCVofiR.png" alt="pCVofiR.png"></a></p>
+<h3 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h3><p>执行到该函数时就会触发断点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">fn</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">debug</span>(fn)</span><br><span class="line"><span class="title function_">fn</span>()</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVo4Rx"><img src="https://s1.ax1x.com/2023/06/11/pCVo4Rx.png" alt="pCVo4Rx.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVooQK"><img src="https://s1.ax1x.com/2023/06/11/pCVooQK.png" alt="pCVooQK.png"></a></p>
+<h3 id="monitor"><a href="#monitor" class="headerlink" title="monitor"></a>monitor</h3><p>函数执行时打印参数值，但无法打印箭头函数的参数</p>
+<p>执行unmonitor删除效果</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fn3</span>(<span class="params">a, b</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">monitor</span>(fn3)</span><br><span class="line"><span class="title function_">fn3</span>(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line"><span class="comment">//输出：VM3370:1 function fn3 called with arguments: 1, 2</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="monitroEvents"><a href="#monitroEvents" class="headerlink" title="monitroEvents"></a>monitroEvents</h3><p>监听并打印元素触发的事件，可以用数组一次性监听多个事件。</p>
+<p>执行unmonitorEvents取消监听</p>
+<h3 id="getEventListeners"><a href="#getEventListeners" class="headerlink" title="getEventListeners"></a>getEventListeners</h3><p>获取注册在元素上的所有事件监听器</p>
+<h3 id="queryObjects"><a href="#queryObjects" class="headerlink" title="queryObjects"></a>queryObjects</h3><p>获取所有原型链中包含该原型的对象</p>
+<h2 id="source面板"><a href="#source面板" class="headerlink" title="source面板"></a>source面板</h2><h3 id="FileSystem"><a href="#FileSystem" class="headerlink" title="FileSystem"></a>FileSystem</h3><p>可以直接与本地的文件连接，在devtools修改文件之后，会将本地的文件内容也进行修改</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVXADP"><img src="https://s1.ax1x.com/2023/06/11/pCVXADP.png" alt="pCVXADP.png"></a></p>
+<h3 id="overrides"><a href="#overrides" class="headerlink" title="overrides"></a>overrides</h3><p>可以以本地的文件取代页面中载入的资源</p>
+<h3 id="断点"><a href="#断点" class="headerlink" title="断点"></a>断点</h3><h4 id="条件断点"><a href="#条件断点" class="headerlink" title="条件断点"></a>条件断点</h4><p>在source代码块需要设置时，在对应的行号右键，选择Add Condition Break Point，写上具体的条件</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVXrb6"><img src="https://s1.ax1x.com/2023/06/11/pCVXrb6.png" alt="pCVXrb6.png"></a></p>
+<h4 id="断点打印信息，Logpoint"><a href="#断点打印信息，Logpoint" class="headerlink" title="断点打印信息，Logpoint"></a>断点打印信息，Logpoint</h4><p>在执行时经过该程序代码时打印信息</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVXR8H"><img src="https://s1.ax1x.com/2023/06/11/pCVXR8H.png" alt="pCVXR8H.png"></a></p>
+<h4 id="dom断点"><a href="#dom断点" class="headerlink" title="dom断点"></a>dom断点</h4><p>在element tab，右键元素，展开break on，有三种断点形式：</p>
+<ul>
+<li><p>subtree modifications ：元素内发生变化时暂停，如添加、删除、修改子节点</p>
+</li>
+<li><p>attribute modifications ：添加、删除、修改元素本身的属性时暂停</p>
+</li>
+<li><p>node removal：元素被删除时暂停，同时删除dom断点</p>
+</li>
+</ul>
+<h4 id="请求断点"><a href="#请求断点" class="headerlink" title="请求断点"></a>请求断点</h4><p>在debugger时，点击在XHR&#x2F;fetch Breapoints列表右上角的+按钮，输入data，回车保存。</p>
+<h4 id="事件监听器断点"><a href="#事件监听器断点" class="headerlink" title="事件监听器断点"></a>事件监听器断点</h4><p>在debugger时，在Event Listener BreakPoint列表的Control下勾选对应的事件，然后手动触发对应的事件</p>
+<h4 id="忽略进入文件"><a href="#忽略进入文件" class="headerlink" title="忽略进入文件"></a>忽略进入文件</h4><p>在对应的文件代码内容区域，右键选择Add script to ignore list，添加之后，这个文件就不会在调试时进入了</p>
+<h2 id="NetWork"><a href="#NetWork" class="headerlink" title="NetWork"></a>NetWork</h2><h3 id="设置区域"><a href="#设置区域" class="headerlink" title="设置区域"></a>设置区域</h3><p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVjISJ"><img src="https://s1.ax1x.com/2023/06/11/pCVjISJ.png" alt="pCVjISJ.png"></a></p>
+<ul>
+<li><p>Use large request rows</p>
+<p>使用宽版的流量记录列表来显示</p>
+</li>
+<li><p>Group by frame</p>
+<p>将来自相同iframe的请求聚焦在一起</p>
+</li>
+<li><p>show overview</p>
+<p>是否显示时间轴</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVj7O1"><img src="https://s1.ax1x.com/2023/06/11/pCVj7O1.png" alt="pCVj7O1.png"></a></p>
+<ul>
+<li><p>Capture screenslots</p>
+<p>是否截图</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/devTools/%E3%80%90devTools%E3%80%91performance/" rel="prev" title="【devTools】performance">
+                  <i class="fa fa-angle-left"></i> 【devTools】performance
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/HTML/%E3%80%90HTML%E3%80%91Shadow%20DOM/" rel="next" title="【HTML】Shadow DOM">
+                  【HTML】Shadow DOM <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="【webAsb】- Emscripten环境搭建依赖环境 python  git   这两项环境是必要的，否则无法进行安装 安装下载项目1git clone https:&#x2F;&#x2F;github.com&#x2F;juj&#x2F;emsdk.git 下载emscripten项目 安装依赖包等1234cd emsdk &#x2F;&#x2F; 进入项目目录中emsdk update &#x2F;&#x2F; 安装各种工具emsdk install latest &#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【wasb】环境搭建">
+<meta property="og:url" content="http://example.com/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="【webAsb】- Emscripten环境搭建依赖环境 python  git   这两项环境是必要的，否则无法进行安装 安装下载项目1git clone https:&#x2F;&#x2F;github.com&#x2F;juj&#x2F;emsdk.git 下载emscripten项目 安装依赖包等1234cd emsdk &#x2F;&#x2F; 进入项目目录中emsdk update &#x2F;&#x2F; 安装各种工具emsdk install latest &#x2F;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s1.ax1x.com/2023/09/09/pP6oCWT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/09/09/pP6xUSA.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/09/09/pP6zKhQ.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/09/09/pP6z1cn.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/09/09/pP6zJBV.png">
+<meta property="og:image" content="https://z1.ax1x.com/2023/09/21/pPIgD91.png">
+<meta property="og:image" content="https://z1.ax1x.com/2023/09/21/pPIfE5Q.png">
+<meta property="article:published_time" content="2025-08-14T03:18:33.963Z">
+<meta property="article:modified_time" content="2025-03-06T09:08:26.521Z">
+<meta property="article:author" content="yangxin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2023/09/09/pP6oCWT.png">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/","path":"2025/08/14/【wasb】环境搭建/","title":"【wasb】环境搭建"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【wasb】环境搭建 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%90webAsb%E3%80%91-Emscripten%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">1.</span> <span class="nav-text">【webAsb】- Emscripten环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.</span> <span class="nav-text">依赖环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.2.1.</span> <span class="nav-text">下载项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E5%8C%85%E7%AD%89"><span class="nav-number">1.2.2.</span> <span class="nav-text">安装依赖包等</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.2.3.</span> <span class="nav-text">配置环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%9C%AA%E9%85%8D%E7%BD%AE%E6%88%90%E5%8A%9F"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">环境未配置成功</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEc-%E7%8E%AF%E5%A2%83"><span class="nav-number">1.3.</span> <span class="nav-text">配置c++环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEc-c"><span class="nav-number">1.3.1.</span> <span class="nav-text">安装配置c&#x2F;c++</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">1.3.2.</span> <span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95-1"><span class="nav-number">1.4.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E6%B5%8B%E8%AF%95%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.4.1.</span> <span class="nav-text">编写测试程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90js%E4%BB%A3%E7%A0%81"><span class="nav-number">1.4.2.</span> <span class="nav-text">生成js代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.4.3.</span> <span class="nav-text">搭建本地服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AA%8C%E6%94%B6"><span class="nav-number">1.4.4.</span> <span class="nav-text">验收</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E9%93%BE"><span class="nav-number">1.5.</span> <span class="nav-text">参链</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【wasb】环境搭建 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【wasb】环境搭建
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:33" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:33+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/webAssembly/" itemprop="url" rel="index"><span itemprop="name">webAssembly</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="【webAsb】-Emscripten环境搭建"><a href="#【webAsb】-Emscripten环境搭建" class="headerlink" title="【webAsb】- Emscripten环境搭建"></a>【webAsb】- Emscripten环境搭建</h1><h2 id="依赖环境"><a href="#依赖环境" class="headerlink" title="依赖环境"></a>依赖环境</h2><ul>
+<li><p>python</p>
+</li>
+<li><p>git</p>
+</li>
+</ul>
+<p>这两项环境是必要的，否则无法进行安装</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="下载项目"><a href="#下载项目" class="headerlink" title="下载项目"></a>下载项目</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone <span class="attr">https</span>:<span class="comment">//github.com/juj/emsdk.git</span></span><br></pre></td></tr></table></figure>
+<p>下载emscripten项目</p>
+<h3 id="安装依赖包等"><a href="#安装依赖包等" class="headerlink" title="安装依赖包等"></a>安装依赖包等</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd emsdk <span class="comment">// 进入项目目录中</span></span><br><span class="line">emsdk update <span class="comment">// 安装各种工具</span></span><br><span class="line">emsdk install latest <span class="comment">//下载各种包，时间比较长</span></span><br><span class="line">emsdk activate latest <span class="comment">//生成 ~/.emscripten 文件，激活配置</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pP6oCWT"><img src="https://s1.ax1x.com/2023/09/09/pP6oCWT.png" alt="pP6oCWT.png"></a></p>
+<h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><p>可以先执行<code>emsdk_env</code>脚本，这个脚本默认会写入环境变量，但是也会有不成功的情况。</p>
+<p>在非emsdk目录下执行<code>emcc --version</code>，判断是否报错，如果报错，就证明环境并未配置成功；如果未报错，那么环境已经配置完成啦</p>
+<h4 id="环境未配置成功"><a href="#环境未配置成功" class="headerlink" title="环境未配置成功"></a>环境未配置成功</h4><ul>
+<li><p>执行 <code>emcmdprompt.bat</code>命令</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pP6xUSA"><img src="https://s1.ax1x.com/2023/09/09/pP6xUSA.png" alt="pP6xUSA.png"></a></p>
+</li>
+<li><p>将带有<code>PATH +=</code>的路径写入环境变量的Path中</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pP6zKhQ"><img src="https://s1.ax1x.com/2023/09/09/pP6zKhQ.png" alt="pP6zKhQ.png"></a></p>
+</li>
+<li><p>将下面带有键值对的写入系统变量中</p>
+<p>记住不能有空格，否则会执行不成功</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pP6z1cn"><img src="https://s1.ax1x.com/2023/09/09/pP6z1cn.png" alt="pP6z1cn.png"></a></p>
+</li>
+<li><p>在非<code>emsdk</code>目录下执行<code>emcc --version</code></p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pP6zJBV"><img src="https://s1.ax1x.com/2023/09/09/pP6zJBV.png" alt="pP6zJBV.png"></a></p>
+<p>环境配置成功</p>
+</li>
+</ul>
+<h2 id="配置c-环境"><a href="#配置c-环境" class="headerlink" title="配置c++环境"></a>配置c++环境</h2><h3 id="安装配置c-c"><a href="#安装配置c-c" class="headerlink" title="安装配置c&#x2F;c++"></a>安装配置c&#x2F;c++</h3><ul>
+<li><p>安装</p>
+<p>安装c&#x2F;c++编译器：<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/mingw-w64/">https://sourceforge.net/projects/mingw-w64/</a></p>
+</li>
+<li><p>配置</p>
+<p>在环境变量的Path中，把解压的mingw的bin目录加入进去</p>
+</li>
+</ul>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>在cmd输入<code>gcc -v</code>，没有报错即可</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pPIgD91"><img src="https://z1.ax1x.com/2023/09/21/pPIgD91.png" alt="pPIgD91.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43180456/article/details/126374156">参链</a></p>
+<h2 id="测试-1"><a href="#测试-1" class="headerlink" title="测试"></a>测试</h2><h3 id="编写测试程序"><a href="#编写测试程序" class="headerlink" title="编写测试程序"></a>编写测试程序</h3><p>建立一个cpp文件，写入c的代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Hello, world!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="生成js代码"><a href="#生成js代码" class="headerlink" title="生成js代码"></a>生成js代码</h3><blockquote>
+<p><code>emcc test.cpp -o test.html</code></p>
+</blockquote>
+<p>会生成<code>html</code>，<code>js</code>和<code>wasm</code>文件，html默认引入js文件，js的作用是引入wasm文件</p>
+<ul>
+<li><p><code>-s</code> 表明编译到 Wasm，否则编译到 Asm.js（Wasm 的前身）， 最初 emscripten 是用于编译到 Asm.js 的。</p>
+</li>
+<li><p><code>SIDE_MODULE</code> 表明编译为副模块。有副模块就有主模块，简单理解副模块会去除 C 标准库函数，因为副模块会在运行时被链接到一个主模块，而主模块有C标准库函数。SIDE_MODULE的值可选 1 或者 2，前者会自动导出代码里所有的函数，而后者需要手动声明。</p>
+</li>
+<li><p><code>-o</code> xxxx 导出选项，导出的文件可选 .html、.js、.wasm，区别在于前面两者会帮你把胶水代码写好 ，而 .wasm 则需要在 JS 自己编写胶水代码了，但是前面两者代码冗余，比如编译为 JS 文件时，JS 文件会包含两千多行代码，不过这是学习 Wasm 的现成实例。</p>
+</li>
+</ul>
+<h3 id="搭建本地服务器"><a href="#搭建本地服务器" class="headerlink" title="搭建本地服务器"></a>搭建本地服务器</h3><p>在代码路径中，搭建本地服务。在浏览器访问本地的文件会报错</p>
+<ul>
+<li><p><code>pnpm init</code></p>
+<p>创建package.json文件</p>
+</li>
+<li><p><code>pnpm i http-server</code></p>
+<p>安装<code>http-server</code></p>
+</li>
+<li><p><code>http-server -o</code></p>
+<p>起本地服务，在浏览器打开html文件</p>
+</li>
+</ul>
+<h3 id="验收"><a href="#验收" class="headerlink" title="验收"></a>验收</h3><p>用<code>http-server</code>起了本地服务后，在浏览器访问对应的域名加上生成的html文件，正常运行项目</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pPIfE5Q"><img src="https://z1.ax1x.com/2023/09/21/pPIfE5Q.png" alt="pPIfE5Q.png"></a></p>
+<h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><p><a target="_blank" rel="noopener" href="http://www.taodudu.cc/news/show-5750307.html?action=onClick">Emscripten编译器安装教程，亲测成功编译出第一个WebAssembly</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E3%80%90RN%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="prev" title="【RN】环境搭建">
+                  <i class="fa fa-angle-left"></i> 【RN】环境搭建
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E3%80%90%E6%89%8B%E5%86%99%E3%80%91call%E3%80%81apply%E3%80%81bind/" rel="next" title="【手写】call、apply、bind">
+                  【手写】call、apply、bind <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

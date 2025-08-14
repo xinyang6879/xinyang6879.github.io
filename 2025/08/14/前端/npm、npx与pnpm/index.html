@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="npm、npx 与 pnpmnpmnpm i与npm update npm i：先检查 node_modules 模块是否有对应的指定模块，如果存在，就不再进行安装，即使远程有新版本也不会重新获取 npm i在安装包的依赖包时，包的依赖包会安装符合规则的最高版本  npm 都要强制重新安装，可以使用-f 或–force 参数。   npm update：每次安装都会先请求远程仓库的最新版本，然后查">
+<meta property="og:type" content="article">
+<meta property="og:title" content="npm、npx与pnpm">
+<meta property="og:url" content="http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/npm%E3%80%81npx%E4%B8%8Epnpm/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="npm、npx 与 pnpmnpmnpm i与npm update npm i：先检查 node_modules 模块是否有对应的指定模块，如果存在，就不再进行安装，即使远程有新版本也不会重新获取 npm i在安装包的依赖包时，包的依赖包会安装符合规则的最高版本  npm 都要强制重新安装，可以使用-f 或–force 参数。   npm update：每次安装都会先请求远程仓库的最新版本，然后查">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pnpm.io/zh/assets/images/node-modules-structure-8ab301ddaed3b7530858b233f5b3be57.jpg">
+<meta property="article:published_time" content="2025-08-14T03:18:06.870Z">
+<meta property="article:modified_time" content="2025-07-04T07:11:00.344Z">
+<meta property="article:author" content="yangxin">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pnpm.io/zh/assets/images/node-modules-structure-8ab301ddaed3b7530858b233f5b3be57.jpg">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/npm%E3%80%81npx%E4%B8%8Epnpm/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/npm%E3%80%81npx%E4%B8%8Epnpm/","path":"2025/08/14/前端/npm、npx与pnpm/","title":"npm、npx与pnpm"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>npm、npx与pnpm | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#npm%E3%80%81npx-%E4%B8%8E-pnpm"><span class="nav-number">1.</span> <span class="nav-text">npm、npx 与 pnpm</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#npm"><span class="nav-number">1.1.</span> <span class="nav-text">npm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-i%E4%B8%8Enpm-update"><span class="nav-number">1.1.1.</span> <span class="nav-text">npm i与npm update</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E9%9D%9E%E5%8F%91%E5%B8%83%E7%9A%84%E5%8C%85"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">安装非发布的包</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-%E7%BC%93%E5%AD%98"><span class="nav-number">2.0.1.</span> <span class="nav-text">npm 缓存</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-i%E6%B5%81%E7%A8%8B"><span class="nav-number">3.0.1.</span> <span class="nav-text">npm i流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#npx"><span class="nav-number">3.1.</span> <span class="nav-text">npx</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E-npm-%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="nav-number">3.1.1.</span> <span class="nav-text">与 npm 的不同</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pnpm"><span class="nav-number">3.2.</span> <span class="nav-text">pnpm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AC%E8%BF%9E%E6%8E%A5%E4%B8%8E%E7%AC%A6%E5%8F%B7%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.2.1.</span> <span class="nav-text">硬连接与符号连接</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pnpm-1"><span class="nav-number">4.0.1.</span> <span class="nav-text">pnpm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%93%E5%AD%98"><span class="nav-number">4.0.1.1.</span> <span class="nav-text">缓存</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E4%BE%9D%E8%B5%96"><span class="nav-number">5.0.0.1.</span> <span class="nav-text">模块依赖</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#npm-%E4%B8%8E-pnpm-%E5%B7%AE%E5%88%AB"><span class="nav-number">6.0.0.1.</span> <span class="nav-text">npm 与 pnpm 差别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#npm%E7%BC%BA%E7%82%B9"><span class="nav-number">6.1.</span> <span class="nav-text">npm缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%A4%8D%E5%AE%89%E8%A3%85"><span class="nav-number">6.1.1.</span> <span class="nav-text">重复安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%BD%E7%81%B5%E4%BE%9D%E8%B5%96"><span class="nav-number">6.1.2.</span> <span class="nav-text">幽灵依赖</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E9%93%BE"><span class="nav-number">6.2.</span> <span class="nav-text">参链</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/npm%E3%80%81npx%E4%B8%8Epnpm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="npm、npx与pnpm | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          npm、npx与pnpm
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-07-04 15:11:00" itemprop="dateModified" datetime="2025-07-04T15:11:00+08:00">2025-07-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="npm、npx-与-pnpm"><a href="#npm、npx-与-pnpm" class="headerlink" title="npm、npx 与 pnpm"></a>npm、npx 与 pnpm</h1><h2 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h2><h3 id="npm-i与npm-update"><a href="#npm-i与npm-update" class="headerlink" title="npm i与npm update"></a><code>npm i</code>与<code>npm update</code></h3><ul>
+<li><p><code>npm i</code>：先检查 node_modules 模块是否有对应的指定模块，如果存在，就不再进行安装，即使远程有新版本也不会重新获取</p>
+<p>npm i在安装包的依赖包时，包的依赖包会安装符合规则的<font color=red>最高</font>版本</p>
+<blockquote>
+<p>npm 都要强制重新安装，可以使用-f 或–force 参数。</p>
+</blockquote>
+</li>
+<li><p><code>npm update</code>：每次安装都会先请求远程仓库的最新版本，然后查询本地版本。</p>
+<blockquote>
+<p>如果本地版本不存在或者远程版本较新，那么更新版本</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="安装非发布的包"><a href="#安装非发布的包" class="headerlink" title="安装非发布的包"></a>安装非发布的包</h4><p><a target="_blank" rel="noopener" href="https://docs.npmjs.com/about-packages-and-modules/">官网</a>表明了如下几个情况可以直接使用</p>
+<ul>
+<li>a:包含一个由 package.json 文件描述的程序的文件夹。</li>
+<li>b:包含（a）的 gzipped tarball 。</li>
+<li>c:解析为（b）的 URL。</li>
+<li>d:&lt;name&gt;@&lt;version&gt;: 在 registry 上发布的(c)</li>
+<li>e:&lt;name&gt;@&lt;tag&gt; : 能指向（d）。</li>
+<li>f:&lt;name&gt; 具有 latest 标签，且满足（e）。</li>
+<li>g:git url，当 clone 时，得到（a）</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git://github.com/user/project.git#commit-ish</span><br><span class="line">git+ssh://user@hostname:project.git#commit-ish</span><br><span class="line">git+http://user@hostname/project/blah.git#commit-ish</span><br><span class="line">git+https://user@hostname/project/blah.git#commit-ish</span><br></pre></td></tr></table></figure>
+
+<p>commit-ish 可以是任何 tag、分支或者 sha，可以用<code>git checkout</code>切换的，默认是<code>master</code></p>
+<h1></h1>
+
+<h3 id="npm-缓存"><a href="#npm-缓存" class="headerlink" title="npm 缓存"></a>npm 缓存</h3><p>由于安装时，即使本地有缓存，但是也不会进行读取，那么这就导致在弱网或者无网情况下，无法安装依赖包或者安装速度极低</p>
+<ul>
+<li><p><code>--cache-min</code>：参数指定了一个时间(以分钟为单位)，只有超过这个时间的模块，才会从远程进行下载安装</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --cache-min <span class="number">9999999</span> &lt;package-name&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1></h1>
+
+<h3 id="npm-i流程"><a href="#npm-i流程" class="headerlink" title="npm i流程"></a><code>npm i</code>流程</h3><ul>
+<li><p>发出<code>npm i</code>命令</p>
+</li>
+<li><p>执行工程自身 preinstall</p>
+<blockquote>
+<p>如果当前工程定义了 preintsall 钩子，那么会调用这个钩子函数</p>
+</blockquote>
+</li>
+<li><p>确定首层依赖</p>
+<blockquote>
+<p>确定当前项目中<code>package.json</code>中的<code>dependencies</code>和<code>devDependencies</code>指定的模块</p>
+</blockquote>
+<blockquote>
+<p>当前项目中的每个依赖包是每个依赖树的根节点，所以 npm 开启多线程对每个依赖包进行更深层级的节点</p>
+</blockquote>
+</li>
+<li><p>获取模块</p>
+<blockquote>
+<p>确定下载的模块版本</p>
+</blockquote>
+<blockquote>
+<p>如果版本描述文件（<code>npm-shrinkwrap.json</code> 或 <code>package-lock. json</code>）有对应模块的信息，那么直接依据对应的信息获取</p>
+</blockquote>
+<blockquote>
+<p>如果没有，向<a target="_blank" rel="noopener" href="https://registry.npmjs.org/">registry</a>查询模块压缩 包的网址，然后依据<code>package.json</code>文件中的版本去仓库中获取。</p>
+</blockquote>
+<blockquote>
+<p>获取到模块的 resloved 字段，即压缩包的地址后。获取到后，npm 依据此地址检查本地缓存，如果缓存中有，那么直接从缓存中(只会检查<code>node_modules</code>目录，而不会检查<code>~/.npm</code>目录)拿；如果没有，那么从仓库中进行下载</p>
+</blockquote>
+<blockquote>
+<p>查找该模块的依赖，如果有依赖则回到第一步，没有则停止</p>
+</blockquote>
+</li>
+<li><p>扁平化模块</p>
+<blockquote>
+<p>获取到完整的依赖树后，里面可能包含大量的重复模块，npm3 之前会严格按照依赖树的结构进行安装，这样会造成大量的模块冗余；</p>
+</blockquote>
+<blockquote>
+<p>npm3 之后默认加入了一个<code>dedupe</code>的过程，遍历所有节点，将模块放在根节点下面（node_modules 下），当发现有了重复模块时，将其丢弃</p>
+<blockquote>
+<p>重复模块：<strong>模块名</strong>相同且<strong>semver</strong>兼容。每个 semver 基本都对应一段<em>版本允许范围</em>，如果两个模块的版本允许范围有<strong>交集</strong>，那么可以得到一个<strong>兼容</strong>版本。这样就不需要版本号完全一致了，减少更多的冗余模块在这个阶段中直接去掉</p>
+<blockquote>
+<p>比如 A 模块依赖 package@^1.0.0，B 模块依赖 package@^1.1.0，则 1.1.0 为兼容版本<br /> node_modules–A<br /> node_modules–B<br /> node_modules--package@^1.1.0<br /><br /> 比如 A 模块依赖 package@^1.0.0，B 模块依赖 package@^2.1.0，则没有兼容版本，会将一个版本放在 node_modules，一个继续保留在依赖树中<br /> node_modules--A--package@^1.0.0<br /> node_modules--B--package@^1.1.0<br /></p>
+</blockquote>
+</blockquote>
+</blockquote>
+</li>
+<li><p>安装模块</p>
+<blockquote>
+<p>下载压缩包，存放在~&#x2F;.npm 目录</p>
+</blockquote>
+<blockquote>
+<p>解压到当前项目的 node_modules 目录</p>
+</blockquote>
+<blockquote>
+<p>执行模块中的生命周期函数（按照 preinstall、install、postinstall 的顺序）。</p>
+</blockquote>
+</li>
+<li><p>执行当前项目自身的生命周期</p>
+<blockquote>
+<p>当前 npm 工程如果定义了钩子此时会被执行（按照 install、postinstall、prepublish、prepare 的顺序）。</p>
+</blockquote>
+</li>
+<li><p>生成或者更新版本描述文件（<code>npm-shrinkwrap.json</code> 或 <code>package-lock. json</code>）</p>
+</li>
+</ul>
+<h2 id="npx"><a href="#npx" class="headerlink" title="npx"></a>npx</h2><p><code>npx</code>是<code>npm@5.25.2</code>增加的命令，如果 npm 版本低于这个版本，那么用<code>npm i -g npx</code>安装即可</p>
+<h3 id="与-npm-的不同"><a href="#与-npm-的不同" class="headerlink" title="与 npm 的不同"></a>与 npm 的不同</h3><ul>
+<li><p>npx 是下载到一个临时目录中，然后使用完成之后，进行删除。没有 npm 一样的缓存</p>
+</li>
+<li><p>npx 还可以运行可执行文件(远程的也可以)，比如只安装 webpack 了，那么用<code>npm run webpack</code>会报错，用<code>npx run webpack</code>就可以成功运行</p>
+</li>
+<li><p>npx 会检查 node_modules 和系统变量<code>$PATH</code>的命令是否存在</p>
+</li>
+<li><p><code>--no-install</code>: 如果本地不存在该模块，那么会报错。可以用于强制使用本地模块</p>
+</li>
+<li><p><code>--ignore-existing</code>: 不管是否本地存在，都强制安装使用远程模块。可以用于获取最新的包，即用即删</p>
+</li>
+</ul>
+<h2 id="pnpm"><a href="#pnpm" class="headerlink" title="pnpm"></a><a target="_blank" rel="noopener" href="https://pnpm.io/zh/motivation">pnpm</a></h2><h3 id="硬连接与符号连接"><a href="#硬连接与符号连接" class="headerlink" title="硬连接与符号连接"></a><a target="_blank" rel="noopener" href="https://juejin.cn/post/7032116303737389086/">硬连接与符号连接</a></h3><ul>
+<li><p>硬连接：使用 inode 指向源文件，即使源文件目录地址变化了，但是依旧能进行访问。因为其 inode 仍指向该文件。没有对原始文件的引用。</p>
+</li>
+<li><p>符号连接：指向的源文件地址，如果源文件目的地址修改了，那么就无法再访问；如果有一个新的文件名字与源文件一致，那么再次访问时，访问的是新文件</p>
+</li>
+</ul>
+<h1></h1>
+
+<h3 id="pnpm-1"><a href="#pnpm-1" class="headerlink" title="pnpm"></a>pnpm</h3><h4 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h4><p>pnpm 和 npm 一样，有一个缓存目录</p>
+<ul>
+<li><p>Mac&#x2F;linux 中默认会设置到{home dir}&gt;&#x2F;.pnpm-store&#x2F;v3；windows 下会设置到当前盘的根目录下，比如 C（C&#x2F;.pnpm-store&#x2F;v3）、D 盘（D&#x2F;.pnpm-store&#x2F;v3）。</p>
+</li>
+<li><p>pnpm 可以在一个电脑上不同的磁盘设置<a target="_blank" rel="noopener" href="https://pnpm.io/zh/workspaces">同一个分区</a>，在这种情况下，pnpm 将复制包而不是硬链接它们，因为硬链接只能发生在同一文件系统同一分区上</p>
+</li>
+<li><p>npm 在安装时，不会去检查缓存；而 pnpm 在安装时，会先检查是否有对应包及其版本的缓存，如果有的话，直接硬链接到这个缓存地址</p>
+</li>
+</ul>
+<h1></h1>
+
+<h4 id="模块依赖"><a href="#模块依赖" class="headerlink" title="模块依赖"></a>模块依赖</h4><ul>
+<li><p>pnpm 使用平铺的方式，类似于<code>npm2</code>的结构，但是增加了一个<code>.pnpm</code>目录，其中的包命名格式如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> .<span class="property">pnpm</span>/&lt;organization-name&gt;+&lt;package-name&gt;@&lt;version&gt;<span class="regexp">/node_modules/</span>&lt;name&gt;</span><br><span class="line"><span class="comment">// 组织名(若无会省略)+包名@版本号/node_modules/名称(项目名称)</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对于 <a target="_blank" rel="noopener" href="https://pnpm.io/zh/how-peers-are-resolved">PeerDependencies</a> 来说，命名规则稍许不同</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.<span class="property">pnpm</span>/&lt;organization-name&gt;+&lt;package-name&gt;@&lt;version&gt;_&lt;organization-name&gt;+&lt;package-name&gt;@&lt;version&gt;<span class="regexp">/node_modules/</span>&lt;name&gt;</span><br><span class="line"><span class="comment">// peerDep组织名(若无会省略)+包名@版本号_组织名(若无会省略)+包名@版本号/node_modules/名称(项目名称)</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pnpm 使用硬链接，将 node_modules 的包地址硬链接到 pnpm 的缓存中；对于同包同版本使用符号连接.</p>
+<p><img src="https://pnpm.io/zh/assets/images/node-modules-structure-8ab301ddaed3b7530858b233f5b3be57.jpg" alt="image"></p>
+</li>
+</ul>
+<h1></h1>
+
+<h4 id="npm-与-pnpm-差别"><a href="#npm-与-pnpm-差别" class="headerlink" title="npm 与 pnpm 差别"></a><a target="_blank" rel="noopener" href="https://pnpm.io/zh/feature-comparison">npm 与 pnpm 差别</a></h4><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>pnpm</th>
+<th>npm</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>隔离的 node_modules</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>自动安装 peers</td>
+<td>✅ 通过 auto-install-peers&#x3D;true</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Plug’n’Play(即插即用)</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>管理 Node.js 版本</td>
+<td>✅ <code>pnpm env &lt;cmd&gt;</code></td>
+<td>❌</td>
+</tr>
+<tr>
+<td>内容可寻址存储</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Side-effects cache(缓存的副作用)</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>有锁文件</td>
+<td><code>pnpm-lock.yaml</code></td>
+<td><code>package-lock.json</code></td>
+</tr>
+<tr>
+<td>即用即删</td>
+<td><code>pnpm dlx</code></td>
+<td><code>npx</code></td>
+</tr>
+</tbody></table>
+<h2 id="npm缺点"><a href="#npm缺点" class="headerlink" title="npm缺点"></a>npm缺点</h2><h3 id="重复安装"><a href="#重复安装" class="headerlink" title="重复安装"></a>重复安装</h3><p>npm3.0是把所有的依赖包拉平的，但是如果依赖包A里面的子依赖包和主项目的依赖包一致但版本冲突时，npm会在依赖包A的<code>node_modules</code>中安装该子依赖包，如果这个时候主项目的依赖包B和依赖包B的子依赖包版本也一致的情况下，npm3也会在依赖包B中再次安装一次子依赖包，这样导致重复安装，从而导致安装包体积变大</p>
+<p>例如：</p>
+<p>主项目依赖subPackA1.0，packA、packB</p>
+<p>packA和packB依赖subPackA2.0</p>
+<p>那么安装结果就是：</p>
+<p>主项目node_modules: packA、packB、subPackA1.0</p>
+<p>packA的node_modules: subPackA2.0</p>
+<p>packB的node_modules: subPackA2.0</p>
+<p>这样造成了subPackA2.0的重复安装</p>
+<h3 id="幽灵依赖"><a href="#幽灵依赖" class="headerlink" title="幽灵依赖"></a>幽灵依赖</h3><p>由于npm3.0为了减轻依赖包（<code>node_modules</code>）的大小，因此是主项目依赖包和依赖包的子依赖包所有拉平放入<code>node_modules</code></p>
+<p>因此就会出现明明主项目没有声明某个包，但是主项目也可以直接引入使用这个依赖包</p>
+<p>例如：主项目依赖了packA，packA依赖subPackA</p>
+<p>主项目可以直接引入subPackA</p>
+<p>而pnpm由于使用软连接的方式访问文件，因此解决了npm的以上两个问题</p>
+<h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><blockquote>
+<p>npm</p>
+</blockquote>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40988677/article/details/125364305">npm 模块安装机制与实现原理 </a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903702063480846">npm 和 package.json 那些不为常人所知的小秘密 </a></p>
+</li>
+</ul>
+<blockquote>
+<p>npx</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269419296">npx 简介 </a></li>
+<li><a target="_blank" rel="noopener" href="https://newsn.net/say/npx.html#npx--ignore-existing">npx 是什么命令？npx 和 npm 有什么区别？ </a></li>
+</ul>
+<blockquote>
+<p>pnpm</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/457698236">pnpm</a></li>
+</ul>
+<blockquote>
+<p>npm缺点</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_59816940/article/details/131395326">幽灵依赖是什么，pnpm出现的意义，使用pnpm创建一个vue3项目</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7456649142510682146">💻《npm 进阶指南📖：掌握机制、规避幽灵依赖，开启高效开发》</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91SSR%E5%92%8CCSR/" rel="prev" title="SSR和CSR">
+                  <i class="fa fa-angle-left"></i> SSR和CSR
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" rel="next" title="记录">
+                  记录 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

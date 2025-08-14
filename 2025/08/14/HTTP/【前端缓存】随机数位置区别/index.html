@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="文件随机数存放位置区别文件url+?+随机数 https:&#x2F;&#x2F;xxx?v&#x3D;1.x.x 一般用于版本号对应的文件  https:&#x2F;&#x2F;xxx?c&#x3D;s45sdf 一般用于文件内容生成的hash值   文件名+hash值https:&#x2F;&#x2F;xxxs45sdf hash值一般由文件内容生成 区别以上两种存放位置都可以使浏览器获取最新的文件，而不是走缓存拿文件 当前主流的一般是用文件名+hash值的形式。原因如下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【前端缓存】随机数位置区别">
+<meta property="og:url" content="http://example.com/2025/08/14/HTTP/%E3%80%90%E5%89%8D%E7%AB%AF%E7%BC%93%E5%AD%98%E3%80%91%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%88%AB/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="文件随机数存放位置区别文件url+?+随机数 https:&#x2F;&#x2F;xxx?v&#x3D;1.x.x 一般用于版本号对应的文件  https:&#x2F;&#x2F;xxx?c&#x3D;s45sdf 一般用于文件内容生成的hash值   文件名+hash值https:&#x2F;&#x2F;xxxs45sdf hash值一般由文件内容生成 区别以上两种存放位置都可以使浏览器获取最新的文件，而不是走缓存拿文件 当前主流的一般是用文件名+hash值的形式。原因如下">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T03:18:06.271Z">
+<meta property="article:modified_time" content="2025-03-06T09:08:26.511Z">
+<meta property="article:author" content="yangxin">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/HTTP/%E3%80%90%E5%89%8D%E7%AB%AF%E7%BC%93%E5%AD%98%E3%80%91%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%88%AB/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/HTTP/%E3%80%90%E5%89%8D%E7%AB%AF%E7%BC%93%E5%AD%98%E3%80%91%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%88%AB/","path":"2025/08/14/HTTP/【前端缓存】随机数位置区别/","title":"【前端缓存】随机数位置区别"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【前端缓存】随机数位置区别 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%AD%98%E6%94%BE%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">文件随机数存放位置区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6url-%E9%9A%8F%E6%9C%BA%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">文件url+?+随机数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%90%8D-hash%E5%80%BC"><span class="nav-number">1.2.</span> <span class="nav-text">文件名+hash值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%BA%E5%88%AB"><span class="nav-number">2.</span> <span class="nav-text">区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E9%93%BE"><span class="nav-number">3.</span> <span class="nav-text">参链</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/HTTP/%E3%80%90%E5%89%8D%E7%AB%AF%E7%BC%93%E5%AD%98%E3%80%91%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【前端缓存】随机数位置区别 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【前端缓存】随机数位置区别
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">浏览器</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="文件随机数存放位置区别"><a href="#文件随机数存放位置区别" class="headerlink" title="文件随机数存放位置区别"></a>文件随机数存放位置区别</h2><h3 id="文件url-随机数"><a href="#文件url-随机数" class="headerlink" title="文件url+?+随机数"></a>文件url+?+随机数</h3><ul>
+<li><p><code>https://xxx?v=1.x.x</code></p>
+<p>一般用于版本号对应的文件</p>
+</li>
+<li><p><code>https://xxx?c=s45sdf</code></p>
+<p>一般用于文件内容生成的hash值</p>
+</li>
+</ul>
+<h3 id="文件名-hash值"><a href="#文件名-hash值" class="headerlink" title="文件名+hash值"></a>文件名+hash值</h3><p><code>https://xxxs45sdf</code></p>
+<p>hash值一般由文件内容生成</p>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>以上两种存放位置都可以使浏览器获取最新的文件，而不是走缓存拿文件</p>
+<p>当前主流的一般是用文件名+hash值的形式。原因如下</p>
+<blockquote>
+<p>一般发版时，是有html文件和js、css文件的。<br />浏览器首先去请求html文件，html嵌入了js、css等其他文件。<br />那么在请求html和js、css等文件的这个时间差内，如果采用第一种方式(文件url+?+随机数)，就容易出现问题</p>
+</blockquote>
+<ul>
+<li><p>如果先发html文件，再发js、css等文件</p>
+<ul>
+<li><p>客户请求时，浏览器不会走缓存，会去取最新的文件。</p>
+</li>
+<li><p>但是可能这个时候取的js、css文件还是老的文件。那么就导致客户端下次再去请求时，走的其实是缓存。</p>
+</li>
+</ul>
+</li>
+<li><p>先发js、css等文件，再发html文件</p>
+<ul>
+<li><p>对于有缓存的用户不会造成影响。</p>
+</li>
+<li><p>但是对于无缓存的用户，拿取数据时，会拿取到最新的js、css等文件，那么最直观的影响可能是页面样式问题。但当html发布成功后，页面会恢复正常</p>
+</li>
+</ul>
+</li>
+<li><p>对于异步加载的情况</p>
+<ul>
+<li><p>代码发布后，用户在使用过程中，进入了一个新路由</p>
+</li>
+<li><p>在新路由页面，获取的是最新的代码文件，但是在进入之前，获取的是老代码文件，那么这里就会导致新老代码文件交替，容易出现问题</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>因此，采用文件名+hash的方式，无论是先发html还是js、css文件，由于是直接通过文件名去获取的，那么就不会产生上述问题。</p>
+<ul>
+<li><p>先发js、css等文件</p>
+<ul>
+<li>由于文件名不同，由于文件名已经不一样了，所以不会覆盖掉之前存在的资源文件，客户端依旧可以安全的访问。</li>
+</ul>
+</li>
+<li><p>再发html文件</p>
+<ul>
+<li>因为js、css等文件已经发布完毕了，那么当html更新了之后，再获取的js、css等文件就已经是最新的了</li>
+</ul>
+</li>
+</ul>
+<h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><p><a target="_blank" rel="noopener" href="https://github.com/fouber/blog/issues/6">大公司里怎样开发和部署前端代码</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/HTTP/%E5%B0%8F%E7%82%B9/" rel="prev" title="小点">
+                  <i class="fa fa-angle-left"></i> 小点
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/HTTP/%E3%80%90http%E3%80%91%E9%98%9F%E5%A4%B4%E9%98%BB%E5%A1%9E/" rel="next" title="【Htpp】队头阻塞">
+                  【Htpp】队头阻塞 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

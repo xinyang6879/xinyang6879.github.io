@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Performance面板开始前提 保持环境整洁，例如使用隐私模式、清除缓存等  确定目标，在执行过程中，尽可能缩短持续时间，避免额外的操作等   开始记录 打开devTools，切换到Performance面板  点击左上角的圆形按钮开始记录     记录过程种可以做一些交互  点击stop停止监测   生成内容  工具栏：与整体面板有关的操作选项和设置  overview图表：可视化呈现完整时">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【devTools】performance">
+<meta property="og:url" content="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91performance/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Performance面板开始前提 保持环境整洁，例如使用隐私模式、清除缓存等  确定目标，在执行过程中，尽可能缩短持续时间，避免额外的操作等   开始记录 打开devTools，切换到Performance面板  点击左上角的圆形按钮开始记录     记录过程种可以做一些交互  点击stop停止监测   生成内容  工具栏：与整体面板有关的操作选项和设置  overview图表：可视化呈现完整时">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVcIH0.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVvNc9.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVvshD.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVv79g.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVxZE6.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVx5rR.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCV2ztK.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCVf0T1.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCV4QP0.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/06/11/pCV45z8.png">
+<meta property="article:published_time" content="2025-08-14T03:18:06.212Z">
+<meta property="article:modified_time" content="2025-03-06T09:08:26.518Z">
+<meta property="article:author" content="yangxin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2023/06/11/pCVcIH0.png">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91performance/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91performance/","path":"2025/08/14/devTools/【devTools】performance/","title":"【devTools】performance"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【devTools】performance | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Performance%E9%9D%A2%E6%9D%BF"><span class="nav-number">1.</span> <span class="nav-text">Performance面板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B"><span class="nav-number">1.1.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E6%8F%90"><span class="nav-number">1.1.1.</span> <span class="nav-text">前提</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E8%AE%B0%E5%BD%95"><span class="nav-number">1.1.2.</span> <span class="nav-text">开始记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%86%85%E5%AE%B9"><span class="nav-number">1.1.3.</span> <span class="nav-text">生成内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E6%A0%8F"><span class="nav-number">1.2.</span> <span class="nav-text">工具栏</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Disabled-Javascript-Call-Stack"><span class="nav-number">1.2.1.</span> <span class="nav-text">Disabled Javascript Call Stack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Enable-advanced-paint-instrumentation"><span class="nav-number">1.2.2.</span> <span class="nav-text">Enable advanced paint instrumentation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Overview%E5%9B%BE%E8%A1%A8"><span class="nav-number">1.3.</span> <span class="nav-text">Overview图表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FPS"><span class="nav-number">1.3.1.</span> <span class="nav-text">FPS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU"><span class="nav-number">1.3.2.</span> <span class="nav-text">CPU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NET"><span class="nav-number">1.3.3.</span> <span class="nav-text">NET</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activities"><span class="nav-number">1.4.</span> <span class="nav-text">Activities</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Main"><span class="nav-number">1.4.1.</span> <span class="nav-text">Main</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Network"><span class="nav-number">1.4.2.</span> <span class="nav-text">Network</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Frames"><span class="nav-number">1.4.3.</span> <span class="nav-text">Frames</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Timeings"><span class="nav-number">1.4.4.</span> <span class="nav-text">Timeings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Experience"><span class="nav-number">1.4.5.</span> <span class="nav-text">Experience</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GPU"><span class="nav-number">1.4.6.</span> <span class="nav-text">GPU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Raster"><span class="nav-number">1.4.7.</span> <span class="nav-text">Raster</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E9%9D%A2%E6%9D%BF%EF%BC%9A"><span class="nav-number">1.5.</span> <span class="nav-text">信息面板：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">1.5.1.</span> <span class="nav-text">Summary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#call-tree"><span class="nav-number">1.5.2.</span> <span class="nav-text">call tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bottom-up"><span class="nav-number">1.5.3.</span> <span class="nav-text">bottom-up</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Event-Log"><span class="nav-number">1.5.4.</span> <span class="nav-text">Event Log</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#performance-monitor"><span class="nav-number">1.6.</span> <span class="nav-text">performance monitor</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80"><span class="nav-number">1.6.1.</span> <span class="nav-text">打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8"><span class="nav-number">1.6.2.</span> <span class="nav-text">作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-Vitals"><span class="nav-number">1.7.</span> <span class="nav-text">Web Vitals</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LCP%EF%BC%9A%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%EF%BC%8C%E7%94%A8%E4%BA%8E%E8%A1%A8%E7%A4%BA%E5%8A%A0%E8%BD%BD%E9%80%9F%E5%BA%A6"><span class="nav-number">1.7.1.</span> <span class="nav-text">LCP：前端性能指标，用于表示加载速度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FID%EF%BC%9A%E8%A1%A8%E7%A4%BA%E9%A6%96%E6%AC%A1%E8%BE%93%E5%85%A5%E5%BB%B6%E8%BF%9F"><span class="nav-number">1.7.2.</span> <span class="nav-text">FID：表示首次输入延迟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CLS%EF%BC%9A%E8%A1%A8%E7%A4%BA%E7%B4%AF%E8%AE%A1%E5%B8%83%E5%B1%80%E5%81%8F%E7%A7%BB"><span class="nav-number">1.7.3.</span> <span class="nav-text">CLS：表示累计布局偏移</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91performance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【devTools】performance | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【devTools】performance
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">浏览器</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Performance面板"><a href="#Performance面板" class="headerlink" title="Performance面板"></a>Performance面板</h1><h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><ul>
+<li><p>保持环境整洁，例如使用隐私模式、清除缓存等</p>
+</li>
+<li><p>确定目标，在执行过程中，尽可能缩短持续时间，避免额外的操作等</p>
+</li>
+</ul>
+<h3 id="开始记录"><a href="#开始记录" class="headerlink" title="开始记录"></a>开始记录</h3><ul>
+<li><p>打开devTools，切换到Performance面板</p>
+</li>
+<li><p>点击左上角的圆形按钮开始记录</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVcIH0"><img src="https://s1.ax1x.com/2023/06/11/pCVcIH0.png" alt="pCVcIH0.png"></a></p>
+<ul>
+<li><p>记录过程种可以做一些交互</p>
+</li>
+<li><p>点击stop停止监测</p>
+</li>
+</ul>
+<h3 id="生成内容"><a href="#生成内容" class="headerlink" title="生成内容"></a>生成内容</h3><p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVvNc9"><img src="https://s1.ax1x.com/2023/06/11/pCVvNc9.png" alt="pCVvNc9.png"></a></p>
+<ul>
+<li><p>工具栏：与整体面板有关的操作选项和设置</p>
+</li>
+<li><p>overview图表：可视化呈现完整时间轴的基本信息</p>
+</li>
+<li><p>Activities：将性能信息以方块式的Activity为单位显示在不同种类的列表中</p>
+</li>
+</ul>
+<h2 id="工具栏"><a href="#工具栏" class="headerlink" title="工具栏"></a>工具栏</h2><p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVvshD"><img src="https://s1.ax1x.com/2023/06/11/pCVvshD.png" alt="pCVvshD.png"></a></p>
+<h3 id="Disabled-Javascript-Call-Stack"><a href="#Disabled-Javascript-Call-Stack" class="headerlink" title="Disabled Javascript Call Stack"></a>Disabled Javascript Call Stack</h3><p>Main列表不会显示js的Call stack信息</p>
+<h3 id="Enable-advanced-paint-instrumentation"><a href="#Enable-advanced-paint-instrumentation" class="headerlink" title="Enable advanced paint instrumentation"></a>Enable advanced paint instrumentation</h3><p>记录绘制性能的详细信息，并显示在</p>
+<ul>
+<li><p>Frames：Frame activity的Layers分页</p>
+</li>
+<li><p>Main：Paint activity的Paint Profiler分页</p>
+</li>
+</ul>
+<h2 id="Overview图表"><a href="#Overview图表" class="headerlink" title="Overview图表"></a>Overview图表</h2><p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVv79g"><img src="https://s1.ax1x.com/2023/06/11/pCVv79g.png" alt="pCVv79g.png"></a></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FPS，帧数</td>
+<td><font color=green>绿色</font>竖线越高，FPS 越高。 FPS 图表上的<font color=red>红色</font>块表示长时间帧，很可能会出现卡顿</td>
+</tr>
+<tr>
+<td>CPU，CPU 资源</td>
+<td>指示消耗 CPU 资源的事件类型</td>
+</tr>
+<tr>
+<td>NET，网络请求</td>
+<td>每条彩色横杠表示一种资源。横杠越长，检索资源所需的时间越长。 每个横杠的浅色部分表示等待时间（从请求资源到第一个字节下载完成的时间），可以在屏幕快照下面查看具体的网络请求数据</td>
+</tr>
+</tbody></table>
+<h3 id="FPS"><a href="#FPS" class="headerlink" title="FPS"></a>FPS</h3><p>绿色方块：每秒帧数的变化，红色、粉色横条为低帧数警告，即可能会让用户感受到卡顿的部分</p>
+<h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><ul>
+<li><p>灰色：浏览器内部的工作</p>
+</li>
+<li><p>蓝色：HTML请求、文件解析</p>
+</li>
+<li><p>黄色：事件、js</p>
+</li>
+<li><p>绿色：图像处理、画面绘制</p>
+</li>
+<li><p>紫色：样式计算</p>
+</li>
+</ul>
+<h3 id="NET"><a href="#NET" class="headerlink" title="NET"></a>NET</h3><ul>
+<li><p>蓝色：有请求正在执行</p>
+</li>
+<li><p>深色：优先权较高的请求</p>
+</li>
+</ul>
+<h2 id="Activities"><a href="#Activities" class="headerlink" title="Activities"></a>Activities</h2><h3 id="Main"><a href="#Main" class="headerlink" title="Main"></a>Main</h3><p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVxZE6"><img src="https://s1.ax1x.com/2023/06/11/pCVxZE6.png" alt="pCVxZE6.png"></a></p>
+<ul>
+<li><p>作用</p>
+<p>显示主线程所有的任务，持续事件超过50ms（长任务）的任务会以红色虚线和右上角的三角形标识</p>
+</li>
+</ul>
+<p>任务底下的Activities依据类型有不同颜色，黄色的js Activity底下以随机颜色显示Call Stack Activities</p>
+<h3 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h3><p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVx5rR"><img src="https://s1.ax1x.com/2023/06/11/pCVx5rR.png" alt="pCVx5rR.png"></a></p>
+<ul>
+<li><p>左侧的细线：连接至发送请求前</p>
+</li>
+<li><p>浅色区域：等待服务器响应</p>
+</li>
+<li><p>深色区域：下载资源</p>
+</li>
+<li><p>右侧的细线：解析资源</p>
+</li>
+<li><p>左上角的小方块：请求优先级，深色表示高，浅色表示浅</p>
+</li>
+</ul>
+<h3 id="Frames"><a href="#Frames" class="headerlink" title="Frames"></a>Frames</h3><p>显示每一帧画面的详细信息</p>
+<h3 id="Timeings"><a href="#Timeings" class="headerlink" title="Timeings"></a>Timeings</h3><p>显示网页使用的重要时间点</p>
+<ul>
+<li><p>DCL：HTML已经加载且解析完毕</p>
+</li>
+<li><p>FP：绘制出默认背景颜色之外的任何内容</p>
+</li>
+<li><p>FCP：绘制出任何文字、图片、有颜色的canvas时</p>
+</li>
+<li><p>LCP：绘制出页面最大的内容时</p>
+</li>
+<li><p>L：解析HTML期间请求的资源都载入完成时</p>
+</li>
+</ul>
+<h3 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h3><p>显示所有元素位移并计算分数，越低表示页面稳定性越高</p>
+<h3 id="GPU"><a href="#GPU" class="headerlink" title="GPU"></a>GPU</h3><p>显示GPU的使用事件</p>
+<h3 id="Raster"><a href="#Raster" class="headerlink" title="Raster"></a>Raster</h3><p>定义：浏览器渲染流程中Paint阶段的一环</p>
+<p>作用：显示产生Raster时各个线程的信息</p>
+<h2 id="信息面板："><a href="#信息面板：" class="headerlink" title="信息面板："></a>信息面板：</h2><ul>
+<li><p>summary：显示activity的持续时间，并将期间发生的其他activities分类显示</p>
+</li>
+<li><p>botton-up：将同一种activity的运行时间加总</p>
+</li>
+<li><p>call tree：以触发关系自上而下显示activities，最上方的称为root activity，是下面各个activities的起点</p>
+</li>
+<li><p>event log：以时间顺序显示activities</p>
+</li>
+</ul>
+<blockquote>
+<p>注：activity占用主线程超过50ms会被加上红色三角形，成为long task</p>
+</blockquote>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>显示该Activity的持续事件，并将期间发生的其他Activists分类显示</p>
+<h3 id="call-tree"><a href="#call-tree" class="headerlink" title="call tree"></a>call tree</h3><p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCV2ztK"><img src="https://s1.ax1x.com/2023/06/11/pCV2ztK.png" alt="pCV2ztK.png"></a></p>
+<p>call tree会显示任务由哪些activities组成，若activity的类型为程序代码，则层层展开可以看到函数的call stack</p>
+<ul>
+<li><p>self time</p>
+<p>函数本身的运行时间，并不包含函数执行其他函数的时间</p>
+</li>
+<li><p>total time</p>
+<p>函数本身和其下所有函数的运行时间的总和</p>
+</li>
+</ul>
+<h3 id="bottom-up"><a href="#bottom-up" class="headerlink" title="bottom-up"></a>bottom-up</h3><p>会将同一种activity的运行时间加总，因此分页中self time较长的函数通常是性能瓶颈的来源</p>
+<p>注：总运行时间长也可能是因为执行次数多</p>
+<h3 id="Event-Log"><a href="#Event-Log" class="headerlink" title="Event Log"></a>Event Log</h3><p>以触发事件顺序显示Activities</p>
+<h2 id="performance-monitor"><a href="#performance-monitor" class="headerlink" title="performance monitor"></a>performance monitor</h2><h3 id="打开"><a href="#打开" class="headerlink" title="打开"></a>打开</h3><p>1、在devtool按esc打开drawer，在左上角三个点打开</p>
+<p>2、在devtools右上角的三个点，打开more tools打开</p>
+<h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>实时监测性能信息，用于检查特定功能是否存在内存泄漏的问题，实时反应内存用量的趋势。一般会把重点放在js heap size（js内存使用占有量）和dom tools</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVf0T1"><img src="https://s1.ax1x.com/2023/06/11/pCVf0T1.png" alt="pCVf0T1.png"></a></p>
+<h2 id="Web-Vitals"><a href="#Web-Vitals" class="headerlink" title="Web Vitals"></a>Web Vitals</h2><h3 id="LCP：前端性能指标，用于表示加载速度"><a href="#LCP：前端性能指标，用于表示加载速度" class="headerlink" title="LCP：前端性能指标，用于表示加载速度"></a>LCP：前端性能指标，用于表示加载速度</h3><p>可以在performance的timeing中可以看到</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCV4QP0"><img src="https://s1.ax1x.com/2023/06/11/pCV4QP0.png" alt="pCV4QP0.png"></a></p>
+<h3 id="FID：表示首次输入延迟"><a href="#FID：表示首次输入延迟" class="headerlink" title="FID：表示首次输入延迟"></a>FID：表示首次输入延迟</h3><p>通过rendering分页的Core Web Vitals来判断</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCV45z8"><img src="https://s1.ax1x.com/2023/06/11/pCV45z8.png" alt="pCV45z8.png"></a></p>
+<h3 id="CLS：表示累计布局偏移"><a href="#CLS：表示累计布局偏移" class="headerlink" title="CLS：表示累计布局偏移"></a>CLS：表示累计布局偏移</h3><p>通过performance的Experience的layout shift标签</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/devTools/%E3%80%90devTools%E3%80%91layers/" rel="prev" title="【devTools】layers">
+                  <i class="fa fa-angle-left"></i> 【devTools】layers
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/devTools/%E3%80%90devTools%E3%80%91%E5%B8%B8%E7%94%A8%E9%9D%A2%E6%9D%BF/" rel="next" title="【devTools】常用面板">
+                  【devTools】常用面板 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

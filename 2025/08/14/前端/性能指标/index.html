@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="基于用户的性能指标FCP：白屏时间     FCP 时长 颜色编码 FCP 分数(HTTP 存档百分位数)    0-2s 快速 75-100   2-4s 中等 50-74   &gt;4s 慢 0-49   LCP：主要内容可见时间(可视区域最大-资源较大 元素到屏幕上的间隔时间)   并不是只初始加载页面的，而是指页面元素变化的时候  LCP 考虑的元素   &lt;img&gt;元素 &amp;l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="性能指标">
+<meta property="og:url" content="http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="基于用户的性能指标FCP：白屏时间     FCP 时长 颜色编码 FCP 分数(HTTP 存档百分位数)    0-2s 快速 75-100   2-4s 中等 50-74   &gt;4s 慢 0-49   LCP：主要内容可见时间(可视区域最大-资源较大 元素到屏幕上的间隔时间)   并不是只初始加载页面的，而是指页面元素变化的时候  LCP 考虑的元素   &lt;img&gt;元素 &amp;l">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T03:18:06.874Z">
+<meta property="article:modified_time" content="2025-07-04T07:11:11.834Z">
+<meta property="article:author" content="yangxin">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/","path":"2025/08/14/前端/性能指标/","title":"性能指标"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>性能指标 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%94%A8%E6%88%B7%E7%9A%84%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">基于用户的性能指标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FCP%EF%BC%9A%E7%99%BD%E5%B1%8F%E6%97%B6%E9%97%B4"><span class="nav-number">1.1.</span> <span class="nav-text">FCP：白屏时间</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LCP%EF%BC%9A%E4%B8%BB%E8%A6%81%E5%86%85%E5%AE%B9%E5%8F%AF%E8%A7%81%E6%97%B6%E9%97%B4"><span class="nav-number">0.1.</span> <span class="nav-text">LCP：主要内容可见时间</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FID%EF%BC%9A%E9%A6%96%E6%AC%A1%E8%BE%93%E5%85%A5%E5%BB%B6%E8%BF%9F"><span class="nav-number">0.1.</span> <span class="nav-text">FID：首次输入延迟</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TTI%EF%BC%9A%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AE%8C%E5%85%A8%E8%BE%BE%E5%88%B0%E5%8F%AF%E4%BA%A4%E4%BA%92%E7%8A%B6%E6%80%81"><span class="nav-number">0.1.</span> <span class="nav-text">TTI：第一次完全达到可交互状态</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TBT%EF%BC%9A%E6%80%BB%E9%98%BB%E5%A1%9E%E6%97%B6%E9%97%B4"><span class="nav-number">0.1.</span> <span class="nav-text">TBT：总阻塞时间</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CLS%EF%BC%9A%E7%B4%AF%E8%AE%A1%E5%B8%83%E5%B1%80%E5%81%8F%E7%A7%BB"><span class="nav-number">0.1.</span> <span class="nav-text">CLS：累计布局偏移</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9F%E5%BA%A6%E6%8C%87%E6%95%B0-SI-%EF%BC%9A%E9%A1%B5%E9%9D%A2%E5%8F%AF%E8%A7%86%E5%8C%BA%E5%9F%9F%E4%B8%AD%E5%86%85%E5%AE%B9%E7%9A%84%E5%A1%AB%E5%85%85%E9%80%9F%E5%BA%A6"><span class="nav-number">0.1.</span> <span class="nav-text">速度指数(SI)：页面可视区域中内容的填充速度</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RAIL-%E6%80%A7%E8%83%BD%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">RAIL 性能模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-Vitals"><span class="nav-number">2.</span> <span class="nav-text">Web Vitals</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Core-Web-Vitals"><span class="nav-number">2.1.</span> <span class="nav-text">Core Web Vitals</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="nav-number">3.</span> <span class="nav-text">测试工具</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="性能指标 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          性能指标
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-07-04 15:11:11" itemprop="dateModified" datetime="2025-07-04T15:11:11+08:00">2025-07-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="基于用户的性能指标"><a href="#基于用户的性能指标" class="headerlink" title="基于用户的性能指标"></a>基于用户的性能指标</h2><h3 id="FCP：白屏时间"><a href="#FCP：白屏时间" class="headerlink" title="FCP：白屏时间"></a>FCP：白屏时间</h3><h1></h1>
+
+<table>
+<thead>
+<tr>
+<th>FCP 时长</th>
+<th>颜色编码</th>
+<th>FCP 分数(HTTP 存档百分位数)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0-2s</td>
+<td><font color=green>快速</font></td>
+<td>75-100</td>
+</tr>
+<tr>
+<td>2-4s</td>
+<td><font color=yellow>中等</font></td>
+<td>50-74</td>
+</tr>
+<tr>
+<td>&gt;4s</td>
+<td><font color=red>慢</font></td>
+<td>0-49</td>
+</tr>
+</tbody></table>
+<h3 id="LCP：主要内容可见时间"><a href="#LCP：主要内容可见时间" class="headerlink" title="LCP：主要内容可见时间"></a>LCP：主要内容可见时间</h3><p>(可视区域最大-资源较大 元素到屏幕上的间隔时间)</p>
+<h1></h1>
+
+<p>并不是只初始加载页面的，而是指页面元素变化的时候</p>
+<blockquote>
+<p>LCP 考虑的元素</p>
+</blockquote>
+<ul>
+<li><code>&lt;img&gt;</code>元素</li>
+<li><code>&lt;image&gt;</code>元素的<code>&lt;svg&gt;</code></li>
+<li><code>&lt;video&gt;</code></li>
+<li>通过<code>[url()](https://developer.mozilla.org/en-US/docs/Web/CSS/url())</code>函数加载背景图片的元素</li>
+<li>包含文本节点或者其他内联文字元素子级的块级元素</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>LCP 时长</th>
+<th>颜色编码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0-2.5s</td>
+<td><font color=green>快速</font></td>
+</tr>
+<tr>
+<td>2.5-4s</td>
+<td><font color=yellow>中等</font></td>
+</tr>
+<tr>
+<td>&gt;4s</td>
+<td><font color=red>慢</font></td>
+</tr>
+</tbody></table>
+<h3 id="FID：首次输入延迟"><a href="#FID：首次输入延迟" class="headerlink" title="FID：首次输入延迟"></a>FID：首次输入延迟</h3><p>第一次与页面交互(点击按钮链接等)到浏览器实际能够响应这次交互的时间</p>
+<h1></h1>
+
+<blockquote>
+<p>输入延迟是因为浏览器的主线程处于繁忙状态(比如忙于解析和执行程序加载的大量计算的 js)，导致无法及时响应用户。</p>
+</blockquote>
+<blockquote>
+<p>第一次的输入延迟通常发生在 FCP 和 TTI 之间，因为页面虽然已经呈现了，但是还无法可靠交互</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>FID 时长</th>
+<th>颜色编码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0-0.1s</td>
+<td><font color=green>快速</font></td>
+</tr>
+<tr>
+<td>0.1-0.3s</td>
+<td><font color=yellow>中等</font></td>
+</tr>
+<tr>
+<td>&gt;0.3s</td>
+<td><font color=red>慢</font></td>
+</tr>
+</tbody></table>
+<h3 id="TTI：第一次完全达到可交互状态"><a href="#TTI：第一次完全达到可交互状态" class="headerlink" title="TTI：第一次完全达到可交互状态"></a>TTI：第一次完全达到可交互状态</h3><p>浏览器可以持续性的响应用户的交互事件。完全达到可交互的状态时间点是在最后一个长文物(50ms 以上才能完成的任务)完成的事件，并且在随后的 5s 内网络和主线程是空闲的</p>
+<h1></h1>
+
+<table>
+<thead>
+<tr>
+<th>TTI 时长</th>
+<th>颜色编码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0-3.8s</td>
+<td><font color=green>快速</font></td>
+</tr>
+<tr>
+<td>3.8-7.3s</td>
+<td><font color=yellow>中等</font></td>
+</tr>
+<tr>
+<td>&gt;7.3s</td>
+<td><font color=red>慢</font></td>
+</tr>
+</tbody></table>
+<h3 id="TBT：总阻塞时间"><a href="#TBT：总阻塞时间" class="headerlink" title="TBT：总阻塞时间"></a>TBT：总阻塞时间</h3><p>即 FCP 和 TTI 之间的间隔时长，在改时间范围内，主线程被阻塞足够长的时间以防止用户的输入事件。</p>
+<h1></h1>
+
+<blockquote>
+<p>长任务，执行时长超过了 50ms</p>
+</blockquote>
+<blockquote>
+<p>页面总阻塞时间&#x3D;FCP 和 TTI 之间发生的每个长任务的阻塞时间总和</p>
+</blockquote>
+<blockquote>
+<p>长任务的阻塞时间&#x3D;长任务的实际执行时长-50ms</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>TBT 时长</th>
+<th>颜色编码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0-0.3s</td>
+<td><font color=green>快速</font></td>
+</tr>
+<tr>
+<td>0.3-0.6s</td>
+<td><font color=yellow>中等</font></td>
+</tr>
+<tr>
+<td>&gt;0.6s</td>
+<td><font color=red>慢</font></td>
+</tr>
+</tbody></table>
+<h3 id="CLS：累计布局偏移"><a href="#CLS：累计布局偏移" class="headerlink" title="CLS：累计布局偏移"></a>CLS：累计布局偏移</h3><p>在整个生命周期中发生的每个意外的布局移位(即在不是预计的位置偏移或者样式错乱)的所有单独布局。</p>
+<p>保证页面的视觉稳定性</p>
+<h1></h1>
+
+<blockquote>
+<p>元素的意外移动通常是由于异步加载资源或者 DOM 元素动态添加到现有内容商法的页面而发生的</p>
+</blockquote>
+<blockquote>
+<p>可能是由于尺寸未知的多媒体资源，字体变化或者动态调整自身大小的第三方广告、小部件</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>TBT 时长</th>
+<th>颜色编码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0-0.1ms</td>
+<td><font color=green>快速</font></td>
+</tr>
+<tr>
+<td>0.1-0.25ms</td>
+<td><font color=yellow>中等</font></td>
+</tr>
+<tr>
+<td>&gt;0.25ms</td>
+<td><font color=red>慢</font></td>
+</tr>
+</tbody></table>
+<h3 id="速度指数-SI-：页面可视区域中内容的填充速度"><a href="#速度指数-SI-：页面可视区域中内容的填充速度" class="headerlink" title="速度指数(SI)：页面可视区域中内容的填充速度"></a>速度指数(SI)：页面可视区域中内容的填充速度</h3><p>计算页面可见区域内容显示的平均时间来衡量</p>
+<h1></h1>
+
+<blockquote>
+<p>捕获浏览器加载页面过程的视频，然后对每 100ms 间隔的页面截图计算页面内容的填充百分比</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>TBT 时长</th>
+<th>颜色编码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0-4.3s</td>
+<td><font color=green>快速</font></td>
+</tr>
+<tr>
+<td>4.3-5.8ms</td>
+<td><font color=yellow>中等</font></td>
+</tr>
+<tr>
+<td>&gt;5.8ms</td>
+<td><font color=red>慢</font></td>
+</tr>
+</tbody></table>
+<h2 id="RAIL-性能模型"><a href="#RAIL-性能模型" class="headerlink" title="RAIL 性能模型"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/422402515">RAIL 性能模型</a></h2><blockquote>
+<p>RAIL</p>
+</blockquote>
+<ul>
+<li>R(响应)：应该尽可能快速的响应用户，应该在 100ms 内相应用户</li>
+<li>A(Animation)：在展示动画的时候，每一帧应该以 16ms 进行渲染，这样可以保持动画的一致性，避免卡顿</li>
+<li>I(空闲)：当使用 JS 主线程的时候，应该把任务划分到执行时间小于 50ms 的片段中，这样可以释放线程以进行用户交互</li>
+<li>L(加载)：应该在小于 1s 的时间内完成加载网页，且可以进行用户交互</li>
+</ul>
+<blockquote>
+<p>感知延迟的时间窗口</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>延迟时长</th>
+<th>用户反映</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0-16ms</td>
+<td>人眼可以感知每秒 60 帧的动画，即每帧 16ms，除了浏览器将一帧画面绘制到屏幕上的时间，网站应用大约需要 10ms 生成一帧</td>
+</tr>
+<tr>
+<td>0-100ms</td>
+<td>在该范围内相应用户的操作，属于流畅的体验</td>
+</tr>
+<tr>
+<td>100-1000ms</td>
+<td>能够感知明显延迟</td>
+</tr>
+<tr>
+<td>&gt;1s</td>
+<td>用户注意力将离开对执行任务的关注</td>
+</tr>
+<tr>
+<td>&gt;10s</td>
+<td>感到过于长以至于失望，可能回放弃任务</td>
+</tr>
+</tbody></table>
+<h2 id="Web-Vitals"><a href="#Web-Vitals" class="headerlink" title="Web Vitals"></a>Web Vitals</h2><h3 id="Core-Web-Vitals"><a href="#Core-Web-Vitals" class="headerlink" title="Core Web Vitals"></a>Core Web Vitals</h3><p>应用于所有 web 页面的 Web Vitals 子集，为其最重要的核心</p>
+<p>主要指标</p>
+<ul>
+<li>LCP：加载性能</li>
+<li>FID：交互性</li>
+<li>CLS：视觉稳定性</li>
+</ul>
+<h2 id="测试工具"><a href="#测试工具" class="headerlink" title="测试工具"></a>测试工具</h2><ul>
+<li>LightHouse</li>
+<li><a target="_blank" rel="noopener" href="https://www.webpagetest.org/">WebPageTest</a></li>
+<li>DevTools</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" rel="prev" title="记录">
+                  <i class="fa fa-angle-left"></i> 记录
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91%E6%97%A0%E5%A4%B4%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%9F%E6%88%90%E5%9B%BE%E7%89%87%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0%E5%AF%B9%E8%B1%A1%E5%82%A8%E5%AD%98/" rel="next" title="【云托管】无头浏览器生成图片并上传到对象储存">
+                  【云托管】无头浏览器生成图片并上传到对象储存 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

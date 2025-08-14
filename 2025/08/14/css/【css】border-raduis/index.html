@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="border-raduis语法 只有一个值  表示圆角属性作用在全部四个角上  有两个值  第一个作用于左上角和右下角，第二个作用于右上角和左下角  三个值  第一个作用于左上角，第二个作用于右上角和左下角，第三个作用于右下角  四个值  按照顺时针的方向，左上、右上、右下、左下 水平半径和垂直半径12border-left-top-radius: 10px 20pxborder-raduis：1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【css】border-raduis">
+<meta property="og:url" content="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="border-raduis语法 只有一个值  表示圆角属性作用在全部四个角上  有两个值  第一个作用于左上角和右下角，第二个作用于右上角和左下角  三个值  第一个作用于左上角，第二个作用于右上角和左下角，第三个作用于右下角  四个值  按照顺时针的方向，左上、右上、右下、左下 水平半径和垂直半径12border-left-top-radius: 10px 20pxborder-raduis：1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T03:18:06.178Z">
+<meta property="article:modified_time" content="2025-03-06T09:08:26.515Z">
+<meta property="article:author" content="yangxin">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/","path":"2025/08/14/css/【css】border-raduis/","title":"【css】border-raduis"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【css】border-raduis | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#border-raduis"><span class="nav-number">1.</span> <span class="nav-text">border-raduis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B0%B4%E5%B9%B3%E5%8D%8A%E5%BE%84%E5%92%8C%E5%9E%82%E7%9B%B4%E5%8D%8A%E5%BE%84"><span class="nav-number">1.2.</span> <span class="nav-text">水平半径和垂直半径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%8F%A0%E6%9B%B2%E7%BA%BF"><span class="nav-number">1.3.</span> <span class="nav-text">重叠曲线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E7%BB%86%E8%8A%82"><span class="nav-number">2.</span> <span class="nav-text">渲染细节</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【css】border-raduis | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【css】border-raduis
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="border-raduis"><a href="#border-raduis" class="headerlink" title="border-raduis"></a>border-raduis</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><ul>
+<li>只有一个值</li>
+</ul>
+<p>表示圆角属性作用在全部四个角上</p>
+<ul>
+<li>有两个值</li>
+</ul>
+<p>第一个作用于左上角和右下角，第二个作用于右上角和左下角</p>
+<ul>
+<li>三个值</li>
+</ul>
+<p>第一个作用于左上角，第二个作用于右上角和左下角，第三个作用于右下角</p>
+<ul>
+<li>四个值</li>
+</ul>
+<p>按照顺时针的方向，左上、右上、右下、左下</p>
+<h3 id="水平半径和垂直半径"><a href="#水平半径和垂直半径" class="headerlink" title="水平半径和垂直半径"></a>水平半径和垂直半径</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-left</span>-<span class="attribute">top</span>-radius: <span class="number">10px</span> <span class="number">20px</span></span><br><span class="line">border-raduis：<span class="number">10px</span> / <span class="number">20px</span></span><br></pre></td></tr></table></figure>
+<p>表示圆角是水平半径为10px，垂直半径为20px的椭圆产生的</p>
+<h3 id="重叠曲线"><a href="#重叠曲线" class="headerlink" title="重叠曲线"></a>重叠曲线</h3><p>f&#x3D;min(Lh&#x2F;Sh, Lv&#x2F;Sv)</p>
+<p>S为半径之和，L为元素宽高，h和v表示方向，f为计算值。</p>
+<p>Lh：元素宽</p>
+<p>Sh：垂直方向的半径和</p>
+<p>Lv：元素高度</p>
+<p>Sv：水平方向的半径和</p>
+<p>如果f计算值小于1，那么所有圆角半径都乘以f</p>
+<p>eg：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-top</span>-<span class="attribute">left</span>-raduis：<span class="number">30px</span> <span class="number">100%</span>；</span><br><span class="line"><span class="attribute">border-bottom</span>-<span class="attribute">left</span>-raduis：<span class="number">30px</span> <span class="number">100%</span>；</span><br><span class="line"><span class="attribute">width</span>：<span class="number">150px</span>；</span><br><span class="line"><span class="attribute">height</span>：<span class="number">100px</span>；</span><br></pre></td></tr></table></figure>
+<p>左上角和左下角的垂直半径是100%（元素高），水平半径是30px<br>f&#x3D;min（150&#x2F;60，100&#x2F;200）&#x3D;0.5</p>
+<p>所以渲染结果为</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-top</span>-<span class="attribute">left</span>-raduis：<span class="number">15px</span> <span class="number">50%</span>；</span><br><span class="line"><span class="attribute">border-bottom</span>-<span class="attribute">left</span>-raduis：<span class="number">15px</span> <span class="number">50%</span>；</span><br></pre></td></tr></table></figure>
+
+<h2 id="渲染细节"><a href="#渲染细节" class="headerlink" title="渲染细节"></a>渲染细节</h2><p>如果元素设置了border边框，则圆角半径会被分为内半径和外半径</p>
+<ul>
+<li><p>padding边缘的圆角大小为设置的border- radius - 边框厚度</p>
+</li>
+<li><p>如果相邻两侧边框厚度不同，则圆角大小将在较厚和较薄边界之间显示平滑过度</p>
+</li>
+<li><p>圆角边框的连接线和直角边框连接线位置一致，但是角度有所不同</p>
+</li>
+<li><p>border-raduis不支持负值</p>
+</li>
+<li><p>圆角以外的区域不可点击，无法响应click事件</p>
+</li>
+<li><p>borser-radius没有继承性</p>
+</li>
+<li><p>支持transition过渡效果，支持animation动画效果</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/css/%E3%80%90css%E3%80%91contain/" rel="prev" title="【css】contain">
+                  <i class="fa fa-angle-left"></i> 【css】contain
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/css/%E3%80%90css%E3%80%91BFC/" rel="next" title="【css】BFC">
+                  【css】BFC <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

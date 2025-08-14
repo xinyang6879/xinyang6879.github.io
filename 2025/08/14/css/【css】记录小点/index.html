@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="border：0与border：none区别相同点两者都可以将元素的边框设为不可见 不同点 性能差异  border：0   其表示为将元素边框设置为0像素，虽然在页面上无法看见，但是浏览器依旧会对边框进行渲染。因此渲染的是一个像素为0的b order。 即border：0依旧会占用内存  border：none  其表示的是将元素边框设置无，因此浏览器在解析时，并不会对其进行渲染 即其不会占用浏">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【css】记录小点">
+<meta property="og:url" content="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="border：0与border：none区别相同点两者都可以将元素的边框设为不可见 不同点 性能差异  border：0   其表示为将元素边框设置为0像素，虽然在页面上无法看见，但是浏览器依旧会对边框进行渲染。因此渲染的是一个像素为0的b order。 即border：0依旧会占用内存  border：none  其表示的是将元素边框设置无，因此浏览器在解析时，并不会对其进行渲染 即其不会占用浏">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T03:18:06.192Z">
+<meta property="article:modified_time" content="2025-05-03T03:49:02.371Z">
+<meta property="article:author" content="yangxin">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/","path":"2025/08/14/css/【css】记录小点/","title":"【css】记录小点"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【css】记录小点 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#border%EF%BC%9A0%E4%B8%8Eborder%EF%BC%9Anone%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">border：0与border：none区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%90%8C%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">相同点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E7%82%B9"><span class="nav-number">1.2.</span> <span class="nav-text">不同点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD"><span class="nav-number">2.</span> <span class="nav-text">垂直居中</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E7%89%87"><span class="nav-number">2.1.</span> <span class="nav-text">图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E5%AD%97"><span class="nav-number">2.2.</span> <span class="nav-text">文字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#line-height"><span class="nav-number">3.</span> <span class="nav-text">line-height</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vertical-align"><span class="nav-number">4.</span> <span class="nav-text">vertical-align</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E7%B4%A0%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-number">5.</span> <span class="nav-text">元素选择器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%85%E5%90%AB%E5%9D%97"><span class="nav-number">6.</span> <span class="nav-text">包含块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8"><span class="nav-number">6.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B"><span class="nav-number">6.2.</span> <span class="nav-text">类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#em"><span class="nav-number">7.</span> <span class="nav-text">em</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#background-size-auto-%E6%B8%B2%E6%9F%93%E8%A7%84%E5%88%99"><span class="nav-number">8.</span> <span class="nav-text">background-size: auto 渲染规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#background-position"><span class="nav-number">9.</span> <span class="nav-text">background-position</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#opacity"><span class="nav-number">10.</span> <span class="nav-text">opacity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#border-raduis"><span class="nav-number">11.</span> <span class="nav-text">border-raduis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-number">11.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B0%B4%E5%B9%B3%E5%8D%8A%E5%BE%84%E5%92%8C%E5%9E%82%E7%9B%B4%E5%8D%8A%E5%BE%84"><span class="nav-number">11.2.</span> <span class="nav-text">水平半径和垂直半径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%8F%A0%E6%9B%B2%E7%BA%BF"><span class="nav-number">11.3.</span> <span class="nav-text">重叠曲线</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【css】记录小点 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【css】记录小点
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-05-03 11:49:02" itemprop="dateModified" datetime="2025-05-03T11:49:02+08:00">2025-05-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="border：0与border：none区别"><a href="#border：0与border：none区别" class="headerlink" title="border：0与border：none区别"></a>border：0与border：none区别</h2><h3 id="相同点"><a href="#相同点" class="headerlink" title="相同点"></a>相同点</h3><p>两者都可以将元素的边框设为不可见</p>
+<h3 id="不同点"><a href="#不同点" class="headerlink" title="不同点"></a>不同点</h3><ul>
+<li><p>性能差异</p>
+</li>
+<li><p>border：0</p>
+</li>
+</ul>
+<p>其表示为将元素边框设置为0像素，虽然在页面上无法看见，但是浏览器依旧会对边框进行渲染。因此渲染的是一个像素为0的b order。</p>
+<p>即border：0依旧会占用内存</p>
+<ul>
+<li>border：none</li>
+</ul>
+<p>其表示的是将元素边框设置无，因此浏览器在解析时，并不会对其进行渲染</p>
+<p>即其不会占用浏览器内存</p>
+<ul>
+<li>兼容</li>
+</ul>
+<p>在ie6&#x2F;7的button元素中，border：none并不会生效</p>
+<h2 id="垂直居中"><a href="#垂直居中" class="headerlink" title="垂直居中"></a>垂直居中</h2><h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">display</span>: table-cell;</span><br><span class="line"><span class="comment">// 子元素</span></span><br><span class="line">vertical-<span class="attr">align</span>: center;</span><br></pre></td></tr></table></figure>
+
+<h3 id="文字"><a href="#文字" class="headerlink" title="文字"></a>文字</h3><ul>
+<li>line-height</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">height</span>: <span class="number">20px</span>;</span><br><span class="line"><span class="attribute">line-height</span>: <span class="number">20px</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="line-height"><a href="#line-height" class="headerlink" title="line-height"></a>line-height</h2><ul>
+<li><p>line-height指的是两行文字基线与基线之间的高度</p>
+</li>
+<li><p>单位为%时，计算规则是相对于当前元素的font-size计算的，即0.x*fontsize</p>
+</li>
+<li><p>无单位时，是相对于当前元素的font-size计算的，即x*fontsize</p>
+</li>
+</ul>
+<h2 id="vertical-align"><a href="#vertical-align" class="headerlink" title="vertical-align"></a>vertical-align</h2><ul>
+<li>元素没有设置时，继承的是父元素line-height的像素值，即如果父元素的line-height是%单位，那么浏览器计算出来的实际line-height值才会被子元素继承。</li>
+</ul>
+<h2 id="元素选择器"><a href="#元素选择器" class="headerlink" title="元素选择器"></a>元素选择器</h2><table>
+<thead>
+<tr>
+<th>选择器</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>#</td>
+<td>id选择器</td>
+</tr>
+<tr>
+<td>.</td>
+<td>class选择器</td>
+</tr>
+<tr>
+<td>M N</td>
+<td>后代选择器，选择M元素内部后代的所有N元素</td>
+</tr>
+<tr>
+<td>M&gt;N</td>
+<td>子代选择器，选择M元素内部后代的第一个子级N元素</td>
+</tr>
+<tr>
+<td>M～N</td>
+<td>兄弟选择器，选择M元素后所有的同级N元素</td>
+</tr>
+<tr>
+<td>M+N</td>
+<td>相邻选择器，选择M元素相邻的下一个N元素，M和N是同一级</td>
+</tr>
+</tbody></table>
+<p>属性选择器:</p>
+<ul>
+<li>A[attr]: 下面其带有指定属性的元素,可以有多个,例如.name[title][id]:选择name的class下同时带有title和id属性的元素</li>
+<li>A[attribute<del>&#x3D;value]: 选取属性值中包含指定词汇的元素.例如p[class</del>&#x3D;name],只要是个p元素且class包含的name的元素就符合</li>
+<li>A[attribute|&#x3D;value]: 选取属性值中全等于指定词汇的元素,例如p[class|&#x3D;name],只要是p元素且class属性是name的元素就符合,如果class有其他的,那就不符合</li>
+<li>A[attribute^&#x3D;value]: 选取属性值以value开头的元素</li>
+<li>A[attribute$&#x3D;value]: 选取属性值以value结尾的元素</li>
+<li>A[attribute*&#x3D;value]: 选取属性值包含value的元素</li>
+<li>A[attribute|&#x3D;value]: 选取属性值等于value或者以value开头的元素</li>
+</ul>
+<h2 id="包含块"><a href="#包含块" class="headerlink" title="包含块"></a>包含块</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>与css盒子模型类似。作用是为这个矩形内部的后代元素提供一个参考，一个元素的大小和定位往往是由该元素所在的包含块决定的。</p>
+<h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><ul>
+<li>根元素</li>
+</ul>
+<p>html元素，它没有父元素，是页面中最顶端的元素。根元素存在的包含块，被称为初始包含块。</p>
+<ul>
+<li>固定定位元素</li>
+</ul>
+<p>若元素的position&#x3D;fixed，那么它的包含块是当前可视窗口，即当前浏览器的窗口</p>
+<p>注意：<strong>小程序</strong>中position&#x3D;fixed会<strong>受到box-shadow</strong>的影响</p>
+<pre><code>box-shadow 会创建一个新的层级上下文，这可能会影响 fixed 元素的层级表现，导致它不如预期地固定在视口上。
+</code></pre>
+<ul>
+<li>静态定位和相对定位元素</li>
+</ul>
+<p>若元素的position&#x3D;relative&#x2F;absolute，那么其包含块是由离他最近的块级祖先元素创建的。祖先元素必须是block、inline-block或table-cell</p>
+<ul>
+<li>绝对定位元素</li>
+</ul>
+<p>若元素的position&#x3D;absolute，那么其包含块是最近的position！&#x3D;static的元素。祖先元素可以是块元素，也可以是行内元素</p>
+<h2 id="em"><a href="#em" class="headerlink" title="em"></a>em</h2><p>em是相对于当前元素的父元素计算的</p>
+<p>但是当用于fontsize时，如果多有个嵌套的元素，那么从父层到子层，其元素字号会越来越小</p>
+<h2 id="background-size-auto-渲染规则"><a href="#background-size-auto-渲染规则" class="headerlink" title="background-size: auto 渲染规则"></a>background-size: auto 渲染规则</h2><ul>
+<li>如果图像没有内在尺寸和内在比例</li>
+</ul>
+<p>按背景定位区域的大小进行渲染，等同于设置属性100%</p>
+<ul>
+<li>水平和垂直方向同时具有内在尺寸</li>
+</ul>
+<p>按图像原始大小进行渲染</p>
+<ul>
+<li>没有内在尺寸，但有内在比例</li>
+</ul>
+<p>渲染效果等同于contain</p>
+<ul>
+<li>只有一个方向有内在尺寸，但具有内在比例</li>
+</ul>
+<p>图像会拉伸到该内在尺寸的大小，同时宽高比符合内在比例</p>
+<ul>
+<li>只有一个方向有内在尺寸，没有内在比例</li>
+</ul>
+<p>图像有内在尺寸的一侧会拉伸到该内在尺寸大小，没有设置内在尺寸的一侧会拉伸到背景定位区域大小</p>
+<p>##background-size：一个为auto，一个为非auto</p>
+<ul>
+<li>有内在比例</li>
+</ul>
+<p>会拉伸到指定的尺寸，宽高依然保持原有的比例</p>
+<ul>
+<li>没有内在比例</li>
+</ul>
+<p>图像会拉伸到指定尺寸。</p>
+<p>如果图像有内在尺寸，则auto到计算尺寸就是图像的尺寸</p>
+<p>如果图像没有内在尺寸，那么auto的计算尺寸就是背景定位区域的尺寸</p>
+<h2 id="background-position"><a href="#background-position" class="headerlink" title="background-position"></a>background-position</h2><ul>
+<li>只有一个值</li>
+</ul>
+<p>例如：20px &#x3D;&#x3D; 20px center</p>
+<p>如果只有一个值，那么无论是具体的数值或者百分比或者是关键字，另一个值一定是center</p>
+<ul>
+<li><p>两个值</p>
+</li>
+<li><p>两个都是关键属性值</p>
+</li>
+</ul>
+<p>left、right表示水平，top、bottom表示垂直。</p>
+<p>不能包含对立的方位，即top bottom是无效的</p>
+<ul>
+<li>一个是关键属性值，一个是数值或者百分比</li>
+</ul>
+<p>如果第一个值是百分比或者数值，那么表示水平方向，另一个关键属性值表示垂直方向</p>
+<p>如果第一个值是关键属性值，那么表示水平方向，另一个百分比或者数值表示垂直方向</p>
+<ul>
+<li>两个值都是数值或者百分比</li>
+</ul>
+<p>第一个表示水平方向，第二个表示垂直方向</p>
+<ul>
+<li>3个值或者4个值</li>
+</ul>
+<p>数值和百分比表示偏移量，第一个值一定要是关键属性值，这个关键属性值表示偏移方向</p>
+<h2 id="opacity"><a href="#opacity" class="headerlink" title="opacity"></a>opacity</h2><p>opacity不等于1的元素会创建一个层叠上下文，层叠顺序会变高</p>
+<h2 id="border-raduis"><a href="#border-raduis" class="headerlink" title="border-raduis"></a>border-raduis</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><ul>
+<li>只有一个值</li>
+</ul>
+<p>表示圆角属性作用在全部四个角上</p>
+<ul>
+<li>有两个值</li>
+</ul>
+<p>第一个作用于左上角和右下角，第二个作用于右上角和左下角</p>
+<ul>
+<li>三个值</li>
+</ul>
+<p>第一个作用于左上角，第二个作用于右上角和左下角，第三个作用于右下角</p>
+<ul>
+<li>四个值</li>
+</ul>
+<p>按照顺时针的方向，左上、右上、右下、左下</p>
+<h3 id="水平半径和垂直半径"><a href="#水平半径和垂直半径" class="headerlink" title="水平半径和垂直半径"></a>水平半径和垂直半径</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-left</span>-<span class="attribute">top</span>-radius: <span class="number">10px</span> <span class="number">20px</span></span><br><span class="line">border-raduis：<span class="number">10px</span> / <span class="number">20px</span></span><br></pre></td></tr></table></figure>
+<p>表示圆角是水平半径为10px，垂直半径为20px的椭圆产生的</p>
+<h3 id="重叠曲线"><a href="#重叠曲线" class="headerlink" title="重叠曲线"></a>重叠曲线</h3><p>f&#x3D;min(Lh&#x2F;Sh, Lv&#x2F;Sv)</p>
+<p>S为半径之和，L为元素宽高，h和v表示方向，f为计算值。</p>
+<p>Lh：元素宽</p>
+<p>Sh：垂直方向的半径和</p>
+<p>Lv：元素高度</p>
+<p>Sv：水平方向的半径和</p>
+<p>如果f计算值小于1，那么所有圆角半径都乘以f</p>
+<p>eg：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-top</span>-<span class="attribute">left</span>-raduis：<span class="number">30px</span> <span class="number">100%</span>；</span><br><span class="line"><span class="attribute">border-bottom</span>-<span class="attribute">left</span>-raduis：<span class="number">30px</span> <span class="number">100%</span>；</span><br><span class="line"><span class="attribute">width</span>：<span class="number">150px</span>；</span><br><span class="line"><span class="attribute">height</span>：<span class="number">100px</span>；</span><br></pre></td></tr></table></figure>
+<p>左上角和左下角的垂直半径是100%（元素高），水平半径是30px<br>f&#x3D;min（150&#x2F;60，100&#x2F;200）&#x3D;0.5</p>
+<p>所以渲染结果为</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-top</span>-<span class="attribute">left</span>-raduis：<span class="number">15px</span> <span class="number">50%</span>；</span><br><span class="line"><span class="attribute">border-bottom</span>-<span class="attribute">left</span>-raduis：<span class="number">15px</span> <span class="number">50%</span>；</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/css/%E3%80%90css%E3%80%91%E6%BB%9A%E5%8A%A8%E8%B4%B4%E5%90%88/" rel="prev" title="【css】滚动贴合">
+                  <i class="fa fa-angle-left"></i> 【css】滚动贴合
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/css/%E5%B0%8F%E7%82%B9/" rel="next" title="【css】小点">
+                  【css】小点 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

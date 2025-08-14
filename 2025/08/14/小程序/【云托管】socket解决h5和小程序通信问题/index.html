@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="云托管https:&#x2F;&#x2F;developers.weixin.qq.com&#x2F;miniprogram&#x2F;dev&#x2F;wxcloudservice&#x2F;wxcloudrun&#x2F;src&#x2F; 云托管是微信小程序出的，无需后端即可部署服务端  基于容器技术，支持用户自定义镜像或代码构建容器，提供全托管的容器服务。 支持常驻运行的服务形态，适合需要长期运行或有复杂依赖的传统业务 提供弹性扩缩、多活容灾等企业级能力 支持长连接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【云托管】socket解决h5和小程序通信问题">
+<meta property="og:url" content="http://example.com/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91socket%E8%A7%A3%E5%86%B3h5%E5%92%8C%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%80%9A%E4%BF%A1%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="云托管https:&#x2F;&#x2F;developers.weixin.qq.com&#x2F;miniprogram&#x2F;dev&#x2F;wxcloudservice&#x2F;wxcloudrun&#x2F;src&#x2F; 云托管是微信小程序出的，无需后端即可部署服务端  基于容器技术，支持用户自定义镜像或代码构建容器，提供全托管的容器服务。 支持常驻运行的服务形态，适合需要长期运行或有复杂依赖的传统业务 提供弹性扩缩、多活容灾等企业级能力 支持长连接">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s21.ax1x.com/2025/04/03/pE6E481.png">
+<meta property="article:published_time" content="2025-08-14T03:18:06.939Z">
+<meta property="article:modified_time" content="2025-04-03T07:23:19.620Z">
+<meta property="article:author" content="yangxin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s21.ax1x.com/2025/04/03/pE6E481.png">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91socket%E8%A7%A3%E5%86%B3h5%E5%92%8C%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%80%9A%E4%BF%A1%E9%97%AE%E9%A2%98/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91socket%E8%A7%A3%E5%86%B3h5%E5%92%8C%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%80%9A%E4%BF%A1%E9%97%AE%E9%A2%98/","path":"2025/08/14/小程序/【云托管】socket解决h5和小程序通信问题/","title":"【云托管】socket解决h5和小程序通信问题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【云托管】socket解决h5和小程序通信问题 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%91%E6%89%98%E7%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">云托管</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#websocket-%E8%A7%A3%E5%86%B3%E9%80%9A%E4%BF%A1%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">websocket 解决通信问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="nav-number">2.1.</span> <span class="nav-text">服务端</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E8%81%94-h5-%E5%92%8C%E5%B0%8F%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.1.1.</span> <span class="nav-text">关联 h5 和小程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%92%E9%80%9A%E6%B6%88%E6%81%AF"><span class="nav-number">2.1.2.</span> <span class="nav-text">互通消息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8"><span class="nav-number">2.1.3.</span> <span class="nav-text">启动</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.2.</span> <span class="nav-text">小程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#h5"><span class="nav-number">2.3.</span> <span class="nav-text">h5</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91socket%E8%A7%A3%E5%86%B3h5%E5%92%8C%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%80%9A%E4%BF%A1%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【云托管】socket解决h5和小程序通信问题 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【云托管】socket解决h5和小程序通信问题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-04-03 15:23:19" itemprop="dateModified" datetime="2025-04-03T15:23:19+08:00">2025-04-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" itemprop="url" rel="index"><span itemprop="name">小程序</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="云托管"><a href="#云托管" class="headerlink" title="云托管"></a>云托管</h2><p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/">https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/</a></p>
+<p>云托管是微信小程序出的，无需后端即可部署服务端</p>
+<ul>
+<li>基于容器技术，支持用户自定义镜像或代码构建容器，提供全托管的容器服务。</li>
+<li>支持常驻运行的服务形态，适合需要长期运行或有复杂依赖的传统业务</li>
+<li>提供弹性扩缩、多活容灾等企业级能力</li>
+<li>支持长连接</li>
+<li>自定义部署支持：nodejs、GoLang、Python、Java</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/Billing/price.html">收费标准</a>，前三个月免费</p>
+<h2 id="websocket-解决通信问题"><a href="#websocket-解决通信问题" class="headerlink" title="websocket 解决通信问题"></a>websocket 解决通信问题</h2><p>找到小程序和 h5 的共同点，这里由于 h5 和小程序用的是同一个 token，因此使用 token 作为链接标识</p>
+<p>小程序示例里面推荐<code>express-ws</code></p>
+<h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><h4 id="关联-h5-和小程序"><a href="#关联-h5-和小程序" class="headerlink" title="关联 h5 和小程序"></a>关联 h5 和小程序</h4><p>思路：</p>
+<ul>
+<li>声明一个 Map，token 作为 key，h5 和小程序作为 value</li>
+<li>从请求中拿到 token 和 env</li>
+<li>如果对应 token 和 env 已经有连接了，那么需要将其关闭</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">WebSocket</span> = <span class="built_in">require</span>(<span class="string">&quot;ws&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> connections = <span class="keyword">new</span> <span class="title class_">Map</span>(); <span class="comment">// 全局存储连接</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">useH5WxConnectSocket</span>(<span class="params">ws, req</span>) &#123;</span><br><span class="line">  <span class="comment">// 从参数获取到token和env</span></span><br><span class="line">  <span class="keyword">const</span> &#123; token, env &#125; = req.<span class="property">query</span>;</span><br><span class="line">  <span class="comment">//   查看是否有历史连接</span></span><br><span class="line">  <span class="keyword">const</span> connection = connections.<span class="title function_">get</span>(token) || <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(</span><br><span class="line">    <span class="string">`[连接更新] token=<span class="subst">$&#123;token&#125;</span> env=<span class="subst">$&#123;env&#125;</span>`</span>,</span><br><span class="line">    <span class="string">`新连接ID: <span class="subst">$&#123;ws._socket?.remotePort&#125;</span>`</span>, <span class="comment">// 查看实际连接ID</span></span><br><span class="line">    <span class="string">`旧连接存在: <span class="subst">$&#123;connection.has(env)&#125;</span>`</span></span><br><span class="line">  );</span><br><span class="line">  <span class="comment">// 清理旧连接</span></span><br><span class="line">  <span class="keyword">if</span> (connection.<span class="title function_">has</span>(env)) &#123;</span><br><span class="line">    <span class="keyword">const</span> oldWs = connection.<span class="title function_">get</span>(env);</span><br><span class="line">    connection.<span class="title function_">delete</span>(env);</span><br><span class="line">    <span class="keyword">if</span> (oldWs.<span class="property">readyState</span> === <span class="title class_">WebSocket</span>.<span class="property">OPEN</span>) &#123;</span><br><span class="line">      oldWs.<span class="title function_">close</span>(); <span class="comment">// 显式关闭旧连接</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//   设置环境对应的连接</span></span><br><span class="line">  connection.<span class="title function_">set</span>(env, ws);</span><br><span class="line">  <span class="comment">//   设置token对应的h5和小程序的连接</span></span><br><span class="line">  connections.<span class="title function_">set</span>(token, connection);</span><br><span class="line">  <span class="comment">//   socket接收到消息</span></span><br><span class="line">  ws.<span class="title function_">on</span>(<span class="string">&quot;message&quot;</span>, <span class="keyword">function</span> (<span class="params">msg</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;message==&quot;</span>, msg);</span><br><span class="line">    <span class="title function_">sendTo</span>(token, msg, env);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 需要添加关闭事件监听</span></span><br><span class="line">  ws.<span class="title function_">on</span>(<span class="string">&quot;close&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 获取到对应的环境</span></span><br><span class="line">    <span class="keyword">const</span> currentConnection = connections.<span class="title function_">get</span>(token);</span><br><span class="line">    <span class="keyword">if</span> (currentConnection?.<span class="title function_">get</span>(env) === ws) &#123;</span><br><span class="line">      <span class="comment">// 确保只删除当前实例</span></span><br><span class="line">      currentConnection.<span class="title function_">delete</span>(env);</span><br><span class="line">      <span class="keyword">if</span> (currentConnection.<span class="property">size</span> === <span class="number">0</span>) connections.<span class="title function_">delete</span>(token);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="互通消息"><a href="#互通消息" class="headerlink" title="互通消息"></a>互通消息</h4><p>思路：</p>
+<ul>
+<li>接收到消息时，获取到对应的 token 和 env</li>
+<li>遍历对应 token 对应的所有环境</li>
+<li>除了接收到消息的 env，给其他连接发送消息</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 发送给指定连接</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">sendTo</span>(<span class="params">token, message, excludeEnv</span>) &#123;</span><br><span class="line">  <span class="comment">// 拿到token对应的所有连接</span></span><br><span class="line">  <span class="keyword">const</span> connectionMap = connections.<span class="title function_">get</span>(token);</span><br><span class="line">  <span class="comment">//   遍历所有连接</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> [env, ws] <span class="keyword">of</span> connectionMap) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(</span><br><span class="line">      <span class="string">`连接状态检查 env=<span class="subst">$&#123;env&#125;</span> 状态码=<span class="subst">$&#123;ws.readyState&#125;</span> 连接ID: <span class="subst">$&#123;ws._socket?.remotePort&#125;</span>`</span></span><br><span class="line">    );</span><br><span class="line">    <span class="comment">// 遍历Map结构</span></span><br><span class="line">    <span class="keyword">if</span> (env === excludeEnv) <span class="keyword">continue</span>; <span class="comment">// 跳过排除的env</span></span><br><span class="line">    <span class="comment">// 如果有连接且该连接处于开启状态</span></span><br><span class="line">    <span class="keyword">if</span> (ws &amp;&amp; ws.<span class="property">readyState</span> === <span class="title class_">WebSocket</span>.<span class="property">OPEN</span>) &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        ws.<span class="title function_">send</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(message));</span><br><span class="line">      &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`发送到env=<span class="subst">$&#123;env&#125;</span>失败:`</span>, err);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p>在<code>index.js</code>中引入对应的 socket 文件，并启动服务</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; useH5WxConnectSocket &#125; = <span class="built_in">require</span>(<span class="string">&quot;./socket&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>();</span><br><span class="line"><span class="comment">// 引入socket，挂在到express上</span></span><br><span class="line"><span class="keyword">var</span> expressWs = <span class="built_in">require</span>(<span class="string">&quot;express-ws&quot;</span>)(app);</span><br><span class="line"><span class="comment">// 设置socket方法</span></span><br><span class="line">app.<span class="title function_">ws</span>(<span class="string">&quot;/socket&quot;</span>, <span class="keyword">function</span> (<span class="params">ws, req</span>) &#123;</span><br><span class="line">  <span class="title function_">useH5WxConnectSocket</span>(ws, req);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="小程序"><a href="#小程序" class="headerlink" title="小程序"></a>小程序</h3><p>小程序调用云托管函数，是通过 sdk 调用的，首先调用<code>wx.cloud.init()</code>后，才能进行云托管的其他函数调用</p>
+<ul>
+<li>初始化云托管</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// App.vue</span></span><br><span class="line">wx.<span class="property">cloud</span>.<span class="title function_">init</span>();</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>连接 socket</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pE6E481"><img src="https://s21.ax1x.com/2025/04/03/pE6E481.png" alt="pE6E481.png"></a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">onConnect</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; socketTask &#125; = <span class="keyword">await</span> wx.<span class="property">cloud</span>.<span class="title function_">connectContainer</span>(&#123;</span><br><span class="line">    <span class="attr">config</span>: &#123; <span class="attr">env</span>: <span class="string">&quot;微信云托管环境ID&quot;</span> &#125;,</span><br><span class="line">    <span class="attr">service</span>: <span class="string">&quot;服务名&quot;</span>, <span class="comment">// 服务列表对应服务的名称</span></span><br><span class="line">    <span class="attr">path</span>: <span class="string">`/socket?token=<span class="subst">$&#123;Store.roleStore.getToken&#125;</span>&amp;env=miniapp`</span>, <span class="comment">// 请求路径，参数通过url传递</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>重连 socket</li>
+</ul>
+<p>socket 最长 1min 后，会关闭连接，因此需要重新进行连接</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">socketTask.<span class="title function_">onClose</span>(<span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;【WEBSOCKET】全局连接关闭，3秒后重连&quot;</span>, <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>());</span><br><span class="line">  <span class="built_in">setTimeout</span>(onConnect, <span class="number">3000</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当 socket 相关抽离时，多个文件引入时需要用同一个连接，且 socket 接收到消息时，需要触发所有引用 socket 的 message 方法</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> _socketTask = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="attr">messageHandlers</span>: (<span class="function">(<span class="params">data: any</span>) =&gt;</span> <span class="keyword">void</span>)[] = [];</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">onConnect</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; socketTask &#125; = <span class="keyword">await</span> wx.<span class="property">cloud</span>.<span class="title function_">connectContainer</span>(&#123;</span><br><span class="line">    <span class="attr">config</span>: &#123; <span class="attr">env</span>: <span class="string">&quot;微信云托管环境ID&quot;</span> &#125;,</span><br><span class="line">    <span class="attr">service</span>: <span class="string">&quot;服务名&quot;</span>, <span class="comment">// 服务列表对应服务的名称</span></span><br><span class="line">    <span class="attr">path</span>: <span class="string">`/socket?token=<span class="subst">$&#123;Store.roleStore.getToken&#125;</span>&amp;env=miniapp`</span>, <span class="comment">// 请求路径，参数通过url传递</span></span><br><span class="line">    &#125;);</span><br><span class="line">    _socketTask = socketTask;</span><br><span class="line">    <span class="comment">// 接收到消息时</span></span><br><span class="line">    _socketTask.<span class="title function_">onMessage</span>(<span class="keyword">function</span> (<span class="params">res</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> info = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="title class_">JSON</span>.<span class="title function_">parse</span>(res.<span class="property">data</span>));</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> info === <span class="string">&quot;string&quot;</span>) &#123;</span><br><span class="line">        info = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(info);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;【WEBSOCKET】收到消息----&quot;</span>, info, <span class="keyword">typeof</span> info);</span><br><span class="line">    messageHandlers.<span class="title function_">forEach</span>(<span class="function">(<span class="params">fn</span>) =&gt;</span> <span class="title function_">fn</span>(info?.<span class="property">type</span>, info?.<span class="property">data</span>));</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">onMessage</span> = (<span class="params">handler: (data: any) =&gt; <span class="keyword">void</span></span>) =&gt; &#123;</span><br><span class="line">    messageHandlers.<span class="title function_">push</span>(handler);</span><br><span class="line">    <span class="comment">// 返回取消订阅函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        messageHandlers = messageHandlers.<span class="title function_">filter</span>(<span class="function">(<span class="params">h</span>) =&gt;</span> h !== handler);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>全部代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// hooks/index</span></span><br><span class="line"><span class="comment">// 声明是为了防止多个页面引入同一个hooks时，每次都会生成一个新的socket连接</span></span><br><span class="line"><span class="keyword">let</span> _socketTask = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="attr">messageHandlers</span>: (<span class="function">(<span class="params">data: any</span>) =&gt;</span> <span class="keyword">void</span>)[] = [];</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">getSocketTask</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">onOpen</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    _socketTask.<span class="title function_">onOpen</span>(<span class="keyword">async</span> <span class="keyword">function</span> (<span class="params">res</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;【WEBSOCKET】&quot;</span>, <span class="string">&quot;链接成功！&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">onError</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    _socketTask.<span class="title function_">onError</span>(<span class="keyword">async</span> <span class="keyword">function</span> (<span class="params">res</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;【WEBSOCKET】&quot;</span>, <span class="string">&quot;连接失败!!，&quot;</span>, res);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">// socket重新连接</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">onClose</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    _socketTask.<span class="title function_">onClose</span>(<span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;【WEBSOCKET】全局连接关闭，3秒后重连&quot;</span>, <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>());</span><br><span class="line">      <span class="built_in">setTimeout</span>(onConnect, <span class="number">3000</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">onConnect</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; socketTask &#125; = <span class="keyword">await</span> wx.<span class="property">cloud</span>.<span class="title function_">connectContainer</span>(&#123;</span><br><span class="line">      <span class="attr">config</span>: &#123; <span class="attr">env</span>: <span class="string">&quot;微信云托管环境ID&quot;</span> &#125;,</span><br><span class="line">      <span class="attr">service</span>: <span class="string">&quot;服务名&quot;</span>, <span class="comment">// 服务列表对应服务的名称</span></span><br><span class="line">      <span class="attr">path</span>: <span class="string">`/socket?token=<span class="subst">$&#123;Store.roleStore.getToken&#125;</span>&amp;env=miniapp`</span>, <span class="comment">// 请求路径，参数通过url传递</span></span><br><span class="line">    &#125;);</span><br><span class="line">    _socketTask = socketTask;</span><br><span class="line">    <span class="comment">// 接收到消息时</span></span><br><span class="line">    _socketTask.<span class="title function_">onMessage</span>(<span class="keyword">function</span> (<span class="params">res</span>) &#123;</span><br><span class="line">      <span class="keyword">let</span> info = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="title class_">JSON</span>.<span class="title function_">parse</span>(res.<span class="property">data</span>));</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> info === <span class="string">&quot;string&quot;</span>) &#123;</span><br><span class="line">        info = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(info);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;【WEBSOCKET】收到消息----&quot;</span>, info, <span class="keyword">typeof</span> info);</span><br><span class="line">      messageHandlers.<span class="title function_">forEach</span>(<span class="function">(<span class="params">fn</span>) =&gt;</span> <span class="title function_">fn</span>(info?.<span class="property">type</span>, info?.<span class="property">data</span>));</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="title function_">onOpen</span>();</span><br><span class="line">    <span class="title function_">onClose</span>();</span><br><span class="line">    <span class="title function_">onError</span>();</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!_socketTask) &#123;</span><br><span class="line">    <span class="title function_">onConnect</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">onSend</span> = (<span class="params">msg</span>) =&gt; &#123;</span><br><span class="line">    _socketTask.<span class="title function_">send</span>(&#123;</span><br><span class="line">      <span class="attr">data</span>: <span class="string">&quot;这是小程序消息&quot;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">socket</span>: _socketTask,</span><br><span class="line">    onSend,</span><br><span class="line">    <span class="attr">onMessage</span>: <span class="function">(<span class="params">handler: (data: any) =&gt; <span class="keyword">void</span></span>) =&gt;</span> &#123;</span><br><span class="line">      messageHandlers.<span class="title function_">push</span>(handler);</span><br><span class="line">      <span class="comment">// 返回取消订阅函数</span></span><br><span class="line">      <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        messageHandlers = messageHandlers.<span class="title function_">filter</span>(<span class="function">(<span class="params">h</span>) =&gt;</span> h !== handler);</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; onMessage &#125; = <span class="title function_">getSocketTask</span>();</span><br><span class="line"><span class="title function_">onMessage</span>(<span class="function">(<span class="params">type, data</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (type === <span class="string">&quot;addMaterial&quot;</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;onMessage&quot;</span>, type, data, list);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="h5"><a href="#h5" class="headerlink" title="h5"></a>h5</h3><p>h5 可以直接使用 socket 连接，不需要引入 sdk，socket 的连接从在线调试-》socket 获取</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> url = <span class="string">`wss://socketURL/socket?token=<span class="subst">$&#123;token&#125;</span>&amp;env=h5`</span>;</span><br><span class="line"><span class="comment">// 销毁旧连接（如果存在）</span></span><br><span class="line"><span class="keyword">if</span> (wsInstance) &#123;</span><br><span class="line">  wsInstance.<span class="title function_">close</span>();</span><br><span class="line">  wsInstance = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 创建新实例</span></span><br><span class="line">wsInstance = <span class="keyword">new</span> <span class="title class_">WebSocket</span>(url);</span><br></pre></td></tr></table></figure>
+<p>依旧需要考虑所有的事件和多文件引入使用同一个连接</p>
+<p>全部代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 模块级变量（单例核心）</span></span><br><span class="line"><span class="keyword">let</span> <span class="attr">wsInstance</span>: <span class="title class_">WebSocket</span> | <span class="literal">null</span> = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="attr">messageHandlers</span>: (<span class="function">(<span class="params">data: any</span>) =&gt;</span> <span class="keyword">void</span>)[] = [];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">initWebSocket</span> = (<span class="params">token: string</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (</span><br><span class="line">    wsInstance &amp;&amp;</span><br><span class="line">    [<span class="title class_">WebSocket</span>.<span class="property">OPEN</span>, <span class="title class_">WebSocket</span>.<span class="property">CONNECTING</span>].<span class="title function_">includes</span>(wsInstance?.<span class="property">readyState</span>)</span><br><span class="line">  ) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> url = <span class="string">`wss://socketURL/socket?token=<span class="subst">$&#123;token&#125;</span>&amp;env=h5`</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 销毁旧连接（如果存在）</span></span><br><span class="line">  <span class="keyword">if</span> (wsInstance) &#123;</span><br><span class="line">    wsInstance.<span class="title function_">close</span>();</span><br><span class="line">    wsInstance = <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建新实例</span></span><br><span class="line">  wsInstance = <span class="keyword">new</span> <span class="title class_">WebSocket</span>(url);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 统一事件监听（只需注册一次）</span></span><br><span class="line">  wsInstance.<span class="property">onopen</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;全局连接建立成功&quot;</span>);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  wsInstance.<span class="property">onmessage</span> = <span class="function">(<span class="params">evt</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> data = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(evt.<span class="property">data</span>);</span><br><span class="line">      messageHandlers.<span class="title function_">forEach</span>(<span class="function">(<span class="params">handler</span>) =&gt;</span> <span class="title function_">handler</span>(data));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;消息解析失败&quot;</span>, e);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  wsInstance.<span class="property">onerror</span> = <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;全局连接错误:&quot;</span>, err);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  wsInstance.<span class="property">onclose</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;全局连接关闭，3秒后重连&quot;</span>);</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">initWebSocket</span>(token), <span class="number">3000</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">useCloudSocket</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; token &#125; = <span class="title function_">useGetIdsFromUrl</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 初始化检查</span></span><br><span class="line">  <span class="keyword">if</span> (!wsInstance) &#123;</span><br><span class="line">    <span class="title function_">initWebSocket</span>(token);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  wsInstance.<span class="property">onclose</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;链接已经关闭&quot;</span>);</span><br><span class="line">    <span class="title function_">initWebSocket</span>(token);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  wsInstance.<span class="property">onerror</span> = <span class="keyword">function</span> (<span class="params">err</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;socket报错信息：&quot;</span>, err);</span><br><span class="line">  &#125;;</span><br><span class="line">  wsInstance.<span class="property">onmessage</span> = <span class="keyword">function</span> (<span class="params">evt</span>) &#123;</span><br><span class="line">    messageHandlers.<span class="title function_">forEach</span>(<span class="function">(<span class="params">ele</span>) =&gt;</span> <span class="title function_">ele</span>(evt.<span class="property">data</span>));</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">send</span>: <span class="function">(<span class="params">type = <span class="string">&quot;init&quot;</span>, data: any</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (wsInstance?.<span class="property">readyState</span> === <span class="title class_">WebSocket</span>.<span class="property">OPEN</span>) &#123;</span><br><span class="line">        wsInstance.<span class="title function_">send</span>(</span><br><span class="line">          <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">            type,</span><br><span class="line">            data,</span><br><span class="line">          &#125;)</span><br><span class="line">        );</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">onMessage</span>: <span class="function">(<span class="params">handler: (data: any) =&gt; <span class="keyword">void</span></span>) =&gt;</span> &#123;</span><br><span class="line">      messageHandlers.<span class="title function_">push</span>(handler);</span><br><span class="line">      <span class="comment">// 返回取消订阅函数</span></span><br><span class="line">      <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        messageHandlers = messageHandlers.<span class="title function_">filter</span>(<span class="function">(<span class="params">h</span>) =&gt;</span> h !== handler);</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">getInstance</span>: <span class="function">() =&gt;</span> wsInstance,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91%E6%97%A0%E5%A4%B4%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%9F%E6%88%90%E5%9B%BE%E7%89%87%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0%E5%AF%B9%E8%B1%A1%E5%82%A8%E5%AD%98/" rel="prev" title="【云托管】无头浏览器生成图片并上传到对象储存">
+                  <i class="fa fa-angle-left"></i> 【云托管】无头浏览器生成图片并上传到对象储存
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E5%8E%9F%E7%90%86%E8%AE%BE%E8%AE%A1/" rel="next" title="开发者工具原理设计">
+                  开发者工具原理设计 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

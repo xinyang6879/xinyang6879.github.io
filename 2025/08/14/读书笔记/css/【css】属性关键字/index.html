@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="inherit继承，从IE8开始支持 initial初始值关键字，把当前css属性的计算值还原为css语法中规定的初始值 注：并不是将其还原为浏览器默认的初始值 unset如果当前使用的css属性是具有继承特性的，例如color，那么就和inherit表现一致 如果当时使用的css属性没有继承特性，那么就表现和initial一致 revert当前元素还原为浏览器内置的样式 allall属性可以重置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【css】属性关键字">
+<meta property="og:url" content="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%85%B3%E9%94%AE%E5%AD%97/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="inherit继承，从IE8开始支持 initial初始值关键字，把当前css属性的计算值还原为css语法中规定的初始值 注：并不是将其还原为浏览器默认的初始值 unset如果当前使用的css属性是具有继承特性的，例如color，那么就和inherit表现一致 如果当时使用的css属性没有继承特性，那么就表现和initial一致 revert当前元素还原为浏览器内置的样式 allall属性可以重置">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T03:18:06.683Z">
+<meta property="article:modified_time" content="2025-03-06T09:08:26.537Z">
+<meta property="article:author" content="yangxin">
+<meta property="article:tag" content="css">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%85%B3%E9%94%AE%E5%AD%97/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%85%B3%E9%94%AE%E5%AD%97/","path":"2025/08/14/读书笔记/css/【css】属性关键字/","title":"【css】属性关键字"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【css】属性关键字 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#inherit"><span class="nav-number">1.</span> <span class="nav-text">inherit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#initial"><span class="nav-number">2.</span> <span class="nav-text">initial</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unset"><span class="nav-number">3.</span> <span class="nav-text">unset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#revert"><span class="nav-number">4.</span> <span class="nav-text">revert</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#all"><span class="nav-number">5.</span> <span class="nav-text">all</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fit-content"><span class="nav-number">6.</span> <span class="nav-text">fit-content</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#min-content"><span class="nav-number">7.</span> <span class="nav-text">min-content</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%BF%E6%8D%A2%E5%85%83%E7%B4%A0"><span class="nav-number">7.1.</span> <span class="nav-text">替换元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CJK%E6%96%87%E5%AD%97"><span class="nav-number">7.2.</span> <span class="nav-text">CJK文字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9EGJK%E6%96%87%E5%AD%97"><span class="nav-number">7.3.</span> <span class="nav-text">非GJK文字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E7%9A%84%E9%A6%96%E9%80%89%E6%9C%80%E5%B0%8F%E5%AE%BD%E5%BA%A6"><span class="nav-number">7.4.</span> <span class="nav-text">最终的首选最小宽度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#max-content"><span class="nav-number">8.</span> <span class="nav-text">max-content</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stretch%E3%80%81available%E3%80%81fill-available"><span class="nav-number">9.</span> <span class="nav-text">stretch、available、fill-available</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%85%B3%E9%94%AE%E5%AD%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【css】属性关键字 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【css】属性关键字
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="inherit"><a href="#inherit" class="headerlink" title="inherit"></a>inherit</h2><p>继承，从IE8开始支持</p>
+<h2 id="initial"><a href="#initial" class="headerlink" title="initial"></a>initial</h2><p>初始值关键字，把当前css属性的计算值还原为css语法中规定的初始值</p>
+<p>注：并不是将其还原为浏览器默认的初始值</p>
+<h2 id="unset"><a href="#unset" class="headerlink" title="unset"></a>unset</h2><p>如果当前使用的css属性是具有继承特性的，例如color，那么就和inherit表现一致</p>
+<p>如果当时使用的css属性没有继承特性，那么就表现和initial一致</p>
+<h2 id="revert"><a href="#revert" class="headerlink" title="revert"></a>revert</h2><p>当前元素还原为浏览器内置的样式</p>
+<h2 id="all"><a href="#all" class="headerlink" title="all"></a>all</h2><p>all属性可以重置除unicode-bidi、direction以及css自定义属性外的所有css属性。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">all</span>：initial ｜inherit ｜unset｜revert</span><br></pre></td></tr></table></figure>
+
+<h2 id="fit-content"><a href="#fit-content" class="headerlink" title="fit-content"></a>fit-content</h2><p>用子元素的宽高来确定当前元素的数据。</p>
+<h2 id="min-content"><a href="#min-content" class="headerlink" title="min-content"></a>min-content</h2><p>最小内容宽度或首选最小宽度</p>
+<h3 id="替换元素"><a href="#替换元素" class="headerlink" title="替换元素"></a>替换元素</h3><p>min-content手当前元素内容自身的宽度。</p>
+<h3 id="CJK文字"><a href="#CJK文字" class="headerlink" title="CJK文字"></a>CJK文字</h3><p>如果是没有标点的中文，那么min-content是单个汉字的宽度</p>
+<p>如果是包含避头标点（，。？、！等）或者避尾标点（“（等），且line-break不是anywhere的中文，那么min-content是包含标点字符的宽度</p>
+<h3 id="非GJK文字"><a href="#非GJK文字" class="headerlink" title="非GJK文字"></a>非GJK文字</h3><p>min-content是由字符单元的宽度决定的，所有连续的英文字母、数字和标点都被认为是一个字符单元，直到遇到中断字符</p>
+<h3 id="最终的首选最小宽度"><a href="#最终的首选最小宽度" class="headerlink" title="最终的首选最小宽度"></a>最终的首选最小宽度</h3><p>是所有内部子元素中最大的那个首选最小宽度值</p>
+<h2 id="max-content"><a href="#max-content" class="headerlink" title="max-content"></a>max-content</h2><p>最大内容宽度</p>
+<h2 id="stretch、available、fill-available"><a href="#stretch、available、fill-available" class="headerlink" title="stretch、available、fill-available"></a>stretch、available、fill-available</h2><p>都是让元素尺寸自动填满可用空间</p>
+<ul>
+<li>stretch</li>
+</ul>
+<p>弹性拉伸，替换之前的fill- available和available</p>
+<ul>
+<li>available</li>
+</ul>
+<p>可用空间，firefox的关键字，需加上-moz-前缀</p>
+<ul>
+<li>fill-avaiable</li>
+</ul>
+<p>填充可用空间，需配合-webkit-私有前缀</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/css/" rel="tag"># css</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E6%B5%81%E5%90%91%E4%BF%AE%E6%94%B9/" rel="prev" title="【css】流向修改">
+                  <i class="fa fa-angle-left"></i> 【css】流向修改
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/docker/" rel="next" title="docker">
+                  docker <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

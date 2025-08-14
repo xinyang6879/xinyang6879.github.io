@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="浏览器进程   1、UI 线程会判断输入的内容是搜索关键词还是 URL   如果是搜索关键词，跳转至默认搜索引擎对应都搜索 URL， 如果输入的内容是 URL，则开始请求 URL。   2、UI 线程将关键词搜索对应的 URL 或输入的 URL 交给网络线程   UI 线程使 Tab 前的图标展示为加载中状态   3、网络线程发出请求，获取请求返回内容   先查询是否有url是ip还是域名，如果是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从地址栏到页面展示的流程">
+<meta property="og:url" content="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%9B%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="浏览器进程   1、UI 线程会判断输入的内容是搜索关键词还是 URL   如果是搜索关键词，跳转至默认搜索引擎对应都搜索 URL， 如果输入的内容是 URL，则开始请求 URL。   2、UI 线程将关键词搜索对应的 URL 或输入的 URL 交给网络线程   UI 线程使 Tab 前的图标展示为加载中状态   3、网络线程发出请求，获取请求返回内容   先查询是否有url是ip还是域名，如果是">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T03:18:06.746Z">
+<meta property="article:modified_time" content="2025-03-06T09:08:26.541Z">
+<meta property="article:author" content="yangxin">
+<meta property="article:tag" content="浏览器">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%9B%E7%A8%8B/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%9B%E7%A8%8B/","path":"2025/08/14/浏览器/浏览器进程/","title":"从地址栏到页面展示的流程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>从地址栏到页面展示的流程 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">浏览器进程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B-%E5%85%B3%E9%94%AE%E6%B8%B2%E6%9F%93%E8%B7%AF%E5%BE%84-CRP"><span class="nav-number">1.</span> <span class="nav-text">渲染进程-关键渲染路径(CRP)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">事件处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">2.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%9B%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="从地址栏到页面展示的流程 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          从地址栏到页面展示的流程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">浏览器</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="浏览器进程"><a href="#浏览器进程" class="headerlink" title="浏览器进程"></a>浏览器进程</h2><h1></h1>
+
+<blockquote>
+<p>1、<font color=red>UI 线程</font>会判断输入的内容是搜索关键词还是 URL</p>
+</blockquote>
+<ul>
+<li>如果是搜索关键词，跳转至默认搜索引擎对应都搜索 URL，</li>
+<li>如果输入的内容是 URL，则开始请求 URL。</li>
+</ul>
+<blockquote>
+<p>2、UI 线程将关键词搜索对应的 URL 或输入的 URL 交给<font color=red>网络线程</font></p>
+</blockquote>
+<ul>
+<li>UI 线程使 Tab 前的图标展示为加载中状态</li>
+</ul>
+<blockquote>
+<p>3、网络线程发出请求，获取请求返回内容</p>
+</blockquote>
+<ul>
+<li>先查询是否有url是ip还是域名，如果是域名，先去进行查看是否有对应的ip解析缓存，没有就进行DNS查询</li>
+<li>建立三次握手（AKC，seq这些）</li>
+<li>发送请求</li>
+<li>服务器返回请求</li>
+<li>如果收到服务器的 301 重定向响应，它就会告知 UI 线程进行重定向然后它会再次发起一个新的网络请求。</li>
+<li>根据响应头中的 Content-Type 字段来确定响应主体的媒体类型</li>
+<li>如果媒体类型是一个<font color=red>HTML</font>文件，则将响应数据交给<font color=red>渲染进程</font></li>
+<li>如果是<font color=red>zip </font>文件或者<font color=red>其它</font>文件，会把相关数据传输给<font color=red>存储线程</font>，下载管理器。</li>
+<li>浏览器会进行 <font color=red>Safe Browsing </font>安全检查，如果域名或者请求内容匹配到已知的恶意站点，网络线程会展示一个<font color=red>警告页</font>。除此之外，网络线程还会做<font color=red> CORB</font>（Cross Origin Read Blocking）检查来确定那些敏感的跨站数据不会被发送至渲染进程</li>
+<li>四次挥手</li>
+</ul>
+<blockquote>
+<p>4、<font color=red>网络线程</font>确信浏览器可以导航到请求网页，网络线程会通知<font color=red> UI 线程</font>数据已经准备好，UI 线程会查找到一个 <font color=red>渲染进程</font>进行网页的渲染。</p>
+</blockquote>
+<ul>
+<li>浏览器为了对查找渲染进程这一步骤进行优化，考虑到网络请求获取响应需要时间，所以在第二步开始，浏览器已经预先查找和启动了一个渲染进程，如果中间步骤一切顺利，当 network thread 接收到数据时，渲染进程已经准备好了，但是如果遇到重定向，这个准备好的渲染进程也许就不可用了，这个时候会重新启动一个渲染进程。</li>
+</ul>
+<blockquote>
+<p>5、浏览器进程 会向 渲染进程 发送 IPC 消息(进程通信的一种方式)来确认导航</p>
+</blockquote>
+<ul>
+<li>浏览器进程将准备好的数据发送给渲染进程，渲染进程接收到数据之后，又发送 IPC 消息给浏览器进程，告诉浏览器进程导航已经提交了，页面开始加载。</li>
+</ul>
+<blockquote>
+<p>6、当导航提交完成后，渲染进程开始加载资源及渲染页面，当页面渲染完成后（页面及内部的 iframe 都触发了 onload 事件），会向浏览器进程发送 IPC 消息，告知浏览器进程，这个时候 UI thread 会停止展示 tab 中的加载中图标。</p>
+</blockquote>
+<h2 id="渲染进程-关键渲染路径-CRP"><a href="#渲染进程-关键渲染路径-CRP" class="headerlink" title="渲染进程-关键渲染路径(CRP)"></a>渲染进程-关键渲染路径(CRP)</h2><h1></h1>
+
+<blockquote>
+<p>当渲染进程接受到导航的确认信息后，开始接受来自浏览器进程的数据，<font color=red>主线程</font>会解析数据转化为 DOM 对象。</p>
+</blockquote>
+<ul>
+<li>解析到图片、CSS、JavaScript 脚本等<font color=red>资源</font>，这些资源是需要从网络或者缓存中获取的，主线程在构建 DOM 过程中如果遇到了这些资源，逐一发起<font color=red>请求</font>去获取，而为了提升效率，浏览器也会运行<font color=red>预加载扫描</font>（preload scanner）程序。“预加载扫描器”是<font color=red>并发</font>运行的，如果如果 HTML 中存在 img、link 等标签，预加载扫描程序会把这些请求传递给<font color=red>浏览器进程的网络线程</font>进行资源下载。</li>
+<li>找到一个<font color=red><code>&lt; script &gt;</code>标签</font>时，它会<font color=red>暂停</font> HTML 文档的解析，并且必须加载、解析和执行 JavaScript 代码。因为<font color=red> JS 可以使用<code>document.write()</code>改变整个 DOM 结构之类的东西来改变文档的形状</font>（ HTML 规范中的解析模型概述有一个很好的图表）。这就是 HTML 解析器必须等待 JavaScript 运行才能继续解析 HTML 文档的原因。<a target="_blank" rel="noopener" href="https://mathiasbynens.be/notes/shapes-ics">V8 关于 JS 执行中的事情</a></li>
+<li>因此如果 js 没有<code>document.write()</code>，可以添加 async 或 defer 属性到<code>&lt; script &gt;</code>标签。然后浏览器异步加载和运行 JavaScript 代码，这样不会阻止解析 DOM</li>
+</ul>
+<blockquote>
+<p><font color=red>主线程</font>依据 Css 选择器以及浏览器默认样式来计算每个元素应该具备的具体样式</p>
+</blockquote>
+<blockquote>
+<p><font color=red>主线程</font>会遍历 DOM 及相关元素的计算样式，构建出包含每个元素的页面坐标信息及盒子模型大小的布局树（Render Tree），遍历过程中，会<font color=red>跳过</font>隐藏的元素（display: none），另外，<font color=red>伪元素</font>虽然在 DOM 树上不可见，但是在<font color=red>布局树</font>上是可见的。</p>
+</blockquote>
+<blockquote>
+<p>遍历布局树（layout tree），生成一系列的绘画记录（paint records）。绘画记录可以看做是记录各元素绘制先后顺序的笔记-绘画顺序表。</p>
+</blockquote>
+<blockquote>
+<p><font color=red>主线程</font>需要遍历渲染树来创建一棵<font color=red>层次树</font>（Layer Tree），对于添加了<font color=red> will-change</font> CSS 属性的元素，会被看做<font color=red>单独</font>的一层，没有 will-change CSS 属性的元素，浏览器会根据情况决定是否要把该元素放在单独的层。</p>
+</blockquote>
+<ul>
+<li>当页面的层超过一定的数量后，层的合成操作要比在每个帧中光栅化页面的一小部分还要慢，因此衡量你应用的渲染性能是十分重要的一件事情。</li>
+</ul>
+<blockquote>
+<p>主线程会把这些信息通知给<font color=red>合成器</font>线程，合成器线程开始对层次数的每一层进行光栅化。 <br/>为了优化显示体验，合成线程可以给不同的光栅线程赋予不同的优先级，将那些在视口中的或者视口附近的层先被光栅化。</p>
+</blockquote>
+<ul>
+<li><p>有的层的可以达到整个页面的大小，合成器需要将它们切分为一块又一块的小图块（tiles）</p>
+</li>
+<li><p>合成器将这些小图块分别进行发送给一系列<font color=red>光栅</font>线程（raster threads）进行光栅化</p>
+</li>
+<li><p>结束后光栅线程会将每个图块的光栅结果存在 GPU Process 的内存中</p>
+</li>
+</ul>
+<blockquote>
+<p>合成线程会收集图块上面叫做绘画四边形（draw quads）的信息来构建一个合成帧（compositor frame）。</p>
+</blockquote>
+<ul>
+<li><p>绘画四边形：包含图块在内存的位置以及图层合成后图块在页面的位置之类的信息。</p>
+</li>
+<li><p>合成帧：代表页面一个帧的内容的绘制四边形集合。</p>
+</li>
+</ul>
+<blockquote>
+<p><font color=red>合成线程</font>就会通过 IPC 向<font color=red>浏览器进程</font>（browser process）提交（commit）一个<font color=red>渲染帧</font>。</p>
+</blockquote>
+<ul>
+<li><p>这个时候可能有另外一个合成帧被浏览器进程的 UI 线程（UI thread）提交以改变浏览器的 UI。这些合成帧都会被发送给 GPU 从而展示在屏幕上。</p>
+</li>
+<li><p>如果合成线程收到页面滚动的事件，合成线程会构建另外一个组合帧发送给 GPU 来更新页面。</p>
+</li>
+</ul>
+<h2 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h2><blockquote>
+<p>当点击或者输入的时候，首先接受到事件的是<font color=red>浏览器进程</font></p>
+</blockquote>
+<blockquote>
+<p>浏览器进程不处理，将事件丢给<font color=red>渲染进程</font></p>
+</blockquote>
+<blockquote>
+<p>渲染进程依据事件发生的<font color=red>坐标</font>，找到<font color=red>目标对象</font>，运行附加的事件侦听器来适当地处理事件。</p>
+</blockquote>
+<blockquote>
+<p><font color=red>合成器线程</font>会标记页面中绑定有事件处理器的区域为<font color=red>非快速滚动区域</font>(non-fast scrollable region)</p>
+</blockquote>
+<ul>
+<li><p>当合成器线程向主线程发送输入事件时，首先要运行的是命中测试以找到事件目标。命中测试使用渲染过程中生成的绘制记录数据来找出发生事件的点坐标下方的内容。</p>
+</li>
+<li><p>如果事件发生在这些存在标注的区域，合成器线程会把事件信息发送给主线程，等待主线程进行事件处理</p>
+</li>
+<li><p>如果事件不是发生在这些区域，合成器线程则会直接合成新的帧而不用等到主线程的响应。</p>
+</li>
+<li><p>所以，在进行事件监听的时候，尤其是事件捕获或者对整个文档进行事件监听的时候需要考虑一下，因为整个页面都被标记为非快速滚动区域。这意味着即使不关心来自页面某些部分的输入，合成器线程也必须与主线程通信并在每次输入事件进入时等待它。因此，合成器的平滑滚动能力被打败了。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 浏览器在主线程中侦听事件，但合成器也可以继续合成新帧。</span></span><br><span class="line"><span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">addEventListener</span>(enent, func, &#123; <span class="attr">passive</span>: <span class="literal">true</span> &#125;);</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41499782/article/details/120039980">合成器线程详解&#x2705;</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35546787/article/details/107788179?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0.topblog&spm=1001.2101.3001.4242.1&utm_relevant_index=3">一文搞懂浏览器的工作原理&#x270B;</a></p>
+<p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41499782/article/details/120035602">chrome 渲染器进程的内部工作原理&#x270B;</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag"># 浏览器</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B/" rel="prev" title="页面渲染流程">
+                  <i class="fa fa-angle-left"></i> 页面渲染流程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91SSR%E5%92%8CCSR/" rel="next" title="SSR和CSR">
+                  SSR和CSR <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="拦截器使用12345678910111213141516171819202122232425262728293031import axios from &quot;axios&quot;;&#x2F;&#x2F; http request 拦截器axios.interceptors.request.use(  (config: any) &#x3D;&gt; &#123;    console.log(&quot;请求拦截器&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="axios拦截器原理">
+<meta property="og:url" content="http://example.com/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91axios-%E6%8B%A6%E6%88%AA%E5%99%A8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="拦截器使用12345678910111213141516171819202122232425262728293031import axios from &quot;axios&quot;;&#x2F;&#x2F; http request 拦截器axios.interceptors.request.use(  (config: any) &#x3D;&gt; &#123;    console.log(&quot;请求拦截器&amp;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T03:18:33.939Z">
+<meta property="article:modified_time" content="2025-03-06T09:08:26.524Z">
+<meta property="article:author" content="yangxin">
+<meta property="article:tag" content="axios 源码">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91axios-%E6%8B%A6%E6%88%AA%E5%99%A8/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91axios-%E6%8B%A6%E6%88%AA%E5%99%A8/","path":"2025/08/14/源码/【源码】axios-拦截器/","title":"axios拦截器原理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>axios拦截器原理 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%A6%E6%88%AA%E5%99%A8%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">拦截器使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A5%E5%8F%A3%E4%BB%A3%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">入口代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%A6%E6%88%AA%E5%99%A8%E7%AE%A1%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">拦截器管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">请求拦截器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-number">5.</span> <span class="nav-text">响应拦截器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E9%93%BE"><span class="nav-number">6.</span> <span class="nav-text">参链</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91axios-%E6%8B%A6%E6%88%AA%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="axios拦截器原理 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          axios拦截器原理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:33" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:33+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/axios-%E6%BA%90%E7%A0%81/" itemprop="url" rel="index"><span itemprop="name">axios 源码</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="拦截器使用"><a href="#拦截器使用" class="headerlink" title="拦截器使用"></a>拦截器使用</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&quot;axios&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// http request 拦截器</span></span><br><span class="line">axios.<span class="property">interceptors</span>.<span class="property">request</span>.<span class="title function_">use</span>(</span><br><span class="line">  <span class="function">(<span class="params">config: any</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;请求拦截器&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> config;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">reject</span>(err);</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">// http response 拦截器</span></span><br><span class="line">axios.<span class="property">interceptors</span>.<span class="property">response</span>.<span class="title function_">use</span>(</span><br><span class="line">  <span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;响应拦截器&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> response.<span class="property">data</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">onError</span>(<span class="string">&quot;系统异常！&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">axios.<span class="title function_">get</span>(url).<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;请求结果&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 输出结果：</span></span><br><span class="line"><span class="comment">// 请求拦截器</span></span><br><span class="line"><span class="comment">// 请求结果</span></span><br><span class="line"><span class="comment">// 响应拦截器</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="入口代码"><a href="#入口代码" class="headerlink" title="入口代码"></a>入口代码</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// /lib/core/axios.js</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Axios</span>(<span class="params">instanceConfig</span>) &#123;</span><br><span class="line">  <span class="comment">// 分别设置请求和响应拦截器管理</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">interceptors</span> = &#123;</span><br><span class="line">    <span class="attr">request</span>: <span class="keyword">new</span> <span class="title class_">InterceptorManager</span>(),</span><br><span class="line">    <span class="attr">response</span>: <span class="keyword">new</span> <span class="title class_">InterceptorManager</span>(),</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Axios</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">request</span> = <span class="keyword">function</span> <span class="title function_">request</span>(<span class="params">configOrUrl, config</span>) &#123;</span><br><span class="line">  <span class="comment">// 不相关代码...</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// filter out skipped interceptors</span></span><br><span class="line">  <span class="comment">// 请求拦截器相关</span></span><br><span class="line">  <span class="keyword">var</span> requestInterceptorChain = [];</span><br><span class="line">  <span class="keyword">var</span> synchronousRequestInterceptors = <span class="literal">true</span>;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">interceptors</span>.<span class="property">request</span>.<span class="title function_">forEach</span>(<span class="keyword">function</span> <span class="title function_">unshiftRequestInterceptors</span>(<span class="params"></span></span><br><span class="line"><span class="params">    interceptor</span></span><br><span class="line"><span class="params">  </span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (</span><br><span class="line">      <span class="keyword">typeof</span> interceptor.<span class="property">runWhen</span> === <span class="string">&quot;function&quot;</span> &amp;&amp;</span><br><span class="line">      interceptor.<span class="title function_">runWhen</span>(config) === <span class="literal">false</span></span><br><span class="line">    ) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    synchronousRequestInterceptors =</span><br><span class="line">      synchronousRequestInterceptors &amp;&amp; interceptor.<span class="property">synchronous</span>;</span><br><span class="line"></span><br><span class="line">    requestInterceptorChain.<span class="title function_">unshift</span>(</span><br><span class="line">      interceptor.<span class="property">fulfilled</span>,</span><br><span class="line">      interceptor.<span class="property">rejected</span></span><br><span class="line">    );</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// 响应拦截器相关代码</span></span><br><span class="line">  <span class="keyword">var</span> responseInterceptorChain = [];</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">interceptors</span>.<span class="property">response</span>.<span class="title function_">forEach</span>(<span class="keyword">function</span> <span class="title function_">pushResponseInterceptors</span>(<span class="params"></span></span><br><span class="line"><span class="params">    interceptor</span></span><br><span class="line"><span class="params">  </span>) &#123;</span><br><span class="line">    responseInterceptorChain.<span class="title function_">push</span>(interceptor.<span class="property">fulfilled</span>, interceptor.<span class="property">rejected</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> promise;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!synchronousRequestInterceptors) &#123;</span><br><span class="line">    <span class="keyword">var</span> chain = [dispatchRequest, <span class="literal">undefined</span>];</span><br><span class="line"></span><br><span class="line">    <span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">unshift</span>.<span class="title function_">apply</span>(chain, requestInterceptorChain);</span><br><span class="line">    chain = chain.<span class="title function_">concat</span>(responseInterceptorChain);</span><br><span class="line"></span><br><span class="line">    promise = <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(config);</span><br><span class="line">    <span class="keyword">while</span> (chain.<span class="property">length</span>) &#123;</span><br><span class="line">      promise = promise.<span class="title function_">then</span>(chain.<span class="title function_">shift</span>(), chain.<span class="title function_">shift</span>());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> promise;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> newConfig = config;</span><br><span class="line">  <span class="keyword">while</span> (requestInterceptorChain.<span class="property">length</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> onFulfilled = requestInterceptorChain.<span class="title function_">shift</span>();</span><br><span class="line">    <span class="keyword">var</span> onRejected = requestInterceptorChain.<span class="title function_">shift</span>();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      newConfig = <span class="title function_">onFulfilled</span>(newConfig);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">      <span class="title function_">onRejected</span>(error);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    promise = <span class="title function_">dispatchRequest</span>(newConfig);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">reject</span>(error);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (responseInterceptorChain.<span class="property">length</span>) &#123;</span><br><span class="line">    promise = promise.<span class="title function_">then</span>(</span><br><span class="line">      responseInterceptorChain.<span class="title function_">shift</span>(),</span><br><span class="line">      responseInterceptorChain.<span class="title function_">shift</span>()</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> promise;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="拦截器管理"><a href="#拦截器管理" class="headerlink" title="拦截器管理"></a>拦截器管理</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// /lib/core/InterceptorManager.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> utils = <span class="built_in">require</span>(<span class="string">&quot;./../utils&quot;</span>);</span><br><span class="line"><span class="comment">// 回调数组</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">InterceptorManager</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">handlers</span> = [];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将新的拦截器添加到回调中</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">Function</span>&#125; fulfilled The function to handle `then` for a `Promise`</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">Function</span>&#125; rejected The function to handle `reject` for a `Promise`</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">Number</span>&#125; An ID used to remove interceptor later</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title class_">InterceptorManager</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">use</span> = <span class="keyword">function</span> <span class="title function_">use</span>(<span class="params">fulfilled, rejected, options</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">handlers</span>.<span class="title function_">push</span>(&#123;</span><br><span class="line">    <span class="attr">fulfilled</span>: fulfilled,</span><br><span class="line">    <span class="attr">rejected</span>: rejected,</span><br><span class="line">    <span class="attr">synchronous</span>: options ? options.<span class="property">synchronous</span> : <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">runWhen</span>: options ? options.<span class="property">runWhen</span> : <span class="literal">null</span>,</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">handlers</span>.<span class="property">length</span> - <span class="number">1</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 删除拦截器</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">Number</span>&#125; id The ID that was returned by `use`</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title class_">InterceptorManager</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">eject</span> = <span class="keyword">function</span> <span class="title function_">eject</span>(<span class="params">id</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">handlers</span>[id]) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">handlers</span>[id] = <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 遍历拦截器</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">Function</span>&#125; fn The function to call for each interceptor</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title class_">InterceptorManager</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">forEach</span> = <span class="keyword">function</span> <span class="title function_">forEach</span>(<span class="params">fn</span>) &#123;</span><br><span class="line">  utils.<span class="title function_">forEach</span>(<span class="variable language_">this</span>.<span class="property">handlers</span>, <span class="keyword">function</span> <span class="title function_">forEachHandler</span>(<span class="params">h</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (h !== <span class="literal">null</span>) &#123;</span><br><span class="line">      <span class="title function_">fn</span>(h);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title class_">InterceptorManager</span>;</span><br></pre></td></tr></table></figure>
+
+<p>总结：</p>
+<ul>
+<li><code>InterceptorManager</code>是一个管理拦截器的类，它包含一个<code>handlers</code>数组，用于存储拦截器。<code>use</code>方法用于添加拦截器，<code>eject</code>方法用于删除拦截器，<code>forEach</code>方法用于遍历拦截器。</li>
+<li>在使用拦截器时，调用的<code>use</code>实际上是调用的<code>InterceptorManager</code>的<code>use</code>方法</li>
+</ul>
+<h2 id="请求拦截器"><a href="#请求拦截器" class="headerlink" title="请求拦截器"></a>请求拦截器</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> requestInterceptorChain = [];</span><br><span class="line"><span class="keyword">var</span> synchronousRequestInterceptors = <span class="literal">true</span>;</span><br><span class="line"><span class="comment">// this.interceptors指向的是在文件`/lib/core/Axios.js`中Axios方法中定义的`this.interceptors`</span></span><br><span class="line"><span class="comment">// this.interceptors是一个InterceptorManager实例</span></span><br><span class="line"><span class="comment">// 在外部(项目)调用axios.interceptors.request的时候，会把对应的请求回调加入到this.interceptors.request的handlers中</span></span><br><span class="line"><span class="comment">// 这里的this.interceptors.request实际调用的是InterceptorManager的`forEach`方法，所以这里的foreach实际是遍历this.interceptors.request的handlers数组</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">interceptors</span>.<span class="property">request</span>.<span class="title function_">forEach</span>(<span class="keyword">function</span> <span class="title function_">unshiftRequestInterceptors</span>(<span class="params"></span></span><br><span class="line"><span class="params">  interceptor</span></span><br><span class="line"><span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (</span><br><span class="line">    <span class="keyword">typeof</span> interceptor.<span class="property">runWhen</span> === <span class="string">&quot;function&quot;</span> &amp;&amp;</span><br><span class="line">    interceptor.<span class="title function_">runWhen</span>(config) === <span class="literal">false</span></span><br><span class="line">  ) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 判断请求拦截器中是否有异步的函数</span></span><br><span class="line">  synchronousRequestInterceptors =</span><br><span class="line">    synchronousRequestInterceptors &amp;&amp; interceptor.<span class="property">synchronous</span>;</span><br><span class="line">  <span class="comment">// 将请求拦截器的回调方法加入到requestInterceptorChain中，注意这里其实是以request的顺序倒叙了一次</span></span><br><span class="line">  <span class="comment">// 即如果request.handlers = [1,2,3]</span></span><br><span class="line">  <span class="comment">// 那么requestInterceptorChain = [3,2,1]</span></span><br><span class="line">  requestInterceptorChain.<span class="title function_">unshift</span>(interceptor.<span class="property">fulfilled</span>, interceptor.<span class="property">rejected</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 如果请求拦截器中有异步的函数</span></span><br><span class="line"><span class="keyword">if</span> (!synchronousRequestInterceptors) &#123;</span><br><span class="line">  <span class="comment">// dispatchRequest是实际的请求</span></span><br><span class="line">    <span class="keyword">var</span> chain = [dispatchRequest, <span class="literal">undefined</span>];</span><br><span class="line">    <span class="comment">// chain组成一个[请求拦截器1成功， 请求拦截器1失败，请求拦截器2成功，请求拦截器2失败，实际请求，响应拦截器1成功，响应拦截器1失败，响应拦截器2成功，响应拦截器2失败]</span></span><br><span class="line">    <span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">unshift</span>.<span class="title function_">apply</span>(chain, requestInterceptorChain);</span><br><span class="line">    chain = chain.<span class="title function_">concat</span>(responseInterceptorChain);</span><br><span class="line"></span><br><span class="line">    promise = <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(config);</span><br><span class="line">    <span class="keyword">while</span> (chain.<span class="property">length</span>) &#123;</span><br><span class="line">      <span class="comment">// 执行顺序应该为：</span></span><br><span class="line">      <span class="comment">// promise.then(请求拦截器1成功， 请求拦截器1失败)</span></span><br><span class="line">      <span class="comment">// promise.then(请求拦截器2成功，请求拦截器2失败)</span></span><br><span class="line">      <span class="comment">// promise.then(实际请求, undefined)</span></span><br><span class="line">      <span class="comment">// promise.then(响应拦截器1成功，响应拦截器1失败)</span></span><br><span class="line">      <span class="comment">// promise.then(响应拦截器2成功，响应拦截器2失败)</span></span><br><span class="line">      promise = promise.<span class="title function_">then</span>(chain.<span class="title function_">shift</span>(), chain.<span class="title function_">shift</span>());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> promise;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 无关代码...</span></span><br><span class="line"><span class="comment">// 将原有的请求配置浅拷贝一份出来</span></span><br><span class="line"><span class="keyword">var</span> newConfig = config;</span><br><span class="line"><span class="comment">// 循环执行requestInterceptorChain中的回调方法;</span></span><br><span class="line"><span class="keyword">while</span> (requestInterceptorChain.<span class="property">length</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> onFulfilled = requestInterceptorChain.<span class="title function_">shift</span>();</span><br><span class="line">  <span class="keyword">var</span> onRejected = requestInterceptorChain.<span class="title function_">shift</span>();</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 执行新的请求拦截器，并将请求拦截器的结果作为下一次执行请求拦截器的参数</span></span><br><span class="line">    newConfig = <span class="title function_">onFulfilled</span>(newConfig);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="comment">// 如果请求拦截器中报错，那么不执行后续的操作</span></span><br><span class="line">    <span class="title function_">onRejected</span>(error);</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 执行请求</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  promise = <span class="title function_">dispatchRequest</span>(newConfig);</span><br><span class="line">&#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">reject</span>(error);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>总结：</p>
+<ul>
+<li>请求拦截器的执行顺序是与书写顺序相反的<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">axios.<span class="property">interceptors</span>.<span class="property">request</span>.<span class="title function_">use</span>(</span><br><span class="line">  <span class="function">(<span class="params">config: any</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;请求拦截器1&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> config;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">reject</span>(err);</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line">axios.<span class="property">interceptors</span>.<span class="property">request</span>.<span class="title function_">use</span>(</span><br><span class="line">  <span class="function">(<span class="params">config: any</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;请求拦截器2&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> config;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">reject</span>(err);</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"><span class="comment">// 执行结果：</span></span><br><span class="line"><span class="comment">// 请求拦截器2</span></span><br><span class="line"><span class="comment">// 请求拦截器1</span></span><br></pre></td></tr></table></figure></li>
+<li>请求拦截器中如果报错，那么不执行后续的操作</li>
+<li>如果请求拦截器中传入<code>synchronous=false</code>表示为异步请求，默认都是异步请求处理操作</li>
+<li>如果是异步请求，axios是和相应拦截器一样的处理，用Promise包裹了一层</li>
+<li>如果是同步请求，那么是直接循环执行的</li>
+</ul>
+<h2 id="响应拦截器"><a href="#响应拦截器" class="headerlink" title="响应拦截器"></a>响应拦截器</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">  <span class="title class_">Axios</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">request</span> = <span class="keyword">function</span> <span class="title function_">request</span>(<span class="params">configOrUrl, config</span>) &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="comment">// 响应拦截器数组</span></span><br><span class="line">  <span class="keyword">var</span> responseInterceptorChain = [];</span><br><span class="line">  <span class="comment">// 按书写顺序将响应拦截器加入到数组中</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">interceptors</span>.<span class="property">response</span>.<span class="title function_">forEach</span>(<span class="keyword">function</span> <span class="title function_">pushResponseInterceptors</span>(<span class="params">interceptor</span>) &#123;</span><br><span class="line">    responseInterceptorChain.<span class="title function_">push</span>(interceptor.<span class="property">fulfilled</span>, interceptor.<span class="property">rejected</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 无关代码...</span></span><br><span class="line">  <span class="keyword">var</span> promise;</span><br><span class="line">  <span class="comment">// 执行真实请求</span></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    promise = <span class="title function_">dispatchRequest</span>(newConfig);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">reject</span>(error);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 按书写顺序执行响应拦截器，并且是以异步执行的</span></span><br><span class="line">  <span class="keyword">while</span> (responseInterceptorChain.<span class="property">length</span>) &#123;</span><br><span class="line">    promise = promise.<span class="title function_">then</span>(responseInterceptorChain.<span class="title function_">shift</span>(), responseInterceptorChain.<span class="title function_">shift</span>());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> promise;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>总结：</p>
+<ul>
+<li>与请求拦截器执行顺序不同，响应拦截器按书写顺序执行</li>
+<li>响应拦截器是默认用异步函数包裹了一层，而请求拦截器是将同步和异步分为两种情况的</li>
+</ul>
+<h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA5MjQwMzQyNw==&mid=2650744604&idx=1&sn=51d8d865c9848fd59f7763f5fb9ce789&chksm=88662490bf11ad86061ae76ff71a1177eeddab02c38d046eecd0e1ad25dc16f7591f91e9e3b2&scene=21#wechat_redirect">学习 axios 源码整体架构，打造属于自己的请求库</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://www.axios-js.com/zh-cn/docs/#axios-spread-callback">axios官网</a></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/axios-%E6%BA%90%E7%A0%81/" rel="tag"># axios 源码</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91axios-%E5%8F%96%E6%B6%88%E8%AF%B7%E6%B1%82/" rel="prev" title="axios取消请求原理">
+                  <i class="fa fa-angle-left"></i> axios取消请求原理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91vuex-%E5%88%9D%E5%A7%8B%E5%8C%96/" rel="next" title="vuex-流程">
+                  vuex-流程 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

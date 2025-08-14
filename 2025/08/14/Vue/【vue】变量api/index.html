@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="ref 和 reactive 区别根本区别：  ref只用于定义typeof val !&#x3D;&#x3D; &#39;object&#39;的数据类型，且内部是基于 class 实现的。如果 ref 传入的是一个 object 类型，那么也会通过 reactive 的方法去执行 123456789101112131415161718192021222324const toReactive &#x3D; (value) &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【vue】变量api">
+<meta property="og:url" content="http://example.com/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E5%8F%98%E9%87%8Fapi/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="ref 和 reactive 区别根本区别：  ref只用于定义typeof val !&#x3D;&#x3D; &#39;object&#39;的数据类型，且内部是基于 class 实现的。如果 ref 传入的是一个 object 类型，那么也会通过 reactive 的方法去执行 123456789101112131415161718192021222324const toReactive &#x3D; (value) &#x3D;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T03:18:06.511Z">
+<meta property="article:modified_time" content="2025-08-12T07:00:32.658Z">
+<meta property="article:author" content="yangxin">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E5%8F%98%E9%87%8Fapi/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E5%8F%98%E9%87%8Fapi/","path":"2025/08/14/Vue/【vue】变量api/","title":"【vue】变量api"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【vue】变量api | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ref-%E5%92%8C-reactive-%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">ref 和 reactive 区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shallowRef"><span class="nav-number">2.</span> <span class="nav-text">shallowRef</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E5%8F%98%E9%87%8Fapi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【vue】变量api | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【vue】变量api
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-12 15:00:32" itemprop="dateModified" datetime="2025-08-12T15:00:32+08:00">2025-08-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="ref-和-reactive-区别"><a href="#ref-和-reactive-区别" class="headerlink" title="ref 和 reactive 区别"></a>ref 和 reactive 区别</h3><p>根本区别：</p>
+<ul>
+<li><p><code>ref</code>只用于定义<code>typeof val !== &#39;object&#39;</code>的数据类型，且内部是基于 class 实现的。如果 ref 传入的是一个 object 类型，那么也会通过 reactive 的方法去执行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">toReactive</span> = (<span class="params">value</span>) =&gt; <span class="title function_">isObject</span>(value) ? <span class="title function_">reactive</span>(value) : value;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RefImpl</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">value, __v_isShallow</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">__v_isShallow</span> = __v_isShallow;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">dep</span> = <span class="literal">undefined</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">__v_isRef</span> = <span class="literal">true</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_rawValue</span> = __v_isShallow ? value : <span class="title function_">toRaw</span>(value);</span><br><span class="line">      <span class="comment">// 判断传入的初始数据是否为对象，如果是那么就转为reactive的实现</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_value</span> = __v_isShallow ? value : <span class="title function_">toReactive</span>(value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">value</span>() &#123;</span><br><span class="line">        <span class="title function_">trackRefValue</span>(<span class="variable language_">this</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_value</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">set</span> <span class="title function_">value</span>(<span class="params">newVal</span>) &#123;</span><br><span class="line">        newVal = <span class="variable language_">this</span>.<span class="property">__v_isShallow</span> ? newVal : <span class="title function_">toRaw</span>(newVal);</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_">hasChanged</span>(newVal, <span class="variable language_">this</span>.<span class="property">_rawValue</span>)) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">_rawValue</span> = newVal;、</span><br><span class="line">            <span class="comment">// 在赋新值的时候也会执行一次</span></span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">_value</span> = <span class="variable language_">this</span>.<span class="property">__v_isShallow</span> ? newVal : <span class="title function_">toReactive</span>(newVal);</span><br><span class="line">            <span class="title function_">triggerRefValue</span>(<span class="variable language_">this</span>, newVal);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>reactive</code>用于定义<code>typeof val === &#39;object&#39;</code>的数据类型，且内部基于 proxy 实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createReactiveObject</span>(<span class="params"></span></span><br><span class="line"><span class="params">  target,</span></span><br><span class="line"><span class="params">  isReadonly,</span></span><br><span class="line"><span class="params">  baseHandlers,</span></span><br><span class="line"><span class="params">  collectionHandlers,</span></span><br><span class="line"><span class="params">  proxyMap</span></span><br><span class="line"><span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="title function_">isObject</span>(target)) &#123;</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">`value cannot be made reactive: <span class="subst">$&#123;<span class="built_in">String</span>(target)&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// target is already a Proxy, return it.</span></span><br><span class="line">  <span class="comment">// exception: calling readonly() on a reactive object</span></span><br><span class="line">  <span class="keyword">if</span> (</span><br><span class="line">    target[<span class="string">&quot;__v_raw&quot;</span> <span class="comment">/* RAW */</span>] &amp;&amp;</span><br><span class="line">    !(isReadonly &amp;&amp; target[<span class="string">&quot;__v_isReactive&quot;</span> <span class="comment">/* IS_REACTIVE */</span>])</span><br><span class="line">  ) &#123;</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// target already has corresponding Proxy</span></span><br><span class="line">  <span class="keyword">const</span> existingProxy = proxyMap.<span class="title function_">get</span>(target);</span><br><span class="line">  <span class="keyword">if</span> (existingProxy) &#123;</span><br><span class="line">    <span class="keyword">return</span> existingProxy;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// only specific value types can be observed.</span></span><br><span class="line">  <span class="keyword">const</span> targetType = <span class="title function_">getTargetType</span>(target);</span><br><span class="line">  <span class="keyword">if</span> (targetType === <span class="number">0</span> <span class="comment">/* INVALID */</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 通过proxy实现数据拦截</span></span><br><span class="line">  <span class="keyword">const</span> proxy = <span class="keyword">new</span> <span class="title class_">Proxy</span>(</span><br><span class="line">    target,</span><br><span class="line">    targetType === <span class="number">2</span> <span class="comment">/* COLLECTION */</span> ? collectionHandlers : baseHandlers</span><br><span class="line">  );</span><br><span class="line">  proxyMap.<span class="title function_">set</span>(target, proxy);</span><br><span class="line">  <span class="keyword">return</span> proxy;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>其他区别：</p>
+<ul>
+<li><p>ref 使用时需要通过<code>.value</code>访问（但是在 template 中不需要），reactive 不需要</p>
+</li>
+<li><p>在使用过程中，ref 可以使用任意数据类型，reactive 只能使用对象、数组、map 等</p>
+</li>
+<li><p>ref 可以直接替换整个数据，也不会丢失响应式，reactive 会丢失</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> data = <span class="title function_">ref</span>(&#123; <span class="attr">a</span>: <span class="number">1</span> &#125;);</span><br><span class="line">data.<span class="property">value</span> = &#123; <span class="attr">b</span>: <span class="number">2</span> &#125;; <span class="comment">//不会丢失响应式</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> data2 = <span class="title function_">reactive</span>(&#123; <span class="attr">a</span>: <span class="number">1</span> &#125;);</span><br><span class="line">data2 = &#123; <span class="attr">b</span>: <span class="number">2</span> &#125;; <span class="comment">//会丢失</span></span><br><span class="line"><span class="comment">// data2 = reactive(&#123;b: 2&#125;) //会丢失</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解构</p>
+<ul>
+<li>ref 解构后依旧可以保持响应式</li>
+<li>reactive 需要通过 toRefs 才可以保持</li>
+</ul>
+</li>
+<li><p>父子数据传递</p>
+<ul>
+<li>ref 在子组件可以通过<code>update:xxx</code>更新到父组件的值</li>
+<li>reactive 无法通过此方法更新，父组件也无法通过 watch 进行获取最新的值</li>
+</ul>
+</li>
+</ul>
+<h3 id="shallowRef"><a href="#shallowRef" class="headerlink" title="shallowRef"></a>shallowRef</h3><p>和ref的流程一样，只是不会走判断如果是对象，那么就会走reactive的逻辑</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">shallowRef</span>(<span class="params">value</span>) &#123;</span><br><span class="line">      <span class="comment">// 这里的true表示不需要走reactive的逻辑（即使是个对象</span></span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">createRef</span>(value, <span class="literal">true</span>);</span><br><span class="line">&#125;</span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">RefImpl</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">value, __v_isShallow</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">__v_isShallow</span> = __v_isShallow;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">dep</span> = <span class="literal">undefined</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">__v_isRef</span> = <span class="literal">true</span>;</span><br><span class="line">      <span class="comment">//   不走reactive的逻辑</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">_rawValue</span> = __v_isShallow ? value : <span class="title function_">toRaw</span>(value);</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">_value</span> = __v_isShallow ? value : <span class="title function_">toReactive</span>(value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">value</span>() &#123;</span><br><span class="line">        <span class="title function_">trackRefValue</span>(<span class="variable language_">this</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_value</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">set</span> <span class="title function_">value</span>(<span class="params">newVal</span>) &#123;</span><br><span class="line">        newVal = <span class="variable language_">this</span>.<span class="property">__v_isShallow</span> ? newVal : <span class="title function_">toRaw</span>(newVal);</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_">hasChanged</span>(newVal, <span class="variable language_">this</span>.<span class="property">_rawValue</span>)) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">_rawValue</span> = newVal;</span><br><span class="line">          <span class="comment">//   即使是重新赋值，也不会触发</span></span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">_value</span> = <span class="variable language_">this</span>.<span class="property">__v_isShallow</span> ? newVal : <span class="title function_">toReactive</span>(newVal);</span><br><span class="line">            <span class="title function_">triggerRefValue</span>(<span class="variable language_">this</span>, newVal);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/Vue/v-model%E5%92%8Creactive%E7%BB%84%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/" rel="prev" title="v-model 和 reactive 组合使用的问题">
+                  <i class="fa fa-angle-left"></i> v-model 和 reactive 组合使用的问题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/Vue/%E5%B0%8F%E7%82%B9/" rel="next" title="小点">
+                  小点 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

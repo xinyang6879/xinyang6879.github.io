@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="原由在项目运行时，页面状态会不断变化，每当状态变化时，都需要重新渲染。如果每次都直接将页面全部替换更新，那么由于访问 dom 是相对昂贵的，这样会导致非常多的性能浪费。因此当某个状态变化时，只更新与这个状态相关联的 dom 节点。虚拟 dom 通过状态声称一个虚拟节点树，然后使用虚拟节点树进行渲染。在更新的时候，只需要比较上一次的节点树与当前节点树有何不同，更新不同的地方即可。 vnode类型注释">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【vue】虚拟dom基本">
+<meta property="og:url" content="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90vue%E3%80%91%E8%99%9A%E6%8B%9Fdom%E5%9F%BA%E6%9C%AC/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="原由在项目运行时，页面状态会不断变化，每当状态变化时，都需要重新渲染。如果每次都直接将页面全部替换更新，那么由于访问 dom 是相对昂贵的，这样会导致非常多的性能浪费。因此当某个状态变化时，只更新与这个状态相关联的 dom 节点。虚拟 dom 通过状态声称一个虚拟节点树，然后使用虚拟节点树进行渲染。在更新的时候，只需要比较上一次的节点树与当前节点树有何不同，更新不同的地方即可。 vnode类型注释">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T03:18:06.713Z">
+<meta property="article:modified_time" content="2025-03-06T09:08:26.540Z">
+<meta property="article:author" content="yangxin">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90vue%E3%80%91%E8%99%9A%E6%8B%9Fdom%E5%9F%BA%E6%9C%AC/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90vue%E3%80%91%E8%99%9A%E6%8B%9Fdom%E5%9F%BA%E6%9C%AC/","path":"2025/08/14/读书笔记/【vue】虚拟dom基本/","title":"【vue】虚拟dom基本"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【vue】虚拟dom基本 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%94%B1"><span class="nav-number">1.</span> <span class="nav-text">原由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vnode"><span class="nav-number">2.</span> <span class="nav-text">vnode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%A8%E9%87%8A%E8%8A%82%E7%82%B9"><span class="nav-number">2.1.1.</span> <span class="nav-text">注释节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E8%8A%82%E7%82%B9"><span class="nav-number">2.1.2.</span> <span class="nav-text">文本节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%8B%E9%9A%86%E5%B1%9E%E6%80%A7"><span class="nav-number">2.1.3.</span> <span class="nav-text">克隆属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%83%E7%B4%A0%E8%8A%82%E7%82%B9"><span class="nav-number">2.1.4.</span> <span class="nav-text">元素节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E8%8A%82%E7%82%B9"><span class="nav-number">2.1.5.</span> <span class="nav-text">组件节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6"><span class="nav-number">2.1.6.</span> <span class="nav-text">函数式组件</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90vue%E3%80%91%E8%99%9A%E6%8B%9Fdom%E5%9F%BA%E6%9C%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【vue】虚拟dom基本 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【vue】虚拟dom基本
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="原由"><a href="#原由" class="headerlink" title="原由"></a>原由</h2><p>在项目运行时，页面状态会不断变化，每当状态变化时，都需要重新渲染。如果每次都直接将页面全部替换更新，那么由于访问 dom 是相对昂贵的，这样会导致非常多的性能浪费。<br>因此当某个状态变化时，只更新与这个状态相关联的 dom 节点。虚拟 dom 通过状态声称一个虚拟节点树，然后使用虚拟节点树进行渲染。在更新的时候，只需要比较上一次的节点树与当前节点树有何不同，更新不同的地方即可。</p>
+<h2 id="vnode"><a href="#vnode" class="headerlink" title="vnode"></a>vnode</h2><h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><h4 id="注释节点"><a href="#注释节点" class="headerlink" title="注释节点"></a>注释节点</h4><ul>
+<li>有效属性<br><code>text</code>和<code>isComment</code></li>
+<li>元素：</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;！—注释—&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>vnode：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">text：”注释”，</span><br><span class="line">isComment：<span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="文本节点"><a href="#文本节点" class="headerlink" title="文本节点"></a>文本节点</h4><ul>
+<li><p>有效属性<br><code>text</code></p>
+</li>
+<li><p>创建过程</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createTextVnode</span>(<span class="params">val</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">VNode</span>(<span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="title class_">String</span>(val));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="克隆属性"><a href="#克隆属性" class="headerlink" title="克隆属性"></a>克隆属性</h4><ul>
+<li><p>特殊属性<br><code>isCloned</code></p>
+</li>
+<li><p>创建过程</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createCloneVnode</span>(<span class="params">vnode, deep</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> cloned = <span class="keyword">new</span> <span class="title class_">VNode</span>(</span><br><span class="line">    vnode.<span class="property">tag</span>,</span><br><span class="line">    vnode.<span class="property">data</span>,</span><br><span class="line">    vnode.<span class="property">children</span>,</span><br><span class="line">    vnode.<span class="property">text</span>,</span><br><span class="line">    vnode.<span class="property">elm</span>,</span><br><span class="line">    vnode.<span class="property">context</span>,</span><br><span class="line">    vnode.<span class="property">componentOptions</span>,</span><br><span class="line">    vnode.<span class="property">asyncFactory</span></span><br><span class="line">  );</span><br><span class="line">  cloned.<span class="property">ns</span> = vnode.<span class="property">ns</span>;</span><br><span class="line">  cloned.<span class="property">isStatic</span> = vnode.<span class="property">isStatic</span>;</span><br><span class="line">  cloned.<span class="property">key</span> = vnode.<span class="property">key</span>;</span><br><span class="line">  cloned.<span class="property">isComment</span> = vnode.<span class="property">isComment</span>;</span><br><span class="line">  cloned.<span class="property">isCloned</span> = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">if</span> (deep &amp;&amp; vnode.<span class="property">children</span>) &#123;</span><br><span class="line">    cloned.<span class="property">children</span> = <span class="title function_">createCloneVnode</span>(vnode.<span class="property">children</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="元素节点"><a href="#元素节点" class="headerlink" title="元素节点"></a>元素节点</h4><ul>
+<li><p>有效属性<br><code>tag</code>: 节点名称，例如 div、li 等<br><code>data</code>: 节点上的数据，例如 attrs、class 等<br><code>children</code>: 当前节点的子节点列表<br><code>context</code>: 当前组件的 vuejs 实例</p>
+</li>
+<li><p>元素：</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>123<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>vnode</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">children</span>: [<span class="title class_">VNode</span>, <span class="title class_">VNode</span>]，</span><br><span class="line"><span class="attr">context</span>: &#123;…&#125;,</span><br><span class="line">data：&#123;…&#125;，</span><br><span class="line"><span class="attr">tag</span>: “div”</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="组件节点"><a href="#组件节点" class="headerlink" title="组件节点"></a>组件节点</h4><ul>
+<li>特有属性：<br><code>componentOptions</code>: 组件节点的选项参数，包括 propsData、tag、children 等<br><code>componentInstance</code>: 组件实例</li>
+</ul>
+<h4 id="函数式组件"><a href="#函数式组件" class="headerlink" title="函数式组件"></a>函数式组件</h4><ul>
+<li>特有属性：<br><code>functionContext</code><br><code>functionOptions</code></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vue/" rel="tag"># vue</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90console%E3%80%91API/" rel="prev" title="consoleAPI">
+                  <i class="fa fa-angle-left"></i> consoleAPI
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90markdown%E3%80%91%E8%AF%AD%E6%B3%95/" rel="next" title="【markdown】语法">
+                  【markdown】语法 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

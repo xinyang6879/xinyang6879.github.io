@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="v-model 语法糖在对于原生组件的 v-model 中，编译时会转换为两个部分  一个绑定到元素的 value&#x2F;check 属性，这样数据变化时会让页面更新 一个监听元素的变化事件（input 等），当事件触发时就改变数据  &lt;input v-model&#x3D;&quot;message&quot;&gt; 会被转换成： 1234_createVNode(&quot;input&amp;qu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【vue】记录小点">
+<meta property="og:url" content="http://example.com/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="v-model 语法糖在对于原生组件的 v-model 中，编译时会转换为两个部分  一个绑定到元素的 value&#x2F;check 属性，这样数据变化时会让页面更新 一个监听元素的变化事件（input 等），当事件触发时就改变数据  &lt;input v-model&#x3D;&quot;message&quot;&gt; 会被转换成： 1234_createVNode(&quot;input&amp;qu">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T03:18:06.513Z">
+<meta property="article:modified_time" content="2025-08-11T03:36:26.729Z">
+<meta property="article:author" content="yangxin">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/","path":"2025/08/14/Vue/【vue】记录小点/","title":"【vue】记录小点"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【vue】记录小点 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#v-model-%E8%AF%AD%E6%B3%95%E7%B3%96"><span class="nav-number">1.</span> <span class="nav-text">v-model 语法糖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#diff"><span class="nav-number">2.</span> <span class="nav-text">diff</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【vue】记录小点 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【vue】记录小点
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-11 11:36:26" itemprop="dateModified" datetime="2025-08-11T11:36:26+08:00">2025-08-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="v-model-语法糖"><a href="#v-model-语法糖" class="headerlink" title="v-model 语法糖"></a>v-model 语法糖</h3><p>在对于原生组件的 v-model 中，编译时会转换为两个部分</p>
+<ul>
+<li>一个绑定到元素的 value&#x2F;check 属性，这样数据变化时会让页面更新</li>
+<li>一个监听元素的变化事件（input 等），当事件触发时就改变数据</li>
+</ul>
+<p><code>&lt;input v-model=&quot;message&quot;&gt;</code> 会被转换成：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">_createVNode</span>(<span class="string">&quot;input&quot;</span>, &#123;</span><br><span class="line">  <span class="attr">modelValue</span>: message, <span class="comment">// 属性绑定</span></span><br><span class="line">  <span class="string">&quot;onUpdate:modelValue&quot;</span>: <span class="function">(<span class="params">$event</span>) =&gt;</span> (message = $event), <span class="comment">// 事件监听</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当初始化渲染时，将<code>message</code>的值赋给 input 的 value，所以输入框显示的是 message 的初始值。</li>
+<li>当用户输入时，触发 input 事件，事件处理函数会将输入框的新值赋给<code>message</code>。</li>
+<li>由于<code>message</code>是响应式数据（比如通过 ref 或 reactive 创建），它的改变会触发依赖更新，即重新执行组件的渲染函数（重新生成虚拟 DOM，然后进行 Diff 更新视图）。但是注意，这里因为 input 的 value 绑定的是 message，所以重新渲染时会设置 input 的 value，但用户正在输入时设置 value 会不会导致问题呢？不会，因为 Vue 在更新 DOM 时，如果发现是输入元素，并且它的值没有变化（或者即使变化了，但不会打断用户的输入，因为 Vue 通过异步更新和事件处理已经做了协调），所以不会干扰用户输入。</li>
+</ul>
+<p>Vue 的处理机制包括：</p>
+<ul>
+<li><p>输入状态检测</p>
+<ul>
+<li>Vue 会检测到 input 元素是否处于”正在输入”状态</li>
+<li>在用户输入期间，即使组件重新渲染，也不会强制更新 input 的 value</li>
+<li>异步更新队列</li>
+</ul>
+</li>
+<li><p>所有 DOM 更新都会放入异步队列中</p>
+<ul>
+<li>用户输入期间的更新会被延迟执行，避免打断用户操作</li>
+<li>DOM 属性更新协调</li>
+</ul>
+</li>
+<li><p>Vue 在更新 input 的 value 时会检查：</p>
+<ul>
+<li>元素是否为当前活跃的输入元素</li>
+<li>用户是否正在进行输入操作</li>
+<li>新值是否与当前用户输入的内容冲突</li>
+</ul>
+</li>
+</ul>
+<h3 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h3><p>c1: 旧节点；c2: 新节点；e1：旧节点的长度；e2：新节点的长度；</p>
+<ul>
+<li><p>先遍历相同头节点的情况</p>
+<p>这里得到 i：新旧节点相同头部的 index</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. sync from start</span></span><br><span class="line"><span class="comment">// (a b) c</span></span><br><span class="line"><span class="comment">// (a b) d e</span></span><br><span class="line"><span class="keyword">while</span> (i &lt;= e1 &amp;&amp; i &lt;= e2) &#123;</span><br><span class="line">  <span class="keyword">const</span> n1 = c1[i];</span><br><span class="line">  <span class="keyword">const</span> n2 = (c2[i] = optimized</span><br><span class="line">    ? <span class="title function_">cloneIfMounted</span>(c2[i])</span><br><span class="line">    : <span class="title function_">normalizeVNode</span>(c2[i]));</span><br><span class="line">  <span class="comment">// 如果是相同头节点</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="title function_">isSameVNodeType</span>(n1, n2)) &#123;</span><br><span class="line">    <span class="title function_">patch</span>(</span><br><span class="line">      n1,</span><br><span class="line">      n2,</span><br><span class="line">      container,</span><br><span class="line">      <span class="literal">null</span>,</span><br><span class="line">      parentComponent,</span><br><span class="line">      parentSuspense,</span><br><span class="line">      isSVG,</span><br><span class="line">      slotScopeIds,</span><br><span class="line">      optimized</span><br><span class="line">    );</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  i++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>遍历尾节点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 2. sync from end</span></span><br><span class="line"><span class="comment">// a (b c)</span></span><br><span class="line"><span class="comment">// d e (b c)</span></span><br><span class="line"><span class="keyword">while</span> (i &lt;= e1 &amp;&amp; i &lt;= e2) &#123;</span><br><span class="line">  <span class="keyword">const</span> n1 = c1[e1];</span><br><span class="line">  <span class="keyword">const</span> n2 = (c2[e2] = optimized</span><br><span class="line">    ? <span class="title function_">cloneIfMounted</span>(c2[e2])</span><br><span class="line">    : <span class="title function_">normalizeVNode</span>(c2[e2]));</span><br><span class="line">  <span class="keyword">if</span> (<span class="title function_">isSameVNodeType</span>(n1, n2)) &#123;</span><br><span class="line">    <span class="title function_">patch</span>(</span><br><span class="line">      n1,</span><br><span class="line">      n2,</span><br><span class="line">      container,</span><br><span class="line">      <span class="literal">null</span>,</span><br><span class="line">      parentComponent,</span><br><span class="line">      parentSuspense,</span><br><span class="line">      isSVG,</span><br><span class="line">      slotScopeIds,</span><br><span class="line">      optimized</span><br><span class="line">    );</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  e1--;</span><br><span class="line">  e2--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>旧节点被遍历结束了，但是新节点没有遍历结束</p>
+<p>这个时候剩余的新节点一定需要重新生成 dom</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 3. common sequence + mount</span></span><br><span class="line"><span class="comment">// (a b)</span></span><br><span class="line"><span class="comment">// (a b) c</span></span><br><span class="line"><span class="comment">// i = 2, e1 = 1, e2 = 2</span></span><br><span class="line"><span class="comment">// (a b)</span></span><br><span class="line"><span class="comment">// c (a b)</span></span><br><span class="line"><span class="comment">// i = 0, e1 = -1, e2 = 0</span></span><br><span class="line"><span class="keyword">if</span> (i &gt; e1) &#123;</span><br><span class="line">  <span class="keyword">if</span> (i &lt;= e2) &#123;</span><br><span class="line">    <span class="keyword">const</span> nextPos = e2 + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">const</span> anchor = nextPos &lt; l2 ? c2[nextPos].<span class="property">el</span> : parentAnchor;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= e2) &#123;</span><br><span class="line">      <span class="title function_">patch</span>(</span><br><span class="line">        <span class="literal">null</span>,</span><br><span class="line">        (c2[i] = optimized ? <span class="title function_">cloneIfMounted</span>(c2[i]) : <span class="title function_">normalizeVNode</span>(c2[i])),</span><br><span class="line">        container,</span><br><span class="line">        anchor,</span><br><span class="line">        parentComponent,</span><br><span class="line">        parentSuspense,</span><br><span class="line">        isSVG,</span><br><span class="line">        slotScopeIds,</span><br><span class="line">        optimized</span><br><span class="line">      );</span><br><span class="line">      i++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>旧节点没有遍历结束，但是新节点遍历结束了</p>
+<p>那么直接把旧节点的 dom 全部卸载掉</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 4. common sequence + unmount</span></span><br><span class="line">      <span class="comment">// (a b) c</span></span><br><span class="line">      <span class="comment">// (a b)</span></span><br><span class="line">      <span class="comment">// i = 2, e1 = 2, e2 = 1</span></span><br><span class="line">      <span class="comment">// a (b c)</span></span><br><span class="line">      <span class="comment">// (b c)</span></span><br><span class="line">      <span class="comment">// i = 0, e1 = 0, e2 = -1</span></span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> (i &gt; e2) &#123;</span><br><span class="line">          <span class="keyword">while</span> (i &lt;= e1) &#123;</span><br><span class="line">              <span class="title function_">unmount</span>(c1[i], parentComponent, parentSuspense, <span class="literal">true</span>);</span><br><span class="line">              i++;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>建立剩余的新节点的节点与节点 key 的 map</p>
+<ul>
+<li><p>如果启用了优化（optimized 为 true），则使用 cloneIfMounted 复用已挂载的节点</p>
+<ul>
+<li><p>判断逻辑：<br>child.el &#x3D;&#x3D;&#x3D; null: 节点未挂载</p>
+<p>当一个 vnode 刚创建但尚未渲染到 DOM 时，el 属性为 null<br>这种情况下直接返回原节点，无需克隆<br>child.memo: 节点被标记为需要记忆</p>
+<p>如果节点有 memo 标记（用于优化），也直接返回原节点<br>其他情况: 节点已挂载</p>
+<p>如果 child.el 不为 null（说明已经挂载到真实 DOM 元素）<br>则调用 cloneVNode(child) 创建新节点</p>
+</li>
+<li><p>工作原理：<br>未挂载节点: vnode.el &#x3D; null，表示该虚拟节点还未对应真实 DOM 元素</p>
+<p>已挂载节点: vnode.el 指向实际的 DOM 元素，表示该虚拟节点已经渲染到页面上</p>
+</li>
+</ul>
+</li>
+<li><p>否则使用 normalizeVNode 标准化节点</p>
+</li>
+<li><p>同时将处理后的节点重新赋值给 c2[i]</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> s2 = i; <span class="comment">// next starting index</span></span><br><span class="line"><span class="comment">// 5.1 build key:index map for newChildren</span></span><br><span class="line"><span class="keyword">const</span> keyToNewIndexMap = <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line"><span class="keyword">for</span> (i = s2; i &lt;= e2; i++) &#123;</span><br><span class="line">  <span class="keyword">const</span> nextChild = (c2[i] = optimized</span><br><span class="line">    ? <span class="title function_">cloneIfMounted</span>(c2[i])</span><br><span class="line">    : <span class="title function_">normalizeVNode</span>(c2[i]));</span><br><span class="line">  <span class="keyword">if</span> (nextChild.<span class="property">key</span> != <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (keyToNewIndexMap.<span class="title function_">has</span>(nextChild.<span class="property">key</span>)) &#123;</span><br><span class="line">      <span class="title function_">warn$1</span>(</span><br><span class="line">        <span class="string">`Duplicate keys found during update:`</span>,</span><br><span class="line">        <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(nextChild.<span class="property">key</span>),</span><br><span class="line">        <span class="string">`Make sure keys are unique.`</span></span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">    keyToNewIndexMap.<span class="title function_">set</span>(nextChild.<span class="property">key</span>, i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>遍历旧节点，查找旧节点剩余的节点是否在新节点里面有，如果有就加上，如果没有就卸载</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> j;</span><br><span class="line"><span class="keyword">let</span> patched = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">const</span> toBePatched = e2 - s2 + <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> moved = <span class="literal">false</span>;</span><br><span class="line"><span class="comment">// used to track whether any node has moved</span></span><br><span class="line"><span class="keyword">let</span> maxNewIndexSoFar = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// works as Map&lt;newIndex, oldIndex&gt;</span></span><br><span class="line"><span class="comment">// Note that oldIndex is offset by +1</span></span><br><span class="line"><span class="comment">// and oldIndex = 0 is a special value indicating the new node has</span></span><br><span class="line"><span class="comment">// no corresponding old node.</span></span><br><span class="line"><span class="comment">// used for determining longest stable subsequence</span></span><br><span class="line"><span class="keyword">const</span> newIndexToOldIndexMap = <span class="keyword">new</span> <span class="title class_">Array</span>(toBePatched);</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; toBePatched; i++) newIndexToOldIndexMap[i] = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (i = s1; i &lt;= e1; i++) &#123;</span><br><span class="line">  <span class="keyword">const</span> prevChild = c1[i];</span><br><span class="line">  <span class="keyword">if</span> (patched &gt;= toBePatched) &#123;</span><br><span class="line">    <span class="comment">// 所有新节点都已处理，剩余的旧节点需要删除</span></span><br><span class="line">    <span class="title function_">unmount</span>(prevChild, parentComponent, parentSuspense, <span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">continue</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> newIndex;</span><br><span class="line">  <span class="keyword">if</span> (prevChild.<span class="property">key</span> != <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="comment">// 有 key 的节点，直接通过 Map 查找新位置</span></span><br><span class="line">    newIndex = keyToNewIndexMap.<span class="title function_">get</span>(prevChild.<span class="property">key</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 无 key 节点，需要遍历查找相同类型的节点</span></span><br><span class="line">    <span class="keyword">for</span> (j = s2; j &lt;= e2; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (</span><br><span class="line">        newIndexToOldIndexMap[j - s2] === <span class="number">0</span> &amp;&amp;</span><br><span class="line">        <span class="title function_">isSameVNodeType</span>(prevChild, c2[j])</span><br><span class="line">      ) &#123;</span><br><span class="line">        newIndex = j;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (newIndex === <span class="literal">undefined</span>) &#123;</span><br><span class="line">    <span class="comment">// 节点在新列表中不存在，需要删除</span></span><br><span class="line">    <span class="title function_">unmount</span>(prevChild, parentComponent, parentSuspense, <span class="literal">true</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 节点存在，记录映射关系并更新</span></span><br><span class="line">    newIndexToOldIndexMap[newIndex - s2] = i + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (newIndex &gt;= maxNewIndexSoFar) &#123;</span><br><span class="line">      maxNewIndexSoFar = newIndex;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      moved = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 更新已存在的节点，prevChild：旧节点，c2[newIndex]：新节点</span></span><br><span class="line">    <span class="title function_">patch</span>(</span><br><span class="line">      prevChild,</span><br><span class="line">      c2[newIndex],</span><br><span class="line">      container,</span><br><span class="line">      <span class="literal">null</span>,</span><br><span class="line">      parentComponent,</span><br><span class="line">      parentSuspense,</span><br><span class="line">      isSVG,</span><br><span class="line">      slotScopeIds,</span><br><span class="line">      optimized</span><br><span class="line">    );</span><br><span class="line">    patched++;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>计算最长递增子序列</p>
+<ul>
+<li>找出新旧节点中相对位置不变的节点序列</li>
+<li>如果节点发生了移动（moved 为 true），则调用 getSequence 计算 newIndexToOldIndexMap 的最长递增子序列</li>
+<li>最长递增子序列（LIS）用于找出不需要移动的节点， 只移动位置发生变化的节点，从而最小化 DOM 操作</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> increasingNewIndexSequence = moved</span><br><span class="line">  ? <span class="title function_">getSequence</span>(newIndexToOldIndexMap)</span><br><span class="line">  : <span class="variable constant_">EMPTY_ARR</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>反向遍历剩余的新节点，因为在前几个步骤中，新节点的前后都可能已经又其他节点的，通过锚点可以利用<code>insertBefore(newNode, referenceNode)</code>具体插入在哪个元素前。如果从头开始，后节点可能不存在，因此是反向遍历</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">j = increasingNewIndexSequence.<span class="property">length</span> - <span class="number">1</span>;</span><br><span class="line"><span class="comment">// looping backwards so that we can use last patched node as anchor</span></span><br><span class="line"><span class="keyword">for</span> (i = toBePatched - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">  <span class="comment">// s2新子节点数组的起始索引，即在此下标之前的节点都已经挂载好了</span></span><br><span class="line">  <span class="keyword">const</span> nextIndex = s2 + i;</span><br><span class="line">  <span class="keyword">const</span> nextChild = c2[nextIndex];</span><br><span class="line">  <span class="comment">// 这里就是获取当前节点的下一个节点，用于节点插入</span></span><br><span class="line">  <span class="keyword">const</span> anchor = nextIndex + <span class="number">1</span> &lt; l2 ? c2[nextIndex + <span class="number">1</span>].<span class="property">el</span> : parentAnchor;</span><br><span class="line">  <span class="comment">// 如果新节点在旧节点中不存在，那么直接插入即可</span></span><br><span class="line">  <span class="keyword">if</span> (newIndexToOldIndexMap[i] === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// mount new</span></span><br><span class="line">    <span class="title function_">patch</span>(</span><br><span class="line">      <span class="literal">null</span>,</span><br><span class="line">      nextChild,</span><br><span class="line">      container,</span><br><span class="line">      anchor,</span><br><span class="line">      parentComponent,</span><br><span class="line">      parentSuspense,</span><br><span class="line">      isSVG,</span><br><span class="line">      slotScopeIds,</span><br><span class="line">      optimized</span><br><span class="line">    );</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (moved) &#123;</span><br><span class="line">    <span class="comment">// move if:</span></span><br><span class="line">    <span class="comment">// There is no stable subsequence (e.g. a reverse)</span></span><br><span class="line">    <span class="comment">// OR current node is not among the stable sequence</span></span><br><span class="line">    <span class="comment">// 移动旧节点到新节点</span></span><br><span class="line">    <span class="keyword">if</span> (j &lt; <span class="number">0</span> || i !== increasingNewIndexSequence[j]) &#123;</span><br><span class="line">      <span class="title function_">move</span>(nextChild, container, anchor, <span class="number">2</span> <span class="comment">/* REORDER */</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      j--;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>为什么采用最长递增子序列算法进行移动，而不是把所有已存在节点进行移动</p>
+<ul>
+<li>采用LIS算法，只需要移动部分节点，这些节点依据LIS列表中的位置去进行定位即可</li>
+<li>移动所有节点，会耗费大量时间  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// 旧子节点: [A, B, C, D, E]</span><br><span class="line">// 新子节点: [B, C, E, A, D]</span><br><span class="line">// 索引映射: [1, 2, 4, 0, 3] (新索引对应的老索引)</span><br><span class="line"></span><br><span class="line">// 如果移动所有节点:</span><br><span class="line">// 1. B -&gt; 移动到位置0</span><br><span class="line">// 2. C -&gt; 移动到位置1  </span><br><span class="line">// 3. E -&gt; 移动到位置2</span><br><span class="line">// 4. A -&gt; 移动到位置3</span><br><span class="line">// 5. D -&gt; 移动到位置4</span><br><span class="line">// 总共5次移动</span><br><span class="line"></span><br><span class="line">// 使用LIS优化:</span><br><span class="line">// LIS: [1, 2, 4] 对应 [B, C, E] - 这些节点已经按正确顺序排列</span><br><span class="line">// 需要移动: [0, 3] 对应 [A, D]</span><br><span class="line">// 1. A -&gt; 移动到位置3</span><br><span class="line">// 2. D -&gt; 移动到位置4  </span><br><span class="line">// 总共2次移动</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/Vue/%E5%B0%8F%E7%82%B9/" rel="prev" title="小点">
+                  <i class="fa fa-angle-left"></i> 小点
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91vitetest%E6%B5%8B%E8%AF%95Store/" rel="next" title="【vueTest】vitetest测试Store踩坑记录">
+                  【vueTest】vitetest测试Store踩坑记录 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

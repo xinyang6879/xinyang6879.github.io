@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="客户端场景参数 设备特征：包括类型（pc&#x2F;手机&#x2F;pad）、硬件配置（cpu&#x2F;内存等）、操作系统（ios&#x2F;安卓等）以及操作系统版本等，  浏览器特征：品牌、版本等  网络情况：连接方式（光纤&#x2F;Wi-Fi&#x2F;移动）、运营商、地区、带宽等。   加载阶段目标领浏览器尽可能快地完成网址初始状态（即第一屏）的呈现，给用户留下良好的第一印象。 优化方向">
+<meta property="og:type" content="article">
+<meta property="og:title" content="性能评估模型">
+<meta property="og:url" content="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="客户端场景参数 设备特征：包括类型（pc&#x2F;手机&#x2F;pad）、硬件配置（cpu&#x2F;内存等）、操作系统（ios&#x2F;安卓等）以及操作系统版本等，  浏览器特征：品牌、版本等  网络情况：连接方式（光纤&#x2F;Wi-Fi&#x2F;移动）、运营商、地区、带宽等。   加载阶段目标领浏览器尽可能快地完成网址初始状态（即第一屏）的呈现，给用户留下良好的第一印象。 优化方向">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T03:18:06.718Z">
+<meta property="article:modified_time" content="2025-03-06T09:08:26.540Z">
+<meta property="article:author" content="yangxin">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0%E6%A8%A1%E5%9E%8B/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0%E6%A8%A1%E5%9E%8B/","path":"2025/08/14/读书笔记/性能评估模型/","title":"性能评估模型"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>性能评估模型 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9C%BA%E6%99%AF%E5%8F%82%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">客户端场景参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E9%98%B6%E6%AE%B5"><span class="nav-number">2.</span> <span class="nav-text">加载阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%96%B9%E5%90%91"><span class="nav-number">2.2.</span> <span class="nav-text">优化方向</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E4%BA%A4%E4%BA%92%E9%98%B6%E6%AE%B5"><span class="nav-number">3.</span> <span class="nav-text">可交互阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A1%E9%87%8F%E8%A7%92%E5%BA%A6"><span class="nav-number">3.1.</span> <span class="nav-text">衡量角度</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="性能评估模型 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          性能评估模型
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" itemprop="url" rel="index"><span itemprop="name">额外内容</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="客户端场景参数"><a href="#客户端场景参数" class="headerlink" title="客户端场景参数"></a>客户端场景参数</h2><ul>
+<li><p>设备特征：包括类型（pc&#x2F;手机&#x2F;pad）、硬件配置（cpu&#x2F;内存等）、操作系统（ios&#x2F;安卓等）以及操作系统版本等，</p>
+</li>
+<li><p>浏览器特征：品牌、版本等</p>
+</li>
+<li><p>网络情况：连接方式（光纤&#x2F;Wi-Fi&#x2F;移动）、运营商、地区、带宽等。</p>
+</li>
+</ul>
+<h2 id="加载阶段"><a href="#加载阶段" class="headerlink" title="加载阶段"></a>加载阶段</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>领浏览器尽可能快地完成网址初始状态（即第一屏）的呈现，给用户留下良好的第一印象。</p>
+<h3 id="优化方向"><a href="#优化方向" class="headerlink" title="优化方向"></a>优化方向</h3><ul>
+<li><p>从视觉角度提高网站内容的渲染速度</p>
+</li>
+<li><p>白屏时间</p>
+</li>
+<li><p>计算时间：<br>将用户在浏览器地址栏中输入url按下回车那一刻作为计时起点，将有可视化的图像渲染到浏览器视窗的时间点作为计时终点，其中的差值就是白屏时间。</p>
+</li>
+<li><p>浏览器工作：<br>域名查询、与web服务器建立tcp连接、发送http请求、接受并渲染文档等。</p>
+</li>
+<li><p>首屏时间</p>
+</li>
+<li><p>计算：<br>计时终点是浏览器的第一屏首次完全渲染完毕的时间点。而计时起点有两种说法，一种是从用户按下回车键开始，即白屏时间被算入首屏时间；一种是将白屏时间的终点作为首屏时间的起点。</p>
+</li>
+<li><p>可交互节点</p>
+</li>
+</ul>
+<p>将网站首次可以响应用户操作反馈的那一刻作为可交互节点，其代表的是一个时刻而不是一个时间间隔。</p>
+<ul>
+<li><p>从交互角度缩短从打开网站到可交互之间的时间间隔，对应可交互节点指标</p>
+</li>
+<li><p>首次有效绘制</p>
+</li>
+</ul>
+<p>对应于不同的业务，在页面上的元素有不同的优先级渲染排序。比如地图中，最重要的元素是地图本身而不是工具箱。因此为了达到更好的效益，优先级高的内容应该相对更早地展示给用户，首次有效绘制指的就是优先级最高的内容被首次渲染的时间节点</p>
+<ul>
+<li>广告可视节点</li>
+</ul>
+<p>更快地将广告展示给用户能间接提高与广告商之间的议价，对于公司来说，广告是非常重要甚至是主要的创收途径。</p>
+<h2 id="可交互阶段"><a href="#可交互阶段" class="headerlink" title="可交互阶段"></a>可交互阶段</h2><h3 id="衡量角度"><a href="#衡量角度" class="headerlink" title="衡量角度"></a>衡量角度</h3><ul>
+<li><p>反馈速度<br>尽可能快的响应用户的操作，根据具体的架构设计可表现在不同的角度。</p>
+</li>
+<li><p>动画帧率<br>对于游戏、地图等涉及数据量庞大时，这个是需要主要的考虑点。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8/" rel="prev" title="浏览器安全">
+                  <i class="fa fa-angle-left"></i> 浏览器安全
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/PerformanceObserver/" rel="next" title="PerformanceObserver">
+                  PerformanceObserver <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

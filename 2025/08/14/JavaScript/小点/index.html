@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="检测一个数是否是整数将这个值转为十进制，如果是整数，那么十进制后的值和原本的值是相等的；如果不是，那么就不相等 1parseInt(num) &#x3D;&#x3D;&#x3D; num  去除字符串空格 利用正则 1234567&#x2F;&#x2F; 去除所有空格const re&#x3D;&#x2F;\s+&#x2F;g;&#x2F;&#x2F; 去除开头空格const re&#x3D;&#x2F;\s+&#x2F;;&#x2F;&#x2F; 去除结尾空格const re&#x3D;&#x2F;\s+$&#x2F;;str.replace(re,&#x27;&amp;#x27">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【js】小点">
+<meta property="og:url" content="http://example.com/2025/08/14/JavaScript/%E5%B0%8F%E7%82%B9/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="检测一个数是否是整数将这个值转为十进制，如果是整数，那么十进制后的值和原本的值是相等的；如果不是，那么就不相等 1parseInt(num) &#x3D;&#x3D;&#x3D; num  去除字符串空格 利用正则 1234567&#x2F;&#x2F; 去除所有空格const re&#x3D;&#x2F;\s+&#x2F;g;&#x2F;&#x2F; 去除开头空格const re&#x3D;&#x2F;\s+&#x2F;;&#x2F;&#x2F; 去除结尾空格const re&#x3D;&#x2F;\s+$&#x2F;;str.replace(re,&#x27;&amp;#x27">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T03:18:06.336Z">
+<meta property="article:modified_time" content="2025-05-03T23:45:05.924Z">
+<meta property="article:author" content="yangxin">
+<meta property="article:tag" content="js">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/JavaScript/%E5%B0%8F%E7%82%B9/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/JavaScript/%E5%B0%8F%E7%82%B9/","path":"2025/08/14/JavaScript/小点/","title":"【js】小点"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【js】小点 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%B5%8B%E4%B8%80%E4%B8%AA%E6%95%B0%E6%98%AF%E5%90%A6%E6%98%AF%E6%95%B4%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">检测一个数是否是整数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%BB%E9%99%A4%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%A9%BA%E6%A0%BC"><span class="nav-number">2.</span> <span class="nav-text">去除字符串空格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined%E5%92%8Cnull%E5%BC%82%E5%90%8C"><span class="nav-number">3.</span> <span class="nav-text">undefined和null异同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%88%E6%89%A7%E8%A1%8C%E5%86%92%E6%B3%A1%E4%BA%8B%E4%BB%B6%E8%BF%98%E6%98%AF%E6%8D%95%E8%8E%B7%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">先执行冒泡事件还是捕获事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E9%A1%B5%E9%9D%A2zindex%E6%9C%80%E5%A4%A7%E7%9A%84%E5%85%83%E7%B4%A0"><span class="nav-number">5.</span> <span class="nav-text">查找页面zindex最大的元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E5%85%A5js%E6%96%87%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">引入js文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E8%8A%82%E7%82%B9%E6%96%B9%E6%B3%95"><span class="nav-number">7.</span> <span class="nav-text">获取节点方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM%E8%8A%82%E7%82%B9%E7%B1%BB%E5%9E%8B"><span class="nav-number">8.</span> <span class="nav-text">DOM节点类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%BF%E4%B8%BB%E5%AF%B9%E8%B1%A1-%E5%8E%9F%E7%94%9F%E5%AF%B9%E8%B1%A1"><span class="nav-number">9.</span> <span class="nav-text">宿主对象,原生对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#this"><span class="nav-number">10.</span> <span class="nav-text">this</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSONP"><span class="nav-number">11.</span> <span class="nav-text">JSONP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E9%A1%B5%E9%9D%A2%E7%9A%84%E5%89%8D%E8%BF%9B%E5%90%8E%E9%80%80"><span class="nav-number">12.</span> <span class="nav-text">如何实现页面的前进后退</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/JavaScript/%E5%B0%8F%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【js】小点 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【js】小点
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-05-04 07:45:05" itemprop="dateModified" datetime="2025-05-04T07:45:05+08:00">2025-05-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JS/" itemprop="url" rel="index"><span itemprop="name">JS</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="检测一个数是否是整数"><a href="#检测一个数是否是整数" class="headerlink" title="检测一个数是否是整数"></a>检测一个数是否是整数</h3><p>将这个值转为十进制，如果是整数，那么十进制后的值和原本的值是相等的；如果不是，那么就不相等</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(num) === num</span><br></pre></td></tr></table></figure>
+
+<h3 id="去除字符串空格"><a href="#去除字符串空格" class="headerlink" title="去除字符串空格"></a>去除字符串空格</h3><ul>
+<li><p>利用正则</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 去除所有空格</span></span><br><span class="line"><span class="keyword">const</span> re=<span class="regexp">/\s+/g</span>;</span><br><span class="line"><span class="comment">// 去除开头空格</span></span><br><span class="line"><span class="keyword">const</span> re=<span class="regexp">/\s+/</span>;</span><br><span class="line"><span class="comment">// 去除结尾空格</span></span><br><span class="line"><span class="keyword">const</span> re=<span class="regexp">/\s+$/</span>;</span><br><span class="line">str.<span class="title function_">replace</span>(re,<span class="string">&#x27;&#x27;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用trim()方法去除首尾空格</p>
+</li>
+</ul>
+<h3 id="undefined和null异同"><a href="#undefined和null异同" class="headerlink" title="undefined和null异同"></a>undefined和null异同</h3><p>相同点</p>
+<ul>
+<li>都表示无数据</li>
+<li>boolean后都是false</li>
+</ul>
+<p>不同点</p>
+<ul>
+<li>null表示一个对象变量已经初始化,但未装入对象; undefined则是未初始化变量</li>
+<li>null表示”无”的对象,转为数值后是0; undefined表示”无”原始值,转为数值后是NaN</li>
+<li>null<ul>
+<li>作为函数参数,表示该函数的参数不是对象</li>
+<li>作为对象原型链的终点</li>
+</ul>
+</li>
+<li>undefined<ul>
+<li>变量被声明了,但没有赋值</li>
+<li>调用函数时,没有传的参数时</li>
+<li>函数没有返回值,默认返回undefined</li>
+<li>对象没有赋值的属性</li>
+</ul>
+</li>
+</ul>
+<h3 id="先执行冒泡事件还是捕获事件"><a href="#先执行冒泡事件还是捕获事件" class="headerlink" title="先执行冒泡事件还是捕获事件"></a>先执行冒泡事件还是捕获事件</h3><p>事件顺序: 其他元素捕获阶段-&gt;本元素代码顺序-&gt;其他元素冒泡阶段</p>
+<p>先执行捕获.从上往下,如果有捕获,则执行,一直向下到目标元素后,从目标元素开始向上执行冒泡元素</p>
+<h3 id="查找页面zindex最大的元素"><a href="#查找页面zindex最大的元素" class="headerlink" title="查找页面zindex最大的元素"></a>查找页面zindex最大的元素</h3><ul>
+<li>获取所有元素</li>
+<li>使用<code>window.getComputedStyle(_DOM).zIndex</code>获取实际的zindex</li>
+<li>进行查找对比</li>
+</ul>
+<h3 id="引入js文件"><a href="#引入js文件" class="headerlink" title="引入js文件"></a>引入js文件</h3><ul>
+<li><p>html的head, body中写script标签</p>
+</li>
+<li><p>script的src引入外部文件</p>
+</li>
+<li><p>元素事件中引入</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button @click=<span class="string">&#x27;alert(&quot;&quot;)&#x27;</span>&gt;btn&lt;/button&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="获取节点方法"><a href="#获取节点方法" class="headerlink" title="获取节点方法"></a>获取节点方法</h3><p>子节点</p>
+<ul>
+<li>getElementById&#x2F;getElementByTagName&#x2F;querySelector…</li>
+<li>childNodes获取子节点,会把换行和空格也作为子节点</li>
+<li>children</li>
+<li>firstChild:获取第一个子节点,可能是换行或空格</li>
+<li>firstElementChild: 获取第一个真正的子节点,不包括换行或空格</li>
+<li>lastChild</li>
+</ul>
+<p>父节点</p>
+<ul>
+<li>parentNode: W3C标准</li>
+<li>parentElement: IE标准</li>
+<li>offsetParent: 获取所有父节点</li>
+</ul>
+<p>兄弟节点:</p>
+<ul>
+<li>previousSibling&#x2F;previousElementSibling: 前者包含换行和空格</li>
+<li>nextSibling&#x2F;nextEmementSibling</li>
+</ul>
+<h3 id="DOM节点类型"><a href="#DOM节点类型" class="headerlink" title="DOM节点类型"></a>DOM节点类型</h3><p>12种</p>
+<ul>
+<li><p>元素节点:nodeType&#x3D;1</p>
+<p>  对应HTML标签元素, nodeName是大写的标签名,nodeValue是null</p>
+</li>
+<li><p>特性节点: nodeType&#x3D;2</p>
+<p>  对应HTML标签的属性,只存在于元素的attributes属性中,并不是DOM树的一部分, nodeName是属性名,nodeValue是属性值</p>
+</li>
+<li><p>文本节点: 3</p>
+<p>  text代表网页的HTML标签内容, nodeName是’#text’,nodeValue是标签内容值</p>
+</li>
+<li><p>CDATA节点: 4</p>
+<p>  只针对基于XML的文档, nodeName是’#cdata-section’,nodeValue是CDATA区域中的内容</p>
+</li>
+<li><p>实体引用名称节点</p>
+<p>  实体是一个声明,指定了在XML中取代内容或标记而使用的名称, nodeName是实体引用的名称,nodeValue是null</p>
+</li>
+<li><p>实体名称节点</p>
+<p>   nodeName是实体名称,nodeValue是null</p>
+</li>
+<li><p>处理指令节点</p>
+<p>  , nodeName是target,nodeValue是entire content excluding the target</p>
+</li>
+<li><p>注释节点: 8</p>
+<p>  nodeName是’#comment’,nodeValue是null</p>
+</li>
+<li><p>文档节点&#x2F;根节点: 9</p>
+<p>  nodeName是’#document’,nodeValue是null</p>
+</li>
+<li><p>文档类型节点</p>
+<p>  包含与文档的doctype有关的所有信息, nodeName是doctype的名称,nodeValue是null</p>
+</li>
+<li><p>文档片段节点</p>
+<p>  在文档中没有对应的标记,是一种轻量级的文档,可以包含控制节点,但不会向完整的文档占用额外的资源, nodeName是’#document-fragment’,nodeValue是null</p>
+</li>
+<li><p>DTD声明节点:12</p>
+<p>  nodeName是符号名称,nodeValue是null</p>
+</li>
+</ul>
+<h3 id="宿主对象-原生对象"><a href="#宿主对象-原生对象" class="headerlink" title="宿主对象,原生对象"></a>宿主对象,原生对象</h3><p>原生对象:ECMA-262把本地对象定义为”独立于宿主环境的ECMAScript实现提供的对象”</p>
+<p>本地对象包括:Object,Function,Array,String,Boolean,Number,Date,RegExp,Error,EvalError,RangeError,ReferenceError,SyntaxError,TypeError,URIError</p>
+<p>内置对象:定义为”由ES实现提供的,独立于宿主环境的所有对象,在ES程序开始执行时出现”,这意味着开发者不需要明确实例化内置对象,它已经被实例化了</p>
+<p>内置对象包括:Global和Math</p>
+<p>宿主对象:网页的运行环境,即DOM和BOM</p>
+<h3 id="this"><a href="#this" class="headerlink" title="this"></a>this</h3><ul>
+<li><p>方法调用</p>
+<p>  当函数被保存为一个对象属性时,该函数是该对象的方法,this指向该对象</p>
+</li>
+<li><p>函数调用</p>
+<p>  this指向全局</p>
+</li>
+<li><p>构造器调用</p>
+<p>  使用new调用的函数,this将会绑定到这个新创建的对象</p>
+</li>
+<li><p>apply&#x2F;call</p>
+<p>  this指向传入的第一个参数</p>
+</li>
+</ul>
+<h3 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h3><p>客户端定义一个函数,然后创建script标签,src为url+?jsonp&#x3D;函数名,之后服务器会生成一个和传递过来的和函数名一样名字的参数,并把需要传递的数据当作擦书传入,然后返回给客户端,此时客户端就指向了这个服务器端返回的函数回调</p>
+<p>客户端定义一个函数,然后请求,服务器返回的js内容就是调用这个函数,需要的数据都作为参数传入这个函数</p>
+<p>JSONP是一种非官方跨域数据交互协议,允许在服务器端集成script标签返回给客户端,通过js回调的形式实现跨域访问</p>
+<p>由于同源策略的影响,跨域会报错,但是script可以访问外部资源,可以绕过同源协议</p>
+<h3 id="如何实现页面的前进后退"><a href="#如何实现页面的前进后退" class="headerlink" title="如何实现页面的前进后退"></a>如何实现页面的前进后退</h3><p>监听路由的变化事件hashchange与路由的第一次加载事件load</p>
+<ul>
+<li>url存在于浏览记录即为后退,后退时,把当前路由后面的浏览记录删除</li>
+<li>url不存在浏览记录是前进,前进时,push在当前路由的数组中</li>
+<li>url在浏览器末端是在刷新页面,不需要对路由数据做任何操作</li>
+</ul>
+<p>注:数组可能存在多次相同的路由,应该用key来区分相同路由的不同实例</p>
+<p>用两个栈实现浏览器的前进后退功能, 使用两个栈X和Y,把首次浏览的页面依次压入栈X,当单击”后退”时,再依次从栈X中出栈,并将其放入Y中.当点击”前进”按钮时,从Y中出栈,将其放入X中.当X中无数据时,说明页面无法继续后退;当Y中无数据时,说明页面无法前进</p>
+<ul>
+<li>进入了多个页面a,b,c:将abc压入X栈,此时在c页面</li>
+<li>后退两步,将bc从X中弹出,放入Y栈,此时在a页面</li>
+<li>前进一步,将b从Y中弹出,放入X栈,此时在b页面</li>
+<li>打开新页面d,将d压入X栈,此时在d页面</li>
+<li>清空Y,此时无法前面或后退到c页面</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/js/" rel="tag"># js</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/JavaScript/%E3%80%90JS%E3%80%91%E4%BF%AE%E9%A5%B0%E5%99%A8/" rel="prev" title="【js】修饰器（Decorator）">
+                  <i class="fa fa-angle-left"></i> 【js】修饰器（Decorator）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/JavaScript/%E3%80%90JS%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" rel="next" title="【JS】记录小点">
+                  【JS】记录小点 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

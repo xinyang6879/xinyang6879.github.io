@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="块级和行内行内多为描述性标记，块级多为结构性标记。块级元素即使声明了宽度也独占一行 link和@import 从属关系：  @import是css提供的语法，只有导入样式表的作用 link是html提供的标签，可以加载css文件，也可以定义rss、rel链接属性等   加载顺序  @import引入的将会在页面解析完成后被加载 link引入的同时css被加载   兼容性  @import是css2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【css】小点">
+<meta property="og:url" content="http://example.com/2025/08/14/css/%E5%B0%8F%E7%82%B9/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="块级和行内行内多为描述性标记，块级多为结构性标记。块级元素即使声明了宽度也独占一行 link和@import 从属关系：  @import是css提供的语法，只有导入样式表的作用 link是html提供的标签，可以加载css文件，也可以定义rss、rel链接属性等   加载顺序  @import引入的将会在页面解析完成后被加载 link引入的同时css被加载   兼容性  @import是css2">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T03:18:06.193Z">
+<meta property="article:modified_time" content="2025-05-04T01:06:06.798Z">
+<meta property="article:author" content="yangxin">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/css/%E5%B0%8F%E7%82%B9/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/css/%E5%B0%8F%E7%82%B9/","path":"2025/08/14/css/小点/","title":"【css】小点"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【css】小点 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9D%97%E7%BA%A7%E5%92%8C%E8%A1%8C%E5%86%85"><span class="nav-number">1.</span> <span class="nav-text">块级和行内</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#link%E5%92%8C-import"><span class="nav-number">2.</span> <span class="nav-text">link和@import</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css%E7%9A%84%E5%BC%95%E5%85%A5%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">css的引入方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css3%E6%96%B0%E7%89%B9%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text">css3新特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%88%9D%E5%A7%8B%E5%8C%96css"><span class="nav-number">5.</span> <span class="nav-text">为什么需要初始化css</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E8%A7%A3%E6%9E%90css%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-number">6.</span> <span class="nav-text">浏览器解析css选择器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%90%E8%97%8F%E5%85%83%E7%B4%A0%E6%96%B9%E6%B3%95"><span class="nav-number">7.</span> <span class="nav-text">隐藏元素方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#visible-hidden%E5%92%8Cdisplay-none%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">7.1.</span> <span class="nav-text">visible:hidden和display:none的区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css%E9%80%89%E6%8B%A9%E5%99%A8%E6%9C%89%E5%93%AA%E4%BA%9B-%E5%93%AA%E4%BA%9B%E5%8F%AF%E4%BB%A5%E7%BB%A7%E6%89%BF"><span class="nav-number">8.</span> <span class="nav-text">css选择器有哪些,哪些可以继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#font%E5%B1%9E%E6%80%A7%E8%AE%BE%E7%BD%AE"><span class="nav-number">9.</span> <span class="nav-text">font属性设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#line-height"><span class="nav-number">10.</span> <span class="nav-text">line-height</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css%E4%BC%98%E5%8C%96"><span class="nav-number">11.</span> <span class="nav-text">css优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E4%BD%93%E7%94%A8%E5%81%B6%E6%95%B0%E8%BF%98%E6%98%AF%E5%A5%87%E6%95%B0"><span class="nav-number">12.</span> <span class="nav-text">字体用偶数还是奇数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#first-child%E5%92%8Cfirst-of-type%E5%8C%BA%E5%88%AB"><span class="nav-number">13.</span> <span class="nav-text">first-child和first-of-type区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%AA%E7%B1%BB%E5%92%8C%E4%BC%AA%E5%85%83%E7%B4%A0"><span class="nav-number">14.</span> <span class="nav-text">伪类和伪元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inline-block%E5%92%8Cfloat%E5%8C%BA%E5%88%AB"><span class="nav-number">15.</span> <span class="nav-text">inline-block和float区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#absolute%E5%92%8Cfloat%E5%8C%BA%E5%88%AB"><span class="nav-number">16.</span> <span class="nav-text">absolute和float区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web%E5%AE%89%E5%85%A8%E8%89%B2"><span class="nav-number">17.</span> <span class="nav-text">web安全色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#float%E5%85%83%E7%B4%A0%E6%B5%AE%E5%8A%A8"><span class="nav-number">18.</span> <span class="nav-text">float元素浮动</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#font-face"><span class="nav-number">18.1.</span> <span class="nav-text">@font-face</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#opacity%E5%92%8Cbackground%E9%80%8F%E6%98%8E%E8%89%B2"><span class="nav-number">19.</span> <span class="nav-text">opacity和background透明色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css%E9%9B%AA%E7%A2%A7%E5%9B%BE"><span class="nav-number">20.</span> <span class="nav-text">css雪碧图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0%E8%83%8C%E6%99%AF%E8%89%B2"><span class="nav-number">21.</span> <span class="nav-text">获取元素背景色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#px-em%E5%92%8Crem"><span class="nav-number">22.</span> <span class="nav-text">px,em和rem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D%E6%96%B9%E6%B3%95"><span class="nav-number">23.</span> <span class="nav-text">屏幕适配方法</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/css/%E5%B0%8F%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【css】小点 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【css】小点
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-05-04 09:06:06" itemprop="dateModified" datetime="2025-05-04T09:06:06+08:00">2025-05-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="块级和行内"><a href="#块级和行内" class="headerlink" title="块级和行内"></a>块级和行内</h3><p>行内多为描述性标记，块级多为结构性标记。块级元素即使声明了宽度也独占一行</p>
+<h3 id="link和-import"><a href="#link和-import" class="headerlink" title="link和@import"></a>link和@import</h3><ul>
+<li><p>从属关系：</p>
+<ul>
+<li>@import是css提供的语法，只有导入样式表的作用</li>
+<li>link是html提供的标签，可以加载css文件，也可以定义rss、rel链接属性等</li>
+</ul>
+</li>
+<li><p>加载顺序</p>
+<ul>
+<li>@import引入的将会在页面解析完成后被加载</li>
+<li>link引入的同时css被加载</li>
+</ul>
+</li>
+<li><p>兼容性</p>
+<ul>
+<li>@import是css2.1的特性，在ie5之后才可以使用</li>
+<li>link是html标签，兼容性好</li>
+</ul>
+</li>
+<li><p>dom可控性</p>
+<ul>
+<li>无法使用@import的方式插入样式，因为dom方法基于文档</li>
+<li>插入link标签可以改变样式，通过js操作dom即可</li>
+</ul>
+</li>
+</ul>
+<h3 id="css的引入方式"><a href="#css的引入方式" class="headerlink" title="css的引入方式"></a>css的引入方式</h3><ul>
+<li>内联样式:style</li>
+<li>内部样式表:<style></style>标签</li>
+<li>link引入</li>
+<li>@import引入</li>
+</ul>
+<h3 id="css3新特性"><a href="#css3新特性" class="headerlink" title="css3新特性"></a>css3新特性</h3><ul>
+<li>阴影: box-shadow、text-shadow</li>
+<li>圆角: border-raduis</li>
+<li>盒子模型: box-sizing</li>
+<li>渐变: linear-gradient、radial-gradient</li>
+<li>颜色:新增RGB、HSLA模式</li>
+<li>过渡: transition</li>
+<li>背景: background-size、background-origin、background-clip</li>
+<li>伪元素: selection(唯一在css3中新增的)</li>
+<li>新增伪类<ul>
+<li>p: first-of-type: 选择属于其父元素的首个p元素的每个p元素</li>
+<li>p:only-of-type: 选择属于其父元素唯一的p元素的每个p元素</li>
+<li>p:last-of-type: 选择属于其父元素的最后一个p元素的每个p元素</li>
+<li>p:only-child: 选择属于其父元素的唯一子元素的每个p元素</li>
+<li>p:nth-child(n): 选择属于其父元素的第n个子元素的每个p元素</li>
+<li>:enabled、:disabled: 控制表单控件的禁用状态</li>
+<li>:checked: 单选框或复选框被选中</li>
+</ul>
+</li>
+</ul>
+<h3 id="为什么需要初始化css"><a href="#为什么需要初始化css" class="headerlink" title="为什么需要初始化css"></a>为什么需要初始化css</h3><ul>
+<li><p>浏览器差异</p>
+<p>  由于各家浏览器内核可能使用不同,不同浏览器对有些标签的默认值是不同的,如果没有初始化,那么就在不同浏览器中表现会有差异</p>
+</li>
+<li><p>提高编码质量</p>
+<p>  如果不初始化,整个页面较乱,重复的css有很多</p>
+</li>
+</ul>
+<h3 id="浏览器解析css选择器"><a href="#浏览器解析css选择器" class="headerlink" title="浏览器解析css选择器"></a>浏览器解析css选择器</h3><p>浏览器解析加载资源与渲染顺序</p>
+<ul>
+<li>浏览器下周的顺序从上到下,渲染也是从上到下,下载和渲染并行</li>
+<li>渲染在某一部分时,其上的所有部分都已经下载完成(不是所有相关联的元素都已经下载完成,例如img)</li>
+<li>如果遇到语义解释性的标签嵌入文件(例如css或js文件),那么ie的下载过程会启用单独连接进行下载,且在下载后进行解析,解析过程中,停止后续元素的下载渲染.此时渲染会被阻塞,必须等js或者css资源加载完毕后才进行后续的渲染</li>
+<li>样式表下载完成后,将和之前下载的所有样式表一起进行解析.解析完成后,将会对之前所有的元素(包括已经渲染的)重新进行渲染.</li>
+</ul>
+<p>浏览器对css选择器的解析规则</p>
+<p>解析是从右到左的,例如p .classA,会先查找classA的元素,再<br>去查找classA元素的父元素是否是p标签</p>
+<h3 id="隐藏元素方法"><a href="#隐藏元素方法" class="headerlink" title="隐藏元素方法"></a>隐藏元素方法</h3><ul>
+<li><p>display:none</p>
+<p>  点击失效,不会占位置</p>
+</li>
+<li><p>opacity:0</p>
+<p>  占位置,有点击事件</p>
+</li>
+<li><p>visible:hidden</p>
+<p>  占位置,无点击事件</p>
+</li>
+<li><p>background:transparent</p>
+<p>  背景色透明化</p>
+</li>
+<li><p>position:absolute&#x2F;fixed + left: -100vw</p>
+<p>  移出屏幕</p>
+</li>
+<li><p>filter:blur(0)</p>
+<p>  将元素模糊度设置为0,从而使元素消失在页面中</p>
+</li>
+<li><p>height: 0 + width: 0</p>
+<p>  将高度和宽度设置为0,使元素消失在页面中</p>
+</li>
+</ul>
+<h4 id="visible-hidden和display-none的区别"><a href="#visible-hidden和display-none的区别" class="headerlink" title="visible:hidden和display:none的区别"></a>visible:hidden和display:none的区别</h4><ul>
+<li>当父元素设置的visibility:hidden时,子元素会继承这个样式,若子元素设置的visible不是hidden,那么子元素可以显示在页面中</li>
+<li>transition动画中,visible生效,但是display是无用的</li>
+<li>visible:hidden不会影响计数器的计数,display:none会</li>
+</ul>
+<p>display&#x3D;none不显示对应的元素及其子元素,在文档布局中不再分配空间(回流+重绘)</p>
+<p>visible&#x3D;hidden只不再显示当前元素,但是在文档空间中还是会保留这个元素的(重绘)</p>
+<h3 id="css选择器有哪些-哪些可以继承"><a href="#css选择器有哪些-哪些可以继承" class="headerlink" title="css选择器有哪些,哪些可以继承"></a>css选择器有哪些,哪些可以继承</h3><ul>
+<li>class: 可继承</li>
+<li>id</li>
+<li>标签: 可继承</li>
+<li>后代选择器: 可继承</li>
+<li>群组选择器: 可继承</li>
+</ul>
+<h3 id="font属性设置"><a href="#font属性设置" class="headerlink" title="font属性设置"></a>font属性设置</h3><p>缩写:<code>font: 变体、字号、行高、字体</code>,使用顺序不区分,但是一般字号和行高写一起,中间用&#x2F;分开,例如10px&#x2F;20px</p>
+<p>font属性</p>
+<ul>
+<li>大小:font-size</li>
+<li>样式:font-style</li>
+<li>字重: font-weight</li>
+<li>行高: line-height</li>
+<li>字体: font-family</li>
+<li>大小写: text-transform: uppercase(大写)&#x2F;lowercase(小写)&#x2F;capitalize(首字母大写)</li>
+<li>修饰: text-decoration: underline(下划线)&#x2F;overline(上划线)&#x2F;line-through(删除线)&#x2F;none(无修饰)</li>
+<li>变体: font-variant: small-caps(小型大写字母)&#x2F;normal(正常)</li>
+</ul>
+<h3 id="line-height"><a href="#line-height" class="headerlink" title="line-height"></a>line-height</h3><p>影响</p>
+<ul>
+<li>代替元素:line-height无影响</li>
+<li>非代替元素: line-height影响</li>
+<li>行内元素: line-height用于计算line-box高度</li>
+<li>块级元素: line-height指定元素内部line-box的最小高度</li>
+</ul>
+<p>值类型:</p>
+<ul>
+<li>normal: 取决于用户代理,浏览器使用默认值,大概1.2</li>
+<li>number: 无单位情况是number * 元素字体大小</li>
+<li>length: 指定length用于计算line-box高度</li>
+<li>percentage: 与元素自身的字体大小有关,计算值是给定的百分比 * 元素计算后的字体大小</li>
+</ul>
+<p>默认值: normal,可以继承.如果父元素的值是一个百分比,那么子级继承的是父级计算之后的结果</p>
+<p>行高: 上下文本行的基线间的垂直距离</p>
+<p>行距:一行底线到下一行定县的垂直距离,即第一行线和第二行线之间的垂直距离</p>
+<p>半行距&#x3D;行距的一半&#x3D;(行高-字体size)&#x2F;2</p>
+<h3 id="css优化"><a href="#css优化" class="headerlink" title="css优化"></a>css优化</h3><ul>
+<li>压缩</li>
+<li>合理设计,复用,减少渲染时间</li>
+<li>合并属性</li>
+<li>减少抵消代码例如滤镜、!import引入等</li>
+<li>减少css嵌套</li>
+<li>减少css rest使用</li>
+<li>考虑继承</li>
+<li>渲染: 慎用高性能属性(float&#x2F;定位等); 减少页面重绘重排</li>
+</ul>
+<h3 id="字体用偶数还是奇数"><a href="#字体用偶数还是奇数" class="headerlink" title="字体用偶数还是奇数"></a>字体用偶数还是奇数</h3><ul>
+<li>使用偶数较容易和页面中其他部分的字号构成一个比例关系</li>
+<li>浏览器原因:低版本的ie6会把奇数字号转为偶数</li>
+<li>ui设计稿给的大部分是偶数(PS提供偶数)</li>
+</ul>
+<h3 id="first-child和first-of-type区别"><a href="#first-child和first-of-type区别" class="headerlink" title="first-child和first-of-type区别"></a>first-child和first-of-type区别</h3><p>first-child表示的是父元素其下的第一个元素</p>
+<p>first-of-type表示的是父元素其下,符合条件的第一个元素,可能并不是第一个元素</p>
+<h3 id="伪类和伪元素"><a href="#伪类和伪元素" class="headerlink" title="伪类和伪元素"></a>伪类和伪元素</h3><p>伪类: 表示元素处于的某种状态</p>
+<p>伪元素: 某个元素的子元素,虽然在逻辑上存在,但实际不存在于文档流中</p>
+<h3 id="inline-block和float区别"><a href="#inline-block和float区别" class="headerlink" title="inline-block和float区别"></a>inline-block和float区别</h3><p>inline-block: 具有block的属性,但是排列顺序按照inline来定</p>
+<p>float:当设置元素浮动时,相邻元素会一句自身大小排满一行,如果父容器宽度不够换行.当设置了元素浮动时,元素就已经脱离了文档流了,相邻元素会呈环绕装排列</p>
+<p>都可以并行显示,可以设置宽高</p>
+<p>区别:</p>
+<ul>
+<li><p>inline-block:水平排列一行,即使元素高度不一致,会以高度最大的元素高度未行高,即使高度小的元素周围留空,也不会有第二行的元素上浮补位.可以设置默认的垂直对齐基线</p>
+</li>
+<li><p>float: 让元素脱离文档流,呈环绕状排列,如果遇到上行有空白,且当前元素宽度小于等于空白处,那么元素会上行补位.默认顶部对齐</p>
+</li>
+</ul>
+<h3 id="absolute和float区别"><a href="#absolute和float区别" class="headerlink" title="absolute和float区别"></a>absolute和float区别</h3><p>float主要调节包围文字,position主要用于调节定位</p>
+<p>float可以将元素从文档里抽出,并不占文档流的空间.position的absolute和fixed也不会占据文档流,但这两个不适合用于给整个网页做布局,因为这样需要为页面上的每一个元素设置坐标来定位</p>
+<p>float可以用来做布局</p>
+<h3 id="web安全色"><a href="#web安全色" class="headerlink" title="web安全色"></a>web安全色</h3><p>不同的平台(mac,pc等)有不同的调色板,不同浏览器也有不同的调色板,那么就可能会导致同一个图片,在mac和pc浏览器的显示效果有差异</p>
+<p>将颜色的十进制&#x2F;rgb转为十六进制使用S</p>
+<h3 id="float元素浮动"><a href="#float元素浮动" class="headerlink" title="float元素浮动"></a>float元素浮动</h3><p>浮动规则: 向指定方向移动,直到碰到包含它的元素或同样float元素的边框.如果元素浮动则不占空间,block元素浮动会失去block属性变为inline-block.但与absolute的元素不影响其他元素不同,float有时会影响周边元素</p>
+<ul>
+<li>float元素前面是非block元素,且这些元素在同一行,则浮动会影响它前面的元素,把它前面的非block元素挤到边上</li>
+<li>如果前面非block元素放不下,则去影响它的下一行,此时可以把过长的inline元素们作为一个整体当block去看.如果float元素下面是非block元素,则会把该元素往边上挤;如果下面是block元素,则会覆盖上该元素,但只是背景的覆盖,依然会把该block元素内容挤到边上</li>
+<li>如果浮动元素面积够大,并且下面不出现清理浮动的css,那么下面的元素都会有影响</li>
+<li>如果给float元素加上偏移,则会挡住其他元素,不管这个元素是block还是inline</li>
+</ul>
+<h4 id="font-face"><a href="#font-face" class="headerlink" title="@font-face"></a>@font-face</h4><p>css功能,允许使用自定义的网络字体</p>
+<h3 id="opacity和background透明色"><a href="#opacity和background透明色" class="headerlink" title="opacity和background透明色"></a>opacity和background透明色</h3><ul>
+<li>opacity:0: 作用于元素以及元素内所有内容的透明度</li>
+<li>transparent: 只能用于元素颜色或者背景色</li>
+</ul>
+<h3 id="css雪碧图"><a href="#css雪碧图" class="headerlink" title="css雪碧图"></a>css雪碧图</h3><p>优点:</p>
+<ul>
+<li>减少http请求次数,提高页面性能</li>
+<li>减少图片总字节,3个图片字节＜3个图片合成的1张图片字节</li>
+<li>解决图片命名很多</li>
+<li>更换风格方便</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>在图片合并时,需要把多张图片有序合理的合并为一张图片,还需要留好足够的空间,防止出现不必要的背景.在宽屏、高分辨率的屏幕下自适应页面,如果图片不够宽,容易出现背景断裂</li>
+<li>雪碧图在开发时比较麻烦,需要测量每个单元背景的精确位置</li>
+<li>维护麻烦,一个图标的改动就需要改动合并的图片</li>
+</ul>
+<h3 id="获取元素背景色"><a href="#获取元素背景色" class="headerlink" title="获取元素背景色"></a>获取元素背景色</h3><p><code>getComputedStyle</code>, 但还需要考虑</p>
+<ul>
+<li>硬件加速时,存在layer squashing的情况</li>
+<li>存在floating元素显示在任意元素上方的情况</li>
+<li>考虑opacity</li>
+<li>zindex</li>
+</ul>
+<p>但当多个元素堆叠在一起或背景色带透明度情况下, 可以使用alpha blending</p>
+<h3 id="px-em和rem"><a href="#px-em和rem" class="headerlink" title="px,em和rem"></a>px,em和rem</h3><p>px: 实际上就是像素,用px设置字体时比较稳定和准确.但px不支持用户进行浏览器缩放或者不同移动端的兼容,因为像素是固定的,屏幕大小可能会有变化</p>
+<pre><code>- ie无法调整使用px作为单位的字体大小
+- px是相对长度单位,是相对于显示器屏幕分辨率而言的
+</code></pre>
+<p>em: 依据父元素的fontsize来决定的.</p>
+<pre><code>- em是相对长度单位,如果当前未对行内文本的字体尺寸设置,那么则相对于浏览器的默认字体尺寸
+- em不是固定的,会继承父级的字体大小
+</code></pre>
+<p>rem: 依据根元素的fontsize来决定的.</p>
+<pre><code>- 一般来说,1em=1rem=100&amp;=16px
+</code></pre>
+<h3 id="屏幕适配方法"><a href="#屏幕适配方法" class="headerlink" title="屏幕适配方法"></a>屏幕适配方法</h3><ul>
+<li><p>响应式</p>
+<p>  主要是工作量大,维护难</p>
+</li>
+<li><p>设置viewport进行缩放</p>
+<p>  可能会导致页面元素模糊</p>
+</li>
+<li><p>固定宽度</p>
+<p>  在大屏手机上页面看起来小</p>
+</li>
+<li><p>流式布局</p>
+<p>  页面布局通过百分比来定义宽度,高度大都使用px固定.因此在大屏幕手机下显示效果比较大,宽度很大</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/css/%E3%80%90css%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" rel="prev" title="【css】记录小点">
+                  <i class="fa fa-angle-left"></i> 【css】记录小点
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/devTools/Chrome--performance/" rel="next" title="Chrome的Performance">
+                  Chrome的Performance <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

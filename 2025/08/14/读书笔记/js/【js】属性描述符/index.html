@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="object属性与方法 通过使用Object.getOwnPropertyDescriptor(object, name)来配置属性  wirteable 设置后无法修改属性值，严格模式下会报错  类似于设置了getter和setter，但是setter是个空操作的。  如果想用setter实现wirteable，那么需要在严格模式下进行报错    configurable 表明属性是否可以再进行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【js】属性描述符">
+<meta property="og:url" content="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="object属性与方法 通过使用Object.getOwnPropertyDescriptor(object, name)来配置属性  wirteable 设置后无法修改属性值，严格模式下会报错  类似于设置了getter和setter，但是setter是个空操作的。  如果想用setter实现wirteable，那么需要在严格模式下进行报错    configurable 表明属性是否可以再进行">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T03:18:06.689Z">
+<meta property="article:modified_time" content="2025-03-06T09:08:26.538Z">
+<meta property="article:author" content="yangxin">
+<meta property="article:tag" content="js">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6/","path":"2025/08/14/读书笔记/js/【js】属性描述符/","title":"【js】属性描述符"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【js】属性描述符 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#object%E5%B1%9E%E6%80%A7%E4%B8%8E%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">object属性与方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#wirteable"><span class="nav-number">1.1.</span> <span class="nav-text">wirteable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#configurable"><span class="nav-number">1.2.</span> <span class="nav-text">configurable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#enumerable"><span class="nav-number">1.3.</span> <span class="nav-text">enumerable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-preventExtensions-obj"><span class="nav-number">1.4.</span> <span class="nav-text">Object.preventExtensions(obj)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-seal-obj"><span class="nav-number">1.5.</span> <span class="nav-text">Object.seal(obj)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-freeze-obj"><span class="nav-number">1.6.</span> <span class="nav-text">Object.freeze(obj)</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【js】属性描述符 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【js】属性描述符
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/js/" itemprop="url" rel="index"><span itemprop="name">js</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="object属性与方法"><a href="#object属性与方法" class="headerlink" title="object属性与方法"></a>object属性与方法</h1><ul>
+<li>通过使用<code>Object.getOwnPropertyDescriptor(object, name)</code>来配置属性</li>
+</ul>
+<h2 id="wirteable"><a href="#wirteable" class="headerlink" title="wirteable"></a>wirteable</h2><ul>
+<li><p>设置后无法修改属性值，严格模式下会报错</p>
+</li>
+<li><p>类似于设置了getter和setter，但是setter是个空操作的。</p>
+<blockquote>
+<p>如果想用setter实现wirteable，那么需要在严格模式下进行报错</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="configurable"><a href="#configurable" class="headerlink" title="configurable"></a>configurable</h2><ul>
+<li>表明属性是否可以再进行配置以及是否禁止删除这个属性</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Object.getOwnPropertyDescriptor(object, name,&#123;configurable: false&#125;)</span><br><span class="line">//报错</span><br><span class="line">//Object.getOwnPropertyDescriptor(object, name,&#123;configurable: true&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>configureable:false</code>时可以将<code>wirteable</code>从true改为false，但是不能从false改为true</li>
+</ul>
+<h2 id="enumerable"><a href="#enumerable" class="headerlink" title="enumerable"></a>enumerable</h2><ul>
+<li><p>是否出现在对象的枚举属性中，设置为<code>false</code>后，在<code>for..in</code>中就不会再出现这个属性</p>
+</li>
+<li><p><code>obj.propertyIsEnumerabel(key)</code>检查该键是否存在对象(不检查原型链)中且enumerable为true，判断该键是否可枚举。</p>
+</li>
+</ul>
+<h2 id="Object-preventExtensions-obj"><a href="#Object-preventExtensions-obj" class="headerlink" title="Object.preventExtensions(obj)"></a>Object.preventExtensions(obj)</h2><ul>
+<li>禁止一个对象添加新属性并且保留已有属性</li>
+</ul>
+<h2 id="Object-seal-obj"><a href="#Object-seal-obj" class="headerlink" title="Object.seal(obj)"></a>Object.seal(obj)</h2><ul>
+<li><p>不能添加新属性，也无法重新配置或者删除任何属性</p>
+</li>
+<li><p>实际上实际上是在一个现有对象上调用 <code>Object.preventExtensions(obj) </code>，并且把所有现有属性标记为 <code>configurable: false</code></p>
+</li>
+</ul>
+<h2 id="Object-freeze-obj"><a href="#Object-freeze-obj" class="headerlink" title="Object.freeze(obj)"></a>Object.freeze(obj)</h2><ul>
+<li><p>禁止对对象本身及其任意属性的修改</p>
+</li>
+<li><p>实际上是在现有对象上调用 <code>Object.seal</code>，并且把所有属性标注为 <code>. wirtable: true</code></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/js/" rel="tag"># js</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91js%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86/" rel="prev" title="js核心原理">
+                  <i class="fa fa-angle-left"></i> js核心原理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91this%E6%8C%87%E5%90%91/" rel="next" title="【js】this指向">
+                  【js】this指向 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="【React Native】环境搭建环境 Nodejs: v16.16.0  react-native: 0.72.3  react-native-cli: 2.0.13  webStorm: 2023.1.2  Android Studio: 2022.2.1.20   基本环境配置安装nodejsNode.Js中文网 安装react-native及其脚手架 npm i -g react-nat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【RN】环境搭建">
+<meta property="og:url" content="http://example.com/2025/08/14/%E3%80%90RN%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="【React Native】环境搭建环境 Nodejs: v16.16.0  react-native: 0.72.3  react-native-cli: 2.0.13  webStorm: 2023.1.2  Android Studio: 2022.2.1.20   基本环境配置安装nodejsNode.Js中文网 安装react-native及其脚手架 npm i -g react-nat">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/21/pCbGec8.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/21/pCb8Xfx.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/21/pCbGJ3V.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/21/pCbJkb4.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/21/pCbJ1qe.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/21/pCbJ4LF.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/21/pCbJodJ.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/21/pCbwt0K.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/21/pCbwwfH.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/21/pCb0mjI.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/21/pCb0KDP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/07/21/pCb0D5F.png">
+<meta property="article:published_time" content="2025-08-14T03:18:33.959Z">
+<meta property="article:modified_time" content="2025-08-14T03:18:49.471Z">
+<meta property="article:author" content="yangxin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2023/07/21/pCbGec8.png">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/%E3%80%90RN%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/%E3%80%90RN%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/","path":"2025/08/14/【RN】环境搭建/","title":"【RN】环境搭建"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【RN】环境搭建 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%90React-Native%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">1.</span> <span class="nav-text">【React Native】环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.</span> <span class="nav-text">基本环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85nodejs"><span class="nav-number">1.2.1.</span> <span class="nav-text">安装nodejs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85react-native%E5%8F%8A%E5%85%B6%E8%84%9A%E6%89%8B%E6%9E%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">安装react-native及其脚手架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Android-Studio"><span class="nav-number">1.2.3.</span> <span class="nav-text">安装Android Studio</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85webStorm"><span class="nav-number">1.2.4.</span> <span class="nav-text">安装webStorm</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.3.</span> <span class="nav-text">新建项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E9%93%BE"><span class="nav-number">1.4.</span> <span class="nav-text">参链</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E3%80%90RN%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【RN】环境搭建 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【RN】环境搭建
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-08-14 11:18:33 / Modified: 11:18:49" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:33+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/React-Native/" itemprop="url" rel="index"><span itemprop="name">React Native</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="【React-Native】环境搭建"><a href="#【React-Native】环境搭建" class="headerlink" title="【React Native】环境搭建"></a>【React Native】环境搭建</h1><h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
+<li><p>Nodejs: <code>v16.16.0</code></p>
+</li>
+<li><p>react-native: <code>0.72.3</code></p>
+</li>
+<li><p>react-native-cli: <code>2.0.13</code></p>
+</li>
+<li><p>webStorm: <code>2023.1.2</code></p>
+</li>
+<li><p>Android Studio: <code>2022.2.1.20</code></p>
+</li>
+</ul>
+<h2 id="基本环境配置"><a href="#基本环境配置" class="headerlink" title="基本环境配置"></a>基本环境配置</h2><h3 id="安装nodejs"><a href="#安装nodejs" class="headerlink" title="安装nodejs"></a>安装nodejs</h3><p><a target="_blank" rel="noopener" href="https://nodejs.p2hp.com/">Node.Js中文网</a></p>
+<h3 id="安装react-native及其脚手架"><a href="#安装react-native及其脚手架" class="headerlink" title="安装react-native及其脚手架"></a>安装react-native及其脚手架</h3><blockquote>
+<p>npm i -g react-native react-native-cli</p>
+</blockquote>
+<h3 id="安装Android-Studio"><a href="#安装Android-Studio" class="headerlink" title="安装Android Studio"></a>安装Android Studio</h3><p>这个是配置安卓环境的，需要配置好后，才能运行成功。</p>
+<p><a target="_blank" rel="noopener" href="https://developer.android.google.cn/studio/">官网下载</a></p>
+<p><a target="_blank" rel="noopener" href="https://reactnative.cn/docs/environment-setup">安装流程</a></p>
+<ul>
+<li><p>必须安装的SDK：</p>
+<ul>
+<li><code>Android SDK</code></li>
+<li><code>Android SDK Platform</code></li>
+<li><code>Android Virtual Device</code></li>
+</ul>
+</li>
+</ul>
+<p>安装过程由于下载内容较多，因此安装过程较慢。</p>
+<ul>
+<li><p>安装后，需要额外安装的SDK</p>
+<ul>
+<li><p><code>Android SDK Platform 33</code></p>
+</li>
+<li><p><code>Intel x86 Atom_64 System Image</code></p>
+</li>
+<li><p><code>Android SDK Build-Tools 33.0.0</code></p>
+</li>
+</ul>
+<p>  从设置按钮-》settings-》Appearance &amp; Behavior -》 System Settings -》 Android SDK<br>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pCbGec8"><img src="https://s1.ax1x.com/2023/07/21/pCbGec8.png" alt="pCbGec8.png"></a></p>
+<p>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pCb8Xfx"><img src="https://s1.ax1x.com/2023/07/21/pCb8Xfx.png" alt="pCb8Xfx.png"></a></p>
+<p>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pCbGJ3V"><img src="https://s1.ax1x.com/2023/07/21/pCbGJ3V.png" alt="pCbGJ3V.png"></a></p>
+</li>
+<li><p>配置路径</p>
+<p>  在环境变量中设置以下路径：</p>
+<blockquote>
+<p><code>ANDROID_HOME</code>: <code>上个步骤中tab中的Android SDK Location</code></p>
+</blockquote>
+<p>  在<code>Path</code>的环境变量中，添加如下文案：</p>
+<ul>
+<li><code>%ANDROID_HOME%\platform-tools</code></li>
+<li><code>%ANDROID_HOME%\emulator</code></li>
+<li><code>%ANDROID_HOME%\tools</code></li>
+<li><code>%ANDROID_HOME%\tools\bin</code></li>
+</ul>
+<p>  设置完成后，点击应用即可</p>
+</li>
+</ul>
+<h3 id="安装webStorm"><a href="#安装webStorm" class="headerlink" title="安装webStorm"></a>安装webStorm</h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv24375178/">安装教程</a></p>
+<p>注：如果破解的code不生效，可以重启电脑然后再填入对应的code</p>
+<h2 id="新建项目"><a href="#新建项目" class="headerlink" title="新建项目"></a>新建项目</h2><ul>
+<li><p>在webStorm新建一个React Native项目</p>
+<p>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pCbJkb4"><img src="https://s1.ax1x.com/2023/07/21/pCbJkb4.png" alt="pCbJkb4.png"></a></p>
+</li>
+<li><p>创建项目的文件目录</p>
+<p>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pCbJ1qe"><img src="https://s1.ax1x.com/2023/07/21/pCbJ1qe.png" alt="pCbJ1qe.png"></a></p>
+</li>
+<li><p>右上角的命令的edit，进入命令的编辑页面</p>
+<p>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pCbJ4LF"><img src="https://s1.ax1x.com/2023/07/21/pCbJ4LF.png" alt="pCbJ4LF.png"></a></p>
+<p>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pCbJodJ"><img src="https://s1.ax1x.com/2023/07/21/pCbJodJ.png" alt="pCbJodJ.png"></a></p>
+</li>
+<li><p>在Before launch的标签栏，点击+，选择<code>Run External Tool</code>，选择+</p>
+<p>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pCbwt0K"><img src="https://s1.ax1x.com/2023/07/21/pCbwt0K.png" alt="pCbwt0K.png"></a></p>
+<p>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pCbwwfH"><img src="https://s1.ax1x.com/2023/07/21/pCbwwfH.png" alt="pCbwwfH.png"></a></p>
+</li>
+<li><p>填写相关信息</p>
+<p>  Name为该按钮的名字</p>
+<p>  Program为react Native的路径，win终端命令:where react-native </p>
+<p>  working directory：该输入框中,先点击右边的insert macro,选择ProjectFileDir.</p>
+<p>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pCb0mjI"><img src="https://s1.ax1x.com/2023/07/21/pCb0mjI.png" alt="pCb0mjI.png"></a></p>
+<p>  填写内容：</p>
+<p>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pCb0KDP"><img src="https://s1.ax1x.com/2023/07/21/pCb0KDP.png" alt="pCb0KDP.png"></a></p>
+</li>
+<li><p>保存以上操作，然后执行刚刚配置好的命令</p>
+<p>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pCb0D5F"><img src="https://s1.ax1x.com/2023/07/21/pCb0D5F.png" alt="pCb0D5F.png"></a></p>
+</li>
+</ul>
+<h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="https://reactnative.cn/docs/environment-setup">搭建开发环境</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv24375178/">webstorm破解激活2023最新永久教程「亲测有效」</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_36279113/article/details/100576426">WebStorm里配置运行React Native</a></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E3%80%90AST%E3%80%91-%E8%A7%A3%E6%9E%90attrs/" rel="prev" title="解析 attrs">
+                  <i class="fa fa-angle-left"></i> 解析 attrs
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="next" title="【wasb】环境搭建">
+                  【wasb】环境搭建 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

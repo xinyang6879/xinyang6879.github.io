@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="api 文档 基本例子12345678910111213141516import WlButton from &quot;@packages&#x2F;components&#x2F;WlButton&#x2F;src&#x2F;index.vue&quot;;import &#123; mount, shallowMount &#125; from &quot;@vue&#x2F;test-utils&quot;;describe(&quot;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【vueTest】测试方法">
+<meta property="og:url" content="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="api 文档 基本例子12345678910111213141516import WlButton from &quot;@packages&#x2F;components&#x2F;WlButton&#x2F;src&#x2F;index.vue&quot;;import &#123; mount, shallowMount &#125; from &quot;@vue&#x2F;test-utils&quot;;describe(&quot;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T03:18:06.571Z">
+<meta property="article:modified_time" content="2025-08-14T03:20:24.251Z">
+<meta property="article:author" content="yangxin">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95/","path":"2025/08/14/vueTest/【vueTest】测试方法/","title":"【vueTest】测试方法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【vueTest】测试方法 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BE%8B%E5%AD%90"><span class="nav-number">1.</span> <span class="nav-text">基本例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E6%9D%A1%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">判断条件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%85%E5%90%AB"><span class="nav-number">2.1.</span> <span class="nav-text">包含</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM-%E5%B1%9E%E6%80%A7"><span class="nav-number">3.</span> <span class="nav-text">DOM 属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#attributes"><span class="nav-number">3.1.</span> <span class="nav-text">attributes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#classes"><span class="nav-number">3.2.</span> <span class="nav-text">classes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B7%E5%BC%8F"><span class="nav-number">3.3.</span> <span class="nav-text">样式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E7%BB%84%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">查找组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#find"><span class="nav-number">4.1.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#findAll"><span class="nav-number">4.2.</span> <span class="nav-text">findAll</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#props"><span class="nav-number">5.1.</span> <span class="nav-text">props()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#minix"><span class="nav-number">5.2.</span> <span class="nav-text">minix</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="nav-number">6.</span> <span class="nav-text">定时器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%87%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="nav-number">6.1.</span> <span class="nav-text">假定时器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E5%AE%9A%E6%97%B6%E5%99%A8%E6%98%AF%E5%90%A6%E8%A2%AB%E6%B8%85%E9%99%A4-spy"><span class="nav-number">6.2.</span> <span class="nav-text">判断定时器是否被清除:spy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mock"><span class="nav-number">7.</span> <span class="nav-text">mock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5"><span class="nav-number">8.</span> <span class="nav-text">异步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6"><span class="nav-number">9.</span> <span class="nav-text">事件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#trigger-%E6%96%B9%E6%B3%95"><span class="nav-number">9.1.</span> <span class="nav-text">trigger 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6"><span class="nav-number">9.2.</span> <span class="nav-text">自定义事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6"><span class="nav-number">9.3.</span> <span class="nav-text">测试自定义事件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95"><span class="nav-number">10.</span> <span class="nav-text">表单</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E8%BE%93%E5%85%A5%E6%A1%86%E5%86%85%E5%AE%B9"><span class="nav-number">10.1.</span> <span class="nav-text">修改输入框内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E9%80%89%E6%A1%86"><span class="nav-number">10.2.</span> <span class="nav-text">单选框</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【vueTest】测试方法 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【vueTest】测试方法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-08-14 11:18:06 / Modified: 11:20:24" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/VueTest/" itemprop="url" rel="index"><span itemprop="name">VueTest</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://v1.test-utils.vuejs.org/zh/api/wrapper/">api 文档</a></p>
+<h2 id="基本例子"><a href="#基本例子" class="headerlink" title="基本例子"></a>基本例子</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">WlButton</span> <span class="keyword">from</span> <span class="string">&quot;@packages/components/WlButton/src/index.vue&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; mount, shallowMount &#125; <span class="keyword">from</span> <span class="string">&quot;@vue/test-utils&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">describe</span>(<span class="string">&quot;test-WlButton.vue&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">test</span>(<span class="string">&quot;test1&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 渲染组件</span></span><br><span class="line">    <span class="keyword">const</span> wrapper = <span class="title function_">shallowMount</span>(<span class="title class_">WlButton</span>, &#123;</span><br><span class="line">      <span class="comment">// 传递给组件的props参数</span></span><br><span class="line">      <span class="attr">propsData</span>: &#123;</span><br><span class="line">        <span class="attr">text</span>: <span class="string">&quot;测试1&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 进行断言，判断页面上是否包含测试1的文字</span></span><br><span class="line">    <span class="title function_">expect</span>(wrapper.<span class="title function_">text</span>()).<span class="title function_">toContain</span>(<span class="string">&quot;测试1&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>mount 和 shallowMount 区别</p>
+<p>mount 方法会渲染整个组件，而 shallowMount 只会渲染一层组件树。</p>
+<p>例如当前测试的组件 A，使用了子组件 B，子组件又包含了孙子组件 C，使用 mount 方法会把 ABC 都挂载出来，而 shallowMount 只会挂载 AB</p>
+<p>shallowMount 在挂载组件之前会对所有子组件进行存根，可以确保对一个组件进行独立的测试，有助于避免测试中因子组件的渲染输出而混乱结果</p>
+</li>
+</ul>
+<h2 id="判断条件"><a href="#判断条件" class="headerlink" title="判断条件"></a>判断条件</h2><h3 id="包含"><a href="#包含" class="headerlink" title="包含"></a>包含</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">expect</span>(wrapper.<span class="title function_">text</span>()).<span class="title function_">toContain</span>(<span class="string">&quot;测试1&quot;</span>);</span><br><span class="line"><span class="title function_">expect</span>(wrapper.<span class="title function_">text</span>()).<span class="title function_">toBe</span>(<span class="string">&quot;测试1&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>text()</code>方法会返回测试组件渲染的所有文本</p>
+<p><code>toBe()</code>：检查判断组件所有文本是否与预期值完全相符合</p>
+<p><code>toContain()</code>: 检查是否包含在所检查的字符串中的某个位置.可以判断 string 和 array</p>
+<h2 id="DOM-属性"><a href="#DOM-属性" class="headerlink" title="DOM 属性"></a>DOM 属性</h2><h3 id="attributes"><a href="#attributes" class="headerlink" title="attributes"></a>attributes</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> attrs = wrapper.<span class="title function_">attributes</span>();</span><br><span class="line"><span class="comment">// &#123; class: &#x27;btn-type-primary btn&#x27; &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>attributes()</code>: 返回组件属性对象</p>
+<h3 id="classes"><a href="#classes" class="headerlink" title="classes"></a>classes</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> attrs = wrapper.<span class="title function_">classes</span>();</span><br><span class="line"><span class="comment">// [&#x27;btn-type-primary&#x27;, &#x27;btn&#x27; ]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="样式"><a href="#样式" class="headerlink" title="样式"></a>样式</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> width = wrapper.<span class="property">element</span>.<span class="property">style</span>.<span class="property">width</span>;</span><br></pre></td></tr></table></figure>
+
+<p>其实就是访问元素的 style,如果元素上面 style 上面没有 width,那么实际上是获取不到的</p>
+<h2 id="查找组件"><a href="#查找组件" class="headerlink" title="查找组件"></a>查找组件</h2><h3 id="find"><a href="#find" class="headerlink" title="find"></a><code>find</code></h3><p><code>find()</code>: 返回渲染树中第一个匹配的节点，类似于<code>document.querySelector</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回el节点下第一个span元素的文本</span></span><br><span class="line">el.<span class="title function_">find</span>(<span class="string">&quot;span&quot;</span>).<span class="title function_">text</span>();</span><br></pre></td></tr></table></figure>
+
+<h3 id="findAll"><a href="#findAll" class="headerlink" title="findAll"></a><code>findAll</code></h3><p><code>findAll()</code>: 类似<code>document.querySelectorAll</code>，在渲染输出中搜索与选择器匹配的节点，并返回一个包含匹配节点的包装器的类数组对象</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span>11<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span>11<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span>11<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span>&gt;</span>11<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span>&gt;</span>11<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span>&gt;</span>11<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> list = el.<span class="title function_">findAll</span>(<span class="string">&quot;span&quot;</span>);</span><br><span class="line">list.<span class="property">length</span>; <span class="comment">//6</span></span><br><span class="line"><span class="title function_">expect</span>(list).<span class="title function_">toHavaLength</span>(<span class="number">6</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><h3 id="props"><a href="#props" class="headerlink" title="props()"></a>props()</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> wrapper = <span class="title function_">shallowMount</span>(<span class="title class_">WlButton</span>, &#123;</span><br><span class="line">  <span class="comment">// 传递给组件的props参数</span></span><br><span class="line">  <span class="attr">propsData</span>: &#123;</span><br><span class="line">    <span class="attr">text</span>: <span class="string">&quot;测试1&quot;</span>,</span><br><span class="line">    <span class="attr">a</span>: <span class="number">1</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line">wrap.<span class="title function_">props</span>(); <span class="comment">// &#123;text: &quot;测试1&quot;, disabled: false&#125;</span></span><br><span class="line"><span class="comment">// 返回一个object，除了传入的text，没有传入,但是组件定义的props都能获取到</span></span><br><span class="line"><span class="comment">// 如果传入了组件内部未定义的prop,那么获取时是获取不到的</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="minix"><a href="#minix" class="headerlink" title="minix"></a>minix</h3><ul>
+<li><p>局部<br>和 props 类似,在挂载节点时,定义 minix 对象传入.</p>
+<p>挂载组件后会自动调用回调的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">MixinExp</span> = &#123;</span><br><span class="line">  <span class="title function_">created</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;created--mixins&quot;</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="title function_">test</span>(<span class="string">&quot;mixin&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> comp = <span class="title function_">mount</span>(<span class="title class_">WlButton</span>, &#123;</span><br><span class="line">    <span class="attr">mixins</span>: [<span class="title class_">MixinExp</span>],</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>全局</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&quot;vue&quot;</span>;</span><br><span class="line"><span class="title class_">Vue</span>.<span class="property">config</span>.<span class="property">productonTip</span> = <span class="literal">false</span>;</span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">mixins</span>(<span class="title class_">MixinExp</span>);</span><br></pre></td></tr></table></figure>
+
+<p>在配置项中设置<a target="_blank" rel="noopener" href="https://jestjs.io/zh-Hans/docs/configuration#setupfiles-array">setupFiles</a>选项</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  ...<span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;setupFiles&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;filepath&quot;</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h2><h3 id="假定时器"><a href="#假定时器" class="headerlink" title="假定时器"></a>假定时器</h3><p>使用假定时器来替换真实的定时器,调用 jest 的<code>useFakeTimers</code>方法时,jest 假定时器会替换真实全局的定时器.定时器被替换后,使用 runTimerToTime 推进假时间</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">jest.<span class="title function_">useFakeTimers</span>();</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;setTimeout&quot;</span>);</span><br><span class="line">&#125;, <span class="number">100</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;setTimeout-after&quot;</span>);</span><br><span class="line">jest.<span class="title function_">runTimersToTime</span>(<span class="number">100</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;setTimeout-after2&quot;</span>);</span><br><span class="line"><span class="comment">// 输出顺序: setTimeout-after setTimeout setTimeout-after2</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="判断定时器是否被清除-spy"><a href="#判断定时器是否被清除-spy" class="headerlink" title="判断定时器是否被清除:spy"></a>判断定时器是否被清除:spy</h3><p>使用<code>jest.spyOn(window, functionName)</code>,然后再用<code>expect().toHaveBeenCalledWith()</code>去判断这个方法是否被调用 就</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">jest.<span class="title function_">useFakeTimers</span>();</span><br><span class="line">jest.<span class="title function_">spyOn</span>(<span class="variable language_">window</span>, <span class="string">&quot;clearTimeout&quot;</span>);</span><br><span class="line"><span class="built_in">setTimeout</span>.<span class="title function_">mockReturnValue</span>(<span class="number">111</span>);</span><br><span class="line"><span class="keyword">const</span> timer = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;setTimeout&quot;</span>);</span><br><span class="line">&#125;, <span class="number">100</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(timer); <span class="comment">///111</span></span><br><span class="line">jest.<span class="title function_">runTimersToTime</span>(<span class="number">100</span>);</span><br><span class="line"><span class="built_in">clearTimeout</span>(timer); <span class="comment">//如果没有调用,那么就会fail</span></span><br><span class="line"><span class="title function_">expect</span>(<span class="variable language_">window</span>.<span class="property">clearTimeout</span>).<span class="title function_">toHaveBeenCalledWith</span>(<span class="number">111</span>); <span class="comment">//success</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="mock"><a href="#mock" class="headerlink" title="mock"></a>mock</h2><p>vue3 中使用<code>root.$options.mocks</code>进行访问,vue2 直接用 this 可以访问</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> $aaa = &#123;</span><br><span class="line">  <span class="attr">start</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;start&quot;</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">end</span>: jest.<span class="title function_">fn</span>(),</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> wrapper = <span class="title function_">shallowMount</span>(<span class="title class_">WlButton</span>, &#123;</span><br><span class="line">  <span class="attr">mocks</span>: &#123; $aaa &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 组件中</span></span><br><span class="line"><span class="keyword">if</span> (root.<span class="property">$options</span>.<span class="property">mocks</span>) &#123;</span><br><span class="line">  root.<span class="property">$options</span>.<span class="property">mocks</span>.<span class="property">$aaa</span>.<span class="title function_">end</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>测试 router 方法就是将数据挂载到 mock 里面</li>
+</ul>
+<h2 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h2><ul>
+<li>使用 await 等待请求结束</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fetchData = jest.<span class="title function_">fn</span>(<span class="function">() =&gt;</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(<span class="string">&quot;&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">test</span>(<span class="string">&quot;http&quot;</span>, <span class="title function_">asycn</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> data = <span class="keyword">await</span> <span class="title function_">fetchData</span>()</span><br><span class="line">  <span class="title function_">expect</span>(data).<span class="title function_">toBe</span>(<span class="string">&quot;&quot;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用<code>flushPromises</code>(@vue&#x2F;test-utils 内置),会在 promise 回调运行结束后再进行下面的行为</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Promise</span>.<span class="title function_">resolve</span>().<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">2</span>);</span><br><span class="line"><span class="keyword">await</span> <span class="title function_">flushPromises</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">3</span>);</span><br><span class="line"><span class="comment">// 输出顺序: 2 1 3</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><h3 id="trigger-方法"><a href="#trigger-方法" class="headerlink" title="trigger 方法"></a>trigger 方法</h3><p>需要在组件内部手动触发传入的事件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">test</span>(<span class="string">&quot;event&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> onClick = jest.<span class="title function_">fn</span>();</span><br><span class="line">  <span class="keyword">const</span> wrapper = <span class="title function_">shallowMount</span>(<span class="title class_">WlButton</span>, &#123;</span><br><span class="line">    <span class="attr">propsData</span>: &#123;</span><br><span class="line">      onClick,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;);</span><br><span class="line">  wrapper.<span class="title function_">find</span>(<span class="string">&quot;.btn&quot;</span>).<span class="title function_">trigger</span>(<span class="string">&quot;click&quot;</span>);</span><br><span class="line">  <span class="title function_">expect</span>(onClick).<span class="title function_">toHaveBeenCalled</span>();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 组件文件</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">onButtonClick</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  (root.<span class="property">$attrs</span> <span class="keyword">as</span> any).<span class="title function_">onClick</span>()</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h3><p>使用<code>emitted</code>可以监测到组件 emit 的事件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">expect</span>(wrapper.<span class="title function_">emitted</span>(<span class="string">&quot;onClick&quot;</span>)).<span class="title function_">toHaveLength</span>(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试自定义事件"><a href="#测试自定义事件" class="headerlink" title="测试自定义事件"></a>测试自定义事件</h3><p>使用<code>el.vm</code>可以访问到具体的元素,调用<code>$emit</code>就可以模拟组件的事件</p>
+<h2 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h2><h3 id="修改输入框内容"><a href="#修改输入框内容" class="headerlink" title="修改输入框内容"></a>修改输入框内容</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方式1</span></span><br><span class="line">el.<span class="title function_">find</span>(<span class="string">&quot;input&quot;</span>).<span class="property">value</span> = <span class="string">&quot;测试输入内容&quot;</span>;</span><br><span class="line">el.<span class="title function_">find</span>(<span class="string">&quot;input&quot;</span>).<span class="title function_">trigger</span>(<span class="string">&quot;change&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方式2</span></span><br><span class="line">el.<span class="title function_">find</span>(<span class="string">&quot;input&quot;</span>).<span class="title function_">setValue</span>(<span class="string">&quot;测试输入内容&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="单选框"><a href="#单选框" class="headerlink" title="单选框"></a>单选框</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方式1</span></span><br><span class="line">el.<span class="property">checked</span> = <span class="literal">true</span>;</span><br><span class="line"><span class="comment">// 方式2</span></span><br><span class="line">el.<span class="title function_">setChecked</span>();</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95vuex/" rel="prev" title="【vueTest】测试vuex">
+                  <i class="fa fa-angle-left"></i> 【vueTest】测试vuex
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E5%8F%96%E5%80%BC%E8%A7%84%E5%88%99/" rel="next" title="【css】取值规则">
+                  【css】取值规则 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

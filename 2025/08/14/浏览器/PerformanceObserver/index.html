@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="介绍PerformanceObserver 和 Performance 作用都是用于获取网站性能数据的 Performance 可以获取当前页面从打开到加载完成的各个时间（基于浏览器打开的时间，而不是依据系统的时间，以 us 为单位），属于同步函数，调用时就会给出具体的数据 PerformanceObserver监测性能度量事件，属于异步函数，调用时可能不会立马执行，而是到对应的时间时才会调用其回">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PerformanceObserver">
+<meta property="og:url" content="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/PerformanceObserver/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="介绍PerformanceObserver 和 Performance 作用都是用于获取网站性能数据的 Performance 可以获取当前页面从打开到加载完成的各个时间（基于浏览器打开的时间，而不是依据系统的时间，以 us 为单位），属于同步函数，调用时就会给出具体的数据 PerformanceObserver监测性能度量事件，属于异步函数，调用时可能不会立马执行，而是到对应的时间时才会调用其回">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-14T03:18:06.742Z">
+<meta property="article:modified_time" content="2025-07-28T08:02:13.605Z">
+<meta property="article:author" content="yangxin">
+<meta property="article:tag" content="浏览器">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/PerformanceObserver/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/PerformanceObserver/","path":"2025/08/14/浏览器/PerformanceObserver/","title":"PerformanceObserver"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>PerformanceObserver | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E5%90%AC%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">监听类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%9E%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">使用实例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E9%87%8F-FCP-FP"><span class="nav-number">4.1.</span> <span class="nav-text">测量 FCP&#x2F;FP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E9%87%8F-LCP"><span class="nav-number">4.2.</span> <span class="nav-text">测量 LCP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E9%87%8F-FID"><span class="nav-number">4.3.</span> <span class="nav-text">测量 FID</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E9%87%8F-CLS"><span class="nav-number">4.4.</span> <span class="nav-text">测量 CLS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81%E5%9D%97%E6%89%A7%E8%A1%8C%E6%97%B6%E9%95%BF"><span class="nav-number">4.5.</span> <span class="nav-text">测试代码块执行时长</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A3%80%E6%B5%8B%E9%95%BF%E4%BB%BB%E5%8A%A1"><span class="nav-number">4.6.</span> <span class="nav-text">检测长任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E4%BA%A4%E4%BA%92%E6%97%B6%E9%95%BF"><span class="nav-number">4.7.</span> <span class="nav-text">用户交互时长</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%95%BF%E5%8A%A8%E7%94%BB%E5%B8%A7"><span class="nav-number">4.8.</span> <span class="nav-text">长动画帧</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E9%93%BE"><span class="nav-number">5.</span> <span class="nav-text">参链</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/PerformanceObserver/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="PerformanceObserver | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PerformanceObserver
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-07-28 16:02:13" itemprop="dateModified" datetime="2025-07-28T16:02:13+08:00">2025-07-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">浏览器</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>PerformanceObserver 和 Performance 作用都是用于获取网站性能数据的</p>
+<p>Performance 可以获取当前页面从打开到加载完成的各个时间（基于浏览器打开的时间，而不是依据系统的时间，以 us 为单位），属于同步函数，调用时就会给出具体的数据</p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/PerformanceObserver">PerformanceObserver</a>监测性能度量事件，属于异步函数，调用时可能不会立马执行，而是到对应的时间时才会调用其回调函数</p>
+<p>而 MutationObserver 可以监听 DOM 节点的属性变化，比如添加、删除、修改属性。</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><ul>
+<li><p>新建一个 PerformanceObserver 实例，并传入一个回调函数用于处理数据</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 创建观察者实例</span></span><br><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function">(<span class="params">list</span>) =&gt;</span> &#123;</span><br><span class="line">  list.<span class="title function_">getEntries</span>().<span class="title function_">forEach</span>(<span class="function">(<span class="params">entry</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 处理每个性能条目</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;-------------------------------&quot;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Entry Type: <span class="subst">$&#123;entry.entryType&#125;</span>`</span>, entry);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;*******************************&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>指定需要观察的内容</p>
+<ul>
+<li>多项观察</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// buffered标识是否获取历史的数据</span></span><br><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">entryTypes</span>: [</span><br><span class="line">    <span class="string">&quot;element&quot;</span>,</span><br><span class="line">    <span class="string">&quot;event&quot;</span>,</span><br><span class="line">    <span class="string">&quot;first-input&quot;</span>,</span><br><span class="line">    <span class="string">&quot;largest-contentful-paint&quot;</span>,</span><br><span class="line">    <span class="string">&quot;layout-shift&quot;</span>,</span><br><span class="line">    <span class="string">&quot;long-animation-frame&quot;</span>,</span><br><span class="line">    <span class="string">&quot;longtask&quot;</span>,</span><br><span class="line">    <span class="string">&quot;mark&quot;</span>,</span><br><span class="line">    <span class="string">&quot;measure&quot;</span>,</span><br><span class="line">    <span class="string">&quot;navigation&quot;</span>,</span><br><span class="line">    <span class="string">&quot;paint&quot;</span>,</span><br><span class="line">    <span class="comment">// &quot;resource&quot;,</span></span><br><span class="line">    <span class="string">&quot;visibility-state&quot;</span>,</span><br><span class="line">  ], <span class="comment">// 可同时监听多种类型</span></span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>单项观察</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">observer.<span class="title function_">observe</span>(&#123; <span class="attr">type</span>: <span class="string">&quot;event&quot;</span>, <span class="attr">buffered</span>: <span class="literal">true</span> &#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>注：实测下来，<code>event</code>类型不支持在<code>entryTypes</code>中，只能通过<code>type</code>去处理</p>
+<ul>
+<li>关闭</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">observer.<span class="title function_">disconnect</span>();</span><br></pre></td></tr></table></figure>
+
+<h3 id="监听类型"><a href="#监听类型" class="headerlink" title="监听类型"></a>监听类型</h3><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/PerformanceEntry/entryType">entryType</a>包含了多种类型</p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/PerformanceElementTiming">PerformanceElementTiming</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/LargestContentfulPaint">LargestContentfulPaint</a></p>
+<ul>
+<li><p><code>element</code>：可以获取元素的加载时间，需要搭配<code>elementtiming</code>属性使用</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">elementtiming</span>=<span class="string">&quot;test-ele&quot;</span> <span class="attr">src</span>=<span class="string">&quot;xxx&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">observer.observe(&#123; type: &#x27;element&#x27;, buffered: true &#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返PerformanceElementTiming类型</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">duration</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">element</span>: img,<span class="comment">// 监听的元素</span></span><br><span class="line">  <span class="attr">entryType</span>: <span class="string">&#x27;element&#x27;</span>,</span><br><span class="line">  <span class="attr">identifier</span>: <span class="string">&#x27;test-ele&#x27;</span>,<span class="comment">// 元素的标识符</span></span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;img-paint&#x27;</span>,</span><br><span class="line">  <span class="attr">loadTime</span>: <span class="number">0</span>,<span class="comment">//图片加载时间，文本的话是0</span></span><br><span class="line">  renderTime： x,</span><br><span class="line">  <span class="attr">startTime</span>: x,</span><br><span class="line">  <span class="attr">url</span>: <span class="string">&quot;src&quot;</span>,<span class="comment">//图片的话是图片地址，文本为空</span></span><br><span class="line">  <span class="attr">intersectionRect</span>: <span class="title class_">DOMRectReadOnly</span>,</span><br><span class="line">  <span class="attr">naturalWidth</span>: <span class="string">&quot;图片原本宽度，文本是0&quot;</span>,</span><br><span class="line">  <span class="attr">naturalHeight</span>: <span class="string">&quot;图片原本高度，文本是0&quot;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>event</code>: 可以监听页面的点击事件，但这个属性只能单独使用，在 entryTypes 中会不生效<br>时间间隔可以通过 startTime-processingEnd 获取</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;event&quot;</span>,</span><br><span class="line">  <span class="comment">// buffered: true,</span></span><br><span class="line">  <span class="attr">durationThreshold</span>: <span class="number">16</span>, <span class="comment">// 只记录持续时间超过16ms的事件</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">// 返PerformanceElementTiming类型</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">cancelable</span>: <span class="title class_">Boolean</span>，</span><br><span class="line">    duration： number,</span><br><span class="line">    <span class="attr">entryType</span>: <span class="string">&quot;event&quot;</span>,</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;click&quot;</span> | <span class="string">&quot;pointerleave&quot;</span> | <span class="string">&quot;pointerout&quot;</span> | <span class="string">&quot;pointerup&quot;</span> | <span class="string">&quot;pointerover&quot;</span> | <span class="string">&quot;pointerenter&quot;</span> | <span class="string">&quot;mouseout&quot;</span> | <span class="string">&quot;mouseleave&quot;</span> | <span class="string">&quot;mouseover&quot;</span> | <span class="string">&quot;mouseup&quot;</span>,</span><br><span class="line">    <span class="attr">processingEnd</span>: number,</span><br><span class="line">    <span class="attr">processingStart</span>: number,<span class="comment">//事件调度开始的时间</span></span><br><span class="line">    <span class="attr">startTime</span>: number,<span class="comment">//创建事件的时间，可以被视为用户交互发生时间的代理。</span></span><br><span class="line">    <span class="attr">target</span>: <span class="title class_">HTMLElement</span> <span class="comment">//触发的元素</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>first-input</code>：首次用户交互延迟，当用户第一次点击时触发，可以作为 FID 的上报数据</p>
+<p>返回和<code>event</code>事件返回一致，时间间隔&#x3D;processingStart-startTime</p>
+</li>
+<li><p><code>largest-contentful-paint</code>：LCP，最大内容绘制时间，可能会触发多次，存在可能上报一个当前最大的，但后续如果又有一个内容宽高大于之前的，那么还会触发一次</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回LargestContentfulPaint类型</span></span><br><span class="line">&#123;</span><br><span class="line">    duration： number,</span><br><span class="line">    <span class="attr">entryType</span>: <span class="string">&quot;largest-contentful-paint&quot;</span>,</span><br><span class="line">    <span class="attr">element</span>: <span class="title class_">HTMLElement</span>,</span><br><span class="line">    <span class="attr">startTime</span>: number, <span class="comment">// 如果此元素的renderTime值不为0，则返回其值，否则返回此条目的loadTime值。</span></span><br><span class="line">    <span class="attr">loadTime</span>: number,<span class="comment">//元素加载时间</span></span><br><span class="line">    <span class="attr">renderTime</span>: number,<span class="comment">//元素呈现到屏幕上的时间。如果元素是在没有Timing Allow origin标头的情况下加载的跨原点图像，则可能不可用。</span></span><br><span class="line">    size：number, <span class="comment">//元素的固有大小返回为面积（宽*高）</span></span><br><span class="line">    url： string,<span class="comment">// 如果元素是图片，那么这个就是图片的地址</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>layout-shift</code>: CLS，页面布局偏移</p>
+<p>返回<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/LayoutShift">LayoutShift</a>类型</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">hadRecentInput</span>: boolean, <span class="comment">// 500ms内是否有输入</span></span><br><span class="line">    <span class="attr">lastInputTime</span>: number，<span class="comment">// 上次输入的时间</span></span><br><span class="line">    sources：<span class="title class_">LayoutShiftAttribution</span>[]， <span class="comment">//返回有哪些元素进行了偏移</span></span><br><span class="line">    startTime： number，<span class="comment">// 布局转换开始的时间</span></span><br><span class="line">    <span class="attr">value</span>: number，<span class="comment">// 布局偏移分数，影响分数（被偏移的视口分数）乘以距离分数（作为视口分数移动的距离）计算得出的。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>long-animation-frame</code>: LoAF，长动画帧，延迟超过 50ms 的渲染更新</p>
+<p>返回<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/PerformanceLongAnimationFrameTiming">PerformanceLongAnimationFrameTiming</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">blockingDuration</span>: number,<span class="comment">// 计算LoAF中持续时间超过50ms的所有长任务，从每个任务中减去50ms，将渲染时间加到最长的任务时间上，并将结果相加来计算的。指示主线程被阻止响应高优先级任务（如用户输入）的总时间</span></span><br><span class="line">    <span class="attr">duration</span>: number,<span class="comment">// 处理整个LoAF所用的时间</span></span><br><span class="line">    <span class="attr">firstUIEventTimestamp</span>: number,<span class="comment">// 在当前动画帧期间排队的第一个UI事件（如鼠标或键盘事件）的时间。</span></span><br><span class="line">    <span class="attr">renderStart</span>: number, <span class="comment">//渲染周期的开始时间，其中包括Window.requestAnimationFrame（）回调、样式和布局计算、ResizeObserver回调和IntersectionObserver回调。</span></span><br><span class="line">    <span class="attr">script</span>: <span class="title class_">PerformanceScriptTiming</span>[],</span><br><span class="line">    <span class="attr">startTime</span>: number,</span><br><span class="line">    <span class="attr">styleAndLayoutStart</span>: number, <span class="comment">//当前动画帧的样式和布局计算所花费的时间段的开始。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>longtask</code>: 监听长任务，执行时间＞ 50ms 的任务，可以用于检测卡顿</p>
+<p>返回<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/PerformanceLongTaskTiming">PerformanceLongTaskTiming</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    attribution： <span class="title class_">TaskAttributionTiming</span>[],</span><br><span class="line">    <span class="attr">duration</span>: number, <span class="comment">// 任务开始和结束之间经过的时间，粒度为1ms。</span></span><br><span class="line">    <span class="attr">entryType</span>: <span class="string">&#x27;longtask&#x27;</span>,</span><br><span class="line">    <span class="attr">name</span>: cross-origin-ancestor<span class="string">&quot; | &quot;</span>cross-origin-descendant<span class="string">&quot; | &quot;</span>cross- origin-unreachable<span class="string">&quot; | &quot;</span>multiple-contexts<span class="string">&quot; | &quot;</span>same-origin-ancestor<span class="string">&quot; | &quot;</span>same-origin-descendant<span class="string">&quot; | &quot;</span>same-origin<span class="string">&quot; | &quot;</span>self<span class="string">&quot; | &quot;</span>unknown<span class="string">&quot;,</span></span><br><span class="line"><span class="string">    startTime: number, // 任务开始时间</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>paint</code>: 用于检测 FCP（首次内容绘制）&#x2F;FP（首次绘制）时间</p>
+<p>返回<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/PerformancePaintTiming">PerformancePaintTiming</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;first-paint&quot;</span> | <span class="string">&quot;first-contentful-paint&quot;</span>,</span><br><span class="line">    <span class="attr">startTime</span>: number, <span class="comment">// 任务开始时间</span></span><br><span class="line">    <span class="attr">duration</span>: <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>resource</code>: 用于监听资源加载时间</p>
+<p>返回<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/PerformanceResourceTiming">PerformanceResourceTiming</a>，其中包含资源各个的加载、链接开始和结束时间等详细信息</p>
+</li>
+<li><p><code>visibility-state</code>: 检测当前网页是否在屏幕中显示</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;hidden&quot;</span> | <span class="string">&quot;visible&quot;</span>,</span><br><span class="line">    <span class="attr">startTime</span>: number, <span class="comment">// 任务开始时间</span></span><br><span class="line">    <span class="attr">duration</span>: <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自定义：<code>measure</code>和<code>mark</code>，调用是通过 performance 调用的，而不是创建的 PerformanceObserver 实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">performance.<span class="title function_">mark</span>(<span class="string">&quot;mark-start&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; data &#125; = <span class="keyword">await</span> <span class="title function_">apiPost</span>(params);</span><br><span class="line">performance.<span class="title function_">mark</span>(<span class="string">&quot;mark-end&quot;</span>);</span><br><span class="line">performance.<span class="title function_">measure</span>(<span class="string">&quot;mark-finish&quot;</span>, <span class="string">&quot;mark-start&quot;</span>, <span class="string">&quot;mark-end&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>measure 输出的<code>duration</code>是 start 和 end 的时间间隔，通过两个 mark 的 startTime 相减得到的</p>
+</li>
+</ul>
+<h3 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h3><h4 id="测量-FCP-FP"><a href="#测量-FCP-FP" class="headerlink" title="测量 FCP&#x2F;FP"></a>测量 FCP&#x2F;FP</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 创建观察者实例</span></span><br><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function">(<span class="params">list</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> entry <span class="keyword">of</span> list.<span class="title function_">getEntriesByName</span>(<span class="string">&quot;first-contentful-paint&quot;</span>)) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;FCP:&quot;</span>, entry.<span class="property">startTime</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> entry <span class="keyword">of</span> list.<span class="title function_">getEntriesByName</span>(<span class="string">&quot;first-paint&quot;</span>)) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;FP:&quot;</span>, entry.<span class="property">startTime</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">entryTypes</span>: [<span class="string">&quot;paint&quot;</span>],</span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="测量-LCP"><a href="#测量-LCP" class="headerlink" title="测量 LCP"></a>测量 LCP</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function">(<span class="params">list</span>) =&gt;</span> &#123;</span><br><span class="line">  list.<span class="title function_">getEntries</span>().<span class="title function_">forEach</span>(<span class="function">(<span class="params">entry</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;-------------------------------&quot;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`LCP: <span class="subst">$&#123;entry.size&#125;</span>`</span>, entry);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;*******************************&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;largest-contentful-paint&quot;</span>,</span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="测量-FID"><a href="#测量-FID" class="headerlink" title="测量 FID"></a>测量 FID</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function">(<span class="params">list</span>) =&gt;</span> &#123;</span><br><span class="line">  list.<span class="title function_">getEntries</span>().<span class="title function_">forEach</span>(<span class="function">(<span class="params">entry</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`FID: <span class="subst">$&#123;entry.processingStart - entry.startTime&#125;</span>`</span>, entry);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;first-input&quot;</span>,</span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="测量-CLS"><a href="#测量-CLS" class="headerlink" title="测量 CLS"></a>测量 CLS</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function">(<span class="params">list</span>) =&gt;</span> &#123;</span><br><span class="line">  list.<span class="title function_">getEntries</span>().<span class="title function_">forEach</span>(<span class="function">(<span class="params">entry</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;-------------------------------&quot;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`CLS: <span class="subst">$&#123;entry.value&#125;</span>`</span>, entry);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;*******************************&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;layout-shift&quot;</span>,</span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="测试代码块执行时长"><a href="#测试代码块执行时长" class="headerlink" title="测试代码块执行时长"></a>测试代码块执行时长</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function">(<span class="params">list</span>) =&gt;</span> &#123;</span><br><span class="line">  list.<span class="title function_">getEntries</span>().<span class="title function_">forEach</span>(<span class="function">(<span class="params">entry</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`<span class="subst">$&#123;entry.name&#125;</span>执行时间: <span class="subst">$&#123;entry.duration&#125;</span>ms`</span>, entry);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;measure&quot;</span>,</span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 需要测量的代码块</span></span><br><span class="line">performance.<span class="title function_">mark</span>(<span class="string">&quot;test-mark&quot;</span>);</span><br><span class="line"><span class="keyword">await</span> <span class="title function_">getList</span>();</span><br><span class="line">performance.<span class="title function_">mark</span>(<span class="string">&quot;test-mark-end&quot;</span>);</span><br><span class="line">performance.<span class="title function_">measure</span>(<span class="string">&quot;test-measure&quot;</span>, <span class="string">&quot;test-mark&quot;</span>, <span class="string">&quot;test-mark-end&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="检测长任务"><a href="#检测长任务" class="headerlink" title="检测长任务"></a>检测长任务</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function"><span class="params">list</span> =&gt;</span> &#123;</span><br><span class="line">  list.<span class="title function_">getEntries</span>().<span class="title function_">forEach</span>(<span class="function"><span class="params">entry</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;-------------------------------&quot;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`长任务耗时: <span class="subst">$&#123;entry.duration&#125;</span>ms`</span>, entry);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;*******************************&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;longtask&quot;</span>,</span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="用户交互时长"><a href="#用户交互时长" class="headerlink" title="用户交互时长"></a>用户交互时长</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function"><span class="params">list</span> =&gt;</span> &#123;</span><br><span class="line">  list.<span class="title function_">getEntries</span>().<span class="title function_">forEach</span>(<span class="function"><span class="params">entry</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;-------------------------------&quot;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(</span><br><span class="line">      <span class="string">`用户<span class="subst">$&#123;entry.name&#125;</span>事件: <span class="subst">$&#123;entry.processingStart - entry.startTime&#125;</span>ms`</span>,</span><br><span class="line">      entry</span><br><span class="line">    );</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;*******************************&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;event&quot;</span>,</span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">durationThreshold</span>: <span class="number">16</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="长动画帧"><a href="#长动画帧" class="headerlink" title="长动画帧"></a>长动画帧</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function"><span class="params">list</span> =&gt;</span> &#123;</span><br><span class="line">  list.<span class="title function_">getEntries</span>().<span class="title function_">forEach</span>(<span class="function"><span class="params">entry</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (entry.<span class="property">duration</span> &gt; <span class="number">50</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;----------------------------------------&quot;</span>);</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`总耗时：<span class="subst">$&#123;entry.duration&#125;</span>`</span>, entry);</span><br><span class="line">      entry.<span class="property">scripts</span>.<span class="title function_">forEach</span>(<span class="function"><span class="params">script</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(</span><br><span class="line">          <span class="string">`<span class="subst">$&#123;script.sourceURL&#125;</span> 在 <span class="subst">$&#123;script.invoker&#125;</span> 耗时 <span class="subst">$&#123;script.duration&#125;</span> ms`</span></span><br><span class="line">        );</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="attr">sourceURL</span>: script.<span class="property">sourceURL</span>,</span><br><span class="line">            <span class="attr">duration</span>: script.<span class="property">duration</span>,</span><br><span class="line">            <span class="attr">functionName</span>: script.<span class="property">sourceFunctionName</span>,</span><br><span class="line">            <span class="attr">invoker</span>: script.<span class="property">invoker</span></span><br><span class="line">          &#125;,</span><br><span class="line">          script</span><br><span class="line">        );</span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;*****************************************&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;long-animation-frame&quot;</span>,</span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7516353515142348863">前端PerformanceObserver使用</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7370963861645557769#heading-4">Performance在性能方面的完全运用</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7407084026739294258?from=search-suggest">前端如何监控用户访问界面时发生了卡顿</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag"># 浏览器</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0%E6%A8%A1%E5%9E%8B/" rel="prev" title="性能评估模型">
+                  <i class="fa fa-angle-left"></i> 性能评估模型
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%B0%8F%E7%82%B9/" rel="next" title="小点">
+                  小点 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
