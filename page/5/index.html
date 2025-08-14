@@ -71,14 +71,14 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-读书笔记/webpack/【webpack】配置项" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-读书笔记/webpack/【webwork】介绍" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E9%85%8D%E7%BD%AE%E9%A1%B9/" class="article-date">
+    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webwork%E3%80%91%E4%BB%8B%E7%BB%8D/" class="article-date">
   <time class="dt-published" datetime="2025-08-14T03:18:06.702Z" itemprop="datePublished">2025-08-14</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/webpack/">webpack</a>
+    <a class="article-category-link" href="/categories/webwork/">webwork</a>
   </div>
 
   </div>
@@ -89,7 +89,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E9%85%8D%E7%BD%AE%E9%A1%B9/">【webpack】配置项</a>
+      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webwork%E3%80%91%E4%BB%8B%E7%BB%8D/">【webwork】介绍</a>
     </h1>
   
 
@@ -97,217 +97,62 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h1><h2 id="context"><a href="#context" class="headerlink" title="context"></a>context</h2><p>在查找相对路径时，以context为根目录。<br>默认为webpack启动时的所在工作目录。<br>注：context必须是一个绝对路径的字符串</p>
-<h2 id="entry-1"><a href="#entry-1" class="headerlink" title="entry"></a>entry</h2><p>类型：string&#x2F;array&#x2F;object</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>例子</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>string</td>
-<td>index•js</td>
-<td>入口模块的文件路径，可以是相对路径</td>
-</tr>
-<tr>
-<td>array</td>
-<td>【index。js，index2。js】</td>
-<td>入口模块的文件路径，可以是相对路径</td>
-</tr>
-<tr>
-<td>object</td>
-<td>{a：index。js}</td>
-<td>配置多个入口，每个入口生成一个chunk</td>
-</tr>
-</tbody></table>
-<p>如果是array，搭配output。library时，只有数组的最后一个入口文件的模块会被导出</p>
-<h1 id="output"><a href="#output" class="headerlink" title="output"></a>output</h1><h2 id="filename"><a href="#filename" class="headerlink" title="filename"></a>filename</h2><ul>
-<li>id：chunk的唯一标识，从0开始</li>
-<li>name：chunk的名称</li>
-<li>hash：chunk的唯一标识的hash值</li>
-<li>chunkhash：chunk内容的hash</li>
+        <h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><ul>
+<li>能长时间运行</li>
+<li>启动性能理想</li>
+<li>内存消耗理想</li>
 </ul>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="target"><a href="#target" class="headerlink" title="target"></a>target</h2><p>代码运行的不同环境，默认为web</p>
-<ul>
-<li>web：针对浏览器，所有代码都集中到一个文件中</li>
-<li>node：针对nodejs，使用require加载chunk模块</li>
-<li>async-node：针对nodejs，异步加载chunk代码</li>
-<li>webworker：针对webworker</li>
-<li>electron-main：针对electon主线程</li>
-<li>electron-rendrer：针对electron渲染线程</li>
-</ul>
-<h1 id="loader"><a href="#loader" class="headerlink" title="loader"></a>loader</h1><ul>
-<li>svg- inline- loader：和raw- loader类似，但是会分析svg的内容，去除其不必要的部分，减少svg的体积</li>
-</ul>
-<h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><h2 id="缩小文件搜索范围"><a href="#缩小文件搜索范围" class="headerlink" title="缩小文件搜索范围"></a>缩小文件搜索范围</h2><ul>
-<li><p>loader配置</p>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><p>webwork依赖于浏览器（宿主环境）来实现的，从而实现了浏览器对多线程的支持</p>
 <blockquote>
-<p>可以通过include去告诉webpack只有那些文件会被这个loader处理，用exclude排除不需要的文件</p>
-</blockquote>
-</li>
-<li><p>优化resolve.modules配置<br>配置webpack去哪些目录下寻找第三方模块</p>
-<blockquote>
-<p>指明依赖包的具体目录位置，减少查询时间。</p>
-</blockquote>
-</li>
-<li><p>优化reslove.main Fields配置<br>配置第三方模块使用哪个入口文件</p>
-<blockquote>
-<p>指明采用字段作为入口文件的描述字段，减少搜索步骤</p>
-</blockquote>
-</li>
-</ul>
-<p>注：需要考虑是否所有依赖包的第三方入口文件的描述字段，一个模块出错，就会导致所有的代码无法正常运行</p>
-<ul>
-<li><p>优化reslove.alias</p>
-<blockquote>
-<p>配置库的具体引用路径，减少查询时间</p>
-</blockquote>
-</li>
-<li><p>resolve.extensions</p>
-<blockquote>
-<p>频率最高的放在最前面。</p>
-</blockquote>
-</li>
-</ul>
-<blockquote>
-<p>列表不能太长</p>
+<p>种类</p>
 </blockquote>
 <ul>
-<li>优化module.noParse</li>
+<li>dedicated worker（专用线程）：只能被首次生成它的脚本使用</li>
+<li>shared worker（共享线程）：可以同时被多个脚本使用</li>
 </ul>
-<h2 id="happypack"><a href="#happypack" class="headerlink" title="happypack"></a>happypack</h2><p>将任务分解给多个子进程去并发执行，子进程处理完后再将结果发送给主进程</p>
-<h2 id="ParallelUglifyPlugin"><a href="#ParallelUglifyPlugin" class="headerlink" title="ParallelUglifyPlugin"></a>ParallelUglifyPlugin</h2><p>uglfyjs是webpack内置的，但是在构建线上代码时会卡住，即是在进行代码压缩。压缩代码需要将代码解析成用object抽象表示的ast语法树，再去应用各种规则分析和处理ast，因此导致这个过程计算量很大，非常耗时</p>
-<p>ParallelUglifyPlugin会开启多个子线程，将对多个文件的压缩工作分配给多个子进程去完成，每个子进程还是用uglfyjs压缩。</p>
-<h2 id="自动刷新"><a href="#自动刷新" class="headerlink" title="自动刷新"></a>自动刷新</h2><ul>
-<li>文件监听原理：</li>
-</ul>
-<blockquote>
-<p>定时获取文件的最后编辑时间，每次存下最新的最后编辑时间，如果发现当前的获取的时间和最后一次保存的编辑时间不一致，就认为该文件发生了变化</p>
-</blockquote>
-<blockquote>
-<blockquote>
-<p>watchOptions.poll用于控制定时时长，每秒检查多少次</p>
-</blockquote>
-</blockquote>
-<blockquote>
-<p>当某个文件被判定为发生了变化时，并不会立刻告诉监听者，而是会先缓存起来，搜集一段时间后，再一次性告诉监听者。</p>
-<blockquote>
-<p>watchOptions.aggregateTimeout 用于配置这个等待时间</p>
-</blockquote>
-</blockquote>
-<ul>
-<li>自动刷新原理</li>
-</ul>
-<p>控制浏览器自动刷新方法：</p>
-<ol>
-<li><p>借助浏览器扩展去通过浏览器的提供的借口刷新，比如webstorm的liveedit</p>
+<h2 id="模式和执行流"><a href="#模式和执行流" class="headerlink" title="模式和执行流"></a>模式和执行流</h2><h3 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h3><ul>
+<li><p>主线程提交任务</p>
 </li>
-<li><p>向要开发的网页中注入代理客户端的代码，通过客户端的去刷新页面</p>
+<li><p>WorkerGlobal做子任务分配，分配到某个worker</p>
 </li>
-<li><p>将要开发的网页装入一个iframe中，通过刷新iframe去看到最新效果</p>
+<li><p>worker子线程分配后，将处理结果返回给WorkerGlobal，WorkerGlobal再将结果返回给主线程</p>
 </li>
-</ol>
-<p>webpack通过devServer.inline控制是否向每个chunk中注入代理客户端，在开启inline时，devserver会向每个chunk注入代理客户端的代码，而项目中chunk有很多chunk，因此会导致构建缓慢。</p>
-<p>启动项目时，可以通过执行命令webpack-dev-server。—inline false完成。那么就会采用第三种方式进行页面刷新。</p>
-<h2 id="模块热替换"><a href="#模块热替换" class="headerlink" title="模块热替换"></a>模块热替换</h2><ul>
-<li>原理</li>
 </ul>
-<p>和自动刷新原理类似，都需要在开发的网页中注入一个代理客户端来连接devserver和网页。当子模块发生更新时，更新事件会一层层向上传递，直到有某层的文件接收了当前变化的模块，这时就会掉用callback函数去执行自定义的逻辑。如果事件一直往上抛，到最外层都没有事件接收他，那么会直接刷新页面。</p>
-<ul>
-<li>优化</li>
-</ul>
-<p>监听更少的文件，忽略nodemodules目录下的文件。</p>
-<h1 id="cdn加速"><a href="#cdn加速" class="headerlink" title="cdn加速"></a>cdn加速</h1><ul>
-<li>缓存问题</li>
-</ul>
-<p>cdn一般会为资源开启很长时间的缓存，可能会导致最新的发布不能用</p>
-<blockquote>
-<p>针对html入口文件，放到自己的服务器中，关闭自己服务器上的缓存，自己的服务器只提供html和数据接口</p>
-</blockquote>
-<blockquote>
-<p>针对静态的js，css，图片等文件，开启cdn和缓存，每个文件带自己内容的hash值</p>
-</blockquote>
-<ul>
-<li>使用</li>
-</ul>
-<blockquote>
-<p>在output.publicPath设置js的地址</p>
-</blockquote>
-<blockquote>
-<p>在css-loader.publicPath设置css导入的资源地址</p>
-</blockquote>
-<blockquote>
-<p>在webplugin.stylepublicpath设置css文件的地址</p>
-</blockquote>
-<h2 id="压缩代码"><a href="#压缩代码" class="headerlink" title="压缩代码"></a>压缩代码</h2><ul>
-<li>js</li>
-</ul>
-<blockquote>
-<p>使用 uglifyplugin和paralleugifyplugin（多线程）进行压缩</p>
-</blockquote>
-<ul>
-<li>压缩es6</li>
-</ul>
-<blockquote>
-<p>优点：对于一样的逻辑，es6代码量少于es5；js对es6的语法做了性能优化，例如针对const声明的变量有更快的读取速度。</p>
-</blockquote>
-<blockquote>
-<p>使用uglifyes进行压缩</p>
-</blockquote>
-<ul>
-<li>压缩css</li>
-</ul>
-<blockquote>
-<p>使用cssnano进行压缩</p>
-</blockquote>
-<h2 id="tree-shaking去除无用的死代码"><a href="#tree-shaking去除无用的死代码" class="headerlink" title="tree shaking去除无用的死代码"></a>tree shaking去除无用的死代码</h2><p>配置babel保留es6模块化语句，presets：modules：false</p>
-<p>启动时带上—display-used- exports参数，指出哪些函数有用和无用。</p>
-<p>启动时带上—optimize-minimize去除无用代码</p>
-<p>配置reslove.mainfields，优先采用jsnext：main（第三方包打包出的es6模块）</p>
-<p>export default无法做tree shaking，因为导出的是一整个对象</p>
-<h2 id="提取公共代码"><a href="#提取公共代码" class="headerlink" title="提取公共代码"></a>提取公共代码</h2><blockquote>
-<p>使用commonchunkplugin</p>
-</blockquote>
-<h2 id="分割代码按需加载"><a href="#分割代码按需加载" class="headerlink" title="分割代码按需加载"></a>分割代码按需加载</h2><blockquote>
-<p>原则</p>
-</blockquote>
-<p>1: 将整个网站划分成一个个小功能，再按照每个功能的相关程度将它们分成几类。</p>
-<p>2: 将每一类合并为一个chunk，按需加载对应的chunk</p>
-<p>3: 不要按需加载用户首次打开网站时需要看到的画面所对应的功能，将其放入执行入口所在的chunk中，以减少用户能感知的网页加载时间</p>
-<p>4: 对于不依赖大量代码的功能点，例如依赖echart画图，将其进行按需加载</p>
-<blockquote>
-<p>webpackChunkName：name</p>
-</blockquote>
-<p>import（&#x2F;* webpackChunkName：name *&#x2F; path）：为动态生成的chunk赋予一个名称，方便追踪和调试代码，若不指定名称，那么默认为[id].js</p>
-<p>以path路径下的文件为入口重新生成一个chunk，当代码执行到import所在的语句时，才会去加载chunk对应生成的文件。import会返回一个promise，当文件加载成功时可以在promise的then方法获取对应的文件内容。</p>
-<h2 id="scope-hoisting"><a href="#scope-hoisting" class="headerlink" title="scope hoisting"></a>scope hoisting</h2><blockquote>
-<p>实现原理</p>
-</blockquote>
-<p>分析模块之间的依赖关系，尽可能将被打散的模块合并到一个函数中。但前提是不能造成代码冗余，因此只有被引用了一次的模块才能被合并。</p>
-<h2 id="prepack"><a href="#prepack" class="headerlink" title="prepack"></a>prepack</h2><blockquote>
-<p>在保持运行结果一致的情况下，改变源码的运行逻辑，输出性能更好的js代码</p>
-</blockquote>
-<p>工作流程：</p>
-<p>1: 通过Babel将js源码解析成抽象语法树，以更细粒度地分析yuanma</p>
-<p>2: prepack实现了一个js解释器，用于执行源码。借助这个解释器，prepack才能理解源码具体是如何执行的，并将执行过程中的结果返回到输出中。</p>
-<p>使用prepack-webpack-plugin插件。</p>
-<h2 id="可视化打包结果"><a href="#可视化打包结果" class="headerlink" title="可视化打包结果"></a>可视化打包结果</h2><ul>
-<li><p>webpack-bundle- analyzer</p>
+<h3 id="执行流"><a href="#执行流" class="headerlink" title="执行流"></a>执行流</h3><ul>
+<li><p>主线程调用new Worker，内核异步创建worker</p>
 </li>
-<li><p><a target="_blank" rel="noopener" href="http://wepack.github.io/analyse">http://wepack.github.io/analyse</a></p>
+<li><p>浏览器内核创建WebCore：Worker</p>
+</li>
+<li><p>主线程调用postMessage通知。</p>
+</li>
+</ul>
+<p>如果当时worker没有创建完成，那么会在浏览器内核中的message队列存放信息，当worker创建完成后，由浏览器内核将消息从队列中放入到worker线程中的执行循环</p>
+<p>如果worker创建已经完成了，那么主线程直接通知到worker线程中的onmessage，不会经历浏览器内核</p>
+<ul>
+<li>worker执行完成后，调用postMessage将信息传递给主线程的onmessage回调中。不经历浏览器内核</li>
+</ul>
+<h2 id="api"><a href="#api" class="headerlink" title="api"></a>api</h2><h3 id="主线程"><a href="#主线程" class="headerlink" title="主线程"></a>主线程</h3><ul>
+<li><p>构造</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> worker = <span class="keyword">new</span> <span class="title class_">Worker</span>(url, options)</span><br></pre></td></tr></table></figure>
+<p>注：</p>
+</li>
+<li><p>页面不允许启动worker，会引发security error</p>
+</li>
+<li><p>脚本类型只接收mime类型为text&#x2F;javascript</p>
+</li>
+<li><p>url无法解析会导致syntaxerror</p>
 </li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E9%85%8D%E7%BD%AE%E9%A1%B9/" data-id="cmeav8q7b0084nwfm0r0m6y83" data-title="【webpack】配置项" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webwork%E3%80%91%E4%BB%8B%E7%BB%8D/" data-id="cmebduiyn00a5pwfm740mck5w" data-title="【webwork】介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webwork/" rel="tag">webwork</a></li></ul>
+
     </footer>
   </div>
   
@@ -436,7 +281,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96%E5%AD%98%E5%82%A8%E5%8D%8F%E8%AE%AE/" data-id="cmeav8q75007lnwfmca0q1bov" data-title="【Web3】去中心化存储协议" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96%E5%AD%98%E5%82%A8%E5%8D%8F%E8%AE%AE/" data-id="cmebduixw006xpwfm43awdz60" data-title="【Web3】去中心化存储协议" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -622,11 +467,114 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%85%AC%E9%93%BE/" data-id="cmeav8q72007enwfm90eyebbq" data-title="【Web3】公链" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%85%AC%E9%93%BE/" data-id="cmebduixu006rpwfm0ztrbs8q" data-title="【Web3】公链" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-读书笔记/WEB3/【Web3】DAO" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91DAO/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.693Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/web3/">web3</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91DAO/">【Web3】DAO</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>DAO是一种由社区主导的“公司”，即去中心化的自治组织，它完全d是透明和自主的，由智能合约制定基本规则，执行商定的决定，并且在任何时候，提案、投票甚至代码都是可以公开审计的。</p>
+<p>DAO完全由个人成员管理，他们共同决定项目未来的走向。</p>
+<p>框架的特点之一就是激励措施的一致性，鼓励直言不讳，并且只批准符合协议本身最大利益的提案，同时符合他们个人的最大利益。</p>
+<h2 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h2><p>DAO的规则是由社区成员的核心团队通过使用智能合约建立的，这些智能合约奠定了DAO运行的基本框架，他们是高度可见的、可验证和可公开审计的，因此任何潜在的成员都可以充分了解协议在每一步的运作方式。</p>
+<p>当规则被正式写入区块链，下一步就是弄清楚如何获得资金以及如何将其赋予治理。通常通过发行代币实现，协议通过发行代币来筹集资金并填补DAO的金库。作为法定货币的回报，代币持有者被赋予一定的投票权，通常与他们的持股数成正比，一旦资金筹集完成，DAO就可以进行部署了。</p>
+<p>DAO部署完成投入使用后，除了通过成员投票达成共识外，不能再通过任何其他方式对其进行修改。</p>
+<p>某些情况下，代币持有者可以投票决定在他们之间分配协议收取的部份费用（例如uniswap）</p>
+<h2 id="协议DAO"><a href="#协议DAO" class="headerlink" title="协议DAO"></a>协议DAO</h2><p>目的是为了帮助构建协议而存在的协议体。</p>
+<h3 id="MarkerDAO"><a href="#MarkerDAO" class="headerlink" title="MarkerDAO"></a>MarkerDAO</h3><p>MarkerDAO是协议DAO的一个典型示例。它是在以太坊区块链上开发借贷、储蓄和稳定加密货币技术的组织。即它是一个建立在以太坊上的DAO，允许在不需要中间人的情况下借贷加密资产，MarkerDAO由管理借贷的智能合约服务以及两种货币（DAI和MKR）组成，以规范贷款的价值。</p>
+<p>MarkerDAO它创建了一个协议，允许任何拥有MarkerDAO钱包的人以DAI稳定币的形式借钱给他人。通过MarkerDAO的智能合约中锁定一些eth，用户可以创建一定数量的dai，锁定的eth越多，可以创建的dai越多。当用户需要解锁作为dai贷款抵押品的eth时，只需要偿还贷款和相关费用。</p>
+<p>当贷款的抵押品价值降至某个点以下时，即eth的价格已经远远低于借入的dai数量，那么这个时候贷款就会被清算。清算和清算威胁通过防止人们借贷过多来保持系统稳定。如果“清算威胁”使系统保持诚实，那么mkr代币持有者是最后的贷款人。当eth价格崩盘并且一次清算太多贷款时，mkr被创建并出售以偿还贷款。同时，费用必须以mkr支付，清算罚款用于回购mkr，这些mkr会被烧毁或销毁。理论上，mkr应该始终有足够的价值来支持清算贷款，dai、mkr和eth作为一种自动制衡系统运行，两两之间相互抵消，以保持系统稳定和去中心化。</p>
+<h2 id="慈善DAO（grant-dao"><a href="#慈善DAO（grant-dao" class="headerlink" title="慈善DAO（grant dao"></a>慈善DAO（grant dao</h2><p>社区捐赠资金并使用dao投票决定如何以治理提案的形式将资金分配给各种贡献者。grant dao最初的治理是通过不可转让的股份进行的，意味着成员参与的主要动机是产生社会效益而非财务回报。</p>
+<h3 id="Moloch-DAO"><a href="#Moloch-DAO" class="headerlink" title="Moloch DAO"></a>Moloch DAO</h3><p>Moloch DAO为公共产品项目提供资金以改善以太坊生态系统。</p>
+<ul>
+<li>目的<br>改善和推动以太坊生态系统的项目提供资金。</li>
+</ul>
+<p>它由成员决定哪些项目可以获得资助。它将区块链技术视为一种公共产品，即每个人都可以从中收益并应该平等的获得东西。</p>
+<h3 id="Gitcoin"><a href="#Gitcoin" class="headerlink" title="Gitcoin"></a>Gitcoin</h3><p>开发人员和编码人员可以在该平台获得报酬，以使用各种编程语言开发开源软件。用户可以向gitcoin平台提交自己的项目提案，可以从捐助者众筹资金。</p>
+<p>旨在促进有意义的开源项目的开发，并更好的协调捐助者和开发者的利益。</p>
+<h2 id="社交DAO"><a href="#社交DAO" class="headerlink" title="社交DAO"></a>社交DAO</h2><p>其旨在将志同道合的人聚集在同一网络社区中，围绕一种代币进行协调。</p>
+<p>示例：FWB</p>
+<h3 id="FWB"><a href="#FWB" class="headerlink" title="FWB"></a>FWB</h3><p>它是一个将集体文化和技术结合在一起的新型社交社区，是一个自行组织，富有创造力的互联网原生社区。它以人类价值观为核心，成员共同进行内容创作。</p>
+<p>它由艺术家、创作者和领导web3.0转型的人员组成，fwb是成员和实现集体使命的技术之间的桥梁。</p>
+<ul>
+<li>工作流程</li>
+</ul>
+<p>其有个参与框架</p>
+<ul>
+<li><p>治理<br>包含fwb代币持有者，他们投票支持dao的提案并通过论坛参与治理</p>
+</li>
+<li><p>董事会</p>
+</li>
+</ul>
+<p>董事会由团队成员、顾问和社区成员等混合实体组成，他们专注于制定有效的社区建设战略。</p>
+<ul>
+<li>团队负责人</li>
+</ul>
+<p>管理贡献者团队的成员，根据自己的经验被选出的。批准用于赏金或奖励的资金，设定关键优先事项以促进协助成功</p>
+<ul>
+<li>贡献者</li>
+</ul>
+<p>持有fwb的成员。贡献者通过积极参与活动为团队提供动力，并根据他们的贡献水平获得奖励。</p>
+<h3 id="APE"><a href="#APE" class="headerlink" title="APE"></a>APE</h3><p>旨在促进去中心化和推进由社区主导的治理模式，任务是管理apecoin dao的决策，负责日常行政、薄记、项目管理和其他任务，以确保dao社区的想法得到足够的支持，因为去中心化治理对于建立和管理一个全球分散的社区很重要。</p>
+<h2 id="服务DAO"><a href="#服务DAO" class="headerlink" title="服务DAO"></a>服务DAO</h2><p>客户可以为特点任务发放奖金，一旦完成，它在奖励个人贡献者之前需要向dao金库支付部份费用。贡献者通常还会收到在dao中传达所有权的治理通行证。</p>
+<h3 id="出现背景"><a href="#出现背景" class="headerlink" title="出现背景"></a>出现背景</h3><ul>
+<li>贡献者获得直接所有权</li>
+</ul>
+<p>服务dao的贡献者既获得了他们为每个客户创作的价值的份额，也获得了整个组织的份额</p>
+<ul>
+<li>开放的贡献文化</li>
+</ul>
+<p>一些服务dao是结构化的，因此任何人都可以加入并做出贡献。过滤申请人都dao更看重一个人为dao增值的能力</p>
+<ul>
+<li><p>更好的理解客户的问题</p>
+</li>
+<li><p>减少贡献者的收入波动</p>
+</li>
+</ul>
+<p>贡献者通过服务dao社区和客户的项目获得报酬，而项目中的报酬一部份为累计到组织中的所有利益相关者，个人贡献者可以随着时间的推移而平滑收益波动。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91DAO/" data-id="cmebduixn0068pwfm1c2odhhi" data-title="【Web3】DAO" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web3/" rel="tag">web3</a></li></ul>
 
     </footer>
   </div>
@@ -740,7 +688,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91Defi/" data-id="cmeav8q6x006rnwfm5v9raiah" data-title="【Web3】DAO" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91Defi/" data-id="cmebduixo006cpwfmeu7qbhmf" data-title="【Web3】DAO" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -754,14 +702,14 @@
 
 
   
-    <article id="post-读书笔记/WEB3/【Web3】DAO" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-读书笔记/WEB3/【Web3】GameFi" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91DAO/" class="article-date">
+    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91GameFi/" class="article-date">
   <time class="dt-published" datetime="2025-08-14T03:18:06.693Z" itemprop="datePublished">2025-08-14</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/web3/">web3</a>
+    <a class="article-category-link" href="/categories/Web3/">Web3</a>
   </div>
 
   </div>
@@ -772,7 +720,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91DAO/">【Web3】DAO</a>
+      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91GameFi/">【Web3】GameFi</a>
     </h1>
   
 
@@ -780,74 +728,107 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>DAO是一种由社区主导的“公司”，即去中心化的自治组织，它完全d是透明和自主的，由智能合约制定基本规则，执行商定的决定，并且在任何时候，提案、投票甚至代码都是可以公开审计的。</p>
-<p>DAO完全由个人成员管理，他们共同决定项目未来的走向。</p>
-<p>框架的特点之一就是激励措施的一致性，鼓励直言不讳，并且只批准符合协议本身最大利益的提案，同时符合他们个人的最大利益。</p>
-<h2 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h2><p>DAO的规则是由社区成员的核心团队通过使用智能合约建立的，这些智能合约奠定了DAO运行的基本框架，他们是高度可见的、可验证和可公开审计的，因此任何潜在的成员都可以充分了解协议在每一步的运作方式。</p>
-<p>当规则被正式写入区块链，下一步就是弄清楚如何获得资金以及如何将其赋予治理。通常通过发行代币实现，协议通过发行代币来筹集资金并填补DAO的金库。作为法定货币的回报，代币持有者被赋予一定的投票权，通常与他们的持股数成正比，一旦资金筹集完成，DAO就可以进行部署了。</p>
-<p>DAO部署完成投入使用后，除了通过成员投票达成共识外，不能再通过任何其他方式对其进行修改。</p>
-<p>某些情况下，代币持有者可以投票决定在他们之间分配协议收取的部份费用（例如uniswap）</p>
-<h2 id="协议DAO"><a href="#协议DAO" class="headerlink" title="协议DAO"></a>协议DAO</h2><p>目的是为了帮助构建协议而存在的协议体。</p>
-<h3 id="MarkerDAO"><a href="#MarkerDAO" class="headerlink" title="MarkerDAO"></a>MarkerDAO</h3><p>MarkerDAO是协议DAO的一个典型示例。它是在以太坊区块链上开发借贷、储蓄和稳定加密货币技术的组织。即它是一个建立在以太坊上的DAO，允许在不需要中间人的情况下借贷加密资产，MarkerDAO由管理借贷的智能合约服务以及两种货币（DAI和MKR）组成，以规范贷款的价值。</p>
-<p>MarkerDAO它创建了一个协议，允许任何拥有MarkerDAO钱包的人以DAI稳定币的形式借钱给他人。通过MarkerDAO的智能合约中锁定一些eth，用户可以创建一定数量的dai，锁定的eth越多，可以创建的dai越多。当用户需要解锁作为dai贷款抵押品的eth时，只需要偿还贷款和相关费用。</p>
-<p>当贷款的抵押品价值降至某个点以下时，即eth的价格已经远远低于借入的dai数量，那么这个时候贷款就会被清算。清算和清算威胁通过防止人们借贷过多来保持系统稳定。如果“清算威胁”使系统保持诚实，那么mkr代币持有者是最后的贷款人。当eth价格崩盘并且一次清算太多贷款时，mkr被创建并出售以偿还贷款。同时，费用必须以mkr支付，清算罚款用于回购mkr，这些mkr会被烧毁或销毁。理论上，mkr应该始终有足够的价值来支持清算贷款，dai、mkr和eth作为一种自动制衡系统运行，两两之间相互抵消，以保持系统稳定和去中心化。</p>
-<h2 id="慈善DAO（grant-dao"><a href="#慈善DAO（grant-dao" class="headerlink" title="慈善DAO（grant dao"></a>慈善DAO（grant dao</h2><p>社区捐赠资金并使用dao投票决定如何以治理提案的形式将资金分配给各种贡献者。grant dao最初的治理是通过不可转让的股份进行的，意味着成员参与的主要动机是产生社会效益而非财务回报。</p>
-<h3 id="Moloch-DAO"><a href="#Moloch-DAO" class="headerlink" title="Moloch DAO"></a>Moloch DAO</h3><p>Moloch DAO为公共产品项目提供资金以改善以太坊生态系统。</p>
-<ul>
-<li>目的<br>改善和推动以太坊生态系统的项目提供资金。</li>
-</ul>
-<p>它由成员决定哪些项目可以获得资助。它将区块链技术视为一种公共产品，即每个人都可以从中收益并应该平等的获得东西。</p>
-<h3 id="Gitcoin"><a href="#Gitcoin" class="headerlink" title="Gitcoin"></a>Gitcoin</h3><p>开发人员和编码人员可以在该平台获得报酬，以使用各种编程语言开发开源软件。用户可以向gitcoin平台提交自己的项目提案，可以从捐助者众筹资金。</p>
-<p>旨在促进有意义的开源项目的开发，并更好的协调捐助者和开发者的利益。</p>
-<h2 id="社交DAO"><a href="#社交DAO" class="headerlink" title="社交DAO"></a>社交DAO</h2><p>其旨在将志同道合的人聚集在同一网络社区中，围绕一种代币进行协调。</p>
-<p>示例：FWB</p>
-<h3 id="FWB"><a href="#FWB" class="headerlink" title="FWB"></a>FWB</h3><p>它是一个将集体文化和技术结合在一起的新型社交社区，是一个自行组织，富有创造力的互联网原生社区。它以人类价值观为核心，成员共同进行内容创作。</p>
-<p>它由艺术家、创作者和领导web3.0转型的人员组成，fwb是成员和实现集体使命的技术之间的桥梁。</p>
-<ul>
-<li>工作流程</li>
-</ul>
-<p>其有个参与框架</p>
-<ul>
-<li><p>治理<br>包含fwb代币持有者，他们投票支持dao的提案并通过论坛参与治理</p>
+        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>GameFi是游戏和金融的组合，涉及到区块链游戏，对玩家提供经济激励。奖励包含游戏内部的奖励或者以nft为载体的奖励。</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><ul>
+<li><p>Decentraland（MANA和LAND代币）、</p>
 </li>
-<li><p>董事会</p>
+<li><p>the sandbox（结合DAO和NFT）</p>
+</li>
+<li><p>axie infinity（AXS代币）</p>
 </li>
 </ul>
-<p>董事会由团队成员、顾问和社区成员等混合实体组成，他们专注于制定有效的社区建设战略。</p>
+<p>前期需要准备3个axie nft作为起始，后续可以通过此游戏赚取回报获取slp代币，可以兑换为金钱</p>
 <ul>
-<li>团队负责人</li>
+<li>Gala Games（以GALA为代币）</li>
 </ul>
-<p>管理贡献者团队的成员，根据自己的经验被选出的。批准用于赏金或奖励的资金，设定关键优先事项以促进协助成功</p>
+<p>将自己定位为一个游戏区块链生态孵化者，经济驱动剂是根据以太坊区块链上的erc-20标准创建的gala代币，兼容币安智能链。</p>
+<p>其生态系统包含游戏、游戏发布平台、nft市场、游戏云托管服务和平台自身的代币经济学。</p>
+<p>玩家可以通过特定的投票机制决定gala games平台应该添加哪些游戏。</p>
 <ul>
-<li>贡献者</li>
+<li>Enjin（是生态系统范围的解决方案，旨在通过对游戏内资产进行代币化并注入项目的原生代币ENJ）</li>
 </ul>
-<p>持有fwb的成员。贡献者通过积极参与活动为团队提供动力，并根据他们的贡献水平获得奖励。</p>
-<h3 id="APE"><a href="#APE" class="headerlink" title="APE"></a>APE</h3><p>旨在促进去中心化和推进由社区主导的治理模式，任务是管理apecoin dao的决策，负责日常行政、薄记、项目管理和其他任务，以确保dao社区的想法得到足够的支持，因为去中心化治理对于建立和管理一个全球分散的社区很重要。</p>
-<h2 id="服务DAO"><a href="#服务DAO" class="headerlink" title="服务DAO"></a>服务DAO</h2><p>客户可以为特点任务发放奖金，一旦完成，它在奖励个人贡献者之前需要向dao金库支付部份费用。贡献者通常还会收到在dao中传达所有权的治理通行证。</p>
-<h3 id="出现背景"><a href="#出现背景" class="headerlink" title="出现背景"></a>出现背景</h3><ul>
-<li>贡献者获得直接所有权</li>
-</ul>
-<p>服务dao的贡献者既获得了他们为每个客户创作的价值的份额，也获得了整个组织的份额</p>
-<ul>
-<li>开放的贡献文化</li>
-</ul>
-<p>一些服务dao是结构化的，因此任何人都可以加入并做出贡献。过滤申请人都dao更看重一个人为dao增值的能力</p>
-<ul>
-<li><p>更好的理解客户的问题</p>
-</li>
-<li><p>减少贡献者的收入波动</p>
-</li>
-</ul>
-<p>贡献者通过服务dao社区和客户的项目获得报酬，而项目中的报酬一部份为累计到组织中的所有利益相关者，个人贡献者可以随着时间的推移而平滑收益波动。</p>
+<p>基础设施包含GraphQL和可信云。由于enjin允许开发人员用sdk和api以便根据需求访问响应功能，因此它采用graphql简化访问资源的方式，促进了虚拟世界和智能合约区块链之间的交互。而可信云允许enjin网络sdk和api的游戏与以太坊区块链互联</p>
+<h2 id="游戏公会YGG"><a href="#游戏公会YGG" class="headerlink" title="游戏公会YGG"></a>游戏公会YGG</h2><p>ygg是专注于区块链p2p游戏的游戏公会，投资nft资产并将全球的区块链游玩家连接到一起的社区。</p>
+<p>目标是建立一个属于玩家和投资者的网络，帮助彼此在nft游戏领域起步和成长。</p>
+<h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>投资于区块链游戏中使用nft的dao？游戏包含较为广义的元宇宙，具有基于区块链的数字世界中的众多元素，包括数字土地&#x2F;货币等。</p>
+<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><p>结合了defi和nft，在以太坊区块链上创建了一种元宇宙经济。</p>
+<p>ygg由多个subDAO（依附于DAO的较小DAO）组成，而这些subdao由来自特定nft游戏或地理位置的玩家群体组成。每个subdao都有自己的一套规则，用于管理各自的p2e游戏的活动和资产。</p>
+<p>在ygg上，所有nft和数字资产都存储于社区控制的ygg金库中，金库为每个subdao提供nft，包括多个区块链游戏的p2e资产。</p>
+<h3 id="代币"><a href="#代币" class="headerlink" title="代币"></a>代币</h3><p>ygg代币是一种赋予持有人对ygg dao的治理权利的erc-20代币。ygg代币可以用于支付网络上的服务费用，也可以在质押后在ygg收益池中获取奖励，或用于解锁ygg discord频道上的独家内容。此外，ygg代币持有者还可以提交提案，并对公会的技术、产品、项目、代币分配和整体治理结构等决策进行投票，最终在dao中得到实施的获胜建议将获得ygg代币奖励。</p>
+<h2 id="dappradar-常用信息平台"><a href="#dappradar-常用信息平台" class="headerlink" title="dappradar 常用信息平台"></a>dappradar 常用信息平台</h2><p>该平台通过包括以太坊、eos和ont在内的20多个协议跟踪1w+dapps，使用户可以分析和比较各自dapps。</p>
+<h3 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h3><p>网站自称为为全球用户带来了关于去中心化应用程序的高质量、准确的见解，迅速成为值得信赖的行业信息来源；发现dapps的起点，托管来自30多个协议的9k个dapps；能提供全面的nft估值和投资组合管理，并在数据主导、可操作的行业报告方面处于领先地位。</p>
+<p>它的代币RADAR具有多种功能：持有人可以质押radar以赚取被动收入；是一种治理代币，允许持有者对生态系统的未来发展进行投票；用户可以获得对特定功能和见解的独占访问权限。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91DAO/" data-id="cmeav8q6y006unwfmfmh4hnet" data-title="【Web3】DAO" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91GameFi/" data-id="cmebduixq006fpwfmeoju9xz3" data-title="【Web3】GameFi" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web3/" rel="tag">web3</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-读书笔记/WEB3/【Web3】SocialFi" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91SocialFi/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.693Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Web3/">Web3</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91SocialFi/">【Web3】SocialFi</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>SocialFi汇集了社交媒体和defi的原则，它提供了一种去中心化的方法来创建、管理和存储社交媒体几其参与者生产的内容。</p>
+<p>在SocialFi的核心，应用程序是内容创建者、影响者和参与者，它们希望更好的控制自己的数据，保障言论自由以及通过参与社交媒体获利。货币化通常发生在加密货币中，而身份管理和数字所有权则由nft驱动。</p>
+<h2 id="构建模块"><a href="#构建模块" class="headerlink" title="构建模块"></a>构建模块</h2><h3 id="货币化"><a href="#货币化" class="headerlink" title="货币化"></a>货币化</h3><p>SocialFi应用程序通过使用社交代币或者应用内实用代币，这些代币不仅可以在应用程序级别创建，而且可以在用户级别创建，创作者可以通过社交代币管理自己的经济。</p>
+<p>模型的基本设计原则：</p>
+<ul>
+<li><p>只有那些持有创作者社交代币的人才能参与他们的帖子，</p>
+</li>
+<li><p>如果想引起影响者的注意，持有最多数量的社交代币时，消息回复会出现在回复页面首页</p>
+</li>
+<li><p>创作者和影响者可以设置阈值，允许拥有超过一定数量社交代币的追随者直接向他们发送消息</p>
+</li>
+<li><p>当用户想要通过点赞或者分享与某人进行互动时，需要花钱。</p>
+</li>
+</ul>
+<h3 id="审查与言论自由"><a href="#审查与言论自由" class="headerlink" title="审查与言论自由"></a>审查与言论自由</h3><p>SocialFi平台通过标记链上数据进行去中心化管理。SocialFi平台所有可公开查看的帖子都在链上，因此，这些链上数据可供规则引擎根据主题和所用词的性质来解析和快速标记帖子。</p>
+<p>每个单独的节点都可以选择阻止一些标签并与其他标签互动。如果一个节点选择参与和认可一个有害帖子时，它将收到法律起诉。因此，在网络中必须允许非中央机构或中央组织内的小团体做出选择，控制器和责任在于个人。</p>
+<h3 id="数字所有权和身份"><a href="#数字所有权和身份" class="headerlink" title="数字所有权和身份"></a>数字所有权和身份</h3><p>如果用户想创建一个SocialFi资料，可以使用自己的nft作为个人头像，并通过连接他们的钱包来确认自己的nft所有权。</p>
+<p>SocialFi平台中的nft为创作者提供分发功能来广播他们的作品。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91SocialFi/" data-id="cmebduixq006jpwfm94vn8ck3" data-title="【Web3】SocialFi" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li></ul>
 
     </footer>
   </div>
@@ -933,143 +914,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91NFT/" data-id="cmeav8q6z006znwfm06xf2lrn" data-title="【Web3】NFT" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-读书笔记/WEB3/【Web3】GameFi" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91GameFi/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.693Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Web3/">Web3</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91GameFi/">【Web3】GameFi</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>GameFi是游戏和金融的组合，涉及到区块链游戏，对玩家提供经济激励。奖励包含游戏内部的奖励或者以nft为载体的奖励。</p>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><ul>
-<li><p>Decentraland（MANA和LAND代币）、</p>
-</li>
-<li><p>the sandbox（结合DAO和NFT）</p>
-</li>
-<li><p>axie infinity（AXS代币）</p>
-</li>
-</ul>
-<p>前期需要准备3个axie nft作为起始，后续可以通过此游戏赚取回报获取slp代币，可以兑换为金钱</p>
-<ul>
-<li>Gala Games（以GALA为代币）</li>
-</ul>
-<p>将自己定位为一个游戏区块链生态孵化者，经济驱动剂是根据以太坊区块链上的erc-20标准创建的gala代币，兼容币安智能链。</p>
-<p>其生态系统包含游戏、游戏发布平台、nft市场、游戏云托管服务和平台自身的代币经济学。</p>
-<p>玩家可以通过特定的投票机制决定gala games平台应该添加哪些游戏。</p>
-<ul>
-<li>Enjin（是生态系统范围的解决方案，旨在通过对游戏内资产进行代币化并注入项目的原生代币ENJ）</li>
-</ul>
-<p>基础设施包含GraphQL和可信云。由于enjin允许开发人员用sdk和api以便根据需求访问响应功能，因此它采用graphql简化访问资源的方式，促进了虚拟世界和智能合约区块链之间的交互。而可信云允许enjin网络sdk和api的游戏与以太坊区块链互联</p>
-<h2 id="游戏公会YGG"><a href="#游戏公会YGG" class="headerlink" title="游戏公会YGG"></a>游戏公会YGG</h2><p>ygg是专注于区块链p2p游戏的游戏公会，投资nft资产并将全球的区块链游玩家连接到一起的社区。</p>
-<p>目标是建立一个属于玩家和投资者的网络，帮助彼此在nft游戏领域起步和成长。</p>
-<h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>投资于区块链游戏中使用nft的dao？游戏包含较为广义的元宇宙，具有基于区块链的数字世界中的众多元素，包括数字土地&#x2F;货币等。</p>
-<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><p>结合了defi和nft，在以太坊区块链上创建了一种元宇宙经济。</p>
-<p>ygg由多个subDAO（依附于DAO的较小DAO）组成，而这些subdao由来自特定nft游戏或地理位置的玩家群体组成。每个subdao都有自己的一套规则，用于管理各自的p2e游戏的活动和资产。</p>
-<p>在ygg上，所有nft和数字资产都存储于社区控制的ygg金库中，金库为每个subdao提供nft，包括多个区块链游戏的p2e资产。</p>
-<h3 id="代币"><a href="#代币" class="headerlink" title="代币"></a>代币</h3><p>ygg代币是一种赋予持有人对ygg dao的治理权利的erc-20代币。ygg代币可以用于支付网络上的服务费用，也可以在质押后在ygg收益池中获取奖励，或用于解锁ygg discord频道上的独家内容。此外，ygg代币持有者还可以提交提案，并对公会的技术、产品、项目、代币分配和整体治理结构等决策进行投票，最终在dao中得到实施的获胜建议将获得ygg代币奖励。</p>
-<h2 id="dappradar-常用信息平台"><a href="#dappradar-常用信息平台" class="headerlink" title="dappradar 常用信息平台"></a>dappradar 常用信息平台</h2><p>该平台通过包括以太坊、eos和ont在内的20多个协议跟踪1w+dapps，使用户可以分析和比较各自dapps。</p>
-<h3 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h3><p>网站自称为为全球用户带来了关于去中心化应用程序的高质量、准确的见解，迅速成为值得信赖的行业信息来源；发现dapps的起点，托管来自30多个协议的9k个dapps；能提供全面的nft估值和投资组合管理，并在数据主导、可操作的行业报告方面处于领先地位。</p>
-<p>它的代币RADAR具有多种功能：持有人可以质押radar以赚取被动收入；是一种治理代币，允许持有者对生态系统的未来发展进行投票；用户可以获得对特定功能和见解的独占访问权限。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91GameFi/" data-id="cmeav8q6z0072nwfm81vl36jy" data-title="【Web3】GameFi" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-读书笔记/WEB3/【Web3】SocialFi" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91SocialFi/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.693Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Web3/">Web3</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91SocialFi/">【Web3】SocialFi</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>SocialFi汇集了社交媒体和defi的原则，它提供了一种去中心化的方法来创建、管理和存储社交媒体几其参与者生产的内容。</p>
-<p>在SocialFi的核心，应用程序是内容创建者、影响者和参与者，它们希望更好的控制自己的数据，保障言论自由以及通过参与社交媒体获利。货币化通常发生在加密货币中，而身份管理和数字所有权则由nft驱动。</p>
-<h2 id="构建模块"><a href="#构建模块" class="headerlink" title="构建模块"></a>构建模块</h2><h3 id="货币化"><a href="#货币化" class="headerlink" title="货币化"></a>货币化</h3><p>SocialFi应用程序通过使用社交代币或者应用内实用代币，这些代币不仅可以在应用程序级别创建，而且可以在用户级别创建，创作者可以通过社交代币管理自己的经济。</p>
-<p>模型的基本设计原则：</p>
-<ul>
-<li><p>只有那些持有创作者社交代币的人才能参与他们的帖子，</p>
-</li>
-<li><p>如果想引起影响者的注意，持有最多数量的社交代币时，消息回复会出现在回复页面首页</p>
-</li>
-<li><p>创作者和影响者可以设置阈值，允许拥有超过一定数量社交代币的追随者直接向他们发送消息</p>
-</li>
-<li><p>当用户想要通过点赞或者分享与某人进行互动时，需要花钱。</p>
-</li>
-</ul>
-<h3 id="审查与言论自由"><a href="#审查与言论自由" class="headerlink" title="审查与言论自由"></a>审查与言论自由</h3><p>SocialFi平台通过标记链上数据进行去中心化管理。SocialFi平台所有可公开查看的帖子都在链上，因此，这些链上数据可供规则引擎根据主题和所用词的性质来解析和快速标记帖子。</p>
-<p>每个单独的节点都可以选择阻止一些标签并与其他标签互动。如果一个节点选择参与和认可一个有害帖子时，它将收到法律起诉。因此，在网络中必须允许非中央机构或中央组织内的小团体做出选择，控制器和责任在于个人。</p>
-<h3 id="数字所有权和身份"><a href="#数字所有权和身份" class="headerlink" title="数字所有权和身份"></a>数字所有权和身份</h3><p>如果用户想创建一个SocialFi资料，可以使用自己的nft作为个人头像，并通过连接他们的钱包来确认自己的nft所有权。</p>
-<p>SocialFi平台中的nft为创作者提供分发功能来广播他们的作品。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91SocialFi/" data-id="cmeav8q700076nwfm1z1n7pzo" data-title="【Web3】SocialFi" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91NFT/" data-id="cmebduixr006lpwfm07po0zh8" data-title="【Web3】NFT" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1151,7 +996,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E4%BA%8C%E5%B1%82%E7%BD%91%E7%BB%9C/" data-id="cmeav8q71007anwfm6rn4bn8u" data-title="【Web3】二层网络" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E4%BA%8C%E5%B1%82%E7%BD%91%E7%BB%9C/" data-id="cmebduixs006ppwfmdp3r4yzf" data-title="【Web3】二层网络" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1210,7 +1055,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91this%E6%8C%87%E5%90%91/" data-id="cmeav8q76007pnwfme1rng0ol" data-title="【js】this指向" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91this%E6%8C%87%E5%90%91/" data-id="cmebduiyk009rpwfm2di71wbi" data-title="【js】this指向" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       

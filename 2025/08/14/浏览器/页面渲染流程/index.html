@@ -14,7 +14,7 @@
 <meta property="og:description" content="从输入url到页面渲染浏览器流程 输入url回车 触发BeforeUnload事件（允许当前页阻止导航   判断是ip还是网址，如果是网站，需要去进行dns查询。浏览器先检查缓存（Service Worker、HTTP Cache等） dns预解析 dns查询流程   进行网络请求 tcp三次握手 http1、http2和http3 ssl加密   获取到html后，开始进行解析 开始解析html">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-08-14T03:18:06.746Z">
-<meta property="article:modified_time" content="2025-08-11T02:56:51.273Z">
+<meta property="article:modified_time" content="2025-08-14T12:35:25.725Z">
 <meta property="article:author" content="yangxin">
 <meta property="article:tag" content="浏览器">
 <meta name="twitter:card" content="summary">
@@ -135,7 +135,7 @@
 <li>浏览器并不知道每个元素应该在什么位置，因此会遍历一次渲染树，把元素位置、大小等转为屏幕上的绝对像素，css和模型、flex等是在这个时候执行的，得到一个布局树</li>
 <li>页面开始渲染，在渲染过程前，会依据每个元素的层级（zindex、3d变换等），进行分层，在每层上进行对应元素的绘制<ul>
 <li>分层通常发生在布局之后、绘制之前。</li>
-<li>浏览器引擎（如Blink）在布局完成后，会根据特定规则（不仅是z-index和transform: translate3d&#x2F;scale3d&#x2F;rotate3d，还包括willchange、opacity &lt; 1、filter、position: fixed、<video>&#x2F;<canvas>等）决定将渲染树中的某些部分提升为独立的合成层（Compositing Layer）</li>
+<li>浏览器引擎（如Blink）在布局完成后，会根据特定规则（不仅是z-index和transform: translate3d&#x2F;scale3d&#x2F;rotate3d，还包括willchange、opacity &lt; 1、filter、position: fixed、&lt;video&gt;、&lt;canvas&gt;等）决定将渲染树中的某些部分提升为独立的合成层（Compositing Layer）</li>
 </ul>
 </li>
 <li>分层完成后，主线程为每个合成层生成一个绘制记录（Paint Record）（包含绘制该层所需的所有绘制指令）。然后，主线程将这些层信息（包括绘制记录）提交（Commit）给合成线程（Compositor Thread）。合成线程将层划分为更小的图块（Tiles）。光栅化线程（Raster Threads）（通常在GPU进程中）负责将每个图块的绘制指令光栅化（Rasterize） 成GPU内存中的位图纹理（Bitmap Texture）。<ul>
@@ -252,7 +252,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B/" data-id="cmeav8q6e004dnwfm9mtp44a8" data-title="页面渲染流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B/" data-id="cmebduix80050pwfm2tliarbw" data-title="页面渲染流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
