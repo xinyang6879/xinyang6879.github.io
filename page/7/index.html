@@ -71,6 +71,127 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-vueTest/【vueTest】前言" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E5%89%8D%E8%A8%80/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.567Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/VueTest/">VueTest</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E5%89%8D%E8%A8%80/">【vueTest】前言</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
+<li><p>vue3</p>
+</li>
+<li><p>node：v16.16.0</p>
+</li>
+</ul>
+<h2 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a>安装包</h2><ul>
+<li><p>jest：测试工具</p>
+</li>
+<li><p>vue-jest：用于解析 vue 文件</p>
+</li>
+<li><p>babel-jest：用于文件引入的加载解析</p>
+</li>
+<li><p>ts-jest： ts 解析加载</p>
+</li>
+<li><p>@vue&#x2F;babel-preset-jsx @vue&#x2F;babel-helper-vue-jsx-merge-props @babel&#x2F;core @babel&#x2F;preset-env @vue&#x2F;babel-preset-app:用于文件加载</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://v1.test-utils.vuejs.org/zh/">@vue&#x2F;test-utils</a>: 可以实现组件的挂载、与组件交互以及断言组件输出</p>
+</li>
+</ul>
+<p>注：jest、vue-jest、babel-jest大版本号(大版本号.x.x)需要保持一致</p>
+<h2 id="jest"><a href="#jest" class="headerlink" title="jest"></a>jest</h2><h3 id="命令配置"><a href="#命令配置" class="headerlink" title="命令配置"></a>命令配置</h3><ul>
+<li>测试运行</li>
+</ul>
+<pre><code><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;test&quot;</span><span class="punctuation">:</span> <span class="string">&quot;jest --no-cache&quot;</span></span><br></pre></td></tr></table></figure>
+
+- 覆盖率测试
+
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;test:coverage&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pnpm run test --coverage&quot;</span></span><br></pre></td></tr></table></figure>
+</code></pre>
+<h3 id="文件范围"><a href="#文件范围" class="headerlink" title="文件范围"></a>文件范围</h3><p>jest 在查找项目的测试文件是使用默认的 glob 匹配模式，对于 non-glob 模式而会自动运行下面三个情况的文件：</p>
+<ul>
+<li><p>xxx.spec.js</p>
+</li>
+<li><p>__tests__文件夹下的 js 和 jsx 文件</p>
+</li>
+<li><p>xxx.test.js</p>
+</li>
+</ul>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
+<li>toBe：匹配器有种类似于object.is或者&#x3D;&#x3D;&#x3D;</li>
+<li>toContain：是否包含</li>
+<li>toEqual：测试对象的内容是否相等，不比较对象的地址，只关心对象的内容是否一致，递归检查对象或数组的每个字段</li>
+<li>toBeNull：判断是否为null</li>
+<li>toBeUndefined：判断是否为undefined</li>
+<li>toBeDefined：与上相反</li>
+<li>toBeNaN：判断是否为NaN</li>
+<li>toBeTruthy：判断是否为true</li>
+<li>toBeFalsy：判断是否为false</li>
+<li>toHaveLength：数组用，检测数组长度</li>
+<li>toThrow：异常匹配</li>
+</ul>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><ul>
+<li><p>jest.config.json</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; pathsToModuleNameMapper &#125; = <span class="built_in">require</span>(<span class="string">&#x27;ts-jest/utils&#x27;</span>);</span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">rootDir</span>: path.<span class="title function_">resolve</span>(__dirname),</span><br><span class="line">  <span class="attr">clearMocks</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">coverageDirectory</span>: <span class="string">&#x27;coverage&#x27;</span>,</span><br><span class="line">  <span class="attr">coverageProvider</span>: <span class="string">&#x27;v8&#x27;</span>,</span><br><span class="line">  <span class="attr">moduleFileExtensions</span>: [<span class="string">&#x27;vue&#x27;</span>, <span class="string">&#x27;js&#x27;</span>, <span class="string">&#x27;json&#x27;</span>, <span class="string">&#x27;jsx&#x27;</span>, <span class="string">&#x27;ts&#x27;</span>, <span class="string">&#x27;tsx&#x27;</span>, <span class="string">&#x27;node&#x27;</span>],</span><br><span class="line">  &lt;!-- 文件路径简写定义，vue定义的不生效 --&gt;</span><br><span class="line">  <span class="attr">moduleNameMapper</span>: <span class="title function_">pathsToModuleNameMapper</span>(&#123;</span><br><span class="line">      <span class="string">&quot;@packages/*&quot;</span>:[ <span class="string">&quot;./packages/*&quot;</span> ]</span><br><span class="line">  &#125;, &#123; <span class="attr">prefix</span>: <span class="string">&#x27;&lt;rootDir&gt;/&#x27;</span> &#125; ),</span><br><span class="line">  <span class="attr">transform</span>: &#123;</span><br><span class="line">      &lt;!-- 解析js、ts文件 --&gt;</span><br><span class="line">  <span class="string">&#x27;^.+\\.(js|mjs|cjs|ts)$&#x27;</span>: <span class="string">&#x27;babel-jest&#x27;</span>,</span><br><span class="line">  &lt;!-- 解析vue文件 --&gt;</span><br><span class="line">      <span class="string">&#x27;^.+\\.vue$&#x27;</span>: <span class="string">&#x27;&lt;rootDir&gt;/node_modules/vue-jest&#x27;</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>babel.config.js</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line"><span class="attr">presets</span>: [</span><br><span class="line">    <span class="string">&quot;@vue/babel-preset-jsx&quot;</span>,</span><br><span class="line">    [<span class="string">&quot;@babel/preset-env&quot;</span>, &#123; <span class="attr">targets</span>: &#123; <span class="attr">node</span>: <span class="string">&quot;current&quot;</span> &#125; &#125;],</span><br><span class="line">],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><ul>
+<li><p>在js文件中需要打断点的地方写上debugger</p>
+</li>
+<li><p>在命令行中加入：<code>&quot;test:debugger&quot;: &quot;node --inspect-brk ./node_modules/jest/bin/jest.js --no-cache --runInBand&quot;</code></p>
+</li>
+<li><p>运行此命令后，在chrome浏览器打开：<code>chrome://inspect</code></p>
+</li>
+<li><p>可以看到有一个Remote Target部分中有node_modules&#x2F;jest&#x2F;bin&#x2F;jest.js</p>
+</li>
+<li><p>单击<code>Inspect</code>可以打开Chrome Debugger窗口</p>
+</li>
+</ul>
+<h2 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h2><ul>
+<li><p>Cannot destructure property ‘config’</p>
+<p>第一次安装版本是29的，后改为26</p>
+</li>
+<li><p>babelJest.getCacheKey is not a function</p>
+<p>babel-jest版本需要和jest版本匹配，安装26的</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E5%89%8D%E8%A8%80/" data-id="cmek09jxt002m6sfm57ibf54q" data-title="【vueTest】前言" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-vueTest/【vueTest】vitetest测试Store" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91vitetest%E6%B5%8B%E8%AF%95Store/" class="article-date">
@@ -155,7 +276,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91vitetest%E6%B5%8B%E8%AF%95Store/" data-id="cmebelnut0030n8fm1af6bhxj" data-title="【vueTest】vitetest测试Store踩坑记录" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91vitetest%E6%B5%8B%E8%AF%95Store/" data-id="cmek09jxs002l6sfm96v0e303" data-title="【vueTest】vitetest测试Store踩坑记录" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -277,7 +398,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/Vue/%E5%B0%8F%E7%82%B9/" data-id="cmebelnul002gn8fmeinz1t2i" data-title="小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/Vue/%E5%B0%8F%E7%82%B9/" data-id="cmek09jxf001p6sfmdoqd4qju" data-title="小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -410,11 +531,34 @@
 </ul>
 </li>
 </ul>
+<h3 id="useRouter和useRoute"><a href="#useRouter和useRoute" class="headerlink" title="useRouter和useRoute"></a>useRouter和useRoute</h3><p>都是用于vue中的路由操作</p>
+<p>区别：</p>
+<ul>
+<li><p>useRouter() - 路由器实例</p>
+<ul>
+<li><p>作用：获取整个 路由器的实例对象（相当于 Vue 2 中的 this.$router）。</p>
+</li>
+<li><p>功能：用于 编程式导航（如跳转页面、前进&#x2F;后退等操作）。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="title function_">useRouter</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导航到新路由（添加历史记录）</span></span><br><span class="line">router.<span class="title function_">push</span>(<span class="string">&#x27;/home&#x27;</span>); </span><br><span class="line">router.<span class="title function_">push</span>(&#123; <span class="attr">path</span>: <span class="string">&#x27;/user&#x27;</span>, <span class="attr">query</span>: &#123; <span class="attr">id</span>: <span class="number">1</span> &#125; &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 替换当前路由（无历史记录）</span></span><br><span class="line">router.<span class="title function_">replace</span>(<span class="string">&#x27;/login&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 前进/后退</span></span><br><span class="line">router.<span class="title function_">go</span>(<span class="number">1</span>);  <span class="comment">// 前进一步</span></span><br><span class="line">router.<span class="title function_">go</span>(-<span class="number">1</span>); <span class="comment">// 后退一步</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>useRoute() - 当前路由信息</p>
+<ul>
+<li><p>作用：获取 当前激活的路由对象（相当于 Vue 2 中的 this.$route）。</p>
+</li>
+<li><p>功能：用于 读取当前路由信息（路径、参数、查询等）。</p>
+</li>
+<li><p>route是响应式的，因此当路由变化时，任何依赖 route 的计算属性或侦听器都会自动更新。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> route = <span class="title function_">useRoute</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 路由路径（如 &quot;/user/123&quot;）</span></span><br><span class="line">route.<span class="property">path</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 动态路由参数（如 /user/:id → &#123; id: &#x27;123&#x27; &#125;）</span></span><br><span class="line">route.<span class="property">params</span>.<span class="property">id</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查询参数（如 ?name=John → &#123; name: &#x27;John&#x27; &#125;）</span></span><br><span class="line">route.<span class="property">query</span>.<span class="property">name</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 路由元信息（在路由配置中定义的 meta 字段）</span></span><br><span class="line">route.<span class="property">meta</span>.<span class="property">requiresAuth</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 完整的 URL（包含查询参数和 hash）</span></span><br><span class="line">route.<span class="property">fullPath</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">watch</span>(<span class="function">() =&gt;</span> route.<span class="property">params</span>.<span class="property">id</span>, <span class="function">(<span class="params">newId</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;ID 变化了:&#x27;</span>, newId);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmebelnun002in8fmht8rg6do" data-title="【vue】记录小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmek09jxg001s6sfme4h40jpy" data-title="【vue】记录小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -489,7 +633,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E5%8F%98%E9%87%8Fapi/" data-id="cmebelnuk002dn8fmalf9c7jk" data-title="【vue】变量api" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E5%8F%98%E9%87%8Fapi/" data-id="cmek09jxe001l6sfm8o8zdui7" data-title="【vue】变量api" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -571,7 +715,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/Vue/v-model%E5%92%8Creactive%E7%BB%84%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/" data-id="cmebelnui002bn8fm9qg45mp8" data-title="v-model 和 reactive 组合使用的问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/Vue/v-model%E5%92%8Creactive%E7%BB%84%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/" data-id="cmek09jxe001k6sfm29w7b1kh" data-title="v-model 和 reactive 组合使用的问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -643,7 +787,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/Vue/v-html%E6%B8%B2%E6%9F%93%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6/" data-id="cmebelnua0027n8fmhor7av30" data-title="v-html渲染自定义组件" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/Vue/v-html%E6%B8%B2%E6%9F%93%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6/" data-id="cmek09jxd001e6sfm7cflbrz9" data-title="v-html渲染自定义组件" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -862,7 +1006,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/Typescript/%E3%80%90TS%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmebelnty001cn8fm5y047crs" data-title="记录" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/Typescript/%E3%80%90TS%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmek09jxb00156sfmfalogd35" data-title="记录" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1310,7 +1454,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/Typescript/%E3%80%90TS%E3%80%91%E7%B1%BB%E5%9E%8B/" data-id="cmebelnu0001fn8fmb8bwa1yc" data-title="【TS】类型" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/Typescript/%E3%80%90TS%E3%80%91%E7%B1%BB%E5%9E%8B/" data-id="cmek09jxh001z6sfm8h6vaf9r" data-title="【TS】类型" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1497,198 +1641,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/Typescript/%E3%80%90TS%E3%80%91%E6%A8%A1%E5%9D%97%E8%A7%A3%E6%9E%90/" data-id="cmebelntx001an8fm1r719dzt" data-title="【TS】模块解析" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Typescript/【TS】内置方法" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/Typescript/%E3%80%90TS%E3%80%91%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.479Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Typescript/">Typescript</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/Typescript/%E3%80%90TS%E3%80%91%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95/">【TS】内置方法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><ul>
-<li>?</li>
-</ul>
-<p>当前属性或者参数为非必传，参数有默认值时会默认转为非必传</p>
-<ul>
-<li>()</li>
-</ul>
-<p>定义函数类型时，()会作为函数参数类型</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fn1</span>(<span class="params"><span class="attr">a</span>: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> bb = &lt;<span class="variable constant_">T1</span>&gt;<span class="keyword">function</span> (<span class="params"><span class="attr">start</span>: <span class="built_in">number</span>, <span class="attr">v</span>: <span class="string">&quot;&quot;</span></span>) &#123;&#125;;</span><br><span class="line">  bb.<span class="property">interval</span> = <span class="number">0</span>;</span><br><span class="line">  bb.<span class="property">reset</span> = <span class="function">() =&gt;</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T1</span> = &#123;</span><br><span class="line">  (<span class="attr">start</span>: <span class="built_in">number</span>, <span class="attr">v</span>: <span class="built_in">string</span>): <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">interval</span>: <span class="built_in">number</span>;</span><br><span class="line">  <span class="title function_">reset</span>(): <span class="built_in">void</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h3 id="abstract"><a href="#abstract" class="headerlink" title="abstract"></a>abstract</h3><ul>
-<li><p>abstract class{}</p>
-<p>抽象类，做为其它派生类的基类使用。 它们一般不会直接被实例化</p>
-</li>
-<li><p>abstract function</p>
-<p>抽象方法不包含具体实现，并且<strong>必须</strong>在子类中实现</p>
-</li>
-</ul>
-<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">A</span> &#123;</span><br><span class="line">  <span class="keyword">abstract</span> <span class="title function_">hello</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span> <span class="keyword">extends</span> <span class="title class_ inherited__">A</span> &#123;</span><br><span class="line">  <span class="title function_">hello</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 报错，必须要声明hello方法</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C</span> <span class="keyword">extends</span> <span class="title class_ inherited__">A</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="implements"><a href="#implements" class="headerlink" title="implements"></a>implements</h3><p>属于 ts 中的 mixin，用于对多个类的类型继承</p>
-<h4 id="异同"><a href="#异同" class="headerlink" title="异同"></a>异同</h4><ul>
-<li><p>相同点</p>
-<p>都可以继承父类的类型</p>
-<p><code>extends</code>、<code>implements</code>和<code>abstract</code>在子类中都可以覆写父类的方法</p>
-</li>
-<li><p>不同点</p>
-<blockquote>
-<p>覆写方法</p>
-</blockquote>
-<p>  <code>extends</code>不是强制要求，子类可以继承父类的方法。</p>
-<p>  <code>implements</code>是强制要求全部覆写父类的方法</p>
-<p>  <code>abstract</code>是强制要求加了<code>abstract</code>的方法或者变量</p>
-<blockquote>
-<p>继承个数</p>
-</blockquote>
-<p>  <code>extends</code> 只能继承一个，<code>implements</code> 可以继承多个</p>
-<blockquote>
-<p>访问范围</p>
-</blockquote>
-<p>  <code>extends</code> 的子类实例可以访问到父类内容</p>
-<p>  <code>implements</code> 只是定义了一个类型，即使在父类里面有方法，子类实例也不能访问，只能访问到子类自身的方法</p>
-</li>
-</ul>
-<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span> &#123;</span><br><span class="line">  <span class="title function_">a_cb</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span> &#123;</span><br><span class="line">  <span class="title function_">b_cb</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C</span> <span class="keyword">implements</span> A, B &#123;</span><br><span class="line">  <span class="title function_">a_cb</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">  <span class="title function_">b_cb</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="指令"><a href="#指令" class="headerlink" title="///指令"></a><code>///</code>指令</h3><p>作用：告诉编译器在编译过程中需要额外的处理</p>
-<h4 id="使用类型"><a href="#使用类型" class="headerlink" title="使用类型"></a>使用类型</h4><ul>
-<li><p><code>/// &lt;reference path=&quot;...&quot; /&gt;</code></p>
-<ul>
-<li>作用：声明文件间的依赖。告诉编译器在编译过程中需要引入的额外文件</li>
-</ul>
-<p>当使用<code>--out</code>或<code>--outFile</code>时，可以做为调整顺序的一种方式。</p>
-<ul>
-<li><p>过滤：使用<code>--noResolve</code></p>
-<p>如果指定了–noResolve 编译选项，三斜线引用会被忽略；它们不会增加新文件，也不会改变给定文件的顺序。</p>
-</li>
-<li><p><code>/// &lt;reference types=&quot;...&quot; /&gt;</code></p>
-<ul>
-<li><p>作用：声明了对某个包类型文件的依赖</p>
-<p>例如：<code>/// &lt;reference types=&quot;node&quot; /</code>表示使用<code>@types/node/index.d.ts</code></p>
-</li>
-</ul>
-</li>
-<li><p><code>/// &lt;reference no-default-lib=&quot;true&quot;/&gt;</code></p>
-<ul>
-<li><p>作用：把文件标记为默认库</p>
-</li>
-<li><p>忽略：<code>--skipDefaultLibCheck</code></p>
-</li>
-</ul>
-</li>
-<li><p><code>/// &lt;amd-module name=&quot;xxx&quot;/&gt;</code></p>
-<ul>
-<li>作用：给编译器传入一个可选的模块名</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>注意点：</p>
-</blockquote>
-<ul>
-<li><p>三斜线指令<font color=red>只能</font>可放在包含它的文件的<font color=red>最顶端</font></p>
-<p>  <code>///</code>指令之前只能出现单&#x2F;多行注释或者<code>///</code>指令，如果出现在语句或者声明之后，那么就会被当做是一个注释</p>
-</li>
-<li><p>引用不存在的文件会报错，自身引用自身也会报错</p>
-</li>
-</ul>
-<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><h3 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h3><ul>
-<li><p>Exclude&lt;T, U&gt;</p>
-<p>从 T 中剔除可以赋值给 U 的类型。</p>
-</li>
-<li><p>Extract&lt;T, U&gt;</p>
-<p>提取 T 中可以赋值给 U 的类型。</p>
-</li>
-<li><p>Omit&lt;T, U&gt;</p>
-<p>构造一个除类型 U 中的属性外具有 T 属性的类型。</p>
-</li>
-<li><p>NonNullable<T></p>
-<p>从 T 中剔除 null 和 undefined。</p>
-</li>
-<li><p>Record&lt;K, T&gt;</p>
-<p>构造一个具有类型 T 的一组属性 K 的类型</p>
-</li>
-<li><p>Pick&lt;T, K extends keyof T&gt;</p>
-<p>从 T 中选择一组键位于并集 K 中的属性</p>
-</li>
-</ul>
-<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><ul>
-<li><p>Readonly<T></p>
-<p>将 T 类型属性全部变为 readonly</p>
-</li>
-<li><p>Partial<T></p>
-<p>将 T 类型属性全部变为可选</p>
-</li>
-<li><p>Required<T></p>
-<p>将 T 类型属性全部变为必选</p>
-</li>
-</ul>
-<h3 id="转换"><a href="#转换" class="headerlink" title="转换"></a>转换</h3><ul>
-<li><p>Uppercase<T extends string></p>
-<p>将字符串文字类型转换为大写</p>
-</li>
-<li><p>Lowercase<T extends string></p>
-<p>将字符串文字类型转换为小写</p>
-</li>
-<li><p>Capitalize<T extends string> &#x2F; Uncapitalize<T extends string></p>
-<p>将字符串文字类型的第一个字符转换为大&#x2F;小写</p>
-</li>
-</ul>
-<h3 id="函数相关"><a href="#函数相关" class="headerlink" title="函数相关"></a>函数相关</h3><ul>
-<li><p>Parameters&lt;T extends (…args: any) &#x3D;&gt; any&gt;</p>
-<p>返回函数的参数</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fn1</span>(<span class="params"><span class="attr">a</span>: <span class="built_in">string</span>, b = <span class="number">2</span></span>) &#123;&#125;</span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T1</span> = <span class="title class_">Parameters</span>&lt;<span class="keyword">typeof</span> fn1&gt;;</span><br><span class="line"><span class="comment">// T1: [a: string, b?: number]</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>ConstructorParameters&lt;T extends abstract new (…args: any) &#x3D;&gt; any&gt;</p>
-<p>获取构造函数的参数</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">fn1</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="attr">a</span>: <span class="built_in">number</span>, b = <span class="number">2</span></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T1</span> = <span class="title class_">ConstructorParameters</span>&lt;<span class="keyword">typeof</span> fn1&gt;;</span><br><span class="line"><span class="comment">// T1: [a: number, b?: number]</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>ReturnType&lt;T extends (…args: any) &#x3D;&gt; any&gt;</p>
-<p>获取函数返回参数</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">a</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">b</span>: <span class="number">2</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T1</span> = <span class="title class_">ReturnType</span>&lt;<span class="keyword">typeof</span> fn&gt;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>InstanceType&lt;T extends abstract new (…args: any) &#x3D;&gt; any&gt;</p>
-<p>获取构造函数函数类型的返回类型</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/Typescript/%E3%80%90TS%E3%80%91%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95/" data-id="cmebelntw0016n8fm8hjhdxln" data-title="【TS】内置方法" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/Typescript/%E3%80%90TS%E3%80%91%E6%A8%A1%E5%9D%97%E8%A7%A3%E6%9E%90/" data-id="cmek09jxa00126sfmhytx8ui6" data-title="【TS】模块解析" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1704,7 +1657,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1715,7 +1668,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PWA/">PWA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Typescript/">Typescript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VueTest/">VueTest</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web3/">Web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/axios-%E6%BA%90%E7%A0%81/">axios 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vuex-%E6%BA%90%E7%A0%81/">vuex 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web3/">web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webAssembly/">webAssembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webwork/">webwork</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/">业务场景</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/">扩展阅读</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/">额外内容</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PWA/">PWA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Typescript/">Typescript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VueTest/">VueTest</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web3/">Web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/axios-%E6%BA%90%E7%A0%81/">axios 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vuex-%E6%BA%90%E7%A0%81/">vuex 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web3/">web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webAssembly/">webAssembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webwork/">webwork</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/">业务场景</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/">扩展阅读</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/">额外内容</a></li></ul>
     </div>
   </div>
 
@@ -1725,7 +1678,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typescript/" rel="tag">Typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VueTest/" rel="tag">VueTest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios-%E6%BA%90%E7%A0%81/" rel="tag">axios 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/" rel="tag">chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/console/" rel="tag">console</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuex-%E6%BA%90%E7%A0%81/" rel="tag">vuex 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web3/" rel="tag">web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webAssembly/" rel="tag">webAssembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webRTC/" rel="tag">webRTC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webwork/" rel="tag">webwork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" rel="tag">业务场景</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" rel="tag">扩展阅读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" rel="tag">浏览器 Performance Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" rel="tag">额外内容</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typescript/" rel="tag">Typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VueTest/" rel="tag">VueTest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios-%E6%BA%90%E7%A0%81/" rel="tag">axios 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/" rel="tag">chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/console/" rel="tag">console</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuex-%E6%BA%90%E7%A0%81/" rel="tag">vuex 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web3/" rel="tag">web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webAssembly/" rel="tag">webAssembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webRTC/" rel="tag">webRTC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webwork/" rel="tag">webwork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" rel="tag">业务场景</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" rel="tag">扩展阅读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" rel="tag">浏览器 Performance Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" rel="tag">额外内容</a></li></ul>
     </div>
   </div>
 
@@ -1735,7 +1688,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
     </div>
   </div>
 
@@ -1757,6 +1710,10 @@
       <ul>
         
           <li>
+            <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">外包</a>
+          </li>
+        
+          <li>
             <a href="/2025/08/14/%E6%89%8B%E5%86%99%E9%A2%98/">手写题</a>
           </li>
         
@@ -1770,10 +1727,6 @@
         
           <li>
             <a href="/2025/08/14/%E3%80%90RN%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【RN】环境搭建</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E3%80%90AST%E3%80%91-%E8%A7%A3%E6%9E%90attrs/">解析 attrs</a>
           </li>
         
       </ul>

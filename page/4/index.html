@@ -147,7 +147,92 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8/" data-id="cmebelnvx005nn8fm5283c49w" data-title="浏览器安全" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8/" data-id="cmek09jyu00616sfme6ms3exq" data-title="浏览器安全" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-读书笔记/性能评估模型" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0%E6%A8%A1%E5%9E%8B/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.718Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/">额外内容</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0%E6%A8%A1%E5%9E%8B/">性能评估模型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="客户端场景参数"><a href="#客户端场景参数" class="headerlink" title="客户端场景参数"></a>客户端场景参数</h2><ul>
+<li><p>设备特征：包括类型（pc&#x2F;手机&#x2F;pad）、硬件配置（cpu&#x2F;内存等）、操作系统（ios&#x2F;安卓等）以及操作系统版本等，</p>
+</li>
+<li><p>浏览器特征：品牌、版本等</p>
+</li>
+<li><p>网络情况：连接方式（光纤&#x2F;Wi-Fi&#x2F;移动）、运营商、地区、带宽等。</p>
+</li>
+</ul>
+<h2 id="加载阶段"><a href="#加载阶段" class="headerlink" title="加载阶段"></a>加载阶段</h2><h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>领浏览器尽可能快地完成网址初始状态（即第一屏）的呈现，给用户留下良好的第一印象。</p>
+<h3 id="优化方向"><a href="#优化方向" class="headerlink" title="优化方向"></a>优化方向</h3><ul>
+<li><p>从视觉角度提高网站内容的渲染速度</p>
+</li>
+<li><p>白屏时间</p>
+</li>
+<li><p>计算时间：<br>将用户在浏览器地址栏中输入url按下回车那一刻作为计时起点，将有可视化的图像渲染到浏览器视窗的时间点作为计时终点，其中的差值就是白屏时间。</p>
+</li>
+<li><p>浏览器工作：<br>域名查询、与web服务器建立tcp连接、发送http请求、接受并渲染文档等。</p>
+</li>
+<li><p>首屏时间</p>
+</li>
+<li><p>计算：<br>计时终点是浏览器的第一屏首次完全渲染完毕的时间点。而计时起点有两种说法，一种是从用户按下回车键开始，即白屏时间被算入首屏时间；一种是将白屏时间的终点作为首屏时间的起点。</p>
+</li>
+<li><p>可交互节点</p>
+</li>
+</ul>
+<p>将网站首次可以响应用户操作反馈的那一刻作为可交互节点，其代表的是一个时刻而不是一个时间间隔。</p>
+<ul>
+<li><p>从交互角度缩短从打开网站到可交互之间的时间间隔，对应可交互节点指标</p>
+</li>
+<li><p>首次有效绘制</p>
+</li>
+</ul>
+<p>对应于不同的业务，在页面上的元素有不同的优先级渲染排序。比如地图中，最重要的元素是地图本身而不是工具箱。因此为了达到更好的效益，优先级高的内容应该相对更早地展示给用户，首次有效绘制指的就是优先级最高的内容被首次渲染的时间节点</p>
+<ul>
+<li>广告可视节点</li>
+</ul>
+<p>更快地将广告展示给用户能间接提高与广告商之间的议价，对于公司来说，广告是非常重要甚至是主要的创收途径。</p>
+<h2 id="可交互阶段"><a href="#可交互阶段" class="headerlink" title="可交互阶段"></a>可交互阶段</h2><h3 id="衡量角度"><a href="#衡量角度" class="headerlink" title="衡量角度"></a>衡量角度</h3><ul>
+<li><p>反馈速度<br>尽可能快的响应用户的操作，根据具体的架构设计可表现在不同的角度。</p>
+</li>
+<li><p>动画帧率<br>对于游戏、地图等涉及数据量庞大时，这个是需要主要的考虑点。</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0%E6%A8%A1%E5%9E%8B/" data-id="cmek09jyy006c6sfm69tubjtq" data-title="性能评估模型" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -207,11 +292,102 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90Wasm%E3%80%91%E4%BB%8B%E7%BB%8D----1/" data-id="cmebelnvn0052n8fm41m41ylk" data-title="【Wasm】介绍(未完成)" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90Wasm%E3%80%91%E4%BB%8B%E7%BB%8D----1/" data-id="cmek09jyp005p6sfm5726hviu" data-title="【Wasm】介绍(未完成)" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webAssembly/" rel="tag">webAssembly</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-读书笔记/【vue】虚拟dom基本" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90vue%E3%80%91%E8%99%9A%E6%8B%9Fdom%E5%9F%BA%E6%9C%AC/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.713Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/vue/">vue</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90vue%E3%80%91%E8%99%9A%E6%8B%9Fdom%E5%9F%BA%E6%9C%AC/">【vue】虚拟dom基本</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="原由"><a href="#原由" class="headerlink" title="原由"></a>原由</h2><p>在项目运行时，页面状态会不断变化，每当状态变化时，都需要重新渲染。如果每次都直接将页面全部替换更新，那么由于访问 dom 是相对昂贵的，这样会导致非常多的性能浪费。<br>因此当某个状态变化时，只更新与这个状态相关联的 dom 节点。虚拟 dom 通过状态声称一个虚拟节点树，然后使用虚拟节点树进行渲染。在更新的时候，只需要比较上一次的节点树与当前节点树有何不同，更新不同的地方即可。</p>
+<h2 id="vnode"><a href="#vnode" class="headerlink" title="vnode"></a>vnode</h2><h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><h4 id="注释节点"><a href="#注释节点" class="headerlink" title="注释节点"></a>注释节点</h4><ul>
+<li>有效属性<br><code>text</code>和<code>isComment</code></li>
+<li>元素：</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;！—注释—&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>vnode：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">text：”注释”，</span><br><span class="line">isComment：<span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="文本节点"><a href="#文本节点" class="headerlink" title="文本节点"></a>文本节点</h4><ul>
+<li><p>有效属性<br><code>text</code></p>
+</li>
+<li><p>创建过程</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createTextVnode</span>(<span class="params">val</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">VNode</span>(<span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="title class_">String</span>(val));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="克隆属性"><a href="#克隆属性" class="headerlink" title="克隆属性"></a>克隆属性</h4><ul>
+<li><p>特殊属性<br><code>isCloned</code></p>
+</li>
+<li><p>创建过程</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createCloneVnode</span>(<span class="params">vnode, deep</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> cloned = <span class="keyword">new</span> <span class="title class_">VNode</span>(</span><br><span class="line">    vnode.<span class="property">tag</span>,</span><br><span class="line">    vnode.<span class="property">data</span>,</span><br><span class="line">    vnode.<span class="property">children</span>,</span><br><span class="line">    vnode.<span class="property">text</span>,</span><br><span class="line">    vnode.<span class="property">elm</span>,</span><br><span class="line">    vnode.<span class="property">context</span>,</span><br><span class="line">    vnode.<span class="property">componentOptions</span>,</span><br><span class="line">    vnode.<span class="property">asyncFactory</span></span><br><span class="line">  );</span><br><span class="line">  cloned.<span class="property">ns</span> = vnode.<span class="property">ns</span>;</span><br><span class="line">  cloned.<span class="property">isStatic</span> = vnode.<span class="property">isStatic</span>;</span><br><span class="line">  cloned.<span class="property">key</span> = vnode.<span class="property">key</span>;</span><br><span class="line">  cloned.<span class="property">isComment</span> = vnode.<span class="property">isComment</span>;</span><br><span class="line">  cloned.<span class="property">isCloned</span> = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">if</span> (deep &amp;&amp; vnode.<span class="property">children</span>) &#123;</span><br><span class="line">    cloned.<span class="property">children</span> = <span class="title function_">createCloneVnode</span>(vnode.<span class="property">children</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="元素节点"><a href="#元素节点" class="headerlink" title="元素节点"></a>元素节点</h4><ul>
+<li><p>有效属性<br><code>tag</code>: 节点名称，例如 div、li 等<br><code>data</code>: 节点上的数据，例如 attrs、class 等<br><code>children</code>: 当前节点的子节点列表<br><code>context</code>: 当前组件的 vuejs 实例</p>
+</li>
+<li><p>元素：</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>123<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>vnode</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">children</span>: [<span class="title class_">VNode</span>, <span class="title class_">VNode</span>]，</span><br><span class="line"><span class="attr">context</span>: &#123;…&#125;,</span><br><span class="line">data：&#123;…&#125;，</span><br><span class="line"><span class="attr">tag</span>: “div”</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="组件节点"><a href="#组件节点" class="headerlink" title="组件节点"></a>组件节点</h4><ul>
+<li>特有属性：<br><code>componentOptions</code>: 组件节点的选项参数，包括 propsData、tag、children 等<br><code>componentInstance</code>: 组件实例</li>
+</ul>
+<h4 id="函数式组件"><a href="#函数式组件" class="headerlink" title="函数式组件"></a>函数式组件</h4><ul>
+<li>特有属性：<br><code>functionContext</code><br><code>functionOptions</code></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90vue%E3%80%91%E8%99%9A%E6%8B%9Fdom%E5%9F%BA%E6%9C%AC/" data-id="cmek09jys005v6sfmhrlyajgq" data-title="【vue】虚拟dom基本" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/" rel="tag">vue</a></li></ul>
 
     </footer>
   </div>
@@ -408,102 +584,11 @@ list2</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90markdown%E3%80%91%E8%AF%AD%E6%B3%95/" data-id="cmebelnvq0056n8fma2v705yr" data-title="【markdown】语法" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90markdown%E3%80%91%E8%AF%AD%E6%B3%95/" data-id="cmek09jyu005y6sfmcy5wdz9q" data-title="【markdown】语法" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" rel="tag">额外内容</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-读书笔记/【vue】虚拟dom基本" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90vue%E3%80%91%E8%99%9A%E6%8B%9Fdom%E5%9F%BA%E6%9C%AC/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.713Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/vue/">vue</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90vue%E3%80%91%E8%99%9A%E6%8B%9Fdom%E5%9F%BA%E6%9C%AC/">【vue】虚拟dom基本</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="原由"><a href="#原由" class="headerlink" title="原由"></a>原由</h2><p>在项目运行时，页面状态会不断变化，每当状态变化时，都需要重新渲染。如果每次都直接将页面全部替换更新，那么由于访问 dom 是相对昂贵的，这样会导致非常多的性能浪费。<br>因此当某个状态变化时，只更新与这个状态相关联的 dom 节点。虚拟 dom 通过状态声称一个虚拟节点树，然后使用虚拟节点树进行渲染。在更新的时候，只需要比较上一次的节点树与当前节点树有何不同，更新不同的地方即可。</p>
-<h2 id="vnode"><a href="#vnode" class="headerlink" title="vnode"></a>vnode</h2><h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><h4 id="注释节点"><a href="#注释节点" class="headerlink" title="注释节点"></a>注释节点</h4><ul>
-<li>有效属性<br><code>text</code>和<code>isComment</code></li>
-<li>元素：</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;！—注释—&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>vnode：</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">text：”注释”，</span><br><span class="line">isComment：<span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="文本节点"><a href="#文本节点" class="headerlink" title="文本节点"></a>文本节点</h4><ul>
-<li><p>有效属性<br><code>text</code></p>
-</li>
-<li><p>创建过程</p>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createTextVnode</span>(<span class="params">val</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">VNode</span>(<span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="title class_">String</span>(val));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="克隆属性"><a href="#克隆属性" class="headerlink" title="克隆属性"></a>克隆属性</h4><ul>
-<li><p>特殊属性<br><code>isCloned</code></p>
-</li>
-<li><p>创建过程</p>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createCloneVnode</span>(<span class="params">vnode, deep</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> cloned = <span class="keyword">new</span> <span class="title class_">VNode</span>(</span><br><span class="line">    vnode.<span class="property">tag</span>,</span><br><span class="line">    vnode.<span class="property">data</span>,</span><br><span class="line">    vnode.<span class="property">children</span>,</span><br><span class="line">    vnode.<span class="property">text</span>,</span><br><span class="line">    vnode.<span class="property">elm</span>,</span><br><span class="line">    vnode.<span class="property">context</span>,</span><br><span class="line">    vnode.<span class="property">componentOptions</span>,</span><br><span class="line">    vnode.<span class="property">asyncFactory</span></span><br><span class="line">  );</span><br><span class="line">  cloned.<span class="property">ns</span> = vnode.<span class="property">ns</span>;</span><br><span class="line">  cloned.<span class="property">isStatic</span> = vnode.<span class="property">isStatic</span>;</span><br><span class="line">  cloned.<span class="property">key</span> = vnode.<span class="property">key</span>;</span><br><span class="line">  cloned.<span class="property">isComment</span> = vnode.<span class="property">isComment</span>;</span><br><span class="line">  cloned.<span class="property">isCloned</span> = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">if</span> (deep &amp;&amp; vnode.<span class="property">children</span>) &#123;</span><br><span class="line">    cloned.<span class="property">children</span> = <span class="title function_">createCloneVnode</span>(vnode.<span class="property">children</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="元素节点"><a href="#元素节点" class="headerlink" title="元素节点"></a>元素节点</h4><ul>
-<li><p>有效属性<br><code>tag</code>: 节点名称，例如 div、li 等<br><code>data</code>: 节点上的数据，例如 attrs、class 等<br><code>children</code>: 当前节点的子节点列表<br><code>context</code>: 当前组件的 vuejs 实例</p>
-</li>
-<li><p>元素：</p>
-</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>123<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>vnode</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">children</span>: [<span class="title class_">VNode</span>, <span class="title class_">VNode</span>]，</span><br><span class="line"><span class="attr">context</span>: &#123;…&#125;,</span><br><span class="line">data：&#123;…&#125;，</span><br><span class="line"><span class="attr">tag</span>: “div”</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="组件节点"><a href="#组件节点" class="headerlink" title="组件节点"></a>组件节点</h4><ul>
-<li>特有属性：<br><code>componentOptions</code>: 组件节点的选项参数，包括 propsData、tag、children 等<br><code>componentInstance</code>: 组件实例</li>
-</ul>
-<h4 id="函数式组件"><a href="#函数式组件" class="headerlink" title="函数式组件"></a>函数式组件</h4><ul>
-<li>特有属性：<br><code>functionContext</code><br><code>functionOptions</code></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90vue%E3%80%91%E8%99%9A%E6%8B%9Fdom%E5%9F%BA%E6%9C%AC/" data-id="cmebelnvt005dn8fm05cdfmcr" data-title="【vue】虚拟dom基本" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/" rel="tag">vue</a></li></ul>
 
     </footer>
   </div>
@@ -569,7 +654,7 @@ list2</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90console%E3%80%91API/" data-id="cmebelnvm004zn8fm2ek24nat" data-title="consoleAPI" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90console%E3%80%91API/" data-id="cmek09jyq005s6sfm2nd16nt4" data-title="consoleAPI" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -629,7 +714,7 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WebRTC/%E3%80%90webRTC%E3%80%91%E5%AA%92%E4%BD%93/" data-id="cmebelnwi006yn8fmfpj05l55" data-title="webRTC媒体" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WebRTC/%E3%80%90webRTC%E3%80%91%E5%AA%92%E4%BD%93/" data-id="cmek09jz700726sfmbucpevhs" data-title="webRTC媒体" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -818,7 +903,7 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WebRTC/%E3%80%90WebRTC%E3%80%91%E4%BB%8B%E7%BB%8D/" data-id="cmebelnwg006wn8fm35ts0t70" data-title="webRTC介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WebRTC/%E3%80%90WebRTC%E3%80%91%E4%BB%8B%E7%BB%8D/" data-id="cmek09jz800746sfm6vkg92jf" data-title="webRTC介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -999,7 +1084,7 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/" data-id="cmebelnwf006sn8fm656z6lmd" data-title="【Web3】基本介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/" data-id="cmek09jz7006y6sfmdoi5ccjk" data-title="【Web3】基本介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1185,7 +1270,7 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-id="cmebelnwo007in8fm5yfa29nu" data-title="【webpack】工作流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-id="cmek09jz900786sfm5sbvhw5h" data-title="【webpack】工作流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1199,256 +1284,11 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
 
 
   
-    <article id="post-读书笔记/webpack/【webpack】配置项" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E9%85%8D%E7%BD%AE%E9%A1%B9/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.702Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/webpack/">webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E9%85%8D%E7%BD%AE%E9%A1%B9/">【webpack】配置项</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h1><h2 id="context"><a href="#context" class="headerlink" title="context"></a>context</h2><p>在查找相对路径时，以context为根目录。<br>默认为webpack启动时的所在工作目录。<br>注：context必须是一个绝对路径的字符串</p>
-<h2 id="entry-1"><a href="#entry-1" class="headerlink" title="entry"></a>entry</h2><p>类型：string&#x2F;array&#x2F;object</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>例子</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>string</td>
-<td>index•js</td>
-<td>入口模块的文件路径，可以是相对路径</td>
-</tr>
-<tr>
-<td>array</td>
-<td>【index。js，index2。js】</td>
-<td>入口模块的文件路径，可以是相对路径</td>
-</tr>
-<tr>
-<td>object</td>
-<td>{a：index。js}</td>
-<td>配置多个入口，每个入口生成一个chunk</td>
-</tr>
-</tbody></table>
-<p>如果是array，搭配output。library时，只有数组的最后一个入口文件的模块会被导出</p>
-<h1 id="output"><a href="#output" class="headerlink" title="output"></a>output</h1><h2 id="filename"><a href="#filename" class="headerlink" title="filename"></a>filename</h2><ul>
-<li>id：chunk的唯一标识，从0开始</li>
-<li>name：chunk的名称</li>
-<li>hash：chunk的唯一标识的hash值</li>
-<li>chunkhash：chunk内容的hash</li>
-</ul>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="target"><a href="#target" class="headerlink" title="target"></a>target</h2><p>代码运行的不同环境，默认为web</p>
-<ul>
-<li>web：针对浏览器，所有代码都集中到一个文件中</li>
-<li>node：针对nodejs，使用require加载chunk模块</li>
-<li>async-node：针对nodejs，异步加载chunk代码</li>
-<li>webworker：针对webworker</li>
-<li>electron-main：针对electon主线程</li>
-<li>electron-rendrer：针对electron渲染线程</li>
-</ul>
-<h1 id="loader"><a href="#loader" class="headerlink" title="loader"></a>loader</h1><ul>
-<li>svg- inline- loader：和raw- loader类似，但是会分析svg的内容，去除其不必要的部分，减少svg的体积</li>
-</ul>
-<h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><h2 id="缩小文件搜索范围"><a href="#缩小文件搜索范围" class="headerlink" title="缩小文件搜索范围"></a>缩小文件搜索范围</h2><ul>
-<li><p>loader配置</p>
-<blockquote>
-<p>可以通过include去告诉webpack只有那些文件会被这个loader处理，用exclude排除不需要的文件</p>
-</blockquote>
-</li>
-<li><p>优化resolve.modules配置<br>配置webpack去哪些目录下寻找第三方模块</p>
-<blockquote>
-<p>指明依赖包的具体目录位置，减少查询时间。</p>
-</blockquote>
-</li>
-<li><p>优化reslove.main Fields配置<br>配置第三方模块使用哪个入口文件</p>
-<blockquote>
-<p>指明采用字段作为入口文件的描述字段，减少搜索步骤</p>
-</blockquote>
-</li>
-</ul>
-<p>注：需要考虑是否所有依赖包的第三方入口文件的描述字段，一个模块出错，就会导致所有的代码无法正常运行</p>
-<ul>
-<li><p>优化reslove.alias</p>
-<blockquote>
-<p>配置库的具体引用路径，减少查询时间</p>
-</blockquote>
-</li>
-<li><p>resolve.extensions</p>
-<blockquote>
-<p>频率最高的放在最前面。</p>
-</blockquote>
-</li>
-</ul>
-<blockquote>
-<p>列表不能太长</p>
-</blockquote>
-<ul>
-<li>优化module.noParse</li>
-</ul>
-<h2 id="happypack"><a href="#happypack" class="headerlink" title="happypack"></a>happypack</h2><p>将任务分解给多个子进程去并发执行，子进程处理完后再将结果发送给主进程</p>
-<h2 id="ParallelUglifyPlugin"><a href="#ParallelUglifyPlugin" class="headerlink" title="ParallelUglifyPlugin"></a>ParallelUglifyPlugin</h2><p>uglfyjs是webpack内置的，但是在构建线上代码时会卡住，即是在进行代码压缩。压缩代码需要将代码解析成用object抽象表示的ast语法树，再去应用各种规则分析和处理ast，因此导致这个过程计算量很大，非常耗时</p>
-<p>ParallelUglifyPlugin会开启多个子线程，将对多个文件的压缩工作分配给多个子进程去完成，每个子进程还是用uglfyjs压缩。</p>
-<h2 id="自动刷新"><a href="#自动刷新" class="headerlink" title="自动刷新"></a>自动刷新</h2><ul>
-<li>文件监听原理：</li>
-</ul>
-<blockquote>
-<p>定时获取文件的最后编辑时间，每次存下最新的最后编辑时间，如果发现当前的获取的时间和最后一次保存的编辑时间不一致，就认为该文件发生了变化</p>
-</blockquote>
-<blockquote>
-<blockquote>
-<p>watchOptions.poll用于控制定时时长，每秒检查多少次</p>
-</blockquote>
-</blockquote>
-<blockquote>
-<p>当某个文件被判定为发生了变化时，并不会立刻告诉监听者，而是会先缓存起来，搜集一段时间后，再一次性告诉监听者。</p>
-<blockquote>
-<p>watchOptions.aggregateTimeout 用于配置这个等待时间</p>
-</blockquote>
-</blockquote>
-<ul>
-<li>自动刷新原理</li>
-</ul>
-<p>控制浏览器自动刷新方法：</p>
-<ol>
-<li><p>借助浏览器扩展去通过浏览器的提供的借口刷新，比如webstorm的liveedit</p>
-</li>
-<li><p>向要开发的网页中注入代理客户端的代码，通过客户端的去刷新页面</p>
-</li>
-<li><p>将要开发的网页装入一个iframe中，通过刷新iframe去看到最新效果</p>
-</li>
-</ol>
-<p>webpack通过devServer.inline控制是否向每个chunk中注入代理客户端，在开启inline时，devserver会向每个chunk注入代理客户端的代码，而项目中chunk有很多chunk，因此会导致构建缓慢。</p>
-<p>启动项目时，可以通过执行命令webpack-dev-server。—inline false完成。那么就会采用第三种方式进行页面刷新。</p>
-<h2 id="模块热替换"><a href="#模块热替换" class="headerlink" title="模块热替换"></a>模块热替换</h2><ul>
-<li>原理</li>
-</ul>
-<p>和自动刷新原理类似，都需要在开发的网页中注入一个代理客户端来连接devserver和网页。当子模块发生更新时，更新事件会一层层向上传递，直到有某层的文件接收了当前变化的模块，这时就会掉用callback函数去执行自定义的逻辑。如果事件一直往上抛，到最外层都没有事件接收他，那么会直接刷新页面。</p>
-<ul>
-<li>优化</li>
-</ul>
-<p>监听更少的文件，忽略nodemodules目录下的文件。</p>
-<h1 id="cdn加速"><a href="#cdn加速" class="headerlink" title="cdn加速"></a>cdn加速</h1><ul>
-<li>缓存问题</li>
-</ul>
-<p>cdn一般会为资源开启很长时间的缓存，可能会导致最新的发布不能用</p>
-<blockquote>
-<p>针对html入口文件，放到自己的服务器中，关闭自己服务器上的缓存，自己的服务器只提供html和数据接口</p>
-</blockquote>
-<blockquote>
-<p>针对静态的js，css，图片等文件，开启cdn和缓存，每个文件带自己内容的hash值</p>
-</blockquote>
-<ul>
-<li>使用</li>
-</ul>
-<blockquote>
-<p>在output.publicPath设置js的地址</p>
-</blockquote>
-<blockquote>
-<p>在css-loader.publicPath设置css导入的资源地址</p>
-</blockquote>
-<blockquote>
-<p>在webplugin.stylepublicpath设置css文件的地址</p>
-</blockquote>
-<h2 id="压缩代码"><a href="#压缩代码" class="headerlink" title="压缩代码"></a>压缩代码</h2><ul>
-<li>js</li>
-</ul>
-<blockquote>
-<p>使用 uglifyplugin和paralleugifyplugin（多线程）进行压缩</p>
-</blockquote>
-<ul>
-<li>压缩es6</li>
-</ul>
-<blockquote>
-<p>优点：对于一样的逻辑，es6代码量少于es5；js对es6的语法做了性能优化，例如针对const声明的变量有更快的读取速度。</p>
-</blockquote>
-<blockquote>
-<p>使用uglifyes进行压缩</p>
-</blockquote>
-<ul>
-<li>压缩css</li>
-</ul>
-<blockquote>
-<p>使用cssnano进行压缩</p>
-</blockquote>
-<h2 id="tree-shaking去除无用的死代码"><a href="#tree-shaking去除无用的死代码" class="headerlink" title="tree shaking去除无用的死代码"></a>tree shaking去除无用的死代码</h2><p>配置babel保留es6模块化语句，presets：modules：false</p>
-<p>启动时带上—display-used- exports参数，指出哪些函数有用和无用。</p>
-<p>启动时带上—optimize-minimize去除无用代码</p>
-<p>配置reslove.mainfields，优先采用jsnext：main（第三方包打包出的es6模块）</p>
-<p>export default无法做tree shaking，因为导出的是一整个对象</p>
-<h2 id="提取公共代码"><a href="#提取公共代码" class="headerlink" title="提取公共代码"></a>提取公共代码</h2><blockquote>
-<p>使用commonchunkplugin</p>
-</blockquote>
-<h2 id="分割代码按需加载"><a href="#分割代码按需加载" class="headerlink" title="分割代码按需加载"></a>分割代码按需加载</h2><blockquote>
-<p>原则</p>
-</blockquote>
-<p>1: 将整个网站划分成一个个小功能，再按照每个功能的相关程度将它们分成几类。</p>
-<p>2: 将每一类合并为一个chunk，按需加载对应的chunk</p>
-<p>3: 不要按需加载用户首次打开网站时需要看到的画面所对应的功能，将其放入执行入口所在的chunk中，以减少用户能感知的网页加载时间</p>
-<p>4: 对于不依赖大量代码的功能点，例如依赖echart画图，将其进行按需加载</p>
-<blockquote>
-<p>webpackChunkName：name</p>
-</blockquote>
-<p>import（&#x2F;* webpackChunkName：name *&#x2F; path）：为动态生成的chunk赋予一个名称，方便追踪和调试代码，若不指定名称，那么默认为[id].js</p>
-<p>以path路径下的文件为入口重新生成一个chunk，当代码执行到import所在的语句时，才会去加载chunk对应生成的文件。import会返回一个promise，当文件加载成功时可以在promise的then方法获取对应的文件内容。</p>
-<h2 id="scope-hoisting"><a href="#scope-hoisting" class="headerlink" title="scope hoisting"></a>scope hoisting</h2><blockquote>
-<p>实现原理</p>
-</blockquote>
-<p>分析模块之间的依赖关系，尽可能将被打散的模块合并到一个函数中。但前提是不能造成代码冗余，因此只有被引用了一次的模块才能被合并。</p>
-<h2 id="prepack"><a href="#prepack" class="headerlink" title="prepack"></a>prepack</h2><blockquote>
-<p>在保持运行结果一致的情况下，改变源码的运行逻辑，输出性能更好的js代码</p>
-</blockquote>
-<p>工作流程：</p>
-<p>1: 通过Babel将js源码解析成抽象语法树，以更细粒度地分析yuanma</p>
-<p>2: prepack实现了一个js解释器，用于执行源码。借助这个解释器，prepack才能理解源码具体是如何执行的，并将执行过程中的结果返回到输出中。</p>
-<p>使用prepack-webpack-plugin插件。</p>
-<h2 id="可视化打包结果"><a href="#可视化打包结果" class="headerlink" title="可视化打包结果"></a>可视化打包结果</h2><ul>
-<li><p>webpack-bundle- analyzer</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="http://wepack.github.io/analyse">http://wepack.github.io/analyse</a></p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E9%85%8D%E7%BD%AE%E9%A1%B9/" data-id="cmebelnwq007qn8fmghqa00kh" data-title="【webpack】配置项" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1459,7 +1299,7 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PWA/">PWA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Typescript/">Typescript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VueTest/">VueTest</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web3/">Web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/axios-%E6%BA%90%E7%A0%81/">axios 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vuex-%E6%BA%90%E7%A0%81/">vuex 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web3/">web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webAssembly/">webAssembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webwork/">webwork</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/">业务场景</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/">扩展阅读</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/">额外内容</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PWA/">PWA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Typescript/">Typescript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VueTest/">VueTest</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web3/">Web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/axios-%E6%BA%90%E7%A0%81/">axios 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vuex-%E6%BA%90%E7%A0%81/">vuex 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web3/">web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webAssembly/">webAssembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webwork/">webwork</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/">业务场景</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/">扩展阅读</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/">额外内容</a></li></ul>
     </div>
   </div>
 
@@ -1469,7 +1309,7 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typescript/" rel="tag">Typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VueTest/" rel="tag">VueTest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios-%E6%BA%90%E7%A0%81/" rel="tag">axios 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/" rel="tag">chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/console/" rel="tag">console</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuex-%E6%BA%90%E7%A0%81/" rel="tag">vuex 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web3/" rel="tag">web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webAssembly/" rel="tag">webAssembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webRTC/" rel="tag">webRTC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webwork/" rel="tag">webwork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" rel="tag">业务场景</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" rel="tag">扩展阅读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" rel="tag">浏览器 Performance Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" rel="tag">额外内容</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typescript/" rel="tag">Typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VueTest/" rel="tag">VueTest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios-%E6%BA%90%E7%A0%81/" rel="tag">axios 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/" rel="tag">chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/console/" rel="tag">console</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuex-%E6%BA%90%E7%A0%81/" rel="tag">vuex 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web3/" rel="tag">web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webAssembly/" rel="tag">webAssembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webRTC/" rel="tag">webRTC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webwork/" rel="tag">webwork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" rel="tag">业务场景</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" rel="tag">扩展阅读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" rel="tag">浏览器 Performance Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" rel="tag">额外内容</a></li></ul>
     </div>
   </div>
 
@@ -1479,7 +1319,7 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
     </div>
   </div>
 
@@ -1501,6 +1341,10 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
       <ul>
         
           <li>
+            <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">外包</a>
+          </li>
+        
+          <li>
             <a href="/2025/08/14/%E6%89%8B%E5%86%99%E9%A2%98/">手写题</a>
           </li>
         
@@ -1514,10 +1358,6 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
         
           <li>
             <a href="/2025/08/14/%E3%80%90RN%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【RN】环境搭建</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E3%80%90AST%E3%80%91-%E8%A7%A3%E6%9E%90attrs/">解析 attrs</a>
           </li>
         
       </ul>

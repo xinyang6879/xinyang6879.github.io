@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>外包 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="vite性能调优Vite 的快，主要源于其“开发环境用 ES Module，生产环境用 Rollup”的架构。 本地开发 预构建  vite 会先将你的 node_modules 中的 CommonJS 或 UMD 格式的依赖，转换为 ESM 格式并打包成一个模块，以减少浏览器请求次数。 因此当依赖非常多且没有esm格式时，预构建非常消耗时间 123456789&#x2F;&#x2F; vite.config.jse">
+<meta property="og:type" content="article">
+<meta property="og:title" content="外包">
+<meta property="og:url" content="http://example.com/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="vite性能调优Vite 的快，主要源于其“开发环境用 ES Module，生产环境用 Rollup”的架构。 本地开发 预构建  vite 会先将你的 node_modules 中的 CommonJS 或 UMD 格式的依赖，转换为 ESM 格式并打包成一个模块，以减少浏览器请求次数。 因此当依赖非常多且没有esm格式时，预构建非常消耗时间 123456789&#x2F;&#x2F; vite.config.jse">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-20T11:17:23.821Z">
+<meta property="article:modified_time" content="2025-08-20T13:25:11.424Z">
+<meta property="article:author" content="yangxin">
+<meta property="article:tag" content="面试">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-面试/【面试】外包" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/" class="article-date">
+  <time class="dt-published" datetime="2025-08-20T11:17:23.821Z" itemprop="datePublished">2025-08-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      外包
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="vite性能调优"><a href="#vite性能调优" class="headerlink" title="vite性能调优"></a>vite性能调优</h2><p>Vite 的快，主要源于其“开发环境用 ES Module，生产环境用 Rollup”的架构。</p>
+<h3 id="本地开发"><a href="#本地开发" class="headerlink" title="本地开发"></a>本地开发</h3><ul>
+<li>预构建</li>
+</ul>
+<p>vite 会先将你的 node_modules 中的 CommonJS 或 UMD 格式的依赖，转换为 ESM 格式并打包成一个模块，以减少浏览器请求次数。</p>
+<p>因此当依赖非常多且没有esm格式时，预构建非常消耗时间</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vite.config.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">optimizeDeps</span>: &#123;</span><br><span class="line">    <span class="comment">// 强制预构建某些默认没有被包含的依赖</span></span><br><span class="line">    <span class="attr">include</span>: [<span class="string">&#x27;some-big-dependency&#x27;</span>],</span><br><span class="line">    <span class="comment">// 排除不需要预构建的依赖（慎用，除非你确定它已经是 ESM 格式）</span></span><br><span class="line">    <span class="attr">exclude</span>: [<span class="string">&#x27;some-fast-esm-package&#x27;</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="生产环境性能调优"><a href="#生产环境性能调优" class="headerlink" title="生产环境性能调优"></a>生产环境性能调优</h3><ul>
+<li>分包</li>
+</ul>
+<p>如果不进行分包，所有第三方库（node_modules）都会打包到一个巨大的 vendor.js 文件中。任何业务代码的改动都会导致用户重新下载整个 vendor 文件，缓存失效。白屏时间长</p>
+<p>在 vite.config.js 中配置 <code>build.rollupOptions.output.manualChunks</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vite.config.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">build</span>: &#123;</span><br><span class="line">    <span class="attr">rollupOptions</span>: &#123;</span><br><span class="line">      <span class="attr">output</span>: &#123;</span><br><span class="line">        <span class="comment">// 手动拆分 chunks</span></span><br><span class="line">        <span class="attr">manualChunks</span>: &#123;</span><br><span class="line">          <span class="comment">// 将 React 相关库拆分成单独的 chunk</span></span><br><span class="line">          <span class="string">&#x27;react-vendor&#x27;</span>: [<span class="string">&#x27;react&#x27;</span>, <span class="string">&#x27;react-dom&#x27;</span>],</span><br><span class="line">          <span class="comment">// 将组件库拆分成单独的 chunk</span></span><br><span class="line">          <span class="string">&#x27;ui-library&#x27;</span>: [<span class="string">&#x27;antd&#x27;</span>, <span class="string">&#x27;@arco-design/web-react&#x27;</span>],</span><br><span class="line">          <span class="comment">// 将工具库拆分开（也可以按更细的粒度）</span></span><br><span class="line">          <span class="string">&#x27;utils&#x27;</span>: [<span class="string">&#x27;lodash-es&#x27;</span>, <span class="string">&#x27;axios&#x27;</span>]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 或者使用函数进行更智能的拆分</span></span><br><span class="line">        <span class="comment">// manualChunks(id) &#123;</span></span><br><span class="line">        <span class="comment">//   if (id.includes(&#x27;node_modules&#x27;)) &#123;</span></span><br><span class="line">        <span class="comment">//     return &#x27;vendor&#x27;;</span></span><br><span class="line">        <span class="comment">//   &#125;</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>tree-shaking</p>
+<ul>
+<li><p>确保：在你的项目 package.json 中设置 “sideEffects”: false，或者准确声明有副作用的文件（如 CSS、Polyfills）。</p>
+<p>  <code>&quot;sideEffects&quot;: false</code>: 表示该包的所有文件都没有副作用，打包工具可以安全地移除未使用的代码。</p>
+<p>  <code>&quot;sideEffects&quot;: [   &quot;*.css&quot;,   &quot;*.scss&quot;,   &quot;dist/polyfills.js&quot;   ]</code>: 表示只有匹配到的文件（如 .css 文件或 polyfills.js）具有副作用，不能被移除。其他未被引用的文件可以安全地移除。</p>
+</li>
+<li><p>编写：尽量使用 ESM 的 import 和 export，避免使用 CommonJS 的 require。保持代码的静态分析友好性。</p>
+</li>
+</ul>
+</li>
+<li><p>代码压缩</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineConfig &#125; <span class="keyword">from</span> <span class="string">&#x27;vite&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">  <span class="attr">build</span>: &#123;</span><br><span class="line">    <span class="attr">minify</span>: <span class="string">&#x27;esbuild&#x27;</span> <span class="comment">// 默认，最快。可选 &#x27;terser&#x27;，但更慢</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>esbuild</li>
+</ol>
+<p>含义： 使用 esbuild 进行代码压缩。<br>esbuild 是一个基于 Go 编写的极快的构建工具，性能优于传统的 JavaScript 压缩工具。</p>
+<p>特点：压缩速度最快。<br>默认情况下，Vite 使用 esbuild 作为压缩工具。<br>支持基本的代码优化（如移除注释、缩短变量名等）。</p>
+<p>适用场景：对构建速度要求较高，且对压缩率要求不高的项目。</p>
+<ol start="2">
+<li>terser</li>
+</ol>
+<p>含义：使用 Terser 进行代码压缩。<br>Terser 是一个成熟的 JavaScript 压缩工具，广泛应用于 Webpack 等构建工具中。</p>
+<p>特点：<br>压缩率更高，能够生成更小的文件。<br>支持更复杂的优化（如死代码移除、更激进的变量名缩短等）。<br>相比 esbuild，压缩速度较慢。</p>
+<p>适用场景：<br>对文件体积要求较高的项目（例如生产环境需要极致优化）。</p>
+<ol start="3">
+<li>false</li>
+</ol>
+<p>含义：<br>禁用代码压缩。<br>构建过程中不会对代码进行任何压缩处理。</p>
+<p>特点：<br>构建速度最快，因为跳过了压缩步骤。<br>输出的文件是未压缩的，体积较大。</p>
+<p>适用场景：<br>调试环境或开发阶段，便于直接查看未压缩的代码。<br>特殊场景下手动使用其他工具进行压缩。</p>
+<ul>
+<li><p>异步和延迟加载（懒加载）</p>
+<ul>
+<li><p>vue-router：通过import引入，每个页面会打包为独立的chunk</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const routes = [</span><br><span class="line">    &#123;</span><br><span class="line">        path: &#x27;/&#x27;,</span><br><span class="line">        component: () =&gt; import(&#x27;./views/Home.vue&#x27;)</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        path: &#x27;/about&#x27;,</span><br><span class="line">        component: () =&gt; import(&#x27;./views/About.vue&#x27;)</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>defineAsynccomponent：通过defineAsyncComponent引入，每个页面会打包为独立的chunk</p>
+</li>
+</ul>
+</li>
+<li><p>分析构建产物</p>
+<ul>
+<li><p>rollup-plugin-visualizer</p>
+</li>
+<li><p>lightHouse&#x2F;WebPageTest等工具</p>
+</li>
+</ul>
+</li>
+<li><p>基于现代浏览器构建</p>
+</li>
+</ul>
+<p>Vite 可以构建两种版本：支持现代浏览器的 ES 模块版本，和支持旧浏览器的传统版本。</p>
+<p><code>@vitejs/plugin-legacy</code> 插件会为你生成传统版本的包和相应的 <code>&lt;script nomodule&gt;</code> 标签</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vite.config.js</span></span><br><span class="line"><span class="keyword">import</span> legacy <span class="keyword">from</span> <span class="string">&#x27;@vitejs/plugin-legacy&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="title function_">legacy</span>(&#123;</span><br><span class="line">      <span class="attr">targets</span>: [<span class="string">&#x27;defaults&#x27;</span>, <span class="string">&#x27;not IE 11&#x27;</span>] <span class="comment">// 指定目标浏览器</span></span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="vite和webpack比有什么优点"><a href="#vite和webpack比有什么优点" class="headerlink" title="vite和webpack比有什么优点"></a>vite和webpack比有什么优点</h2><h3 id="核心差异"><a href="#核心差异" class="headerlink" title="核心差异"></a>核心差异</h3><ul>
+<li><p>Webpack：采用 「打包优先」 的思路。启动时，它会递归地构建所有模块的依赖关系图，将所有模块（JS、CSS、图片等）打包成一个或多个 bundle（通常是一个 vendor.js 和一个 app.js）。这个过程涉及大量的 AST 解析、代码转换和模块合并，项目越大，启动和热更新速度越慢16。</p>
+</li>
+<li><p>Vite：利用浏览器原生支持的 ES Modules (ESM)特性。开发阶段，Vite 启动一个服务器，浏览器直接按需请求模块。Vite 只在需要时（如请求某个模块时）编译源文件，并提供了高效的 HMR14。生产环境则使用 Rollup 进行打包14。</p>
+</li>
+</ul>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><ul>
+<li>Webpack</li>
+</ul>
+<blockquote>
+<p>优点：</p>
+</blockquote>
+<p>生态成熟稳定：社区庞大，拥有海量的 Loader 和 Plugin，几乎能处理任何类型的资源或满足任何构建需求（如微前端 Module Federation）168。</p>
+<p>功能强大全面：对代码分割6、懒加载6、静态资源处理36、旧浏览器兼容（如 IE）3等方面支持得非常完善。</p>
+<p>高度可配置：几乎能通过配置实现任何想要的构建流程，适合高度定制化的场景6。</p>
+<blockquote>
+<p>缺点：</p>
+</blockquote>
+<p>配置复杂：学习曲线陡峭，配置文件可能非常冗长和复杂68。</p>
+<p>开发体验相对较差：启动速度和热更新速度随项目增大而明显变慢，影响开发效率</p>
+<ul>
+<li>Vite</li>
+</ul>
+<blockquote>
+<p>优点：</p>
+</blockquote>
+<p>极致的开发体验：启动速度和热更新速度极快，几乎秒开，热更新无感，大幅提升开发效率和幸福感。</p>
+<p>开箱即用：对 TypeScript、JSX、CSS Modules、PostCSS 等提供原生支持，减少配置成本。</p>
+<p>生产构建优化：使用 Rollup 打包，通常能生成更小体积的产出物（得益于更高效的 Tree Shaking）。</p>
+<pre><code>Webpack 的 Tree Shaking 依赖于 CommonJS 和 ESM 的混合支持，导致在处理非纯 ESM 模块时可能无法完全移除无用代码。
+
+Webpack 的模块解析机制更加复杂，可能导致额外的运行时代码（如 __webpack_require__）被引入, 需要兼容更多的浏览器环境，包括旧版浏览器（如 IE 11）。
+
+Webpack 的 CSS 处理依赖于插件（如 mini-css-extract-plugin），可能会引入额外的运行时逻辑。
+
+Webpack 通常需要额外的 Loader（如 file-loader 或 url-loader）来处理静态资源，增加了配置复杂性和潜在的冗余代码。
+
+Vite 默认生成面向现代浏览器的 ES Module 构建产物，不包含旧版浏览器的兼容性代码（如 Polyfills）。
+
+如果需要支持旧版浏览器，可以使用 @vitejs/plugin-legacy 插件，生成单独的 Legacy Bundle，避免污染现代浏览器的构建产物。
+
+Vite 使用 PostCSS 和原生 CSS Modules，能够高效地处理样式文件，并自动进行 Tree Shaking。
+
+Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件优化资源路径。
+</code></pre>
+<blockquote>
+<p>缺点：</p>
+</blockquote>
+<p>生态相对年轻：虽然基本需求都有覆盖，但一些特殊或复杂的场景可能找不到 Webpack 那样成熟多样的插件解决方案。</p>
+<p>兼容性处理：对旧版浏览器（如 IE 11）支持不友好，需要额外配置 @vitejs&#x2F;plugin-legacy 和 polyfills。</p>
+<table>
+<thead>
+<tr>
+<th>特性维度</th>
+<th>Webpack</th>
+<th>Vite</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>构建理念</td>
+<td>打包器：提前打包所有资源，生成 bundle1</td>
+<td>基于原生 ESM：开发时按需编译和服务，生产使用 Rollup</td>
+</tr>
+<tr>
+<td>开发服务器启动</td>
+<td>较慢（需先构建完整依赖图并打包）</td>
+<td>极快（无需打包，直接启动服务器）</td>
+</tr>
+<tr>
+<td>热更新 (HMR)</td>
+<td>相对较慢（需重新构建变动的模块链）</td>
+<td>非常快（基于 ESM，仅精确更新修改的模块）</td>
+</tr>
+<tr>
+<td>生产构建</td>
+<td>自身进行打包优化，配置复杂</td>
+<td>使用 Rollup，配置简洁，Tree Shaking 高效</td>
+</tr>
+<tr>
+<td>配置复杂度</td>
+<td>高（需大量 Loader 和 Plugin 配置）</td>
+<td>低（开箱即用，预设常用功能）</td>
+</tr>
+<tr>
+<td>生态成熟度</td>
+<td>非常成熟，社区庞大，插件和 Loader 丰富</td>
+<td>发展中，生态不如 Webpack 丰富但增长迅速</td>
+</tr>
+<tr>
+<td>兼容性</td>
+<td>好（支持旧版浏览器、CommonJS）</td>
+<td>面向现代浏览器（对旧版浏览器支持需额外处理）</td>
+</tr>
+</tbody></table>
+<h2 id="项目中如何使用ts"><a href="#项目中如何使用ts" class="headerlink" title="项目中如何使用ts"></a>项目中如何使用ts</h2><ul>
+<li><p>安装 TypeScript</p>
+</li>
+<li><p>初始化配置文件 (tsconfig.json)</p>
+</li>
+</ul>
+<p>TypeScript 的行为由一个名为 tsconfig.json 的文件控制。在项目根目录下生成它：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx tsc --init</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置 tsconfig.json</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;compilerOptions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;target&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ES2020&quot;</span><span class="punctuation">,</span>           <span class="comment">// 编译输出的 JavaScript 版本</span></span><br><span class="line">    <span class="attr">&quot;lib&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;ES2020&quot;</span><span class="punctuation">,</span> <span class="string">&quot;DOM&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span>     <span class="comment">// 要包含的环境 API 类型定义（如浏览器DOM）</span></span><br><span class="line">    <span class="attr">&quot;module&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ESNext&quot;</span><span class="punctuation">,</span>           <span class="comment">// 模块系统</span></span><br><span class="line">    <span class="attr">&quot;moduleResolution&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node&quot;</span><span class="punctuation">,</span>   <span class="comment">// 模块解析策略，与 Node.js 相同</span></span><br><span class="line">    <span class="attr">&quot;strict&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span>               <span class="comment">// 【核心】开启所有严格类型检查</span></span><br><span class="line">    <span class="attr">&quot;esModuleInterop&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span>      <span class="comment">// 更好地兼容 CommonJS 和 ES Module</span></span><br><span class="line">    <span class="attr">&quot;skipLibCheck&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span>         <span class="comment">// 跳过第三方库的类型检查，加快编译</span></span><br><span class="line">    <span class="attr">&quot;forceConsistentCasingInFileNames&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;allowJs&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span>              <span class="comment">// 【迁移关键】允许编译 .js 文件</span></span><br><span class="line">    <span class="attr">&quot;outDir&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./dist&quot;</span><span class="punctuation">,</span>           <span class="comment">// 输出目录（构建时）</span></span><br><span class="line">    <span class="attr">&quot;rootDir&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./src&quot;</span><span class="punctuation">,</span>           <span class="comment">// 源文件目录</span></span><br><span class="line">    <span class="attr">&quot;jsx&quot;</span><span class="punctuation">:</span> <span class="string">&quot;react-jsx&quot;</span>            <span class="comment">// 如果是 React 项目，处理 JSX 语法</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;include&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;src/**/*&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span>        <span class="comment">// 指定要编译的文件范围</span></span><br><span class="line">  <span class="attr">&quot;exclude&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;node_modules&quot;</span><span class="punctuation">,</span> <span class="string">&quot;dist&quot;</span><span class="punctuation">]</span> <span class="comment">// 排除的文件</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>“allowJs”: true：对于迁移至关重要。允许项目混合存在 .js 和 .ts 文件。</p>
+<p>“strict”: true：强烈建议开启。这是 TypeScript 的核心价值，能从源头避免大量错误。</p>
+<p>“skipLibCheck”: true：避免检查 node_modules 中的第三方库类型，大幅提升编译速度。</p>
+<ul>
+<li><p>基本类型注解: 为变量、函数参数和返回值添加类型。</p>
+</li>
+<li><p>使用接口 (interface) 和类型别名 (type): 用于复杂类型，例如接口返回</p>
+</li>
+<li><p>泛型 (Generics)：hooks多类型参数</p>
+</li>
+<li><p>公共类型抽离：将公共的类型定义抽离到 @&#x2F;types 或 @&#x2F;interfaces 这样的独立目录中，或者通过declara global.d.ts使得可以不通过引入就可以直接使用</p>
+</li>
+</ul>
+<h2 id="ts怎么防止any"><a href="#ts怎么防止any" class="headerlink" title="ts怎么防止any"></a>ts怎么防止any</h2><ul>
+<li>tsconfig.json添加<code>noExplicitAny: true</code>(TypeScript 4.1+)</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;compilerOptions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;noImplicitAny&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;strict&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;noExplicitAny&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span>  <span class="comment">// 需要 TypeScript 4.1+</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用 ESLint</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;rules&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;@typescript-eslint/no-explicit-any&quot;</span><span class="punctuation">:</span> <span class="string">&quot;error&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;@typescript-eslint/no-unsafe-assignment&quot;</span><span class="punctuation">:</span> <span class="string">&quot;error&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;@typescript-eslint/no-unsafe-call&quot;</span><span class="punctuation">:</span> <span class="string">&quot;error&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;@typescript-eslint/no-unsafe-member-access&quot;</span><span class="punctuation">:</span> <span class="string">&quot;error&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;@typescript-eslint/no-unsafe-return&quot;</span><span class="punctuation">:</span> <span class="string">&quot;error&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="vue3和vue2优化"><a href="#vue3和vue2优化" class="headerlink" title="vue3和vue2优化"></a>vue3和vue2优化</h2><h3 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h3><h4 id="虚拟dom"><a href="#虚拟dom" class="headerlink" title="虚拟dom"></a>虚拟dom</h4><ul>
+<li><p>Vue 2：</p>
+<p>  在编译时，只能知道哪些节点是静态的，哪些是动态的，但无法区分动态节点中哪些是固定不变的（例如 class），每次 diff 都需要全量对比。</p>
+</li>
+<li><p>Vue 3：编译器会极尽所能地进行静态分析，生成优化后的虚拟 DOM 代码。</p>
+<ul>
+<li><p>静态提升 (Static Hoisting)：将静态的节点和属性“提升”到 render 函数之外。这意味着这些静态内容只在首次渲染时创建一次，后续更新时可以复用，完全跳过 diff 过程。</p>
+</li>
+<li><p>Patch 标志 (Patch Flags)：在创建动态节点时，Vue 3 会为其打上一个 &#x2F;* PatchFlag *&#x2F; 标志（一个数字），明确标识出这个节点需要被比对的类型，比如 1 代表 文本 变化，2 代表 class 变化。这样在 diff 时，可以直接跳过静态内容，只比对可能变化的动态内容，大大减少了比较范围。</p>
+</li>
+<li><p>树结构拍平 (Tree Flattening)：编译器会将模板中静态的子树“拍平”。这意味着在更新时，Vue 不再需要去遍历整个树结构，而是直接定位到包含动态内容的节点块（block）进行比对，效率极高。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="响应式"><a href="#响应式" class="headerlink" title="响应式"></a>响应式</h4><ul>
+<li>Vue 2：使用 Object.defineProperty 来递归遍历所有属性，将其转换为 getter&#x2F;setter。它有明显的缺陷：</li>
+</ul>
+<p>无法检测对象属性的添加和删除，必须使用 Vue.set 和 Vue.delete。</p>
+<p>对数组的索引操作和 length 修改无法监听，需要重写数组方法（如 push, pop）。</p>
+<p>初始化时需要递归遍历整个对象，性能较差。</p>
+<ul>
+<li>Vue 3：使用 Proxy 来实现响应式，性能更好。</li>
+</ul>
+<p>全面拦截：可以监听到任何类型的属性变化，包括增、删、改、数组索引和 length 操作，彻底告别 Vue.set&#x2F;Vue.delete。</p>
+<p>性能更好：Proxy 是在元编程层面提供的功能，性能通常优于 Object.defineProperty 的递归遍历。并且它是惰性的，只有在真正访问到某个深层属性时才会被递归转换为响应式。</p>
+<p>支持 Map、Set 等集合类型：Vue 2 无法原生响应这些类型，Vue 3 可以。</p>
+<h3 id="源码和体积-Bundle-Size-–treeshaking"><a href="#源码和体积-Bundle-Size-–treeshaking" class="headerlink" title="源码和体积 (Bundle Size)–treeshaking"></a>源码和体积 (Bundle Size)–treeshaking</h3><p>Vue 2：整个 Vue 库（如 vue.runtime.js）是一个大的单体，即使你只用了其中的一个 v-show 指令，也无法在打包时去掉未使用的功能（如 v-model, transition 等）。</p>
+<p>Vue 3：将代码组织成多个独立的 ES 模块。构建工具（如 Webpack, Vite）可以只打包你真正用到的 API。例如，如果你没有使用 transition 组件，那么它的代码就不会出现在最终的生产包中。</p>
+<p>结果：Vue 3 的核心运行时体积压缩后仅有约 10kB（gzipped），比 Vue 2 更小。</p>
+<h3 id="Composition-API"><a href="#Composition-API" class="headerlink" title="Composition API"></a>Composition API</h3><ul>
+<li><p>Vue 2 (Options API)：</p>
+<p>  通过 data, methods, computed, watch, 生命周期 等选项来组织代码。</p>
+<p>  缺点是逻辑关注点分散。一个功能相关的代码（数据、方法、计算属性、生命周期）被拆分到不同选项里，在阅读和维护成百上千行的组件时，需要上下反复滚动，非常痛苦。</p>
+</li>
+<li><p>Vue 3 (Composition API)：</p>
+<p>  通过 setup() 函数，允许你按逻辑功能而非选项类型来组织代码。</p>
+<p>  所有相关的代码（响应式数据、函数、生命周期）可以集中在一起，极大提高了代码的可读性和可维护性。它还带来了极强的逻辑复用能力（自定义组合式函数，类似于 React Hooks）。</p>
+</li>
+</ul>
+<h3 id="更好的-TypeScript-支持"><a href="#更好的-TypeScript-支持" class="headerlink" title="更好的 TypeScript 支持"></a>更好的 TypeScript 支持</h3><ul>
+<li><p>Vue 2：</p>
+<p>  对 TS 的支持是“嫁接”上去的，因为它的代码库本身是用 ES 写的，类型推导体验较差，需要依赖 vue-class-component 这类装饰器方案，学习成本高且不够自然。</p>
+</li>
+<li><p>Vue 3：</p>
+<p>  完全用 TypeScript 重写。这意味着它具有一流的类型推导，组合式 API 对 TS 的支持尤其出色（因为主要是函数调用）。编写 Vue 3 + TS 组件体验非常流畅，几乎不需要额外的学习成本。</p>
+</li>
+</ul>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>Fragment (片段)：组件可以像 React 一样有多个根节点，无需再用一个无用的 div 包裹。</p>
+<p>Teleport (传送)：可以将组件的一部分模板“传送”到 DOM 的其他位置（如全局模态框、提示框），解决嵌套定位问题。</p>
+<p>Suspense (实验性)：提供了一种在组件树中协调异步依赖（如异步组件、async setup()）的机制，可以优雅地处理加载状态。</p>
+<h2 id="组合式api、option-api和mixins"><a href="#组合式api、option-api和mixins" class="headerlink" title="组合式api、option api和mixins"></a>组合式api、option api和mixins</h2><p>理解组合式 API (Composition API)、选项式 API (Options API) 和 Mixins 的优劣，能帮你在 Vue 开发中做出更合适的选择。我先用一个表格汇总它们的主要特点，然后详细解释。</p>
+<table>
+<thead>
+<tr>
+<th align="left">特性维度</th>
+<th align="left">选项式 API (Options API)</th>
+<th align="left">组合式 API (Composition API)</th>
+<th align="left">Mixins</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>代码组织</strong></td>
+<td align="left">按<strong>选项类型</strong>（data, methods等）组织，相同功能的代码<strong>分散</strong></td>
+<td align="left">按<strong>逻辑功能</strong>组织，同一功能的代码<strong>集中</strong></td>
+<td align="left">按<strong>功能模块</strong>组织，但多个 Mixin 的代码在组件中<strong>混合</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>逻辑复用</strong></td>
+<td align="left">难以复用，通常通过 Mixins 或作用域插槽实现</td>
+<td align="left"><strong>极强的复用性</strong>，通过组合式函数 (Composables) 实现，<strong>灵活清晰</strong></td>
+<td align="left"><strong>一定的复用性</strong>，但容易发生<strong>命名冲突</strong>，来源不清晰</td>
+</tr>
+<tr>
+<td align="left"><strong>TypeScript 支持</strong></td>
+<td align="left">支持性<strong>一般</strong>，类型推断较弱</td>
+<td align="left"><strong>一流的支持</strong>，基于函数，提供出色的类型推断</td>
+<td align="left">支持性<strong>差</strong>，类型推导不友好</td>
+</tr>
+<tr>
+<td align="left"><strong>学习成本</strong></td>
+<td align="left"><strong>低</strong>，易于上手，约定大于配置</td>
+<td align="left"><strong>较高</strong>，需要理解响应式 API 和函数组合的思想</td>
+<td align="left"><strong>中等</strong>，概念简单但陷阱较多（如命名冲突）</td>
+</tr>
+<tr>
+<td align="left"><strong>灵活性 &amp; 控制力</strong></td>
+<td align="left"><strong>较低</strong>，受限于 Vue 的选项结构</td>
+<td align="left"><strong>极高</strong>，完全是普通的 JavaScript 函数，不受组件约束</td>
+<td align="left"><strong>较低</strong>，逻辑分散在多个 Mixin 中，关系不清</td>
+</tr>
+<tr>
+<td align="left"><strong>可调试性</strong></td>
+<td align="left">较容易，错误通常会在具体的选项（如 methods）中</td>
+<td align="left">较容易，调用栈清晰，能明确追踪到组合式函数</td>
+<td align="left"><strong>困难</strong>，当出现问题时，很难追踪到属性或方法的具体来源（是哪个 Mixin？）</td>
+</tr>
+<tr>
+<td align="left"><strong>适用场景</strong></td>
+<td align="left"><strong>中小型项目</strong>、<strong>低复杂度组件</strong>、<strong>初学者</strong></td>
+<td align="left"><strong>中大型项目</strong>、<strong>高复杂度组件</strong>、<strong>需要大量逻辑复用</strong>、<strong>追求更好TS支持和长期维护</strong></td>
+<td align="left"><strong>Vue 2 项目中逻辑复用的主要方式</strong>（在 Vue 3 中已被组合式 API 取代）</td>
+</tr>
+</tbody></table>
+<p> **选项式 API (Options API)**：它通过一些选项（如 <code>data</code>, <code>methods</code>, <code>computed</code>, <code>watch</code> 等）来组织代码。</p>
+<ul>
+<li><strong>优点</strong>：<ul>
+<li><strong>结构清晰，易于上手</strong>：代码放在哪个选项里有明确的约定，对初学者非常友好。</li>
+<li><strong>“所见即所得”</strong>：查看一个选项（如 <code>methods</code>）就能看到组件的所有方法。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li><strong>逻辑关注点分离</strong>：当一个组件的功能变得复杂时，<strong>同一个功能的代码（数据、方法、计算属性、生命周期）会被拆分到不同的选项中</strong>。阅读和维护时需要反复上下滚动，如同“反复横跳”，体验较差。</li>
+<li><strong>逻辑复用困难</strong>：本身不支持很好的逻辑复用，虽然可以通过 Mixins 实现，但会带来新问题。</li>
+<li><strong>TypeScript 支持有限</strong>：与 TS 的集成体验不如 Composition API 流畅。</li>
+</ul>
+</li>
+<li><strong>适用场景</strong>：<strong>小型到中型项目</strong>、<strong>逻辑不复杂的组件</strong>、<strong>刚接触 Vue 的初学者</strong>。</li>
+</ul>
+<p><strong>组合式 API (Composition API)<strong>： Vue 3 引入的新范式。它允许我们使用</strong>导入的 API 函数</strong>来描述组件逻辑，并采用<strong>函数</strong>的方式组织代码。</p>
+<ul>
+<li><strong>优点</strong>：<ul>
+<li><strong>卓越的代码组织</strong>：可以<strong>将同一个逻辑关注点的所有代码（响应式数据、函数、生命周期等）放在一起</strong>，大大提高了代码的可读性和可维护性。对于大型组件，这是巨大的优势。</li>
+<li><strong>强大的逻辑复用</strong>：通过**组合式函数 (Composables)**，可以创建高度可复用、有状态逻辑的单元。它们像搭建乐高积木一样被组合到组件中，解决了 Mixins 的所有缺陷（命名冲突、来源不明确）。</li>
+<li><strong>更好的 TypeScript 支持</strong>：完全是函数和变量，享受完整的类型推断，编写 Vue 组件和编写 TS 几乎没有区别。</li>
+<li><strong>更灵活的代码分割</strong>：一个功能可以轻松拆分成一个独立的组合式函数。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li><strong>更高的学习曲线</strong>：需要理解 <code>ref</code>, <code>reactive</code>, <code>watch</code> 等新 API 的概念，并且思维方式要从“选项”切换到“函数组合”。</li>
+<li><strong>需要更多的代码设计</strong>：选项式 API 提供了固定的结构，而组合式 API 给予了更大自由，这也意味着需要开发者自己更好地组织代码。</li>
+</ul>
+</li>
+<li><strong>适用场景</strong>：<strong>中大型项目</strong>、<strong>复杂组件</strong>、<strong>需要大量逻辑复用</strong>、<strong>追求与 TypeScript 的深度融合</strong>、<strong>重视长期维护性</strong>。</li>
+</ul>
+<p><strong>Mixins</strong>： 是一种在 <strong>Vue 2</strong> 时代<strong>实现逻辑复用的主要方式</strong>。它允许你将组件的选项（如 <code>data</code>, <code>methods</code> 等）抽离到一个独立的对象中，然后“混合”进多个组件。</p>
+<ul>
+<li><strong>优点</strong>：<ul>
+<li><strong>在一定程度上的逻辑复用</strong>：在当时是解决代码复用的一种方案。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li><strong>命名冲突</strong>：如果多个 Mixin 或组件本身包含了同名的属性或方法，会发生覆盖，且调试起来非常困难。</li>
+<li><strong>来源不清晰（黑盒）</strong>：在使用 Mixin 的组件中，你无法一眼看出某个属性或方法到底是来自组件自身，还是来自某个 Mixin，或者是哪个 Mixin。这极大地降低了代码的可维护性。</li>
+<li><strong>不可知的属性传播</strong>：一个 Mixin 可能会向组件注入大量它不需要的属性和方法，导致组件变得臃肿且难以理解。</li>
+<li><strong>糟糕的 TypeScript 支持</strong>：很难为 Mixin 提供良好的类型定义。</li>
+</ul>
+</li>
+<li><strong>现状与适用场景</strong>：<strong>在 Vue 3 中，Composition API 被明确推荐为替代 Mixins 的首选方案</strong>。Mixins 现在主要用于<strong>遗留的 Vue 2 项目</strong>或一些非常简单的复用场景。</li>
+</ul>
+<h2 id="首屏优化"><a href="#首屏优化" class="headerlink" title="首屏优化"></a>首屏优化</h2><ul>
+<li>缓存</li>
+<li>cdn</li>
+<li>代码切分</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/" data-id="cmek09jyw00666sfm6ql01uxa" data-title="外包" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2025/08/14/%E6%89%8B%E5%86%99%E9%A2%98/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">手写题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PWA/">PWA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Typescript/">Typescript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VueTest/">VueTest</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web3/">Web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/axios-%E6%BA%90%E7%A0%81/">axios 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vuex-%E6%BA%90%E7%A0%81/">vuex 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web3/">web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webAssembly/">webAssembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webwork/">webwork</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/">业务场景</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/">扩展阅读</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/">额外内容</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typescript/" rel="tag">Typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VueTest/" rel="tag">VueTest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios-%E6%BA%90%E7%A0%81/" rel="tag">axios 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/" rel="tag">chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/console/" rel="tag">console</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuex-%E6%BA%90%E7%A0%81/" rel="tag">vuex 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web3/" rel="tag">web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webAssembly/" rel="tag">webAssembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webRTC/" rel="tag">webRTC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webwork/" rel="tag">webwork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" rel="tag">业务场景</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" rel="tag">扩展阅读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" rel="tag">浏览器 Performance Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" rel="tag">额外内容</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">外包</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/14/%E6%89%8B%E5%86%99%E9%A2%98/">手写题</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/14/%E3%80%90%E6%89%8B%E5%86%99%E3%80%91call%E3%80%81apply%E3%80%81bind/">【手写】call、apply、bind</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【wasb】环境搭建</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/14/%E3%80%90RN%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【RN】环境搭建</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 yangxin<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

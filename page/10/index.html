@@ -71,6 +71,192 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-devTools/Chrome--performance" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/devTools/Chrome--performance/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.208Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/devTools/Chrome--performance/">Chrome的Performance</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Chrome-的-performance"><a href="#Chrome-的-performance" class="headerlink" title="Chrome 的 performance"></a>Chrome 的 performance</h1><h2 id="开始记录"><a href="#开始记录" class="headerlink" title="开始记录"></a>开始记录</h2><p>可以通过调整这两个参数模拟低网低 cpu 情况 <a target="_blank" rel="noopener" href="https://imgtu.com/i/bRXxL4"><img src="https://s1.ax1x.com/2022/03/09/bRXxL4.png" alt="bRXxL4.png"></a></p>
+<p>点击按钮，刷新页面或者只需要旁边的刷新按钮开始进行记录分析 <a target="_blank" rel="noopener" href="https://imgtu.com/i/bRjuTA"><img src="https://s1.ax1x.com/2022/03/09/bRjuTA.png" alt="bRjuTA.png"></a></p>
+<h2 id="操作设置栏-controls"><a href="#操作设置栏-controls" class="headerlink" title="操作设置栏 controls"></a>操作设置栏 controls</h2><ul>
+<li>可以通过这个下拉框看到之前的分析数据</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/bRjI1K"><img src="https://s1.ax1x.com/2022/03/09/bRjI1K.png" alt="bRjI1K.png"></a></p>
+<ul>
+<li>其他配置</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/bRvDUA"><img src="https://s1.ax1x.com/2022/03/09/bRvDUA.png" alt="bRvDUA.png"></a></p>
+<h2 id="页面性能的高级汇总-overview"><a href="#页面性能的高级汇总-overview" class="headerlink" title="页面性能的高级汇总 overview"></a>页面性能的高级汇总 overview</h2><p><a target="_blank" rel="noopener" href="https://imgtu.com/i/bRzmmF"><img src="https://s1.ax1x.com/2022/03/09/bRzmmF.png" alt="bRzmmF.png"></a> <a target="_blank" rel="noopener" href="https://imgtu.com/i/bWF68H"><img src="https://s1.ax1x.com/2022/03/09/bWF68H.png" alt="bWF68H.png"></a></p>
+<ul>
+<li>颜色表示<blockquote>
+<p><font color=#87CEFA>HTML</font></p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p><font color=yellow>脚本</font></p>
+</blockquote>
+<blockquote>
+<p><font color=#9370DB>样式</font></p>
+</blockquote>
+<blockquote>
+<p><font color=green>媒体资源</font></p>
+</blockquote>
+<blockquote>
+<p><font color=gray>其他资源</font></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FPS，帧数</td>
+<td><font color=green>绿色</font>竖线越高，FPS 越高。 FPS 图表上的<font color=red>红色</font>块表示长时间帧，很可能会出现卡顿</td>
+</tr>
+<tr>
+<td>CPU，CPU 资源</td>
+<td>指示消耗 CPU 资源的事件类型</td>
+</tr>
+<tr>
+<td>NET，网络请求</td>
+<td>每条彩色横杠表示一种资源。横杠越长，检索资源所需的时间越长。 每个横杠的浅色部分表示等待时间（从请求资源到第一个字节下载完成的时间），可以在屏幕快照下面查看具体的网络请求数据</td>
+</tr>
+</tbody></table>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/bWCE4J"><img src="https://s1.ax1x.com/2022/03/09/bWCE4J.png" alt="bWCE4J.png"></a></p>
+<h2 id="火焰图：-CPU-堆叠可视化"><a href="#火焰图：-CPU-堆叠可视化" class="headerlink" title="火焰图： CPU 堆叠可视化"></a>火焰图： CPU 堆叠可视化</h2><p><a target="_blank" rel="noopener" href="https://imgtu.com/i/bWEmgH"><img src="https://s1.ax1x.com/2022/03/09/bWEmgH.png" alt="bWEmgH.png"></a></p>
+<ul>
+<li>Timing</li>
+</ul>
+<blockquote>
+<p>FCP: First Contentful Paint，白屏时间，第一个元素出现的时间</p>
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/174837488">LCP</a>: Largest Contentful Paint，视窗最大可见图片或者文本块的渲染时间</p>
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qiwoo_weekly/article/details/98818202">FMP</a>: First Meaningful Paint，首次有效绘制时间，页面的“主要内容”开始出现在屏幕上的时间点</p>
+</blockquote>
+<blockquote>
+<p>DCL: DOMContentLoaded Event，dom 加载完毕时间</p>
+</blockquote>
+<blockquote>
+<p>L: Onload Event，完全加载完毕时间</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Network</td>
+<td>资源加载顺序及时长</td>
+</tr>
+<tr>
+<td>Main</td>
+<td>渲染进程中主线程的执行记录，点击 main 可以看到某个任务执行的具体情况<a target="_blank" rel="noopener" href="https://imgtu.com/i/bWV5Os"><img src="https://s1.ax1x.com/2022/03/09/bWV5Os.png" alt="bWV5Os.png"></a></td>
+</tr>
+<tr>
+<td>Timings</td>
+<td>用户交互操作，比如点击鼠标、输入文字、动画等</td>
+</tr>
+<tr>
+<td>Compositor</td>
+<td>r 合成线程的执行记录，用来记录 html 绘制阶段 (Paint)结束后的图层合成操</td>
+</tr>
+<tr>
+<td>Raster</td>
+<td>光栅化线程池，用来让 GPU 执行光栅化的任务</td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>GPU 进程主线程的执行过程记录，如 可以直观看到何时启动 GPU 加速</td>
+</tr>
+<tr>
+<td>Frame</td>
+<td>ifream 框架加载详情</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>不同的时间段的执行情况。页面中的内存使用的情况<a target="_blank" rel="noopener" href="https://imgtu.com/i/bWZwNV"><img src="https://s1.ax1x.com/2022/03/09/bWZwNV.png" alt="bWZwNV.png"></a></td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>在火焰图上看到一到三条垂直的虚线。蓝线代表 DOMContentLoaded 事件。 绿线代表首次绘制的时间。 红线代表 load 事件</p>
+</li>
+<li><p>如果是耗时长的 Task，其右上角会标红，这个时候，我们可以选中标红的 Task，然后放大，看其具体的耗时点。放大后，这里可以看到都在做哪些操作，哪些函数耗时了多少,这里代码有压缩，看到的是压缩后的函数名。然后我们点击一下某个函数，在面板最下面，就会出现代码的信息，是哪个函数，耗时多少，在哪个文件上的第几行等。这样我们就很方便地定位到耗时函数了。<br><a target="_blank" rel="noopener" href="https://imgtu.com/i/bWu7JP"><img src="https://s1.ax1x.com/2022/03/09/bWu7JP.png" alt="bWu7JP.png"></a></p>
+</li>
+</ul>
+<h2 id="Summary性能摘要"><a href="#Summary性能摘要" class="headerlink" title="Summary性能摘要"></a>Summary性能摘要</h2><p><a target="_blank" rel="noopener" href="https://imgtu.com/i/bWmDOJ"><img src="https://s1.ax1x.com/2022/03/09/bWmDOJ.png" alt="bWmDOJ.png"></a></p>
+<ul>
+<li>颜色表示<blockquote>
+<p><font color=#87CEFA>Loading</font>：网络通信和HTML解析</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p><font color=yellow>Scripting</font>：JavaScript执行</p>
+</blockquote>
+<blockquote>
+<p><font color=#9370DB>Rendering</font>：样式计算和布局，即重排</p>
+</blockquote>
+<blockquote>
+<p><font color=green>Painting</font>：重绘</p>
+</blockquote>
+<blockquote>
+<p><font color=gray>other</font>：其它事件花费的时间</p>
+</blockquote>
+<blockquote>
+<p><font color=white>Idle</font>：空闲时间</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zjjing/p/9106111.html">事件包含</a></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/29879682">Chrome Performance 使用栗子</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/163474573">Chrome Performance 页面性能分析指南</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b6f87bac5381">饼状图分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiaohuochai/p/9182710.html">performance</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/devTools/Chrome--performance/" data-id="cmek09jxj00256sfmh6ko7mgq" data-title="Chrome的Performance" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" rel="tag">浏览器 Performance Chrome</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-css/小点" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/08/14/css/%E5%B0%8F%E7%82%B9/" class="article-date">
@@ -330,7 +516,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E5%B0%8F%E7%82%B9/" data-id="cmebelnu5001sn8fm24vh8zdx" data-title="【css】小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/css/%E5%B0%8F%E7%82%B9/" data-id="cmek09jy6003u6sfm235ggdfl" data-title="【css】小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -559,7 +745,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmebelnu8001yn8fmf17u2l7k" data-title="【css】记录小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmek09jy4003q6sfmba8n0hyu" data-title="【css】记录小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -695,75 +881,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E6%BB%9A%E5%8A%A8%E8%B4%B4%E5%90%88/" data-id="cmebelnuh0028n8fm4nr32ui2" data-title="【css】滚动贴合" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-css/【css】BFC" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/css/%E3%80%90css%E3%80%91BFC/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.178Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/css/">css</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/css/%E3%80%90css%E3%80%91BFC/">【css】BFC</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>定义：页面中的一块渲染区域，同一个格式化上下文内和不同格式化上下文之间的定位方式都会发生变化</p>
-<h2 id="bfc-块级格式化上下文"><a href="#bfc-块级格式化上下文" class="headerlink" title="bfc(块级格式化上下文)"></a>bfc(块级格式化上下文)</h2><h3 id="创建条件"><a href="#创建条件" class="headerlink" title="创建条件"></a>创建条件</h3><ul>
-<li><p>根元素</p>
-</li>
-<li><p>脱离普通文档流的元素(浮动，绝对定位，固定定位)</p>
-</li>
-<li><p>非块级元素(包含flex，table)</p>
-</li>
-<li><p>overflow ！&#x3D;&#x3D; visible(默认值)的块级元素</p>
-</li>
-</ul>
-<h3 id="影响"><a href="#影响" class="headerlink" title="影响"></a>影响</h3><ul>
-<li><p>同一个bfc内的相邻块级元素垂直外边距会发生折叠，即两者边距取决于双方边距的最大值而不是边距和</p>
-</li>
-<li><p>内部元素与外部元素互不影响，因为bfc是独立容器</p>
-</li>
-<li><p>在计算bfc高度时，内部的浮动元素也会被计算在哪内</p>
-</li>
-</ul>
-<h2 id="ifc-内联格式化上下文"><a href="#ifc-内联格式化上下文" class="headerlink" title="ifc(内联格式化上下文)"></a>ifc(内联格式化上下文)</h2><h3 id="形成"><a href="#形成" class="headerlink" title="形成"></a>形成</h3><p>多个内联（块级）元素排列在一起的时候，这些内联（块级）元素之间不能穿插块级元素，否则会被切割为多个ifc</p>
-<h3 id="影响-1"><a href="#影响-1" class="headerlink" title="影响"></a>影响</h3><ul>
-<li><p>一个ifc内的元素都是水平排列的</p>
-</li>
-<li><p>横向的margin，border，padding属性对这些元素都是有效的</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91BFC/" data-id="cmebelnu1001in8fm9xo43p0t" data-title="【css】BFC" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E6%BB%9A%E5%8A%A8%E8%B4%B4%E5%90%88/" data-id="cmek09jy3003o6sfm7v233alg" data-title="【css】滚动贴合" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -853,7 +971,75 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/" data-id="cmebelnu2001ln8fm8w0gde6n" data-title="【css】border-raduis" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/" data-id="cmek09jxx00336sfmfb5u8c5r" data-title="【css】border-raduis" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-css/【css】BFC" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/css/%E3%80%90css%E3%80%91BFC/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.178Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/css/">css</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/css/%E3%80%90css%E3%80%91BFC/">【css】BFC</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>定义：页面中的一块渲染区域，同一个格式化上下文内和不同格式化上下文之间的定位方式都会发生变化</p>
+<h2 id="bfc-块级格式化上下文"><a href="#bfc-块级格式化上下文" class="headerlink" title="bfc(块级格式化上下文)"></a>bfc(块级格式化上下文)</h2><h3 id="创建条件"><a href="#创建条件" class="headerlink" title="创建条件"></a>创建条件</h3><ul>
+<li><p>根元素</p>
+</li>
+<li><p>脱离普通文档流的元素(浮动，绝对定位，固定定位)</p>
+</li>
+<li><p>非块级元素(包含flex，table)</p>
+</li>
+<li><p>overflow ！&#x3D;&#x3D; visible(默认值)的块级元素</p>
+</li>
+</ul>
+<h3 id="影响"><a href="#影响" class="headerlink" title="影响"></a>影响</h3><ul>
+<li><p>同一个bfc内的相邻块级元素垂直外边距会发生折叠，即两者边距取决于双方边距的最大值而不是边距和</p>
+</li>
+<li><p>内部元素与外部元素互不影响，因为bfc是独立容器</p>
+</li>
+<li><p>在计算bfc高度时，内部的浮动元素也会被计算在哪内</p>
+</li>
+</ul>
+<h2 id="ifc-内联格式化上下文"><a href="#ifc-内联格式化上下文" class="headerlink" title="ifc(内联格式化上下文)"></a>ifc(内联格式化上下文)</h2><h3 id="形成"><a href="#形成" class="headerlink" title="形成"></a>形成</h3><p>多个内联（块级）元素排列在一起的时候，这些内联（块级）元素之间不能穿插块级元素，否则会被切割为多个ifc</p>
+<h3 id="影响-1"><a href="#影响-1" class="headerlink" title="影响"></a>影响</h3><ul>
+<li><p>一个ifc内的元素都是水平排列的</p>
+</li>
+<li><p>横向的margin，border，padding属性对这些元素都是有效的</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91BFC/" data-id="cmek09jxx00356sfm87iedn8v" data-title="【css】BFC" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -990,7 +1176,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91contain/" data-id="cmebelnu3001mn8fm4v3pbule" data-title="【css】contain" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91contain/" data-id="cmek09jxy003b6sfmezoy0dsc" data-title="【css】contain" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1161,7 +1347,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E5%B1%82%E5%8F%A0%E4%B8%8A%E4%B8%8B%E6%96%87/" data-id="cmebelnu7001xn8fm62404jnl" data-title="【css】层叠上下文" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E5%B1%82%E5%8F%A0%E4%B8%8A%E4%B8%8B%E6%96%87/" data-id="cmek09jy2003l6sfm9nav2cg4" data-title="【css】层叠上下文" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1212,7 +1398,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/hello-world/" data-id="cmebelnsj0001n8fm1plgd5sh" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/hello-world/" data-id="cmek09jw400016sfm0gat1o32" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1385,7 +1571,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/10/14/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%80%BC%E5%AE%9A%E4%B9%89%E8%AF%AD%E6%B3%95/" data-id="cmebelnus002vn8fm8jm5duaa" data-title="【css】属性值定义语法" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/10/14/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%80%BC%E5%AE%9A%E4%B9%89%E8%AF%AD%E6%B3%95/" data-id="cmek09jxz003e6sfm5f9s83ui" data-title="【css】属性值定义语法" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1399,103 +1585,11 @@
 
 
   
-    <article id="post-css/【css】不常用属性总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/07/28/css/%E3%80%90css%E3%80%91%E4%B8%8D%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7%E6%80%BB%E7%BB%93/" class="article-date">
-  <time class="dt-published" datetime="2023-07-28T07:42:03.000Z" itemprop="datePublished">2023-07-28</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/css/">css</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/07/28/css/%E3%80%90css%E3%80%91%E4%B8%8D%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7%E6%80%BB%E7%BB%93/">【css】不常用属性总结</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="【css】、不常用样式总结"><a href="#【css】、不常用样式总结" class="headerlink" title="【css】、不常用样式总结"></a>【css】、不常用样式总结</h1><h2 id="关于文字换行"><a href="#关于文字换行" class="headerlink" title="关于文字换行"></a>关于文字换行</h2><ul>
-<li><p><code>word-break</code></p>
-<p>换行规则</p>
-</li>
-<li><p><code>white-space</code></p>
-<p>保留换行和空格</p>
-</li>
-<li><p><code>word-wrap</code>(老) &#x2F; <code>overflow-wrap</code>(新) </p>
-</li>
-<li><p><code>line-break</code></p>
-</li>
-<li><p><code>hyphens</code></p>
-<p>用于英文字符</p>
-</li>
-<li><wbr />
-
-<p>有机会就断开换行</p>
-</li>
-<li><br />
-
-<p>直接换行</p>
-</li>
-</ul>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ul>
-<li><p><code>background-size</code></p>
-</li>
-<li><p><code>background-image</code></p>
-<p>可以设置多背景</p>
-</li>
-<li><p><code>background-clip</code></p>
-<p>控制背景显示区域，还可以设置文字的渐变色</p>
-</li>
-<li><p><code>background-origin</code></p>
-<p>背景定位原点</p>
-</li>
-<li><p><code>background-repeat</code></p>
-<p>背景图片重复设置</p>
-</li>
-<li><p><code>background-position</code></p>
-</li>
-</ul>
-<h2 id="叠加属性"><a href="#叠加属性" class="headerlink" title="叠加属性"></a>叠加属性</h2><p>即父组件和子组件 同时设置一个属性，其表现并非是子组件覆盖父组件或者父组件覆盖子组件，而是将其两个属性值进行叠加计算</p>
-<ul>
-<li><p><code>opacity</code></p>
-<p>用乘法计算出的结果</p>
-</li>
-<li><p><code>text-decoration</code></p>
-<p>会两个都进行显示</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/07/28/css/%E3%80%90css%E3%80%91%E4%B8%8D%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7%E6%80%BB%E7%BB%93/" data-id="cmebelnu4001rn8fmfcwt6kim" data-title="【css】不常用属性总结" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/9/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span>
+    <a class="extend prev" rel="prev" href="/page/9/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/11/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1506,7 +1600,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PWA/">PWA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Typescript/">Typescript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VueTest/">VueTest</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web3/">Web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/axios-%E6%BA%90%E7%A0%81/">axios 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vuex-%E6%BA%90%E7%A0%81/">vuex 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web3/">web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webAssembly/">webAssembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webwork/">webwork</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/">业务场景</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/">扩展阅读</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/">额外内容</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PWA/">PWA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Typescript/">Typescript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VueTest/">VueTest</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web3/">Web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/axios-%E6%BA%90%E7%A0%81/">axios 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vuex-%E6%BA%90%E7%A0%81/">vuex 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web3/">web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webAssembly/">webAssembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webwork/">webwork</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/">业务场景</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/">扩展阅读</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/">额外内容</a></li></ul>
     </div>
   </div>
 
@@ -1516,7 +1610,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typescript/" rel="tag">Typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VueTest/" rel="tag">VueTest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios-%E6%BA%90%E7%A0%81/" rel="tag">axios 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/" rel="tag">chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/console/" rel="tag">console</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuex-%E6%BA%90%E7%A0%81/" rel="tag">vuex 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web3/" rel="tag">web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webAssembly/" rel="tag">webAssembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webRTC/" rel="tag">webRTC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webwork/" rel="tag">webwork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" rel="tag">业务场景</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" rel="tag">扩展阅读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" rel="tag">浏览器 Performance Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" rel="tag">额外内容</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typescript/" rel="tag">Typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VueTest/" rel="tag">VueTest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios-%E6%BA%90%E7%A0%81/" rel="tag">axios 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/" rel="tag">chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/console/" rel="tag">console</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuex-%E6%BA%90%E7%A0%81/" rel="tag">vuex 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web3/" rel="tag">web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webAssembly/" rel="tag">webAssembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webRTC/" rel="tag">webRTC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webwork/" rel="tag">webwork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" rel="tag">业务场景</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" rel="tag">扩展阅读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" rel="tag">浏览器 Performance Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" rel="tag">额外内容</a></li></ul>
     </div>
   </div>
 
@@ -1526,7 +1620,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
     </div>
   </div>
 
@@ -1548,6 +1642,10 @@
       <ul>
         
           <li>
+            <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">外包</a>
+          </li>
+        
+          <li>
             <a href="/2025/08/14/%E6%89%8B%E5%86%99%E9%A2%98/">手写题</a>
           </li>
         
@@ -1561,10 +1659,6 @@
         
           <li>
             <a href="/2025/08/14/%E3%80%90RN%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【RN】环境搭建</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E3%80%90AST%E3%80%91-%E8%A7%A3%E6%9E%90attrs/">解析 attrs</a>
           </li>
         
       </ul>
