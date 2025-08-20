@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>外包 | Hexo</title>
+  <title>记录1 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="vite性能调优Vite 的快，主要源于其“开发环境用 ES Module，生产环境用 Rollup”的架构。 本地开发 预构建  vite 会先将你的 node_modules 中的 CommonJS 或 UMD 格式的依赖，转换为 ESM 格式并打包成一个模块，以减少浏览器请求次数。 因此当依赖非常多且没有esm格式时，预构建非常消耗时间 123456789&#x2F;&#x2F; vite.config.jse">
 <meta property="og:type" content="article">
-<meta property="og:title" content="外包">
+<meta property="og:title" content="记录1">
 <meta property="og:url" content="http://example.com/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="vite性能调优Vite 的快，主要源于其“开发环境用 ES Module，生产环境用 Rollup”的架构。 本地开发 预构建  vite 会先将你的 node_modules 中的 CommonJS 或 UMD 格式的依赖，转换为 ESM 格式并打包成一个模块，以减少浏览器请求次数。 因此当依赖非常多且没有esm格式时，预构建非常消耗时间 123456789&#x2F;&#x2F; vite.config.jse">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-08-20T11:17:23.821Z">
-<meta property="article:modified_time" content="2025-08-20T13:25:11.424Z">
+<meta property="article:modified_time" content="2025-08-20T13:37:10.940Z">
 <meta property="article:author" content="yangxin">
 <meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
@@ -92,7 +92,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      外包
+      记录1
     </h1>
   
 
@@ -118,7 +118,7 @@
 <ul>
 <li><p>tree-shaking</p>
 <ul>
-<li><p>确保：在你的项目 package.json 中设置 “sideEffects”: false，或者准确声明有副作用的文件（如 CSS、Polyfills）。</p>
+<li><p>在你的项目 package.json 中设置 “sideEffects”: false，或者准确声明有副作用的文件（如 CSS、Polyfills）。</p>
 <p>  <code>&quot;sideEffects&quot;: false</code>: 表示该包的所有文件都没有副作用，打包工具可以安全地移除未使用的代码。</p>
 <p>  <code>&quot;sideEffects&quot;: [   &quot;*.css&quot;,   &quot;*.scss&quot;,   &quot;dist/polyfills.js&quot;   ]</code>: 表示只有匹配到的文件（如 .css 文件或 polyfills.js）具有副作用，不能被移除。其他未被引用的文件可以安全地移除。</p>
 </li>
@@ -455,16 +455,53 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
 </li>
 <li><strong>现状与适用场景</strong>：<strong>在 Vue 3 中，Composition API 被明确推荐为替代 Mixins 的首选方案</strong>。Mixins 现在主要用于<strong>遗留的 Vue 2 项目</strong>或一些非常简单的复用场景。</li>
 </ul>
-<h2 id="首屏优化"><a href="#首屏优化" class="headerlink" title="首屏优化"></a>首屏优化</h2><ul>
-<li>缓存</li>
+<h2 id="首屏优化"><a href="#首屏优化" class="headerlink" title="首屏优化"></a>首屏优化</h2><h3 id="构建阶段优化"><a href="#构建阶段优化" class="headerlink" title="构建阶段优化"></a>构建阶段优化</h3><ul>
+<li><p>懒加载</p>
+<p>  动态导入 (import(‘…’))： 会创建一个新的代码分割点。构建工具会将被导入的模块及其依赖拆分到一个独立的 chunk 文件中，这个文件只有在运行时需要时才会被浏览器加载</p>
+<ul>
+<li>路由懒加载：使用动态 import() 语法来定义路由</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// router.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; createRouter, createWebHistory &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 静态导入（不好）：构建时会打包到一起</span></span><br><span class="line"><span class="comment">// import Home from &#x27;./views/Home.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 动态导入（好）：会生成单独的 chunk 文件</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">Home</span> = (<span class="params"></span>) =&gt; <span class="keyword">import</span>(<span class="string">&#x27;./views/Home.vue&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">About</span> = (<span class="params"></span>) =&gt; <span class="keyword">import</span>(<span class="string">&#x27;./views/About.vue&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line"><span class="attr">history</span>: <span class="title function_">createWebHistory</span>(),</span><br><span class="line"><span class="attr">routes</span>: [</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Home</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&#x27;/about&#x27;</span>, <span class="attr">component</span>: <span class="title class_">About</span> &#125;,</span><br><span class="line">],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>组件懒加载：defineAsyncComponent</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">HeavyComponent</span> = <span class="title function_">defineAsyncComponent</span>(<span class="function">() =&gt;</span></span><br><span class="line">    <span class="keyword">import</span>(<span class="string">&#x27;./components/HeavyComponent.vue&#x27;</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>依赖优化</p>
+<p>  将很少变化的第三方库（如 vue, vue-router, lodash, element-plus）单独打包，利用浏览器缓存机制（强缓存），用户下次访问时就不再需要下载它们。</p>
+<p>  在 vite.config.js 中配置 <code>build.rollupOptions.output.manualChunks</code>。</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">// vite.config.js</span></span><br><span class="line">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">build</span>: &#123;</span><br><span class="line">        <span class="attr">rollupOptions</span>: &#123;</span><br><span class="line">        <span class="attr">output</span>: &#123;</span><br><span class="line">            <span class="comment">// 手动拆分 chunks</span></span><br><span class="line">            <span class="attr">manualChunks</span>: &#123;</span><br><span class="line">            <span class="comment">// 将 React 相关库拆分成单独的 chunk</span></span><br><span class="line">            <span class="string">&#x27;react-vendor&#x27;</span>: [<span class="string">&#x27;react&#x27;</span>, <span class="string">&#x27;react-dom&#x27;</span>],</span><br><span class="line">            <span class="comment">// 将组件库拆分成单独的 chunk</span></span><br><span class="line">            <span class="string">&#x27;ui-library&#x27;</span>: [<span class="string">&#x27;antd&#x27;</span>, <span class="string">&#x27;@arco-design/web-react&#x27;</span>],</span><br><span class="line">            <span class="comment">// 将工具库拆分开（也可以按更细的粒度）</span></span><br><span class="line">            <span class="string">&#x27;utils&#x27;</span>: [<span class="string">&#x27;lodash-es&#x27;</span>, <span class="string">&#x27;axios&#x27;</span>]</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 或者使用函数进行更智能的拆分</span></span><br><span class="line">            <span class="comment">// manualChunks(id) &#123;</span></span><br><span class="line">            <span class="comment">//   if (id.includes(&#x27;node_modules&#x27;)) &#123;</span></span><br><span class="line">            <span class="comment">//     return &#x27;vendor&#x27;;</span></span><br><span class="line">            <span class="comment">//   &#125;</span></span><br><span class="line">            <span class="comment">// &#125;</span></span><br><span class="line">        &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;    </span><br><span class="line"></span><br><span class="line">- <span class="title class_">Tree</span> <span class="title class_">Shaking</span></span><br><span class="line"></span><br><span class="line">    在项目 package.<span class="property">json</span> 中设置 <span class="string">&quot;sideEffects&quot;</span>: <span class="literal">false</span>，或者准确声明有副作用的文件（如 <span class="variable constant_">CSS</span>、<span class="title class_">Polyfills</span>）</span><br><span class="line"></span><br><span class="line">- 压缩资源</span><br><span class="line"></span><br><span class="line">    - <span class="variable constant_">JS</span>/<span class="variable constant_">CSS</span> 压缩：<span class="title class_">Vite</span> 默认使用 esbuild 进行压缩，效率极高，通常无需配置。</span><br><span class="line"></span><br><span class="line">    - 图片压缩：使用 <span class="title class_">Vite</span> 插件如 vite-plugin-imagemin，或在构建流程前手动压缩图片（使用 <span class="title class_">Tinypng</span>, <span class="title class_">Squoosh</span> 等工具）。</span><br><span class="line"></span><br><span class="line">- @vitejs/plugin-legacy</span><br><span class="line"></span><br><span class="line">    通过 @vitejs/plugin-legacy 实现。它会生成两套包，现代浏览器只需加载更小的版本。</span><br><span class="line"></span><br><span class="line">    <span class="string">``</span><span class="string">` js</span></span><br><span class="line"><span class="string">    // vite.config.js</span></span><br><span class="line"><span class="string">    import legacy from &#x27;@vitejs/plugin-legacy&#x27;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    export default defineConfig(&#123;</span></span><br><span class="line"><span class="string">    plugins: [</span></span><br><span class="line"><span class="string">        legacy(&#123;</span></span><br><span class="line"><span class="string">        targets: [&#x27;defaults&#x27;, &#x27;not IE 11&#x27;], // 指定目标浏览器</span></span><br><span class="line"><span class="string">        &#125;),</span></span><br><span class="line"><span class="string">    ],</span></span><br><span class="line"><span class="string">    &#125;);</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>unocss：所有css融合一起，减少多余样式</p>
+</li>
+</ul>
+<h3 id="运行优化"><a href="#运行优化" class="headerlink" title="运行优化"></a>运行优化</h3><ul>
+<li><p>路由懒加载</p>
+</li>
+<li><p>Suspense：等待异步组件加载态</p>
+</li>
+<li><p>骨架屏</p>
+</li>
+<li><p>优化静态内容</p>
+<ul>
+<li><p>v-once：对纯粹静态、永远不会改变的内容使用 v-once，Vue 会将其视为静态节点，跳过后续的 diff 检查。</p>
+</li>
+<li><p>v-memo (Vue 3.2+)：对复杂的、有条件渲染的组件或节点进行记忆，只有在依赖项数组变化时才更新。可用于优化大型 v-for 列表。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h3><ul>
+<li>gzip压缩</li>
+<li>协商缓存、强缓存</li>
 <li>cdn</li>
-<li>代码切分</li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/" data-id="cmek09jyw00666sfm6ql01uxa" data-title="外包" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/" data-id="cmek0pda6005664fmd0u7fkoa" data-title="记录1" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -538,7 +575,7 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
       <ul>
         
           <li>
-            <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">外包</a>
+            <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">记录1</a>
           </li>
         
           <li>

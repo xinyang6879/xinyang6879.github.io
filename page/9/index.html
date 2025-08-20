@@ -71,6 +71,150 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-HTTP/【http】队头阻塞" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/HTTP/%E3%80%90http%E3%80%91%E9%98%9F%E5%A4%B4%E9%98%BB%E5%A1%9E/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.271Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/http/">http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/HTTP/%E3%80%90http%E3%80%91%E9%98%9F%E5%A4%B4%E9%98%BB%E5%A1%9E/">【Htpp】队头阻塞</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="http1队头阻塞"><a href="#http1队头阻塞" class="headerlink" title="http1队头阻塞"></a>http1队头阻塞</h2><p>除了TCP的本身限制外，http1的先进先出（FIFO）的设计导致的。即浏览器在发送了请求后，必须按照发送顺序获取到相应的响应结果。例如请求A、请求B按顺序发送，请求A需要1s响应，请求B需要0.1s响应，即使B请求响应更加快速，但是浏览器依旧需要等待A的响应才能获取到B的响应。这就是http1的队头阻塞</p>
+<h3 id="FIFO"><a href="#FIFO" class="headerlink" title="FIFO"></a>FIFO</h3><h4 id="使用原因"><a href="#使用原因" class="headerlink" title="使用原因"></a>使用原因</h4><ul>
+<li><p>简化协议实现</p>
+<p>  http1设计在早期互联网，顺序处理模型更加简单，减少协议复杂性</p>
+</li>
+<li><p>避免资源竞争</p>
+<p>  顺序处理可以避免服务器或客户端因并发处理多个请求导致数据混乱</p>
+</li>
+<li><p>兼容性</p>
+<p>  早期浏览器和服务器对并发有限制，因此使用FIFO是权衡之后的结果</p>
+</li>
+</ul>
+<h4 id="表现"><a href="#表现" class="headerlink" title="表现"></a>表现</h4><p>请求顺序化和相应顺序化</p>
+<h4 id="导致问题"><a href="#导致问题" class="headerlink" title="导致问题"></a>导致问题</h4><ul>
+<li><p>队头阻塞</p>
+</li>
+<li><p>性能问题</p>
+<p>  高并发情况下，FIFO机制会导致连接利用率低下，无法充分利用带宽</p>
+</li>
+</ul>
+<h4 id="改进尝试"><a href="#改进尝试" class="headerlink" title="改进尝试"></a>改进尝试</h4><p>管道化：允许客户端在未接受响应是连续发送多个请求</p>
+<ul>
+<li><p>缺点</p>
+<ul>
+<li>响应必须按顺序返回</li>
+<li>服务器实现复杂，且易因队头阻塞导致性能问题</li>
+<li>浏览器默认禁用管道话</li>
+</ul>
+</li>
+</ul>
+<p>因此管道化实际并未解决队头阻塞问题</p>
+<h2 id="http2"><a href="#http2" class="headerlink" title="http2"></a>http2</h2><h3 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h3><ul>
+<li><p>二进制分帧</p>
+<p>  http2中引入了二进制分帧的概念，即将请求的参数及数据全部分解为一个一个的二进制格式帧，这样可以提升传输和解析的效率。</p>
+</li>
+<li><p>多路复用</p>
+<p>  流是一组双向的帧序列，每个流都有一个唯一的标识符，并且可以在同一个连接中并发传输多个流，可以最大程度实现多路复用</p>
+<p>  一个流可以由多个帧组成，这些帧按顺序发送，接收方根据流标识符将其重新组合为完整的请求或响应</p>
+</li>
+</ul>
+<p>因此多个http可以同时并发传输或者交错传输，从而减少队头阻塞</p>
+<h3 id="帧"><a href="#帧" class="headerlink" title="帧"></a>帧</h3><h4 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h4><p>每个帧有一个固定头部（9字节），包括：</p>
+<ul>
+<li><p>长度：Length</p>
+<p>  帧负载长度，由24位3个字节大小表示</p>
+</li>
+<li><p>类型：Type</p>
+<p>  帧类型，说明格式及其语义，用8位1个字节表示</p>
+</li>
+<li><p>标志：Flags</p>
+<p>  指示帧的特定属性或状态，用8位1个字节表示</p>
+</li>
+<li><p>流标识符：Stream Identifier</p>
+<p>  表示该帧关联的流，用31为表示，上限为2^31</p>
+</li>
+<li><p>帧数据</p>
+<p>  传输的数据内容Payload由帧类型决定</p>
+</li>
+<li><p>R<br>  1位保留字段，未定义，以0x0结尾</p>
+</li>
+</ul>
+<h4 id="帧类型"><a href="#帧类型" class="headerlink" title="帧类型"></a>帧类型</h4><p>Pad Length：填充字节长度<br>E：标识流是否为独占，设置PRIORITY时才有值<br>Stream Dependency：流的依赖流，设置PRIORITY时才有值<br>Weight：流优先级权重，设置PRIORITY时才有值<br>Header Block Fragment：Header块片段<br>Padding：填充字节长度</p>
+<ul>
+<li><p>DATA帧</p>
+<p>  数据帧主要存储http2数据报文，包含8位填充字节+填充字节长度（PADDED）标记位true时说明由填充字节+Data具体传输的数据</p>
+</li>
+<li><p>HEADER帧</p>
+<p>  包含Pad Length（填充字节长度）+E（标识流是否为独占，设置PRIORITY时才有值）+Stream Dependency（流的依赖流，设置PRIORITY时才有值）+ Weight（流优先级权重，设置PRIORITY时才有值）+ Header Block Fragment（Header块片段）+ Padding（填充字节长度）</p>
+</li>
+<li><p>PROIRITY帧</p>
+<p>  发送流的优先级，包含E+Stream Dependency+Weight</p>
+</li>
+<li><p>RST_STREAM帧</p>
+<p>  当发送错误或取消时，用于终止一个流，包含Error Code，32位错误代码，说明错误原因</p>
+</li>
+<li><p>SETTINGS帧</p>
+<p>  用于传达连接端点之间的配置参数，标为ACK&#x3D;0表示被对等的SETTINGS帧使用，不为0时表示FRAME_SIZE_ERROR连接错误</p>
+</li>
+<li><p>PUSH_PROMISE帧</p>
+<p>  服务端向客户端推送的帧，客户端可以返回RST_STREAM拒绝</p>
+</li>
+<li><p>PING帧</p>
+<p>  心跳监测，测量发送往还时间，确定连接是否正常，ACK&#x3D;0表示PING帧响应，1表示PING帧</p>
+</li>
+<li><p>GOAWAY帧</p>
+<p>  用于关闭连接或发出错误，允许停止接受新的流并完成前面的流处理</p>
+<p>  包括R+Last Stream Id + Error Code + Addictional Debug Data</p>
+</li>
+<li><p>WINDOW_UPDATE帧</p>
+<p>  用于连接和流的流量控制</p>
+</li>
+<li><p>CONTINUATION帧</p>
+<p>  一种持续帧，用于继续传输Header头块片段。通常Header块比较大，在HEADERS、PUSH_PROMISE、CONTINUATION帧之后继续传输</p>
+</li>
+</ul>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>http2只解决了应用层的问题，但是由于其还是基于tcp的，因此tcp硬伤的队头阻塞依旧存在</p>
+<p>tcp由于“可靠传输”而包含的按序到达的机制，使得http2的队头阻塞问题仍然存在</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/huansky/p/14420723.html">HTTP 1.x 学习笔记 —— Web 性能权威指南</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/330300133">关于队头阻塞（Head-of-Line blocking），看这一篇就足够了</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_63951768/article/details/144917352">HTTP1.1 对头阻塞和 HTTP2 中对其的解决措施</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/HTTP/%E3%80%90http%E3%80%91%E9%98%9F%E5%A4%B4%E9%98%BB%E5%A1%9E/" data-id="cmek0pd8o000q64fm6a45e502" data-title="【Htpp】队头阻塞" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/http/" rel="tag">http</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-HTTP/【前端缓存】随机数位置区别" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/08/14/HTTP/%E3%80%90%E5%89%8D%E7%AB%AF%E7%BC%93%E5%AD%98%E3%80%91%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%88%AB/" class="article-date">
@@ -156,7 +300,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/HTTP/%E3%80%90%E5%89%8D%E7%AB%AF%E7%BC%93%E5%AD%98%E3%80%91%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%88%AB/" data-id="cmek09jx3000l6sfm26cfggab" data-title="【前端缓存】随机数位置区别" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/HTTP/%E3%80%90%E5%89%8D%E7%AB%AF%E7%BC%93%E5%AD%98%E3%80%91%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%88%AB/" data-id="cmek0pd8p000t64fmhwadghwr" data-title="【前端缓存】随机数位置区别" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -270,163 +414,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/HTTP/%E5%B0%8F%E7%82%B9/" data-id="cmek09jx4000o6sfm289g89nn" data-title="小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/HTTP/%E5%B0%8F%E7%82%B9/" data-id="cmek0pd8q000v64fm0uey4w3a" data-title="小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-HTTP/【Htpp】header" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/HTTP/%E3%80%90Htpp%E3%80%91header/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.271Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/http/">http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/HTTP/%E3%80%90Htpp%E3%80%91header/">【Htpp】header</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="通用头部"><a href="#通用头部" class="headerlink" title="通用头部"></a>通用头部</h2><h3 id="cache-control"><a href="#cache-control" class="headerlink" title="cache-control"></a>cache-control</h3><p>控制缓存，可以接收多个参数，参数之间以“，”隔空。</p>
-<blockquote>
-<p>请求和响应共用</p>
-</blockquote>
-<ul>
-<li><p>no-cache：表示强制使用最新的值而不使用缓存。请求头部包含no-cache，表示客户端不接收缓存过的响应，缓存服务器必须把客户端请求转发给源服务器；响应请求里面包含，那么缓存服务器不能对响应资源进行缓存。（协商缓存</p>
-</li>
-<li><p>no-store：不应该缓存当前内容，表示对应的报文中包含机密信息，不缓存</p>
-</li>
-<li><p>no-transform：缓存不能改变主体的媒体类型，能防止缓存服务器压缩图片资源等。</p>
-</li>
-<li><p>max-age：缓存有效期（以秒为单位）。请求包含时，如果缓存资源的缓存时间比指定时间数值更小时则接受缓存资源，当值为0时，缓存服务器会把请求转发给源服务器；当响应包含时，缓存服务器不再确认资源的有效期，而以max-age数值作为缓存保存时长。</p>
-</li>
-<li><p>s-maxage: 用于配置<strong>代理服务器</strong>的缓存，以秒为单位，优先级高于max-age，但只在代理服务器中生效，客户端依然使用max-age</p>
-</li>
-</ul>
-<h4 id="max-age-0和no-cache"><a href="#max-age-0和no-cache" class="headerlink" title="max-age&#x3D;0和no-cache"></a>max-age&#x3D;0和no-cache</h4><ul>
-<li><p><code>no-cache</code>：浏览器可以进行缓存，未定性缓存是否已经过期，禁用未经验证的缓存。但是在每次请求时，需要像服务端发送一个请求判断这次的资源是否过期。如果服务端返回304，说明资源还在有效期内，浏览器可以直接使用缓存资源；但是如果内容已经过期了，服务器会返回新的内容。比max-age&#x3D;0更严格，确保每次都需要进行验证</p>
-</li>
-<li><p><code>max-age=0</code>: 将缓存已经视为过期了，但允许客户端复用缓存（通过验证），需要像服务器发起请求，如果服务端返回304，那么客户端依旧使用缓存，如果是200，那么就视为需要重新获取新数据。</p>
-</li>
-</ul>
-<p>Cache-Control: no-cache, max-age&#x3D;0是冗余写法，但是可以确保浏览器的兼容性</p>
-<table>
-<thead>
-<tr>
-<th>特性</th>
-<th>max-age&#x3D;0</th>
-<th>no-cache</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>缓存是否保留</td>
-<td>保留，但被视为过期</td>
-<td>保留，但每次使用前需要验证</td>
-</tr>
-<tr>
-<td>验证条件</td>
-<td>可能被其他条件覆盖</td>
-<td>强制无条件</td>
-</tr>
-<tr>
-<td>优先级</td>
-<td>较低</td>
-<td>较高</td>
-</tr>
-<tr>
-<td>场景</td>
-<td>希望缓存快速更新，但允许复用</td>
-<td>强制要求数据一致性（如实时数据）</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>请求头部</p>
-</blockquote>
-<ul>
-<li><p>min-fresh：要求缓存服务器指定时间内返回响应（以秒为单位）</p>
-</li>
-<li><p>only-if-cached：客户端仅在缓存服务器本地缓存目标资源的情况下才会要求其返回值，也就是说不会向源服务器转发请求。</p>
-</li>
-</ul>
-<blockquote>
-<p>响应头部</p>
-</blockquote>
-<ul>
-<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mK0vouYv4BwgX190fSd/article/details/89880083">must-revalidate</a>：本地缓存过期前可以使用，否则必须进行有效性校验</p>
-</li>
-<li><p>public：响应可能会被任何对象缓存，没有限制</p>
-</li>
-<li><p>private： 响应只能被特定用户缓存，不能被其他用户使用</p>
-</li>
-<li><p>proxy-revalidate：仅适用于共享缓存，私有缓存时忽略</p>
-</li>
-</ul>
-<h3 id="connection"><a href="#connection" class="headerlink" title="connection"></a>connection</h3><ul>
-<li><p>close: 当一方的connection为close时，表示关闭此次连接</p>
-</li>
-<li><p>keep-live：持久化连接</p>
-</li>
-</ul>
-<h3 id="date"><a href="#date" class="headerlink" title="date"></a>date</h3><p>报文创建时间</p>
-<h2 id="请求头部"><a href="#请求头部" class="headerlink" title="请求头部"></a>请求头部</h2><h3 id="accept"><a href="#accept" class="headerlink" title="accept"></a>accept</h3><p>可以设置多个值，每个值通过“，”进行分割</p>
-<p>常用值：text&#x2F;html，application&#x2F;xml；q&#x3D;0.9等</p>
-<p>注：q&#x3D;x，是给当前类型赋予权重，范围为0～1，可精确到小数点后3位。和MIME子类型通过“，”分割，默认权重值为1。服务器会优先返回权重较大的类型，如果权重相等，则按照从左至右的顺序处理。</p>
-<h3 id="accept-charset"><a href="#accept-charset" class="headerlink" title="accept-charset"></a>accept-charset</h3><p>客户端可以处理的字符集类型，通常不需要额外设置此项，每种文件类型都有默认的值。和accept一样可以设置权重</p>
-<h3 id="accept-encoding"><a href="#accept-encoding" class="headerlink" title="accept-encoding"></a>accept-encoding</h3><p>客户端可以接收的编码方式，通常这个字段值会是某种压缩算法，比如gzip等。和accept一样可以设置权重</p>
-<h3 id="accept-language"><a href="#accept-language" class="headerlink" title="accept-language"></a>accept-language</h3><p>客户端可以解析的自然语言，可以一次性指定多个语言并设置权重。</p>
-<h3 id="authorization"><a href="#authorization" class="headerlink" title="authorization"></a>authorization</h3><p>告知服务端认证信息。通常在收到401后，在请求头里面加入authorization：type credentials</p>
-<h3 id="host（必传）"><a href="#host（必传）" class="headerlink" title="host（必传）"></a>host（必传）</h3><p>告知服务器请求资源所处的互联网主机名和端口号（不指定将使用默认端口号）。</p>
-<p>必传是因为服务器在接收到请求后将请求的主机号替换为ip地址，但是如果这个ip部署了多个域名，那么服务器无法转发到对应的请求</p>
-<h3 id="if-modified-since"><a href="#if-modified-since" class="headerlink" title="if-modified-since"></a>if-modified-since</h3><p>确认代理或者客户端本地资源的有效性。服务端在接受到这个值后，会与资源最近更新时间做对比，如果在字段指定的日期之后资源发生了变化，那么服务器会返回最新的资源，否则返回304</p>
-<h3 id="if-none-match"><a href="#if-none-match" class="headerlink" title="if-none-match"></a>if-none-match</h3><p>用于判断本地缓存是否失效。存储的是上个响应头部的etag值。当指定的值与资源的etag值不一致时，服务器端才会处理请求</p>
-<h2 id="响应头部"><a href="#响应头部" class="headerlink" title="响应头部"></a>响应头部</h2><h3 id="age"><a href="#age" class="headerlink" title="age"></a>age</h3><p>告知客户端服务端在多久前创建了响应，若创建该响应的是缓存服务器，age指的是缓存后响应再次发起认证到认证完成的时间。代理创建响应必须加上age字段</p>
-<h3 id="etag"><a href="#etag" class="headerlink" title="etag"></a>etag</h3><p>服务端在每次更新资源后生成一个唯一对应的标识，生成算法由服务器自行决定</p>
-<p>分类：</p>
-<ul>
-<li><p>强etag：资源发生变化就会改变</p>
-</li>
-<li><p>弱etag：资源发生了较大变化时才会改变。以W&#x2F;来表示</p>
-</li>
-</ul>
-<h3 id="location"><a href="#location" class="headerlink" title="location"></a>location</h3><p>使用头部字段location可以引导请求发起方至某个与请求url位置不同的资源，一般会配合3xx进行使用</p>
-<h3 id="www-authenticate"><a href="#www-authenticate" class="headerlink" title="www-authenticate"></a>www-authenticate</h3><p>告知客户端当前服务器端可接收的认证方案，然后客户端可以在authentication字段中返回对应的值</p>
-<h2 id="主体头部"><a href="#主体头部" class="headerlink" title="主体头部"></a>主体头部</h2><h3 id="allow"><a href="#allow" class="headerlink" title="allow"></a>allow</h3><p>通知客户端能够支持的http请求方法。当服务端接收到不支持http请求方法时，会响应状态信息405，同时把支持的方法写入allow字段</p>
-<h3 id="content-encoding"><a href="#content-encoding" class="headerlink" title="content-encoding"></a>content-encoding</h3><p>告知客户端当前响应内容的编码方式</p>
-<h3 id="content-length"><a href="#content-length" class="headerlink" title="content-length"></a>content-length</h3><p>表明主体部分的大小，单位为字节</p>
-<h3 id="content-type"><a href="#content-type" class="headerlink" title="content-type"></a>content-type</h3><p>表明响应主体内容的MIME类型</p>
-<h3 id="last-modified"><a href="#last-modified" class="headerlink" title="last-modified"></a>last-modified</h3><p>资源最后的修改时间，配合缓存使用</p>
-<h3 id="expires"><a href="#expires" class="headerlink" title="expires"></a>expires</h3><p>失效日期</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/HTTP/%E3%80%90Htpp%E3%80%91header/" data-id="cmek09jx8000u6sfm2mzcelp3" data-title="【Htpp】header" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/http/" rel="tag">http</a></li></ul>
-
     </footer>
   </div>
   
@@ -833,7 +824,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/HTML/%E5%B0%8F%E7%82%B9/" data-id="cmek09jwu000g6sfmdaj95rbj" data-title="【HTML】记录小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/HTML/%E5%B0%8F%E7%82%B9/" data-id="cmek0pd8k000k64fm7afd6gje" data-title="【HTML】记录小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -900,7 +891,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/HTML/%E3%80%90HTML%E3%80%91%E8%AE%B0%E5%BD%95/" data-id="cmek09jwu000f6sfmf8hx8hkc" data-title="【HTML】记录" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/HTML/%E3%80%90HTML%E3%80%91%E8%AE%B0%E5%BD%95/" data-id="cmek0pd8g000e64fm6u6m7thu" data-title="【HTML】记录" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -975,7 +966,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/HTML/%E3%80%90HTML%E3%80%91templates%20and%20slots/" data-id="cmek09jwt000c6sfmf2c94zyo" data-title="【HTML】templates and slots" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/HTML/%E3%80%90HTML%E3%80%91templates%20and%20slots/" data-id="cmek0pd8h000f64fmg01g8wq0" data-title="【HTML】templates and slots" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1128,7 +1119,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/HTML/%E3%80%90HTML%E3%80%91Shadow%20DOM/" data-id="cmek09jws000a6sfmcppi9h6i" data-title="【HTML】Shadow DOM" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/HTML/%E3%80%90HTML%E3%80%91Shadow%20DOM/" data-id="cmek0pd8f000b64fm3ly97yi3" data-title="【HTML】Shadow DOM" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1243,7 +1234,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91%E5%B8%B8%E7%94%A8%E9%9D%A2%E6%9D%BF/" data-id="cmek09jxr002f6sfmfqq86v2f" data-title="【devTools】常用面板" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91%E5%B8%B8%E7%94%A8%E9%9D%A2%E6%9D%BF/" data-id="cmek0pd9h003564fm7570biu1" data-title="【devTools】常用面板" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1436,7 +1427,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91performance/" data-id="cmek09jxp002c6sfmcrmme9qz" data-title="【devTools】performance" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91performance/" data-id="cmek0pd9j003a64fm622a0mje" data-title="【devTools】performance" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1498,7 +1489,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91layers/" data-id="cmek09jxh001w6sfmf28g0m0y" data-title="【devTools】layers" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91layers/" data-id="cmek0pd9f003164fmajje8897" data-title="【devTools】layers" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1567,7 +1558,7 @@
       <ul>
         
           <li>
-            <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">外包</a>
+            <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">记录1</a>
           </li>
         
           <li>

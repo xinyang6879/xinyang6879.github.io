@@ -71,6 +71,98 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-小程序/【云托管】无头浏览器生成图片并上传到对象储存" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91%E6%97%A0%E5%A4%B4%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%9F%E6%88%90%E5%9B%BE%E7%89%87%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0%E5%AF%B9%E8%B1%A1%E5%82%A8%E5%AD%98/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.939Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91%E6%97%A0%E5%A4%B4%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%9F%E6%88%90%E5%9B%BE%E7%89%87%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0%E5%AF%B9%E8%B1%A1%E5%82%A8%E5%AD%98/">【云托管】无头浏览器生成图片并上传到对象储存</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="无头浏览器截图"><a href="#无头浏览器截图" class="headerlink" title="无头浏览器截图"></a>无头浏览器截图</h2><p>使用库 puppeteer</p>
+<p>云托管 cli 的 nodejs 版本是 14.20.1，因此最新的 puppeteer 不兼容，部署发布会报错，需要将其降低到 17</p>
+<ul>
+<li>dockerFile 配置字体</li>
+</ul>
+<p>没有配置导致中文字体出现方括号</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    apt-get install -y \</span></span><br><span class="line"><span class="language-bash">    fonts-arphic-ukai \</span></span><br><span class="line"><span class="language-bash">    fonts-arphic-uming \</span></span><br><span class="line"><span class="language-bash">    fonts-ipafont-mincho \</span></span><br><span class="line"><span class="language-bash">    fonts-unfonts-core</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>开启无头浏览器</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> browser;</span><br><span class="line"><span class="comment">// 启动浏览器</span></span><br><span class="line">browser = <span class="keyword">await</span> puppeteer.<span class="title function_">launch</span>(&#123;</span><br><span class="line">  <span class="attr">headless</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">executablePath</span>: process.<span class="property">env</span>.<span class="property">PUPPETEER_EXECUTABLE_PATH</span>,</span><br><span class="line">  <span class="attr">args</span>: [</span><br><span class="line">    <span class="string">&quot;--no-sandbox&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--disable-setuid-sandbox&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--disable-dev-shm-usage&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--single-process&quot;</span>,</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">timeout</span>: <span class="number">60000</span>, <span class="comment">// 增加超时时间</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 开启一个新的标签页</span></span><br><span class="line"><span class="keyword">const</span> page = <span class="keyword">await</span> browser.<span class="title function_">newPage</span>();</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>加载对应页面</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 读取 HTML 文件</span></span><br><span class="line"><span class="keyword">const</span> filePath = path.<span class="title function_">join</span>(__dirname, <span class="string">&quot;./template-1.html&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> htmlContent = fs.<span class="title function_">readFileSync</span>(filePath, <span class="string">&quot;utf8&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">escapeRegExp</span> = (<span class="params">str</span>) =&gt; str.<span class="title function_">replace</span>(<span class="regexp">/[.*+?^$&#123;&#125;()|[\]\\]/g</span>, <span class="string">&quot;\\$&amp;&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> [key, value] <span class="keyword">of</span> <span class="title class_">Object</span>.<span class="title function_">entries</span>(dataToReplace)) &#123;</span><br><span class="line">  <span class="keyword">const</span> escapedKey = <span class="title function_">escapeRegExp</span>(key);</span><br><span class="line">  htmlContent = htmlContent.<span class="title function_">replace</span>(<span class="keyword">new</span> <span class="title class_">RegExp</span>(escapedKey, <span class="string">&quot;g&quot;</span>), value);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 加载修改后的 HTML 内容</span></span><br><span class="line"><span class="keyword">await</span> page.<span class="title function_">setContent</span>(htmlContent, &#123; <span class="attr">waitUntil</span>: <span class="string">&quot;networkidle0&quot;</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置视口大小</span></span><br><span class="line"><span class="comment">// 修改后：根据 4 倍缩放调整视口</span></span><br><span class="line"><span class="keyword">await</span> page.<span class="title function_">setViewport</span>(&#123;</span><br><span class="line">  <span class="attr">width</span>: <span class="number">220</span>,</span><br><span class="line">  <span class="attr">height</span>: <span class="number">176</span>,</span><br><span class="line">  <span class="attr">deviceScaleFactor</span>: <span class="number">2</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>截图保存</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 创建截图目录</span></span><br><span class="line"><span class="keyword">const</span> screenshotDir = path.<span class="title function_">join</span>(__dirname, <span class="string">&quot;screenshots&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (!fs.<span class="title function_">existsSync</span>(screenshotDir)) &#123;</span><br><span class="line">  fs.<span class="title function_">mkdirSync</span>(screenshotDir, &#123; <span class="attr">recursive</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> name = <span class="title class_">Math</span>.<span class="title function_">random</span>() + <span class="string">&quot;_screenshot.png&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> picName = path.<span class="title function_">join</span>(screenshotDir, name);</span><br><span class="line"><span class="comment">// 添加字体加载等待</span></span><br><span class="line"><span class="keyword">await</span> page.<span class="title function_">evaluate</span>(<span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">ensureFonts</span> = (<span class="params">callback</span>) =&gt; &#123;</span><br><span class="line">    <span class="variable language_">document</span>.<span class="property">fonts</span>.<span class="property">ready</span>.<span class="title function_">then</span>(callback);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> <span class="title function_">ensureFonts</span>(resolve));</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 截图并保存</span></span><br><span class="line"><span class="keyword">await</span> page.<span class="title function_">screenshot</span>(&#123; <span class="attr">path</span>: picName, <span class="attr">fullPage</span>: <span class="literal">true</span> &#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="上传到对象储存"><a href="#上传到对象储存" class="headerlink" title="上传到对象储存"></a>上传到对象储存</h2><p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/development/storage/service/upload.html">https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/development/storage/service/upload.html</a></p>
+<p>上传到对象储存需要走两部，获取上传链接，然后再进行文件上传</p>
+<p>服务端可以通过配置云调用，将<code>tcb/uploadfile</code>和<code>tcb/batchdownloadfile</code>配置到云调用中，那么服务端就不需要再传 access_token 了，且可以通过<code>req.headers?.[&quot;x-wx-openid&quot;]</code>获取到用户的 unionid</p>
+<h3 id="获取上传链接"><a href="#获取上传链接" class="headerlink" title="获取上传链接"></a>获取上传链接</h3><p>uploadFileResponse 返回的 token 有效期是半小时</p>
+<p>同名的文件是被覆盖</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> uploadFileResponse = <span class="keyword">await</span> axios.<span class="title function_">post</span>(</span><br><span class="line">  <span class="string">&quot;http://api.weixin.qq.com/tcb/uploadfile&quot;</span>,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">env</span>: <span class="string">&quot;微信云托管环境ID&quot;</span>,</span><br><span class="line">    <span class="attr">path</span>: <span class="string">`shareCard/<span class="subst">$&#123;name&#125;</span>`</span>, <span class="comment">//目录及文件名称</span></span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"><span class="keyword">if</span> (uploadFileResponse.<span class="property">status</span> !== <span class="number">200</span> || !uploadFileResponse.<span class="property">data</span>.<span class="property">url</span>) &#123;</span><br><span class="line">  <span class="keyword">await</span> browser.<span class="title function_">close</span>();</span><br><span class="line">  <span class="title function_">reject</span>(uploadFileResponse);</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h3><p>接口链接是获取上传链接时返回的 url，依据接口的参数拼接</p>
+<p>此接口无返回，状态码 status 返回 204，因此不要判断其状态码是 200 才算是正常的！！！</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> result = uploadFileResponse.<span class="property">data</span>;</span><br><span class="line"><span class="keyword">const</span> data = <span class="keyword">new</span> <span class="title class_">FormData</span>();</span><br><span class="line">data.<span class="title function_">append</span>(<span class="string">&quot;key&quot;</span>, <span class="string">`shareCard/<span class="subst">$&#123;name&#125;</span>`</span>);</span><br><span class="line">data.<span class="title function_">append</span>(<span class="string">&quot;Signature&quot;</span>, result.<span class="property">authorization</span>);</span><br><span class="line">data.<span class="title function_">append</span>(<span class="string">&quot;x-cos-security-token&quot;</span>, result.<span class="property">token</span>);</span><br><span class="line">data.<span class="title function_">append</span>(<span class="string">&quot;x-cos-meta-fileid&quot;</span>, result.<span class="property">cos_file_id</span>);</span><br><span class="line"><span class="keyword">const</span> fileStream = fs.<span class="title function_">createReadStream</span>(picName);</span><br><span class="line">data.<span class="title function_">append</span>(<span class="string">&quot;file&quot;</span>, fileStream, &#123;</span><br><span class="line">  <span class="attr">filename</span>: name,</span><br><span class="line">  <span class="attr">contentType</span>: <span class="string">&quot;image/png&quot;</span>,</span><br><span class="line">  <span class="attr">knownLength</span>: fs.<span class="title function_">statSync</span>(picName).<span class="property">size</span>,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// COS 直传</span></span><br><span class="line"><span class="keyword">const</span> uploadRes = <span class="keyword">await</span> axios.<span class="title function_">post</span>(result.<span class="property">url</span>, data, &#123;</span><br><span class="line">  <span class="attr">headers</span>: data.<span class="title function_">getHeaders</span>(),</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取文件下载链接"><a href="#获取文件下载链接" class="headerlink" title="获取文件下载链接"></a>获取文件下载链接</h3><p>服务端和小程序端都有获取到文件下载链接的方法，小程序可以通过 fileid 直接在 image、video 等标签中直接显示</p>
+<ul>
+<li>服务端获取文件下载链接</li>
+</ul>
+<p>如果之前给的下载链接未失效，那么此图片修改后，对应的下载链接的图片也会更新</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getFileLinkResponse = <span class="keyword">await</span> axios.<span class="title function_">post</span>(</span><br><span class="line">  <span class="string">&quot;http://api.weixin.qq.com/tcb/batchdownloadfile&quot;</span>,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">env</span>: <span class="string">&quot;微信云托管环境ID&quot;</span>,</span><br><span class="line">    <span class="attr">file_list</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">fileid</span>: result.<span class="property">file_id</span>,</span><br><span class="line">        <span class="attr">max_age</span>: <span class="number">7200</span>, <span class="comment">//失效时间</span></span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"><span class="keyword">const</span> [fileInfo = &#123;&#125;] = getFileLinkResponse.<span class="property">data</span>?.<span class="property">file_list</span> || [];</span><br><span class="line"><span class="keyword">const</span> download_url = fileInfo.<span class="property">download_url</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">FileInfo</span> = &#123;</span><br><span class="line">  <span class="attr">fileid</span>: <span class="built_in">string</span>; <span class="comment">// 文件ID</span></span><br><span class="line">  <span class="attr">download_url</span>: <span class="built_in">string</span>; <span class="comment">// 下载链接</span></span><br><span class="line">  <span class="attr">status</span>: <span class="built_in">number</span>; <span class="comment">// 状态码</span></span><br><span class="line">  <span class="attr">errmsg</span>: <span class="built_in">string</span>; <span class="comment">// 该文件错误信息</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="储存数据库"><a href="#储存数据库" class="headerlink" title="储存数据库"></a>储存数据库</h2><p>依据 unionid，fileid 储存到数据库中</p>
+<h3 id="定义数据表"><a href="#定义数据表" class="headerlink" title="定义数据表"></a>定义数据表</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// db.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; <span class="title class_">Sequelize</span>, <span class="title class_">DataTypes</span> &#125; = <span class="built_in">require</span>(<span class="string">&quot;sequelize&quot;</span>);</span><br><span class="line"><span class="comment">// 从环境变量中读取数据库配置</span></span><br><span class="line"><span class="keyword">const</span> &#123; <span class="variable constant_">MYSQL_USERNAME</span>, <span class="variable constant_">MYSQL_PASSWORD</span>, <span class="variable constant_">MYSQL_ADDRESS</span> = <span class="string">&quot;&quot;</span> &#125; = process.<span class="property">env</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> [host, port] = <span class="variable constant_">MYSQL_ADDRESS</span>.<span class="title function_">split</span>(<span class="string">&quot;:&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sequelize = <span class="keyword">new</span> <span class="title class_">Sequelize</span>(<span class="string">&quot;nodejs_demo&quot;</span>, <span class="variable constant_">MYSQL_USERNAME</span>, <span class="variable constant_">MYSQL_PASSWORD</span>, &#123;</span><br><span class="line">  host,</span><br><span class="line">  port,</span><br><span class="line">  <span class="attr">dialect</span>: <span class="string">&quot;mysql&quot;</span> <span class="comment">/* one of &#x27;mysql&#x27; | &#x27;mariadb&#x27; | &#x27;postgres&#x27; | &#x27;mssql&#x27; */</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义新的数据模型</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">UserShareStyle</span> = sequelize.<span class="title function_">define</span>(<span class="string">&quot;UserShareStyle&quot;</span>, &#123;</span><br><span class="line">  <span class="attr">unionid</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">DataTypes</span>.<span class="property">STRING</span>,</span><br><span class="line">    <span class="attr">allowNull</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">unique</span>: <span class="literal">true</span>, <span class="comment">// 确保每个 unionid 是唯一的</span></span><br><span class="line">    <span class="attr">index</span>: <span class="literal">true</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">fileId</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">DataTypes</span>.<span class="property">STRING</span>,</span><br><span class="line">    <span class="attr">allowNull</span>: <span class="literal">false</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据库初始化方法</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">init</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="title class_">UserShareStyle</span>.<span class="title function_">sync</span>(&#123; <span class="attr">alter</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导出初始化方法和模型</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">initDB</span>: init,</span><br><span class="line">  <span class="title class_">UserShareStyle</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>入口文件声明</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">bootstrap</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">initDB</span>();</span><br><span class="line">  app.<span class="title function_">listen</span>(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;启动成功&quot;</span>, port);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取到用户unionid</span></span><br><span class="line"><span class="keyword">const</span> unionid = req.<span class="property">headers</span>?.[<span class="string">&quot;x-wx-openid&quot;</span>];</span><br><span class="line"><span class="keyword">const</span> [record, created] = <span class="keyword">await</span> <span class="title class_">UserShareStyle</span>.<span class="title function_">upsert</span>(</span><br><span class="line">  &#123; unionid, <span class="attr">fileId</span>: result.<span class="property">file_id</span> &#125;, <span class="comment">// 更新或插入的数据</span></span><br><span class="line">  &#123; <span class="attr">where</span>: &#123; unionid &#125; &#125; <span class="comment">// 根据 unionid 操作</span></span><br><span class="line">);</span><br><span class="line"><span class="keyword">if</span> (created) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;插入新记录成功&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;更新记录成功&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91%E6%97%A0%E5%A4%B4%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%9F%E6%88%90%E5%9B%BE%E7%89%87%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0%E5%AF%B9%E8%B1%A1%E5%82%A8%E5%AD%98/" data-id="cmek0pd9t004264fmbtw543ko" data-title="【云托管】无头浏览器生成图片并上传到对象储存" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-小程序/【云托管】socket解决h5和小程序通信问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91socket%E8%A7%A3%E5%86%B3h5%E5%92%8C%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%80%9A%E4%BF%A1%E9%97%AE%E9%A2%98/" class="article-date">
@@ -168,151 +260,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91socket%E8%A7%A3%E5%86%B3h5%E5%92%8C%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%80%9A%E4%BF%A1%E9%97%AE%E9%A2%98/" data-id="cmek09jy7003v6sfm62sn6jix" data-title="【云托管】socket解决h5和小程序通信问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91socket%E8%A7%A3%E5%86%B3h5%E5%92%8C%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%80%9A%E4%BF%A1%E9%97%AE%E9%A2%98/" data-id="cmek0pd9u004764fmbx1p0mvl" data-title="【云托管】socket解决h5和小程序通信问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-小程序/【云托管】无头浏览器生成图片并上传到对象储存" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91%E6%97%A0%E5%A4%B4%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%9F%E6%88%90%E5%9B%BE%E7%89%87%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0%E5%AF%B9%E8%B1%A1%E5%82%A8%E5%AD%98/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.939Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91%E6%97%A0%E5%A4%B4%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%9F%E6%88%90%E5%9B%BE%E7%89%87%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0%E5%AF%B9%E8%B1%A1%E5%82%A8%E5%AD%98/">【云托管】无头浏览器生成图片并上传到对象储存</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="无头浏览器截图"><a href="#无头浏览器截图" class="headerlink" title="无头浏览器截图"></a>无头浏览器截图</h2><p>使用库 puppeteer</p>
-<p>云托管 cli 的 nodejs 版本是 14.20.1，因此最新的 puppeteer 不兼容，部署发布会报错，需要将其降低到 17</p>
-<ul>
-<li>dockerFile 配置字体</li>
-</ul>
-<p>没有配置导致中文字体出现方括号</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    apt-get install -y \</span></span><br><span class="line"><span class="language-bash">    fonts-arphic-ukai \</span></span><br><span class="line"><span class="language-bash">    fonts-arphic-uming \</span></span><br><span class="line"><span class="language-bash">    fonts-ipafont-mincho \</span></span><br><span class="line"><span class="language-bash">    fonts-unfonts-core</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>开启无头浏览器</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> browser;</span><br><span class="line"><span class="comment">// 启动浏览器</span></span><br><span class="line">browser = <span class="keyword">await</span> puppeteer.<span class="title function_">launch</span>(&#123;</span><br><span class="line">  <span class="attr">headless</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">executablePath</span>: process.<span class="property">env</span>.<span class="property">PUPPETEER_EXECUTABLE_PATH</span>,</span><br><span class="line">  <span class="attr">args</span>: [</span><br><span class="line">    <span class="string">&quot;--no-sandbox&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--disable-setuid-sandbox&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--disable-dev-shm-usage&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--single-process&quot;</span>,</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">timeout</span>: <span class="number">60000</span>, <span class="comment">// 增加超时时间</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 开启一个新的标签页</span></span><br><span class="line"><span class="keyword">const</span> page = <span class="keyword">await</span> browser.<span class="title function_">newPage</span>();</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>加载对应页面</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 读取 HTML 文件</span></span><br><span class="line"><span class="keyword">const</span> filePath = path.<span class="title function_">join</span>(__dirname, <span class="string">&quot;./template-1.html&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> htmlContent = fs.<span class="title function_">readFileSync</span>(filePath, <span class="string">&quot;utf8&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">escapeRegExp</span> = (<span class="params">str</span>) =&gt; str.<span class="title function_">replace</span>(<span class="regexp">/[.*+?^$&#123;&#125;()|[\]\\]/g</span>, <span class="string">&quot;\\$&amp;&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> [key, value] <span class="keyword">of</span> <span class="title class_">Object</span>.<span class="title function_">entries</span>(dataToReplace)) &#123;</span><br><span class="line">  <span class="keyword">const</span> escapedKey = <span class="title function_">escapeRegExp</span>(key);</span><br><span class="line">  htmlContent = htmlContent.<span class="title function_">replace</span>(<span class="keyword">new</span> <span class="title class_">RegExp</span>(escapedKey, <span class="string">&quot;g&quot;</span>), value);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 加载修改后的 HTML 内容</span></span><br><span class="line"><span class="keyword">await</span> page.<span class="title function_">setContent</span>(htmlContent, &#123; <span class="attr">waitUntil</span>: <span class="string">&quot;networkidle0&quot;</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置视口大小</span></span><br><span class="line"><span class="comment">// 修改后：根据 4 倍缩放调整视口</span></span><br><span class="line"><span class="keyword">await</span> page.<span class="title function_">setViewport</span>(&#123;</span><br><span class="line">  <span class="attr">width</span>: <span class="number">220</span>,</span><br><span class="line">  <span class="attr">height</span>: <span class="number">176</span>,</span><br><span class="line">  <span class="attr">deviceScaleFactor</span>: <span class="number">2</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>截图保存</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 创建截图目录</span></span><br><span class="line"><span class="keyword">const</span> screenshotDir = path.<span class="title function_">join</span>(__dirname, <span class="string">&quot;screenshots&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (!fs.<span class="title function_">existsSync</span>(screenshotDir)) &#123;</span><br><span class="line">  fs.<span class="title function_">mkdirSync</span>(screenshotDir, &#123; <span class="attr">recursive</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> name = <span class="title class_">Math</span>.<span class="title function_">random</span>() + <span class="string">&quot;_screenshot.png&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> picName = path.<span class="title function_">join</span>(screenshotDir, name);</span><br><span class="line"><span class="comment">// 添加字体加载等待</span></span><br><span class="line"><span class="keyword">await</span> page.<span class="title function_">evaluate</span>(<span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">ensureFonts</span> = (<span class="params">callback</span>) =&gt; &#123;</span><br><span class="line">    <span class="variable language_">document</span>.<span class="property">fonts</span>.<span class="property">ready</span>.<span class="title function_">then</span>(callback);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> <span class="title function_">ensureFonts</span>(resolve));</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 截图并保存</span></span><br><span class="line"><span class="keyword">await</span> page.<span class="title function_">screenshot</span>(&#123; <span class="attr">path</span>: picName, <span class="attr">fullPage</span>: <span class="literal">true</span> &#125;);</span><br></pre></td></tr></table></figure>
-
-<h2 id="上传到对象储存"><a href="#上传到对象储存" class="headerlink" title="上传到对象储存"></a>上传到对象储存</h2><p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/development/storage/service/upload.html">https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/development/storage/service/upload.html</a></p>
-<p>上传到对象储存需要走两部，获取上传链接，然后再进行文件上传</p>
-<p>服务端可以通过配置云调用，将<code>tcb/uploadfile</code>和<code>tcb/batchdownloadfile</code>配置到云调用中，那么服务端就不需要再传 access_token 了，且可以通过<code>req.headers?.[&quot;x-wx-openid&quot;]</code>获取到用户的 unionid</p>
-<h3 id="获取上传链接"><a href="#获取上传链接" class="headerlink" title="获取上传链接"></a>获取上传链接</h3><p>uploadFileResponse 返回的 token 有效期是半小时</p>
-<p>同名的文件是被覆盖</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> uploadFileResponse = <span class="keyword">await</span> axios.<span class="title function_">post</span>(</span><br><span class="line">  <span class="string">&quot;http://api.weixin.qq.com/tcb/uploadfile&quot;</span>,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">env</span>: <span class="string">&quot;微信云托管环境ID&quot;</span>,</span><br><span class="line">    <span class="attr">path</span>: <span class="string">`shareCard/<span class="subst">$&#123;name&#125;</span>`</span>, <span class="comment">//目录及文件名称</span></span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"><span class="keyword">if</span> (uploadFileResponse.<span class="property">status</span> !== <span class="number">200</span> || !uploadFileResponse.<span class="property">data</span>.<span class="property">url</span>) &#123;</span><br><span class="line">  <span class="keyword">await</span> browser.<span class="title function_">close</span>();</span><br><span class="line">  <span class="title function_">reject</span>(uploadFileResponse);</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h3><p>接口链接是获取上传链接时返回的 url，依据接口的参数拼接</p>
-<p>此接口无返回，状态码 status 返回 204，因此不要判断其状态码是 200 才算是正常的！！！</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> result = uploadFileResponse.<span class="property">data</span>;</span><br><span class="line"><span class="keyword">const</span> data = <span class="keyword">new</span> <span class="title class_">FormData</span>();</span><br><span class="line">data.<span class="title function_">append</span>(<span class="string">&quot;key&quot;</span>, <span class="string">`shareCard/<span class="subst">$&#123;name&#125;</span>`</span>);</span><br><span class="line">data.<span class="title function_">append</span>(<span class="string">&quot;Signature&quot;</span>, result.<span class="property">authorization</span>);</span><br><span class="line">data.<span class="title function_">append</span>(<span class="string">&quot;x-cos-security-token&quot;</span>, result.<span class="property">token</span>);</span><br><span class="line">data.<span class="title function_">append</span>(<span class="string">&quot;x-cos-meta-fileid&quot;</span>, result.<span class="property">cos_file_id</span>);</span><br><span class="line"><span class="keyword">const</span> fileStream = fs.<span class="title function_">createReadStream</span>(picName);</span><br><span class="line">data.<span class="title function_">append</span>(<span class="string">&quot;file&quot;</span>, fileStream, &#123;</span><br><span class="line">  <span class="attr">filename</span>: name,</span><br><span class="line">  <span class="attr">contentType</span>: <span class="string">&quot;image/png&quot;</span>,</span><br><span class="line">  <span class="attr">knownLength</span>: fs.<span class="title function_">statSync</span>(picName).<span class="property">size</span>,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// COS 直传</span></span><br><span class="line"><span class="keyword">const</span> uploadRes = <span class="keyword">await</span> axios.<span class="title function_">post</span>(result.<span class="property">url</span>, data, &#123;</span><br><span class="line">  <span class="attr">headers</span>: data.<span class="title function_">getHeaders</span>(),</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="获取文件下载链接"><a href="#获取文件下载链接" class="headerlink" title="获取文件下载链接"></a>获取文件下载链接</h3><p>服务端和小程序端都有获取到文件下载链接的方法，小程序可以通过 fileid 直接在 image、video 等标签中直接显示</p>
-<ul>
-<li>服务端获取文件下载链接</li>
-</ul>
-<p>如果之前给的下载链接未失效，那么此图片修改后，对应的下载链接的图片也会更新</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getFileLinkResponse = <span class="keyword">await</span> axios.<span class="title function_">post</span>(</span><br><span class="line">  <span class="string">&quot;http://api.weixin.qq.com/tcb/batchdownloadfile&quot;</span>,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">env</span>: <span class="string">&quot;微信云托管环境ID&quot;</span>,</span><br><span class="line">    <span class="attr">file_list</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">fileid</span>: result.<span class="property">file_id</span>,</span><br><span class="line">        <span class="attr">max_age</span>: <span class="number">7200</span>, <span class="comment">//失效时间</span></span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"><span class="keyword">const</span> [fileInfo = &#123;&#125;] = getFileLinkResponse.<span class="property">data</span>?.<span class="property">file_list</span> || [];</span><br><span class="line"><span class="keyword">const</span> download_url = fileInfo.<span class="property">download_url</span>;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">FileInfo</span> = &#123;</span><br><span class="line">  <span class="attr">fileid</span>: <span class="built_in">string</span>; <span class="comment">// 文件ID</span></span><br><span class="line">  <span class="attr">download_url</span>: <span class="built_in">string</span>; <span class="comment">// 下载链接</span></span><br><span class="line">  <span class="attr">status</span>: <span class="built_in">number</span>; <span class="comment">// 状态码</span></span><br><span class="line">  <span class="attr">errmsg</span>: <span class="built_in">string</span>; <span class="comment">// 该文件错误信息</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h2 id="储存数据库"><a href="#储存数据库" class="headerlink" title="储存数据库"></a>储存数据库</h2><p>依据 unionid，fileid 储存到数据库中</p>
-<h3 id="定义数据表"><a href="#定义数据表" class="headerlink" title="定义数据表"></a>定义数据表</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// db.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; <span class="title class_">Sequelize</span>, <span class="title class_">DataTypes</span> &#125; = <span class="built_in">require</span>(<span class="string">&quot;sequelize&quot;</span>);</span><br><span class="line"><span class="comment">// 从环境变量中读取数据库配置</span></span><br><span class="line"><span class="keyword">const</span> &#123; <span class="variable constant_">MYSQL_USERNAME</span>, <span class="variable constant_">MYSQL_PASSWORD</span>, <span class="variable constant_">MYSQL_ADDRESS</span> = <span class="string">&quot;&quot;</span> &#125; = process.<span class="property">env</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> [host, port] = <span class="variable constant_">MYSQL_ADDRESS</span>.<span class="title function_">split</span>(<span class="string">&quot;:&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sequelize = <span class="keyword">new</span> <span class="title class_">Sequelize</span>(<span class="string">&quot;nodejs_demo&quot;</span>, <span class="variable constant_">MYSQL_USERNAME</span>, <span class="variable constant_">MYSQL_PASSWORD</span>, &#123;</span><br><span class="line">  host,</span><br><span class="line">  port,</span><br><span class="line">  <span class="attr">dialect</span>: <span class="string">&quot;mysql&quot;</span> <span class="comment">/* one of &#x27;mysql&#x27; | &#x27;mariadb&#x27; | &#x27;postgres&#x27; | &#x27;mssql&#x27; */</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义新的数据模型</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">UserShareStyle</span> = sequelize.<span class="title function_">define</span>(<span class="string">&quot;UserShareStyle&quot;</span>, &#123;</span><br><span class="line">  <span class="attr">unionid</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">DataTypes</span>.<span class="property">STRING</span>,</span><br><span class="line">    <span class="attr">allowNull</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">unique</span>: <span class="literal">true</span>, <span class="comment">// 确保每个 unionid 是唯一的</span></span><br><span class="line">    <span class="attr">index</span>: <span class="literal">true</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">fileId</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">DataTypes</span>.<span class="property">STRING</span>,</span><br><span class="line">    <span class="attr">allowNull</span>: <span class="literal">false</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据库初始化方法</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">init</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="title class_">UserShareStyle</span>.<span class="title function_">sync</span>(&#123; <span class="attr">alter</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导出初始化方法和模型</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">initDB</span>: init,</span><br><span class="line">  <span class="title class_">UserShareStyle</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>入口文件声明</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">bootstrap</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">initDB</span>();</span><br><span class="line">  app.<span class="title function_">listen</span>(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;启动成功&quot;</span>, port);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取到用户unionid</span></span><br><span class="line"><span class="keyword">const</span> unionid = req.<span class="property">headers</span>?.[<span class="string">&quot;x-wx-openid&quot;</span>];</span><br><span class="line"><span class="keyword">const</span> [record, created] = <span class="keyword">await</span> <span class="title class_">UserShareStyle</span>.<span class="title function_">upsert</span>(</span><br><span class="line">  &#123; unionid, <span class="attr">fileId</span>: result.<span class="property">file_id</span> &#125;, <span class="comment">// 更新或插入的数据</span></span><br><span class="line">  &#123; <span class="attr">where</span>: &#123; unionid &#125; &#125; <span class="comment">// 根据 unionid 操作</span></span><br><span class="line">);</span><br><span class="line"><span class="keyword">if</span> (created) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;插入新记录成功&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;更新记录成功&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91%E6%97%A0%E5%A4%B4%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%9F%E6%88%90%E5%9B%BE%E7%89%87%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0%E5%AF%B9%E8%B1%A1%E5%82%A8%E5%AD%98/" data-id="cmek09jy800406sfm85pr4t0y" data-title="【云托管】无头浏览器生成图片并上传到对象储存" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-前端/【前端】记录小点" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.874Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/">记录</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="如何固定安装依赖时所有依赖用到某个包的版本"><a href="#如何固定安装依赖时所有依赖用到某个包的版本" class="headerlink" title="如何固定安装依赖时所有依赖用到某个包的版本"></a>如何固定安装依赖时所有依赖用到某个包的版本</h3><p>使用<code>yarn</code>，在<code>package.json</code>中添加<code>resolutions</code>字段，并添加需要固定版本依赖的包名及版本号</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;dependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;vue&quot;</span><span class="punctuation">:</span> &#x27;<span class="number">2.0</span><span class="number">.0</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;vue-router&quot;</span><span class="punctuation">:</span> &#x27;<span class="number">3.0</span><span class="number">.0</span>&#x27;</span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;resolutions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;vue&quot;</span><span class="punctuation">:</span> &#x27;<span class="number">2.0</span><span class="number">.0</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>这样安装后，即使vue-router依赖的vue版本不是<code>2.0.0</code>,但可以强制其使用vue对应的版本</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u010494753/article/details/139534853?spm=1001.2014.3001.5501">package.json中resolutions的使用场景</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmek09jxw002z6sfmalaw834o" data-title="记录" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li></ul>
-
     </footer>
   </div>
   
@@ -603,7 +554,56 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/" data-id="cmek09jxy00386sfm6xnm4uiz" data-title="性能指标" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/" data-id="cmek0pd9q003p64fm0jqy6mfr" data-title="性能指标" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-前端/【前端】记录小点" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.874Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/">记录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="如何固定安装依赖时所有依赖用到某个包的版本"><a href="#如何固定安装依赖时所有依赖用到某个包的版本" class="headerlink" title="如何固定安装依赖时所有依赖用到某个包的版本"></a>如何固定安装依赖时所有依赖用到某个包的版本</h3><p>使用<code>yarn</code>，在<code>package.json</code>中添加<code>resolutions</code>字段，并添加需要固定版本依赖的包名及版本号</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;dependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;vue&quot;</span><span class="punctuation">:</span> &#x27;<span class="number">2.0</span><span class="number">.0</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;vue-router&quot;</span><span class="punctuation">:</span> &#x27;<span class="number">3.0</span><span class="number">.0</span>&#x27;</span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;resolutions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;vue&quot;</span><span class="punctuation">:</span> &#x27;<span class="number">2.0</span><span class="number">.0</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样安装后，即使vue-router依赖的vue版本不是<code>2.0.0</code>,但可以强制其使用vue对应的版本</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u010494753/article/details/139534853?spm=1001.2014.3001.5501">package.json中resolutions的使用场景</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmek0pd9r003s64fm7nybcrwx" data-title="记录" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -885,7 +885,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/npm%E3%80%81npx%E4%B8%8Epnpm/" data-id="cmek09jxv002w6sfm4nlj5zeg" data-title="npm、npx与pnpm" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/npm%E3%80%81npx%E4%B8%8Epnpm/" data-id="cmek0pd9l003g64fmbteadye3" data-title="npm、npx与pnpm" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -951,7 +951,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91SSR%E5%92%8CCSR/" data-id="cmek09jxw00316sfm0m78hgof" data-title="SSR和CSR" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91SSR%E5%92%8CCSR/" data-id="cmek0pd9p003l64fmcxa07oq1" data-title="SSR和CSR" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1122,7 +1122,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%9B%E7%A8%8B/" data-id="cmek09jyi00536sfmdz6i68m6" data-title="从地址栏到页面展示的流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%9B%E7%A8%8B/" data-id="cmek0pda2004s64fmboxuguhq" data-title="从地址栏到页面展示的流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1316,7 +1316,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B/" data-id="cmek09jyk00556sfmglol10qv" data-title="页面渲染流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B/" data-id="cmek0pda3004z64fmby96fnz0" data-title="页面渲染流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1544,7 +1544,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%B0%8F%E7%82%B9/" data-id="cmek09jye004k6sfmfag3eb8x" data-title="小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%B0%8F%E7%82%B9/" data-id="cmek0pda0004m64fm7o9ghuit" data-title="小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1682,7 +1682,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/PerformanceObserver/" data-id="cmek09jyd004d6sfm7wek0rtw" data-title="PerformanceObserver" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/PerformanceObserver/" data-id="cmek0pda1004p64fmhwr0eubr" data-title="PerformanceObserver" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1753,7 +1753,7 @@
       <ul>
         
           <li>
-            <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">外包</a>
+            <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">记录1</a>
           </li>
         
           <li>

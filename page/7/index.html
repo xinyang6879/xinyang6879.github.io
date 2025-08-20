@@ -180,7 +180,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E5%89%8D%E8%A8%80/" data-id="cmek09jxt002m6sfm57ibf54q" data-title="【vueTest】前言" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E5%89%8D%E8%A8%80/" data-id="cmek0pd9i003764fmemccb22n" data-title="【vueTest】前言" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -276,132 +276,12 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91vitetest%E6%B5%8B%E8%AF%95Store/" data-id="cmek09jxs002l6sfm96v0e303" data-title="【vueTest】vitetest测试Store踩坑记录" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91vitetest%E6%B5%8B%E8%AF%95Store/" data-id="cmek0pd9e002y64fm8z050vtr" data-title="【vueTest】vitetest测试Store踩坑记录" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VueTest/" rel="tag">VueTest</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Vue/小点" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/Vue/%E5%B0%8F%E7%82%B9/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.513Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/vue/">vue</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/Vue/%E5%B0%8F%E7%82%B9/">小点</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="渐进式框架理解"><a href="#渐进式框架理解" class="headerlink" title="渐进式框架理解"></a>渐进式框架理解</h3><p>渐进式表示: 没有做过多的事情,vuejs只提供了最核心的组件系统和双向数据绑定,pinia、vue-router都是围绕vuejs开发的库</p>
-<p>如果使用react还需要理解:</p>
-<ul>
-<li>函数时编程理念</li>
-<li>副作用</li>
-<li>什么是纯函数</li>
-<li>如何隔离避免副作用</li>
-</ul>
-<h3 id="组件之间传值方式"><a href="#组件之间传值方式" class="headerlink" title="组件之间传值方式"></a>组件之间传值方式</h3><p>父向子</p>
-<ul>
-<li>props</li>
-<li>inject</li>
-<li>vuex</li>
-<li>调用子组件实例的方法+defineExpose</li>
-</ul>
-<p>子向父</p>
-<ul>
-<li>emit</li>
-<li>引用类型可以修改或者用Vue.set</li>
-<li>vuex</li>
-</ul>
-<h3 id="v-if和v-show区别"><a href="#v-if和v-show区别" class="headerlink" title="v-if和v-show区别"></a>v-if和v-show区别</h3><p>相同点:</p>
-<p>都是vuejs中用于控制元素是否显示的指令</p>
-<p>不同点:</p>
-<ul>
-<li>v-if是在节点中都没有这个元素, 动态向dom树添加或者删除这个节点; v-show是使用了display:none让元素不显示</li>
-<li>v-if切换是有一个局部编译&#x2F;卸载的过程,切换过程中适当销毁和重建内部的事件监听和子组件;而v-show只是css切换</li>
-<li>在初始编译过程中,v-if如果是false那么就不会编译,v-show都会编译</li>
-<li>v-if切换是会销毁和创建;v-show只编译一次.因此v-show性能更好(如果存在多次切换条件)</li>
-</ul>
-<p>v-if判断是否加载,可以减轻服务器压力,但在需要加载时,会由更高的切换开销</p>
-<p>v-show跳转dom的style属性,可以使得用户操作更加流畅,但由更高的初始渲染开销</p>
-<h3 id="vue的计算属性"><a href="#vue的计算属性" class="headerlink" title="vue的计算属性"></a>vue的计算属性</h3><p>设计初衷是用于简单运算,在computed中放入太多逻辑会让模板过重且难以维护</p>
-<p>用法:</p>
-<ul>
-<li>在一个计算属性中可以完成各种复杂的逻辑,包括运算和函数调用等,只要最终返回一个结果即可</li>
-<li>计算属性可以依赖多个vue实例的数据,只要其中任一数据变化,计算属性就会重新执行,视图也会更新</li>
-</ul>
-<p>getter和setter</p>
-<p>每个计算属性都包括一个getter和setter,通常使用的都是computed的默认用法,只是利用了getter来读取.在用户需要时,可以提供一个setter函数,当手动修改computed的值就像修改一个普通数据那样时,就会触发setter</p>
-<p>computed缓存</p>
-<p>computed会有对数据的缓存,多次使用同一个computed不会重复计算,除非数据变化.</p>
-<p>其基于computed的依赖进行缓存的,计算属性只有在其相关依赖发生改变时才会重新求值</p>
-<h3 id="vue-router有哪几种导航钩子"><a href="#vue-router有哪几种导航钩子" class="headerlink" title="vue-router有哪几种导航钩子"></a>vue-router有哪几种导航钩子</h3><p>守卫类型</p>
-<ul>
-<li><p>全局守卫: router.beforeEach(to, from, next)</p>
-<p>  当一个导航触发时,其会按照创建顺序调用.守卫是异步解析执行,此时导航在所有守卫resolve完之前一直处于等待状态</p>
-</li>
-<li><p>全局解析守卫: router.beforeResolve(to, from, next)</p>
-<p>  在全局解析守卫中可以使用beforeResolve注册一个全局守卫.和beforeEach类似,但其在导航被确认之前,同时在所有组件内守卫和异步路由组件被解析之后调用</p>
-</li>
-<li><p>全局后置钩子: router.afterEach(to, from)</p>
-<p>  也可以注册全局后置钩子,但这个没有next,也无法改变导航本身</p>
-</li>
-<li><p>路由独享的守卫: beforeEnter</p>
-<p>  可以在路由配置这个函数</p>
-</li>
-<li><p>组件内的守卫: beforeRouteUpdate,beforeRouteEnter,  beforeRouterLeave</p>
-</li>
-</ul>
-<p>参数:</p>
-<p>to(即将要进入的页面路由对象), </p>
-<p>from(从哪儿来的页面路由对象), </p>
-<p>next(一定要调用这个方法来resolve这个钩子,否则页面会一直等待)</p>
-<h3 id="vue-router导航解析流程"><a href="#vue-router导航解析流程" class="headerlink" title="vue-router导航解析流程"></a>vue-router导航解析流程</h3><ul>
-<li>导航被触发</li>
-<li>调用离开组件的beforeRouterLeave钩子</li>
-<li>调用全局的beforeEach函数</li>
-<li>在重用的组件调用beforeRouteUpdate</li>
-<li>在路由配置中调用beforeEnter</li>
-<li>解析异步路由组件</li>
-<li>调用组件的beforeRouteEnter</li>
-<li>调用全局的beforeResolve</li>
-<li>导航被确认</li>
-<li>调用全局的afterEach</li>
-<li>触发DOM更新</li>
-<li>用创建好的实例调用beforeRouteEnter守卫中传给next的回调函数</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/Vue/%E5%B0%8F%E7%82%B9/" data-id="cmek09jxf001p6sfmdoqd4qju" data-title="小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
     </footer>
   </div>
   
@@ -558,7 +438,127 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmek09jxg001s6sfme4h40jpy" data-title="【vue】记录小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmek0pd9c002s64fmd095a5pw" data-title="【vue】记录小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Vue/小点" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/Vue/%E5%B0%8F%E7%82%B9/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.513Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/vue/">vue</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/Vue/%E5%B0%8F%E7%82%B9/">小点</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="渐进式框架理解"><a href="#渐进式框架理解" class="headerlink" title="渐进式框架理解"></a>渐进式框架理解</h3><p>渐进式表示: 没有做过多的事情,vuejs只提供了最核心的组件系统和双向数据绑定,pinia、vue-router都是围绕vuejs开发的库</p>
+<p>如果使用react还需要理解:</p>
+<ul>
+<li>函数时编程理念</li>
+<li>副作用</li>
+<li>什么是纯函数</li>
+<li>如何隔离避免副作用</li>
+</ul>
+<h3 id="组件之间传值方式"><a href="#组件之间传值方式" class="headerlink" title="组件之间传值方式"></a>组件之间传值方式</h3><p>父向子</p>
+<ul>
+<li>props</li>
+<li>inject</li>
+<li>vuex</li>
+<li>调用子组件实例的方法+defineExpose</li>
+</ul>
+<p>子向父</p>
+<ul>
+<li>emit</li>
+<li>引用类型可以修改或者用Vue.set</li>
+<li>vuex</li>
+</ul>
+<h3 id="v-if和v-show区别"><a href="#v-if和v-show区别" class="headerlink" title="v-if和v-show区别"></a>v-if和v-show区别</h3><p>相同点:</p>
+<p>都是vuejs中用于控制元素是否显示的指令</p>
+<p>不同点:</p>
+<ul>
+<li>v-if是在节点中都没有这个元素, 动态向dom树添加或者删除这个节点; v-show是使用了display:none让元素不显示</li>
+<li>v-if切换是有一个局部编译&#x2F;卸载的过程,切换过程中适当销毁和重建内部的事件监听和子组件;而v-show只是css切换</li>
+<li>在初始编译过程中,v-if如果是false那么就不会编译,v-show都会编译</li>
+<li>v-if切换是会销毁和创建;v-show只编译一次.因此v-show性能更好(如果存在多次切换条件)</li>
+</ul>
+<p>v-if判断是否加载,可以减轻服务器压力,但在需要加载时,会由更高的切换开销</p>
+<p>v-show跳转dom的style属性,可以使得用户操作更加流畅,但由更高的初始渲染开销</p>
+<h3 id="vue的计算属性"><a href="#vue的计算属性" class="headerlink" title="vue的计算属性"></a>vue的计算属性</h3><p>设计初衷是用于简单运算,在computed中放入太多逻辑会让模板过重且难以维护</p>
+<p>用法:</p>
+<ul>
+<li>在一个计算属性中可以完成各种复杂的逻辑,包括运算和函数调用等,只要最终返回一个结果即可</li>
+<li>计算属性可以依赖多个vue实例的数据,只要其中任一数据变化,计算属性就会重新执行,视图也会更新</li>
+</ul>
+<p>getter和setter</p>
+<p>每个计算属性都包括一个getter和setter,通常使用的都是computed的默认用法,只是利用了getter来读取.在用户需要时,可以提供一个setter函数,当手动修改computed的值就像修改一个普通数据那样时,就会触发setter</p>
+<p>computed缓存</p>
+<p>computed会有对数据的缓存,多次使用同一个computed不会重复计算,除非数据变化.</p>
+<p>其基于computed的依赖进行缓存的,计算属性只有在其相关依赖发生改变时才会重新求值</p>
+<h3 id="vue-router有哪几种导航钩子"><a href="#vue-router有哪几种导航钩子" class="headerlink" title="vue-router有哪几种导航钩子"></a>vue-router有哪几种导航钩子</h3><p>守卫类型</p>
+<ul>
+<li><p>全局守卫: router.beforeEach(to, from, next)</p>
+<p>  当一个导航触发时,其会按照创建顺序调用.守卫是异步解析执行,此时导航在所有守卫resolve完之前一直处于等待状态</p>
+</li>
+<li><p>全局解析守卫: router.beforeResolve(to, from, next)</p>
+<p>  在全局解析守卫中可以使用beforeResolve注册一个全局守卫.和beforeEach类似,但其在导航被确认之前,同时在所有组件内守卫和异步路由组件被解析之后调用</p>
+</li>
+<li><p>全局后置钩子: router.afterEach(to, from)</p>
+<p>  也可以注册全局后置钩子,但这个没有next,也无法改变导航本身</p>
+</li>
+<li><p>路由独享的守卫: beforeEnter</p>
+<p>  可以在路由配置这个函数</p>
+</li>
+<li><p>组件内的守卫: beforeRouteUpdate,beforeRouteEnter,  beforeRouterLeave</p>
+</li>
+</ul>
+<p>参数:</p>
+<p>to(即将要进入的页面路由对象), </p>
+<p>from(从哪儿来的页面路由对象), </p>
+<p>next(一定要调用这个方法来resolve这个钩子,否则页面会一直等待)</p>
+<h3 id="vue-router导航解析流程"><a href="#vue-router导航解析流程" class="headerlink" title="vue-router导航解析流程"></a>vue-router导航解析流程</h3><ul>
+<li>导航被触发</li>
+<li>调用离开组件的beforeRouterLeave钩子</li>
+<li>调用全局的beforeEach函数</li>
+<li>在重用的组件调用beforeRouteUpdate</li>
+<li>在路由配置中调用beforeEnter</li>
+<li>解析异步路由组件</li>
+<li>调用组件的beforeRouteEnter</li>
+<li>调用全局的beforeResolve</li>
+<li>导航被确认</li>
+<li>调用全局的afterEach</li>
+<li>触发DOM更新</li>
+<li>用创建好的实例调用beforeRouteEnter守卫中传给next的回调函数</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/Vue/%E5%B0%8F%E7%82%B9/" data-id="cmek0pd9d002w64fm35bueyql" data-title="小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -633,7 +633,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E5%8F%98%E9%87%8Fapi/" data-id="cmek09jxe001l6sfm8o8zdui7" data-title="【vue】变量api" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E5%8F%98%E9%87%8Fapi/" data-id="cmek0pd9a002n64fmaku0fd5x" data-title="【vue】变量api" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -715,7 +715,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/Vue/v-model%E5%92%8Creactive%E7%BB%84%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/" data-id="cmek09jxe001k6sfm29w7b1kh" data-title="v-model 和 reactive 组合使用的问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/Vue/v-model%E5%92%8Creactive%E7%BB%84%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/" data-id="cmek0pd99002k64fm9vffer0j" data-title="v-model 和 reactive 组合使用的问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -787,7 +787,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/Vue/v-html%E6%B8%B2%E6%9F%93%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6/" data-id="cmek09jxd001e6sfm7cflbrz9" data-title="v-html渲染自定义组件" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/Vue/v-html%E6%B8%B2%E6%9F%93%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6/" data-id="cmek0pd95002a64fm8r5y05ig" data-title="v-html渲染自定义组件" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1006,7 +1006,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/Typescript/%E3%80%90TS%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmek09jxb00156sfmfalogd35" data-title="记录" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/Typescript/%E3%80%90TS%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmek0pd8y001r64fmdmkz64tp" data-title="记录" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1454,7 +1454,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/Typescript/%E3%80%90TS%E3%80%91%E7%B1%BB%E5%9E%8B/" data-id="cmek09jxh001z6sfm8h6vaf9r" data-title="【TS】类型" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/Typescript/%E3%80%90TS%E3%80%91%E7%B1%BB%E5%9E%8B/" data-id="cmek0pd8x001l64fm6l3ubi2b" data-title="【TS】类型" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1641,7 +1641,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/Typescript/%E3%80%90TS%E3%80%91%E6%A8%A1%E5%9D%97%E8%A7%A3%E6%9E%90/" data-id="cmek09jxa00126sfmhytx8ui6" data-title="【TS】模块解析" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/Typescript/%E3%80%90TS%E3%80%91%E6%A8%A1%E5%9D%97%E8%A7%A3%E6%9E%90/" data-id="cmek0pd8v001f64fm03xw9ev2" data-title="【TS】模块解析" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1710,7 +1710,7 @@
       <ul>
         
           <li>
-            <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">外包</a>
+            <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">记录1</a>
           </li>
         
           <li>

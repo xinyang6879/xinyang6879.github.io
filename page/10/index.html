@@ -243,7 +243,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/devTools/Chrome--performance/" data-id="cmek09jxj00256sfmh6ko7mgq" data-title="Chrome的Performance" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/devTools/Chrome--performance/" data-id="cmek0pd9b002q64fm9bu04zy9" data-title="Chrome的Performance" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -516,7 +516,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E5%B0%8F%E7%82%B9/" data-id="cmek09jy6003u6sfm235ggdfl" data-title="【css】小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/css/%E5%B0%8F%E7%82%B9/" data-id="cmek0pd97002e64fme3ni29oi" data-title="【css】小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -745,7 +745,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmek09jy4003q6sfmba8n0hyu" data-title="【css】记录小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmek0pd98002g64fmbgw89bq3" data-title="【css】记录小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -881,7 +881,75 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E6%BB%9A%E5%8A%A8%E8%B4%B4%E5%90%88/" data-id="cmek09jy3003o6sfm7v233alg" data-title="【css】滚动贴合" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E6%BB%9A%E5%8A%A8%E8%B4%B4%E5%90%88/" data-id="cmek0pd93002864fmd01kfrld" data-title="【css】滚动贴合" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-css/【css】BFC" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/css/%E3%80%90css%E3%80%91BFC/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.178Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/css/">css</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/css/%E3%80%90css%E3%80%91BFC/">【css】BFC</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>定义：页面中的一块渲染区域，同一个格式化上下文内和不同格式化上下文之间的定位方式都会发生变化</p>
+<h2 id="bfc-块级格式化上下文"><a href="#bfc-块级格式化上下文" class="headerlink" title="bfc(块级格式化上下文)"></a>bfc(块级格式化上下文)</h2><h3 id="创建条件"><a href="#创建条件" class="headerlink" title="创建条件"></a>创建条件</h3><ul>
+<li><p>根元素</p>
+</li>
+<li><p>脱离普通文档流的元素(浮动，绝对定位，固定定位)</p>
+</li>
+<li><p>非块级元素(包含flex，table)</p>
+</li>
+<li><p>overflow ！&#x3D;&#x3D; visible(默认值)的块级元素</p>
+</li>
+</ul>
+<h3 id="影响"><a href="#影响" class="headerlink" title="影响"></a>影响</h3><ul>
+<li><p>同一个bfc内的相邻块级元素垂直外边距会发生折叠，即两者边距取决于双方边距的最大值而不是边距和</p>
+</li>
+<li><p>内部元素与外部元素互不影响，因为bfc是独立容器</p>
+</li>
+<li><p>在计算bfc高度时，内部的浮动元素也会被计算在哪内</p>
+</li>
+</ul>
+<h2 id="ifc-内联格式化上下文"><a href="#ifc-内联格式化上下文" class="headerlink" title="ifc(内联格式化上下文)"></a>ifc(内联格式化上下文)</h2><h3 id="形成"><a href="#形成" class="headerlink" title="形成"></a>形成</h3><p>多个内联（块级）元素排列在一起的时候，这些内联（块级）元素之间不能穿插块级元素，否则会被切割为多个ifc</p>
+<h3 id="影响-1"><a href="#影响-1" class="headerlink" title="影响"></a>影响</h3><ul>
+<li><p>一个ifc内的元素都是水平排列的</p>
+</li>
+<li><p>横向的margin，border，padding属性对这些元素都是有效的</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91BFC/" data-id="cmek0pd8x001m64fmhxc40lc1" data-title="【css】BFC" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -971,75 +1039,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/" data-id="cmek09jxx00336sfmfb5u8c5r" data-title="【css】border-raduis" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-css/【css】BFC" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/css/%E3%80%90css%E3%80%91BFC/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.178Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/css/">css</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/css/%E3%80%90css%E3%80%91BFC/">【css】BFC</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>定义：页面中的一块渲染区域，同一个格式化上下文内和不同格式化上下文之间的定位方式都会发生变化</p>
-<h2 id="bfc-块级格式化上下文"><a href="#bfc-块级格式化上下文" class="headerlink" title="bfc(块级格式化上下文)"></a>bfc(块级格式化上下文)</h2><h3 id="创建条件"><a href="#创建条件" class="headerlink" title="创建条件"></a>创建条件</h3><ul>
-<li><p>根元素</p>
-</li>
-<li><p>脱离普通文档流的元素(浮动，绝对定位，固定定位)</p>
-</li>
-<li><p>非块级元素(包含flex，table)</p>
-</li>
-<li><p>overflow ！&#x3D;&#x3D; visible(默认值)的块级元素</p>
-</li>
-</ul>
-<h3 id="影响"><a href="#影响" class="headerlink" title="影响"></a>影响</h3><ul>
-<li><p>同一个bfc内的相邻块级元素垂直外边距会发生折叠，即两者边距取决于双方边距的最大值而不是边距和</p>
-</li>
-<li><p>内部元素与外部元素互不影响，因为bfc是独立容器</p>
-</li>
-<li><p>在计算bfc高度时，内部的浮动元素也会被计算在哪内</p>
-</li>
-</ul>
-<h2 id="ifc-内联格式化上下文"><a href="#ifc-内联格式化上下文" class="headerlink" title="ifc(内联格式化上下文)"></a>ifc(内联格式化上下文)</h2><h3 id="形成"><a href="#形成" class="headerlink" title="形成"></a>形成</h3><p>多个内联（块级）元素排列在一起的时候，这些内联（块级）元素之间不能穿插块级元素，否则会被切割为多个ifc</p>
-<h3 id="影响-1"><a href="#影响-1" class="headerlink" title="影响"></a>影响</h3><ul>
-<li><p>一个ifc内的元素都是水平排列的</p>
-</li>
-<li><p>横向的margin，border，padding属性对这些元素都是有效的</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91BFC/" data-id="cmek09jxx00356sfm87iedn8v" data-title="【css】BFC" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/" data-id="cmek0pd8y001s64fmgj81c0wx" data-title="【css】border-raduis" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1176,7 +1176,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91contain/" data-id="cmek09jxy003b6sfmezoy0dsc" data-title="【css】contain" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91contain/" data-id="cmek0pd8z001w64fmevdo01yn" data-title="【css】contain" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1347,7 +1347,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E5%B1%82%E5%8F%A0%E4%B8%8A%E4%B8%8B%E6%96%87/" data-id="cmek09jy2003l6sfm9nav2cg4" data-title="【css】层叠上下文" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E5%B1%82%E5%8F%A0%E4%B8%8A%E4%B8%8B%E6%96%87/" data-id="cmek0pd91002264fm3rjzfopk" data-title="【css】层叠上下文" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1398,7 +1398,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/hello-world/" data-id="cmek09jw400016sfm0gat1o32" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/hello-world/" data-id="cmek0pd86000264fmdkg80r7z" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1571,7 +1571,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/10/14/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%80%BC%E5%AE%9A%E4%B9%89%E8%AF%AD%E6%B3%95/" data-id="cmek09jxz003e6sfm5f9s83ui" data-title="【css】属性值定义语法" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/10/14/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%80%BC%E5%AE%9A%E4%B9%89%E8%AF%AD%E6%B3%95/" data-id="cmek0pd92002464fmhzjxhnt9" data-title="【css】属性值定义语法" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1642,7 +1642,7 @@
       <ul>
         
           <li>
-            <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">外包</a>
+            <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">记录1</a>
           </li>
         
           <li>
