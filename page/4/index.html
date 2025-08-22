@@ -71,6 +71,144 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-浏览器/PerformanceObserver" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/PerformanceObserver/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.742Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/PerformanceObserver/">PerformanceObserver</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>PerformanceObserver 和 Performance 作用都是用于获取网站性能数据的</p>
+<p>Performance 可以获取当前页面从打开到加载完成的各个时间（基于浏览器打开的时间，而不是依据系统的时间，以 us 为单位），属于同步函数，调用时就会给出具体的数据</p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/PerformanceObserver">PerformanceObserver</a>监测性能度量事件，属于异步函数，调用时可能不会立马执行，而是到对应的时间时才会调用其回调函数</p>
+<p>而 MutationObserver 可以监听 DOM 节点的属性变化，比如添加、删除、修改属性。</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><ul>
+<li><p>新建一个 PerformanceObserver 实例，并传入一个回调函数用于处理数据</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 创建观察者实例</span></span><br><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function">(<span class="params">list</span>) =&gt;</span> &#123;</span><br><span class="line">  list.<span class="title function_">getEntries</span>().<span class="title function_">forEach</span>(<span class="function">(<span class="params">entry</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 处理每个性能条目</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;-------------------------------&quot;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Entry Type: <span class="subst">$&#123;entry.entryType&#125;</span>`</span>, entry);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;*******************************&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>指定需要观察的内容</p>
+<ul>
+<li>多项观察</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// buffered标识是否获取历史的数据</span></span><br><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">entryTypes</span>: [</span><br><span class="line">    <span class="string">&quot;element&quot;</span>,</span><br><span class="line">    <span class="string">&quot;event&quot;</span>,</span><br><span class="line">    <span class="string">&quot;first-input&quot;</span>,</span><br><span class="line">    <span class="string">&quot;largest-contentful-paint&quot;</span>,</span><br><span class="line">    <span class="string">&quot;layout-shift&quot;</span>,</span><br><span class="line">    <span class="string">&quot;long-animation-frame&quot;</span>,</span><br><span class="line">    <span class="string">&quot;longtask&quot;</span>,</span><br><span class="line">    <span class="string">&quot;mark&quot;</span>,</span><br><span class="line">    <span class="string">&quot;measure&quot;</span>,</span><br><span class="line">    <span class="string">&quot;navigation&quot;</span>,</span><br><span class="line">    <span class="string">&quot;paint&quot;</span>,</span><br><span class="line">    <span class="comment">// &quot;resource&quot;,</span></span><br><span class="line">    <span class="string">&quot;visibility-state&quot;</span>,</span><br><span class="line">  ], <span class="comment">// 可同时监听多种类型</span></span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>单项观察</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">observer.<span class="title function_">observe</span>(&#123; <span class="attr">type</span>: <span class="string">&quot;event&quot;</span>, <span class="attr">buffered</span>: <span class="literal">true</span> &#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>注：实测下来，<code>event</code>类型不支持在<code>entryTypes</code>中，只能通过<code>type</code>去处理</p>
+<ul>
+<li>关闭</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">observer.<span class="title function_">disconnect</span>();</span><br></pre></td></tr></table></figure>
+
+<h3 id="监听类型"><a href="#监听类型" class="headerlink" title="监听类型"></a>监听类型</h3><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/PerformanceEntry/entryType">entryType</a>包含了多种类型</p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/PerformanceElementTiming">PerformanceElementTiming</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/LargestContentfulPaint">LargestContentfulPaint</a></p>
+<ul>
+<li><p><code>element</code>：可以获取元素的加载时间，需要搭配<code>elementtiming</code>属性使用</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">elementtiming</span>=<span class="string">&quot;test-ele&quot;</span> <span class="attr">src</span>=<span class="string">&quot;xxx&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">observer.observe(&#123; type: &#x27;element&#x27;, buffered: true &#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返PerformanceElementTiming类型</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">duration</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">element</span>: img,<span class="comment">// 监听的元素</span></span><br><span class="line">  <span class="attr">entryType</span>: <span class="string">&#x27;element&#x27;</span>,</span><br><span class="line">  <span class="attr">identifier</span>: <span class="string">&#x27;test-ele&#x27;</span>,<span class="comment">// 元素的标识符</span></span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;img-paint&#x27;</span>,</span><br><span class="line">  <span class="attr">loadTime</span>: <span class="number">0</span>,<span class="comment">//图片加载时间，文本的话是0</span></span><br><span class="line">  renderTime： x,</span><br><span class="line">  <span class="attr">startTime</span>: x,</span><br><span class="line">  <span class="attr">url</span>: <span class="string">&quot;src&quot;</span>,<span class="comment">//图片的话是图片地址，文本为空</span></span><br><span class="line">  <span class="attr">intersectionRect</span>: <span class="title class_">DOMRectReadOnly</span>,</span><br><span class="line">  <span class="attr">naturalWidth</span>: <span class="string">&quot;图片原本宽度，文本是0&quot;</span>,</span><br><span class="line">  <span class="attr">naturalHeight</span>: <span class="string">&quot;图片原本高度，文本是0&quot;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>event</code>: 可以监听页面的点击事件，但这个属性只能单独使用，在 entryTypes 中会不生效<br>时间间隔可以通过 startTime-processingEnd 获取</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;event&quot;</span>,</span><br><span class="line">  <span class="comment">// buffered: true,</span></span><br><span class="line">  <span class="attr">durationThreshold</span>: <span class="number">16</span>, <span class="comment">// 只记录持续时间超过16ms的事件</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">// 返PerformanceElementTiming类型</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">cancelable</span>: <span class="title class_">Boolean</span>，</span><br><span class="line">    duration： number,</span><br><span class="line">    <span class="attr">entryType</span>: <span class="string">&quot;event&quot;</span>,</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;click&quot;</span> | <span class="string">&quot;pointerleave&quot;</span> | <span class="string">&quot;pointerout&quot;</span> | <span class="string">&quot;pointerup&quot;</span> | <span class="string">&quot;pointerover&quot;</span> | <span class="string">&quot;pointerenter&quot;</span> | <span class="string">&quot;mouseout&quot;</span> | <span class="string">&quot;mouseleave&quot;</span> | <span class="string">&quot;mouseover&quot;</span> | <span class="string">&quot;mouseup&quot;</span>,</span><br><span class="line">    <span class="attr">processingEnd</span>: number,</span><br><span class="line">    <span class="attr">processingStart</span>: number,<span class="comment">//事件调度开始的时间</span></span><br><span class="line">    <span class="attr">startTime</span>: number,<span class="comment">//创建事件的时间，可以被视为用户交互发生时间的代理。</span></span><br><span class="line">    <span class="attr">target</span>: <span class="title class_">HTMLElement</span> <span class="comment">//触发的元素</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>first-input</code>：首次用户交互延迟，当用户第一次点击时触发，可以作为 FID 的上报数据</p>
+<p>返回和<code>event</code>事件返回一致，时间间隔&#x3D;processingStart-startTime</p>
+</li>
+<li><p><code>largest-contentful-paint</code>：LCP，最大内容绘制时间，可能会触发多次，存在可能上报一个当前最大的，但后续如果又有一个内容宽高大于之前的，那么还会触发一次</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回LargestContentfulPaint类型</span></span><br><span class="line">&#123;</span><br><span class="line">    duration： number,</span><br><span class="line">    <span class="attr">entryType</span>: <span class="string">&quot;largest-contentful-paint&quot;</span>,</span><br><span class="line">    <span class="attr">element</span>: <span class="title class_">HTMLElement</span>,</span><br><span class="line">    <span class="attr">startTime</span>: number, <span class="comment">// 如果此元素的renderTime值不为0，则返回其值，否则返回此条目的loadTime值。</span></span><br><span class="line">    <span class="attr">loadTime</span>: number,<span class="comment">//元素加载时间</span></span><br><span class="line">    <span class="attr">renderTime</span>: number,<span class="comment">//元素呈现到屏幕上的时间。如果元素是在没有Timing Allow origin标头的情况下加载的跨原点图像，则可能不可用。</span></span><br><span class="line">    size：number, <span class="comment">//元素的固有大小返回为面积（宽*高）</span></span><br><span class="line">    url： string,<span class="comment">// 如果元素是图片，那么这个就是图片的地址</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>layout-shift</code>: CLS，页面布局偏移</p>
+<p>返回<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/LayoutShift">LayoutShift</a>类型</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">hadRecentInput</span>: boolean, <span class="comment">// 500ms内是否有输入</span></span><br><span class="line">    <span class="attr">lastInputTime</span>: number，<span class="comment">// 上次输入的时间</span></span><br><span class="line">    sources：<span class="title class_">LayoutShiftAttribution</span>[]， <span class="comment">//返回有哪些元素进行了偏移</span></span><br><span class="line">    startTime： number，<span class="comment">// 布局转换开始的时间</span></span><br><span class="line">    <span class="attr">value</span>: number，<span class="comment">// 布局偏移分数，影响分数（被偏移的视口分数）乘以距离分数（作为视口分数移动的距离）计算得出的。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>long-animation-frame</code>: LoAF，长动画帧，延迟超过 50ms 的渲染更新</p>
+<p>返回<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/PerformanceLongAnimationFrameTiming">PerformanceLongAnimationFrameTiming</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">blockingDuration</span>: number,<span class="comment">// 计算LoAF中持续时间超过50ms的所有长任务，从每个任务中减去50ms，将渲染时间加到最长的任务时间上，并将结果相加来计算的。指示主线程被阻止响应高优先级任务（如用户输入）的总时间</span></span><br><span class="line">    <span class="attr">duration</span>: number,<span class="comment">// 处理整个LoAF所用的时间</span></span><br><span class="line">    <span class="attr">firstUIEventTimestamp</span>: number,<span class="comment">// 在当前动画帧期间排队的第一个UI事件（如鼠标或键盘事件）的时间。</span></span><br><span class="line">    <span class="attr">renderStart</span>: number, <span class="comment">//渲染周期的开始时间，其中包括Window.requestAnimationFrame（）回调、样式和布局计算、ResizeObserver回调和IntersectionObserver回调。</span></span><br><span class="line">    <span class="attr">script</span>: <span class="title class_">PerformanceScriptTiming</span>[],</span><br><span class="line">    <span class="attr">startTime</span>: number,</span><br><span class="line">    <span class="attr">styleAndLayoutStart</span>: number, <span class="comment">//当前动画帧的样式和布局计算所花费的时间段的开始。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>longtask</code>: 监听长任务，执行时间＞ 50ms 的任务，可以用于检测卡顿</p>
+<p>返回<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/PerformanceLongTaskTiming">PerformanceLongTaskTiming</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    attribution： <span class="title class_">TaskAttributionTiming</span>[],</span><br><span class="line">    <span class="attr">duration</span>: number, <span class="comment">// 任务开始和结束之间经过的时间，粒度为1ms。</span></span><br><span class="line">    <span class="attr">entryType</span>: <span class="string">&#x27;longtask&#x27;</span>,</span><br><span class="line">    <span class="attr">name</span>: cross-origin-ancestor<span class="string">&quot; | &quot;</span>cross-origin-descendant<span class="string">&quot; | &quot;</span>cross- origin-unreachable<span class="string">&quot; | &quot;</span>multiple-contexts<span class="string">&quot; | &quot;</span>same-origin-ancestor<span class="string">&quot; | &quot;</span>same-origin-descendant<span class="string">&quot; | &quot;</span>same-origin<span class="string">&quot; | &quot;</span>self<span class="string">&quot; | &quot;</span>unknown<span class="string">&quot;,</span></span><br><span class="line"><span class="string">    startTime: number, // 任务开始时间</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>paint</code>: 用于检测 FCP（首次内容绘制）&#x2F;FP（首次绘制）时间</p>
+<p>返回<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/PerformancePaintTiming">PerformancePaintTiming</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;first-paint&quot;</span> | <span class="string">&quot;first-contentful-paint&quot;</span>,</span><br><span class="line">    <span class="attr">startTime</span>: number, <span class="comment">// 任务开始时间</span></span><br><span class="line">    <span class="attr">duration</span>: <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>resource</code>: 用于监听资源加载时间</p>
+<p>返回<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/PerformanceResourceTiming">PerformanceResourceTiming</a>，其中包含资源各个的加载、链接开始和结束时间等详细信息</p>
+</li>
+<li><p><code>visibility-state</code>: 检测当前网页是否在屏幕中显示</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;hidden&quot;</span> | <span class="string">&quot;visible&quot;</span>,</span><br><span class="line">    <span class="attr">startTime</span>: number, <span class="comment">// 任务开始时间</span></span><br><span class="line">    <span class="attr">duration</span>: <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自定义：<code>measure</code>和<code>mark</code>，调用是通过 performance 调用的，而不是创建的 PerformanceObserver 实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">performance.<span class="title function_">mark</span>(<span class="string">&quot;mark-start&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; data &#125; = <span class="keyword">await</span> <span class="title function_">apiPost</span>(params);</span><br><span class="line">performance.<span class="title function_">mark</span>(<span class="string">&quot;mark-end&quot;</span>);</span><br><span class="line">performance.<span class="title function_">measure</span>(<span class="string">&quot;mark-finish&quot;</span>, <span class="string">&quot;mark-start&quot;</span>, <span class="string">&quot;mark-end&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>measure 输出的<code>duration</code>是 start 和 end 的时间间隔，通过两个 mark 的 startTime 相减得到的</p>
+</li>
+</ul>
+<h3 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h3><h4 id="测量-FCP-FP"><a href="#测量-FCP-FP" class="headerlink" title="测量 FCP&#x2F;FP"></a>测量 FCP&#x2F;FP</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 创建观察者实例</span></span><br><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function">(<span class="params">list</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> entry <span class="keyword">of</span> list.<span class="title function_">getEntriesByName</span>(<span class="string">&quot;first-contentful-paint&quot;</span>)) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;FCP:&quot;</span>, entry.<span class="property">startTime</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> entry <span class="keyword">of</span> list.<span class="title function_">getEntriesByName</span>(<span class="string">&quot;first-paint&quot;</span>)) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;FP:&quot;</span>, entry.<span class="property">startTime</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">entryTypes</span>: [<span class="string">&quot;paint&quot;</span>],</span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="测量-LCP"><a href="#测量-LCP" class="headerlink" title="测量 LCP"></a>测量 LCP</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function">(<span class="params">list</span>) =&gt;</span> &#123;</span><br><span class="line">  list.<span class="title function_">getEntries</span>().<span class="title function_">forEach</span>(<span class="function">(<span class="params">entry</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;-------------------------------&quot;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`LCP: <span class="subst">$&#123;entry.size&#125;</span>`</span>, entry);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;*******************************&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;largest-contentful-paint&quot;</span>,</span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="测量-FID"><a href="#测量-FID" class="headerlink" title="测量 FID"></a>测量 FID</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function">(<span class="params">list</span>) =&gt;</span> &#123;</span><br><span class="line">  list.<span class="title function_">getEntries</span>().<span class="title function_">forEach</span>(<span class="function">(<span class="params">entry</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`FID: <span class="subst">$&#123;entry.processingStart - entry.startTime&#125;</span>`</span>, entry);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;first-input&quot;</span>,</span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="测量-CLS"><a href="#测量-CLS" class="headerlink" title="测量 CLS"></a>测量 CLS</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function">(<span class="params">list</span>) =&gt;</span> &#123;</span><br><span class="line">  list.<span class="title function_">getEntries</span>().<span class="title function_">forEach</span>(<span class="function">(<span class="params">entry</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;-------------------------------&quot;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`CLS: <span class="subst">$&#123;entry.value&#125;</span>`</span>, entry);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;*******************************&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;layout-shift&quot;</span>,</span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="测试代码块执行时长"><a href="#测试代码块执行时长" class="headerlink" title="测试代码块执行时长"></a>测试代码块执行时长</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function">(<span class="params">list</span>) =&gt;</span> &#123;</span><br><span class="line">  list.<span class="title function_">getEntries</span>().<span class="title function_">forEach</span>(<span class="function">(<span class="params">entry</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`<span class="subst">$&#123;entry.name&#125;</span>执行时间: <span class="subst">$&#123;entry.duration&#125;</span>ms`</span>, entry);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;measure&quot;</span>,</span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 需要测量的代码块</span></span><br><span class="line">performance.<span class="title function_">mark</span>(<span class="string">&quot;test-mark&quot;</span>);</span><br><span class="line"><span class="keyword">await</span> <span class="title function_">getList</span>();</span><br><span class="line">performance.<span class="title function_">mark</span>(<span class="string">&quot;test-mark-end&quot;</span>);</span><br><span class="line">performance.<span class="title function_">measure</span>(<span class="string">&quot;test-measure&quot;</span>, <span class="string">&quot;test-mark&quot;</span>, <span class="string">&quot;test-mark-end&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="检测长任务"><a href="#检测长任务" class="headerlink" title="检测长任务"></a>检测长任务</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function"><span class="params">list</span> =&gt;</span> &#123;</span><br><span class="line">  list.<span class="title function_">getEntries</span>().<span class="title function_">forEach</span>(<span class="function"><span class="params">entry</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;-------------------------------&quot;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`长任务耗时: <span class="subst">$&#123;entry.duration&#125;</span>ms`</span>, entry);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;*******************************&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;longtask&quot;</span>,</span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="用户交互时长"><a href="#用户交互时长" class="headerlink" title="用户交互时长"></a>用户交互时长</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function"><span class="params">list</span> =&gt;</span> &#123;</span><br><span class="line">  list.<span class="title function_">getEntries</span>().<span class="title function_">forEach</span>(<span class="function"><span class="params">entry</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;-------------------------------&quot;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(</span><br><span class="line">      <span class="string">`用户<span class="subst">$&#123;entry.name&#125;</span>事件: <span class="subst">$&#123;entry.processingStart - entry.startTime&#125;</span>ms`</span>,</span><br><span class="line">      entry</span><br><span class="line">    );</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;*******************************&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;event&quot;</span>,</span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">durationThreshold</span>: <span class="number">16</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="长动画帧"><a href="#长动画帧" class="headerlink" title="长动画帧"></a>长动画帧</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function"><span class="params">list</span> =&gt;</span> &#123;</span><br><span class="line">  list.<span class="title function_">getEntries</span>().<span class="title function_">forEach</span>(<span class="function"><span class="params">entry</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (entry.<span class="property">duration</span> &gt; <span class="number">50</span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;----------------------------------------&quot;</span>);</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`总耗时：<span class="subst">$&#123;entry.duration&#125;</span>`</span>, entry);</span><br><span class="line">      entry.<span class="property">scripts</span>.<span class="title function_">forEach</span>(<span class="function"><span class="params">script</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(</span><br><span class="line">          <span class="string">`<span class="subst">$&#123;script.sourceURL&#125;</span> 在 <span class="subst">$&#123;script.invoker&#125;</span> 耗时 <span class="subst">$&#123;script.duration&#125;</span> ms`</span></span><br><span class="line">        );</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="attr">sourceURL</span>: script.<span class="property">sourceURL</span>,</span><br><span class="line">            <span class="attr">duration</span>: script.<span class="property">duration</span>,</span><br><span class="line">            <span class="attr">functionName</span>: script.<span class="property">sourceFunctionName</span>,</span><br><span class="line">            <span class="attr">invoker</span>: script.<span class="property">invoker</span></span><br><span class="line">          &#125;,</span><br><span class="line">          script</span><br><span class="line">        );</span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;*****************************************&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">observer.<span class="title function_">observe</span>(&#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;long-animation-frame&quot;</span>,</span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7516353515142348863">前端PerformanceObserver使用</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7370963861645557769#heading-4">Performance在性能方面的完全运用</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7407084026739294258?from=search-suggest">前端如何监控用户访问界面时发生了卡顿</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/PerformanceObserver/" data-id="cmemqxrb7004s14fmenovedno" data-title="PerformanceObserver" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-读书笔记/性能评估模型" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0%E6%A8%A1%E5%9E%8B/" class="article-date">
@@ -144,7 +282,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0%E6%A8%A1%E5%9E%8B/" data-id="cmek0pdag005x64fm9y8deytz" data-title="性能评估模型" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0%E6%A8%A1%E5%9E%8B/" data-id="cmemqxrbv006214fm8iek9g2v" data-title="性能评估模型" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -232,7 +370,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8/" data-id="cmek0pdag006264fm413fcp1e" data-title="浏览器安全" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8/" data-id="cmemqxrbx006714fm9ayz2kwf" data-title="浏览器安全" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -292,7 +430,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90Wasm%E3%80%91%E4%BB%8B%E7%BB%8D----1/" data-id="cmek0pdac005o64fm8rzy8uh6" data-title="【Wasm】介绍(未完成)" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90Wasm%E3%80%91%E4%BB%8B%E7%BB%8D----1/" data-id="cmemqxrbp005r14fm8wvr1rqq" data-title="【Wasm】介绍(未完成)" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -493,7 +631,7 @@ list2</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90markdown%E3%80%91%E8%AF%AD%E6%B3%95/" data-id="cmek0pdad005r64fm7qh99b4q" data-title="【markdown】语法" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90markdown%E3%80%91%E8%AF%AD%E6%B3%95/" data-id="cmemqxrbs005w14fm2rx47a6j" data-title="【markdown】语法" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -584,7 +722,7 @@ list2</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90vue%E3%80%91%E8%99%9A%E6%8B%9Fdom%E5%9F%BA%E6%9C%AC/" data-id="cmek0pdaf005u64fmb6hwf66i" data-title="【vue】虚拟dom基本" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90vue%E3%80%91%E8%99%9A%E6%8B%9Fdom%E5%9F%BA%E6%9C%AC/" data-id="cmemqxrbu005z14fm70bjg9ol" data-title="【vue】虚拟dom基本" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -654,7 +792,7 @@ list2</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90console%E3%80%91API/" data-id="cmek0pdab005m64fmha2dea8z" data-title="consoleAPI" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90console%E3%80%91API/" data-id="cmemqxrbq005t14fm2tm99ou5" data-title="consoleAPI" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -714,7 +852,7 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WebRTC/%E3%80%90webRTC%E3%80%91%E5%AA%92%E4%BD%93/" data-id="cmek0pdas007a64fm899xgcfa" data-title="webRTC媒体" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WebRTC/%E3%80%90webRTC%E3%80%91%E5%AA%92%E4%BD%93/" data-id="cmemqxrc4006p14fm1y3w173i" data-title="webRTC媒体" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -903,7 +1041,7 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WebRTC/%E3%80%90WebRTC%E3%80%91%E4%BB%8B%E7%BB%8D/" data-id="cmek0pdaq006z64fm9jc81dyx" data-title="webRTC介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WebRTC/%E3%80%90WebRTC%E3%80%91%E4%BB%8B%E7%BB%8D/" data-id="cmemqxrbz006e14fmeictdejs" data-title="webRTC介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -917,190 +1055,9 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
 
 
   
-    <article id="post-读书笔记/WEB3/【Web3】基本介绍" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-读书笔记/webpack/【webpack】配置项" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.702Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Web3/">Web3</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/">【Web3】基本介绍</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="钱包"><a href="#钱包" class="headerlink" title="钱包"></a>钱包</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>用硬件或软件的方式，可以访问资金，与去中心化应用程序进行交互，充当无银行金融服务的网关、收集NFT、创建链上身份与社区，并提供比传统钱包更多的用途</p>
-<h3 id="组成条件"><a href="#组成条件" class="headerlink" title="组成条件"></a>组成条件</h3><ul>
-<li>公钥：链接到自己可以发售和接收交易的地址</li>
-<li>私钥：用于签署新交易并允许访问资金，必须保密</li>
-<li>种子短语：用于生成多个私钥。作为根密钥，可以访问用户钱包中其他密钥和地址，也可以创建新的密钥</li>
-</ul>
-<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><h4 id="热钱包（软钱包）"><a href="#热钱包（软钱包）" class="headerlink" title="热钱包（软钱包）"></a>热钱包（软钱包）</h4><p>可以存储、发送、接收和查看代币，所以比其他类型的钱包更加方便</p>
-<ul>
-<li>托管地：可以访问互联网和加密货币网络的设备上</li>
-<li>实用性：最高</li>
-<li>安全性：容易收到黑客攻击，因为连接到网络了</li>
-</ul>
-<h4 id="桌面钱包"><a href="#桌面钱包" class="headerlink" title="桌面钱包"></a>桌面钱包</h4><p>会被作为应用程序下载到电脑上，在本地运行<br>被认为是可用的，最安全的热钱包类型</p>
-<ul>
-<li>托管地：电脑</li>
-</ul>
-<h4 id="网络钱包"><a href="#网络钱包" class="headerlink" title="网络钱包"></a>网络钱包</h4><p>允许通过浏览器界面进行交互和访问，无须在本地设备上下载或者安装任何内容<br>具有与桌面钱包完全相同的功能，使用相同的区块链和区块浏览器来搜索区块和交易</p>
-<ul>
-<li>托管地：其他人的计算机或者服务器上</li>
-</ul>
-<h4 id="手机钱包"><a href="#手机钱包" class="headerlink" title="手机钱包"></a>手机钱包</h4><p>与桌面钱包类似，只是托管地是手机<br>与桌面钱包相比，手机钱包的功能相对更简单一些</p>
-<h4 id="冷钱包"><a href="#冷钱包" class="headerlink" title="冷钱包"></a>冷钱包</h4><p>无须连接到互联网，那么这就使得冷钱包是存储加密货币的更安全的替代方案，因为有物理介质可以离线存储密钥</p>
-<ul>
-<li>安全性：抵抗黑客能力更强，对长期投资者来说很实用</li>
-</ul>
-<h4 id="硬件钱包"><a href="#硬件钱包" class="headerlink" title="硬件钱包"></a>硬件钱包</h4><p>使用随机生成器生成公钥和私钥的物理电子设备<br>最适合长期投资和存储使用，因为它们不太容易获得</p>
-<ul>
-<li>主要用例：确保未分配的、用于持续使用的大笔资金的安全性</li>
-<li>安全性：最安全的存储方案之一，因为能够在设备中保存公钥和私钥，而无须借助任何互联网连接。这样对加密货币的访问是处于离线状态</li>
-</ul>
-<h4 id="纸钱包"><a href="#纸钱包" class="headerlink" title="纸钱包"></a>纸钱包</h4><p>由物理打印出的区块链地址和私钥组成，到纸上。这些信息会被打印成二维码，可以通过扫描二维码来汇款</p>
-<ul>
-<li>托管地：纸</li>
-<li>缺点；只能一次性发送全部余额，不能多次发送部分</li>
-</ul>
-<h4 id="市面上主流钱包"><a href="#市面上主流钱包" class="headerlink" title="市面上主流钱包"></a>市面上主流钱包</h4><blockquote>
-<p>以太坊钱包</p>
-</blockquote>
-<ul>
-<li><p>metamask</p>
-</li>
-<li><p>trust Wallet</p>
-</li>
-<li><p>argent</p>
-</li>
-<li><p>imToken</p>
-</li>
-</ul>
-<blockquote>
-<p>其他生态</p>
-</blockquote>
-<ul>
-<li><p>phantom：Solana生态</p>
-</li>
-<li><p>keplr：Cosmos生态</p>
-</li>
-<li><p>polkadot：Polkadot生态</p>
-</li>
-<li><p>tezos：Temple生态</p>
-</li>
-</ul>
-<h2 id="助记词"><a href="#助记词" class="headerlink" title="助记词"></a>助记词</h2><p>由于私钥一般情况下，都非常冗长复杂，不适合记忆，为了方便使用，密码学家将其简化成了12或者24位不等的单词或者中文字符，简化之后的就被称为助记词</p>
-<p>即：</p>
-<ul>
-<li><p>助记词是密钥的另外一种形式</p>
-</li>
-<li><p>通过助记词可以获取相关的多个私钥，但是通过私钥无法获取助记词</p>
-</li>
-</ul>
-<h2 id="区块链浏览器"><a href="#区块链浏览器" class="headerlink" title="区块链浏览器"></a>区块链浏览器</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>区块链浏览器是一种软件，它使用api和区块链节点从区块链中提取各种数据，然后使用数据库来排列搜索到的数据，并以可搜索的格式将数据呈现给用户</p>
-<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>区块链钱包可以提供不同类型的数据，但仅限于与钱包管理的密钥相关的数据。区块链浏览器用于查看与在给定区块链的所有钱包上执行的交易相关的数据。<br>特殊之处就是在于透明度，它允许用户检查智能合约地址的余额和支出，如当用户参数首次代币发行时。</p>
-<h3 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h3><ul>
-<li>查看任何钱包地址的交易历史<br>能够审计任何钱包地址并提高区块链的透明度</li>
-<li>查看接收和更改地址<br>可以查看交易接收地址、更改地址。将加密货币返回给支出者，以防输入值过多用于交易费用，提高了交易的透明度</li>
-<li>查看当天最大的交易</li>
-<li>查看内存池的状态<br>可以查看区块链上未确认的交易及其详细信息</li>
-<li>查看双花交易<br>部门浏览器支持</li>
-<li>查看孤立和陈旧区块<br>孤立区块：挖掘之后没有附加到最长的区块链上，并且它们的父区块链是未知的</li>
-</ul>
-<p>陈旧区块：已知父区块链，但未链接到已知最长链的区块</p>
-<ul>
-<li><p>查看发现或开采特点区块的个人或矿池</p>
-</li>
-<li><p>查看创世区块</p>
-</li>
-<li><p>允许用户查看交易费用、区块链难度、哈希率和其他数据</p>
-</li>
-</ul>
-<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><ul>
-<li><p>将加密货币发送给某人之前会检查钱包地址是否对区块链有效</p>
-</li>
-<li><p>检查加密货币是否已经发送给目标个人。所有者可以检查他们的钱包余额</p>
-</li>
-<li><p>可以帮助解释尚未通过或确认的交易出现的问题以及查看确认jieduan</p>
-</li>
-<li><p>帮助用户了解交易或Gas当前的成本，从而帮助计划未来的Gas支出</p>
-</li>
-<li><p>帮助用户了解某个组是不是挖掘交易的人，并有助于决定是否为未来的挖掘活动投入更多的计算资源</p>
-</li>
-<li><p>可以帮助正在开发钱包的人，如果它可以进行正常的工作（发送、接收、存储和加密货币）</p>
-</li>
-<li><p>与其他软件一起使用，可以证实数据和信息</p>
-</li>
-</ul>
-<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><ul>
-<li><p>资源管理器首先使用节点接口提取给定区块链中的所有数据，一旦它导出数据，就会将其存储在可搜索的表格中</p>
-</li>
-<li><p>将收集最新的交易和区块，根据定义的可搜索类别进行排列。它为用户提供了一个界面用于搜索。在技术方面，资源管理器可以使用关系数据库、sql数据库和api</p>
-</li>
-</ul>
-<p>每个区块链节点都可以直接读取区块链上的数据，获取最新交易和挖掘区块等数据等详细信息，然后将其发送到数据库，其中数据以可搜索表格的形式排列，使得资源管理器可以快速使用这些数据。</p>
-<p>大部分的区块链使用表格，每一行都有唯一的id或者键用于区分</p>
-<h2 id="域名系统"><a href="#域名系统" class="headerlink" title="域名系统"></a>域名系统</h2><p>在区块链中，域名系统和网络中的域名概念不同。区块链中，域名指向的是钱包地址，是一种身份的关联和映射，解决了ip或钱包地址过长的问题</p>
-<h3 id="ENS域名系统"><a href="#ENS域名系统" class="headerlink" title="ENS域名系统"></a>ENS域名系统</h3><h4 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h4><p>ens由两个以太坊智能合约组成：记录域名的ens注册表和将域名与机器的可读地址互相转换的解析器</p>
-<h4 id="获取"><a href="#获取" class="headerlink" title="获取"></a>获取</h4><p>在ens app上注册</p>
-<h3 id="DAS域名账户系统"><a href="#DAS域名账户系统" class="headerlink" title="DAS域名账户系统"></a>DAS域名账户系统</h3><h4 id="含义-1"><a href="#含义-1" class="headerlink" title="含义"></a>含义</h4><p>das是web3的去中心化身份认证系统，和ens类似，允许用户将个人域名绑定都适用所有链的人类可读地址。</p>
-<h2 id="预言机"><a href="#预言机" class="headerlink" title="预言机"></a>预言机</h2><p>预言机充当区块链上的app接口，通过查询可以获取智能合约的相关信息。预言机也可以向真实世界发送数据</p>
-<h3 id="背景-1"><a href="#背景-1" class="headerlink" title="背景"></a>背景</h3><p>大多数区块链都有用于转移价值、启用协议操作或促进治理的本地加密货币，一些区块链支持智能合约，而智能合约可以在没有第三方的情况下执行，并且可以设计为执行几乎任何可以想象得到的合约。</p>
-<p>区块链和链上智能合约需要一种方法来利用外部的链下数据，以便智能合约执行影响现实世界的app，因此预言机就需要被用到</p>
-<h3 id="分类-1"><a href="#分类-1" class="headerlink" title="分类"></a>分类</h3><ul>
-<li>软件预言机</li>
-</ul>
-<p>提供来自网站、服务器或数据库等数字源的数据。可以提供实时信息</p>
-<ul>
-<li>硬件预言机</li>
-</ul>
-<p>提供来自现实世界的数据，可以传递和中继来自项目运动传感器</p>
-<ul>
-<li>集中式预言机</li>
-</ul>
-<p>它由单个实体控制，并充当智能合约的唯一数据提供者。它要求合同参与者对一个实体给予极大的信任；它还代表单点故障，这可能会威胁到智能合约的安全性，如果预言机被破坏，智能合约也会被破坏。智能合约的准确性和有效性在很大程度上取决于所提供数据的质量，因此预言机对智能合约有很大的权利。</p>
-<p>预言机问题：预言机可以使智能合约在去信任方之间执行，但当他变得过度中心化时，可能会有它试图成为中间人的风险。</p>
-<ul>
-<li>去中心化预言机</li>
-</ul>
-<p>去中心化预言机试图实现依赖因果关系而不是个人关系的去信任和确定性结果。它以与区块链网络相同的方式实现这些结果，在许多网络参与者之间分配信任。通过利用许多不同的数据源并实施不受单个实体控制的预言机系统，去中心化的预言机网络可能成为为智能合约提供更高级别的安全性和公平性。</p>
-<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>Chainlink</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/" data-id="cmek0pdap006u64fm2uate40l" data-title="【Web3】基本介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-读书笔记/webpack/【webpack】工作流程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" class="article-date">
+    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E9%85%8D%E7%BD%AE%E9%A1%B9/" class="article-date">
   <time class="dt-published" datetime="2025-08-14T03:18:06.702Z" itemprop="datePublished">2025-08-14</time>
 </a>
     
@@ -1116,7 +1073,7 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/">【webpack】工作流程</a>
+      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E9%85%8D%E7%BD%AE%E9%A1%B9/">【webpack】配置项</a>
     </h1>
   
 
@@ -1124,158 +1081,217 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p><a target="_blank" rel="noopener" href="http://wepack.wuhaolin.cn/5-2%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E5%88%86%E6%9E%90.zip">http://wepack.wuhaolin.cn/5-2输出文件分析.zip</a></p>
-<p>bundle.js能直接中浏览器运行是因为输出的文件中通过__webpack_require__定义了一个可以在浏览器执行的加载函数，模拟nodejs的require。</p>
-<p>原本一个个独立的模块文件被合并到了一个单独的bundle.js的原因是浏览器不能像nodejs一样快速在本地加载一个个模块文件，而必须通过网络请求去加载还未得到的文件。如果模块数量很多，那么加载时间会很长，因此将所有模块都存放到了数组中，执行一次网络加载。</p>
-<h2 id="流程概括"><a href="#流程概括" class="headerlink" title="流程概括"></a>流程概括</h2><h3 id="初始化参数"><a href="#初始化参数" class="headerlink" title="初始化参数"></a>初始化参数</h3><ul>
-<li>从配置文件和shell语句中读取和合并参数，得出最终的参数</li>
-</ul>
-<h4 id="发生事件"><a href="#发生事件" class="headerlink" title="发生事件"></a>发生事件</h4><table>
+        <h1 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h1><h2 id="context"><a href="#context" class="headerlink" title="context"></a>context</h2><p>在查找相对路径时，以context为根目录。<br>默认为webpack启动时的所在工作目录。<br>注：context必须是一个绝对路径的字符串</p>
+<h2 id="entry-1"><a href="#entry-1" class="headerlink" title="entry"></a>entry</h2><p>类型：string&#x2F;array&#x2F;object</p>
+<table>
 <thead>
 <tr>
-<th>event name</th>
-<th>desc</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>初始化参数</td>
-<td>从配置文件和shell语句中读取合并参数，得出最终的参数，在这个过程中还会执行配置文件中的插件实例化语句 new Plugin（）</td>
-</tr>
-<tr>
-<td>实例化compiler</td>
-<td>用上一步得到的参数初始化compiler实例，compiler负责文件监听和启动编译，在compiler实例中包含了完整的webpack配置，全局只有一个compiler实例</td>
-</tr>
-<tr>
-<td>加载插件</td>
-<td>依次调用插件的apply方法，让插件可以监听后续的所有事件节点。同时向插件传入compiler实例的引用，以方便插件通过compiler调用webpack提供的api</td>
-</tr>
-<tr>
-<td>environment</td>
-<td>开始应用nodejs风格的文件系统到complier对象，以方便后续的文件寻找和读取</td>
-</tr>
-<tr>
-<td>entry-option</td>
-<td>读取配置的entrys，为每个entry实例化一个对应的entrypath，为后面该entry的递归解析工作做准备</td>
-</tr>
-<tr>
-<td>after-plugins</td>
-<td>调用完所有的内置和配置的插件apply方法</td>
-</tr>
-<tr>
-<td>after-resolvers</td>
-<td>根据配置初始化resolver，resolver负责在文件系统中寻找指定路径的文件</td>
-</tr>
-</tbody></table>
-<h3 id="编译阶段"><a href="#编译阶段" class="headerlink" title="编译阶段"></a>编译阶段</h3><h4 id="开始编译"><a href="#开始编译" class="headerlink" title="开始编译"></a>开始编译</h4><ul>
-<li>用上一步得到的参数初始化compiler对象，加载所有配置的插件，通过执行对象的run方法开始执行编译</li>
-</ul>
-<h4 id="确定入口"><a href="#确定入口" class="headerlink" title="确定入口"></a>确定入口</h4><ul>
-<li>配置的entry找出所有的入口文件</li>
-</ul>
-<h4 id="编译模块"><a href="#编译模块" class="headerlink" title="编译模块"></a>编译模块</h4><p>从入口文件出发，调用所有的配置的loader对模块进行翻译，再找出模块依赖的模块，再递归本步骤直至所有的入口依赖的文件都经过本步骤的处理</p>
-<h4 id="完成编译模块"><a href="#完成编译模块" class="headerlink" title="完成编译模块"></a>完成编译模块</h4><p>使用loader翻译完所有的模块后，得到每个模块被翻译后的最终内容以及它们之间的依赖关系</p>
-<h4 id="发生事件-1"><a href="#发生事件-1" class="headerlink" title="发生事件"></a>发生事件</h4><table>
-<thead>
-<tr>
-<th>事件</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>run</td>
-<td>启动一次新的编译</td>
-</tr>
-<tr>
-<td>watch-run</td>
-<td>和run类似，但是是在监听模式下启动编译，可以获取是哪些文件发生变化导致重新启动编译</td>
-</tr>
-<tr>
-<td>compile</td>
-<td>告诉插件一次新的编译将要启动，同时会给插件带上compiler对象</td>
-</tr>
-<tr>
-<td>compilation</td>
-<td>当webpack以开发模式运行时，每当检测到文件的变化，便有一次新的Compilation被创建。一个Compilation对象包含了当前当模块资源，编译生成资源，变化的文件等，此对象也提供很多事件回调给插件进行扩展</td>
-</tr>
-<tr>
-<td>make</td>
-<td>一个新的Compilation创建完毕，即将从entry开始读取文件，根据文件当类型和配置的loader对文件进行编译，编译完成后再找出该文件依赖的文件，递归的编译解析</td>
-</tr>
-<tr>
-<td>after-compile</td>
-<td>一次Compilation执行完成</td>
-</tr>
-<tr>
-<td>invalid</td>
-<td>当遇到文件不存在，文件编译错误等异常时会触发该事件，该事件不会导致webpack退出</td>
-</tr>
-</tbody></table>
-<h4 id="compilation阶段的事件"><a href="#compilation阶段的事件" class="headerlink" title="compilation阶段的事件"></a>compilation阶段的事件</h4><table>
-<thead>
-<tr>
-<th>事件</th>
+<th>类型</th>
+<th>例子</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>build-module</td>
-<td>使用对应的loader去转换一个模块</td>
+<td>string</td>
+<td>index•js</td>
+<td>入口模块的文件路径，可以是相对路径</td>
 </tr>
 <tr>
-<td>normal- module- loader</td>
-<td>在用loader转换完一个模块后，使用acorn解析转换后的内容，输出对应的ast，方便web pack对后面的代码进行分析</td>
+<td>array</td>
+<td>【index。js，index2。js】</td>
+<td>入口模块的文件路径，可以是相对路径</td>
 </tr>
 <tr>
-<td>program</td>
-<td>从配置的入口模块开始，分析其ast，当遇到require等导入其他模块的语句时，便将其加入依赖的模块列表中，同时对新找出的依赖模块递归分析，最终弄清所有模块的依赖关系</td>
-</tr>
-<tr>
-<td>seal</td>
-<td>所有模块及其依赖的模块都通过loader转换完成，依据依赖关系开始生成chunk</td>
+<td>object</td>
+<td>{a：index。js}</td>
+<td>配置多个入口，每个入口生成一个chunk</td>
 </tr>
 </tbody></table>
-<h3 id="输出阶段"><a href="#输出阶段" class="headerlink" title="输出阶段"></a>输出阶段</h3><h4 id="输出资源"><a href="#输出资源" class="headerlink" title="输出资源"></a>输出资源</h4><p>根据入口和模块之间的依赖关系，组装成一个个包含多个模块的chunk，再将每个chunk转换成一个单独的文件加入输出列表中。</p>
-<h4 id="输出完成"><a href="#输出完成" class="headerlink" title="输出完成"></a>输出完成</h4><p>确定好输出内容后，根据配置确定输出的路径和文件名，将文件的内容写入文件系统中</p>
-<h4 id="发生事件-2"><a href="#发生事件-2" class="headerlink" title="发生事件"></a>发生事件</h4><table>
-<thead>
-<tr>
-<th>事件</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>should-emit</td>
-<td>所有需要输出的文件已经生成，询问插件哪些文件需要输出，哪些不需要输出</td>
-</tr>
-<tr>
-<td>emit</td>
-<td>确定好要输出哪些文件后，执行文件输出，可以在此回调中获取和修改输出的内容</td>
-</tr>
-<tr>
-<td>after-emit</td>
-<td>文件输出完毕</td>
-</tr>
-<tr>
-<td>done</td>
-<td>成功完成一次完整的编译输出流程</td>
-</tr>
-<tr>
-<td>failed</td>
-<td>如果在编译和输出的流程中遇到异常，导致webpack退出，就会直接跳转到本步骤，插件在本事件中可以获取具体的错误原因</td>
-</tr>
-</tbody></table>
-<h2 id="事件流"><a href="#事件流" class="headerlink" title="事件流"></a>事件流</h2><p>webpack通过tapable来组织广播打包流程。webpack在运行时会广播事件，插件只需要监听它所关心的事件，就能加入这条线中，去改变打包的结果。</p>
-<p>webpack的事件流机制保证了插件的有序性，使得整个系统的扩展性良好。事件流机制应用了观察者模式，和nodejs的eventemitter类似。compiler和compilation都继承至tapable，可以直接中在complier和compilation对象上广播和监听事件。</p>
+<p>如果是array，搭配output。library时，只有数组的最后一个入口文件的模块会被导出</p>
+<h1 id="output"><a href="#output" class="headerlink" title="output"></a>output</h1><h2 id="filename"><a href="#filename" class="headerlink" title="filename"></a>filename</h2><ul>
+<li>id：chunk的唯一标识，从0开始</li>
+<li>name：chunk的名称</li>
+<li>hash：chunk的唯一标识的hash值</li>
+<li>chunkhash：chunk内容的hash</li>
+</ul>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="target"><a href="#target" class="headerlink" title="target"></a>target</h2><p>代码运行的不同环境，默认为web</p>
+<ul>
+<li>web：针对浏览器，所有代码都集中到一个文件中</li>
+<li>node：针对nodejs，使用require加载chunk模块</li>
+<li>async-node：针对nodejs，异步加载chunk代码</li>
+<li>webworker：针对webworker</li>
+<li>electron-main：针对electon主线程</li>
+<li>electron-rendrer：针对electron渲染线程</li>
+</ul>
+<h1 id="loader"><a href="#loader" class="headerlink" title="loader"></a>loader</h1><ul>
+<li>svg- inline- loader：和raw- loader类似，但是会分析svg的内容，去除其不必要的部分，减少svg的体积</li>
+</ul>
+<h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><h2 id="缩小文件搜索范围"><a href="#缩小文件搜索范围" class="headerlink" title="缩小文件搜索范围"></a>缩小文件搜索范围</h2><ul>
+<li><p>loader配置</p>
+<blockquote>
+<p>可以通过include去告诉webpack只有那些文件会被这个loader处理，用exclude排除不需要的文件</p>
+</blockquote>
+</li>
+<li><p>优化resolve.modules配置<br>配置webpack去哪些目录下寻找第三方模块</p>
+<blockquote>
+<p>指明依赖包的具体目录位置，减少查询时间。</p>
+</blockquote>
+</li>
+<li><p>优化reslove.main Fields配置<br>配置第三方模块使用哪个入口文件</p>
+<blockquote>
+<p>指明采用字段作为入口文件的描述字段，减少搜索步骤</p>
+</blockquote>
+</li>
+</ul>
+<p>注：需要考虑是否所有依赖包的第三方入口文件的描述字段，一个模块出错，就会导致所有的代码无法正常运行</p>
+<ul>
+<li><p>优化reslove.alias</p>
+<blockquote>
+<p>配置库的具体引用路径，减少查询时间</p>
+</blockquote>
+</li>
+<li><p>resolve.extensions</p>
+<blockquote>
+<p>频率最高的放在最前面。</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>列表不能太长</p>
+</blockquote>
+<ul>
+<li>优化module.noParse</li>
+</ul>
+<h2 id="happypack"><a href="#happypack" class="headerlink" title="happypack"></a>happypack</h2><p>将任务分解给多个子进程去并发执行，子进程处理完后再将结果发送给主进程</p>
+<h2 id="ParallelUglifyPlugin"><a href="#ParallelUglifyPlugin" class="headerlink" title="ParallelUglifyPlugin"></a>ParallelUglifyPlugin</h2><p>uglfyjs是webpack内置的，但是在构建线上代码时会卡住，即是在进行代码压缩。压缩代码需要将代码解析成用object抽象表示的ast语法树，再去应用各种规则分析和处理ast，因此导致这个过程计算量很大，非常耗时</p>
+<p>ParallelUglifyPlugin会开启多个子线程，将对多个文件的压缩工作分配给多个子进程去完成，每个子进程还是用uglfyjs压缩。</p>
+<h2 id="自动刷新"><a href="#自动刷新" class="headerlink" title="自动刷新"></a>自动刷新</h2><ul>
+<li>文件监听原理：</li>
+</ul>
+<blockquote>
+<p>定时获取文件的最后编辑时间，每次存下最新的最后编辑时间，如果发现当前的获取的时间和最后一次保存的编辑时间不一致，就认为该文件发生了变化</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>watchOptions.poll用于控制定时时长，每秒检查多少次</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>当某个文件被判定为发生了变化时，并不会立刻告诉监听者，而是会先缓存起来，搜集一段时间后，再一次性告诉监听者。</p>
+<blockquote>
+<p>watchOptions.aggregateTimeout 用于配置这个等待时间</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>自动刷新原理</li>
+</ul>
+<p>控制浏览器自动刷新方法：</p>
+<ol>
+<li><p>借助浏览器扩展去通过浏览器的提供的借口刷新，比如webstorm的liveedit</p>
+</li>
+<li><p>向要开发的网页中注入代理客户端的代码，通过客户端的去刷新页面</p>
+</li>
+<li><p>将要开发的网页装入一个iframe中，通过刷新iframe去看到最新效果</p>
+</li>
+</ol>
+<p>webpack通过devServer.inline控制是否向每个chunk中注入代理客户端，在开启inline时，devserver会向每个chunk注入代理客户端的代码，而项目中chunk有很多chunk，因此会导致构建缓慢。</p>
+<p>启动项目时，可以通过执行命令webpack-dev-server。—inline false完成。那么就会采用第三种方式进行页面刷新。</p>
+<h2 id="模块热替换"><a href="#模块热替换" class="headerlink" title="模块热替换"></a>模块热替换</h2><ul>
+<li>原理</li>
+</ul>
+<p>和自动刷新原理类似，都需要在开发的网页中注入一个代理客户端来连接devserver和网页。当子模块发生更新时，更新事件会一层层向上传递，直到有某层的文件接收了当前变化的模块，这时就会掉用callback函数去执行自定义的逻辑。如果事件一直往上抛，到最外层都没有事件接收他，那么会直接刷新页面。</p>
+<ul>
+<li>优化</li>
+</ul>
+<p>监听更少的文件，忽略nodemodules目录下的文件。</p>
+<h1 id="cdn加速"><a href="#cdn加速" class="headerlink" title="cdn加速"></a>cdn加速</h1><ul>
+<li>缓存问题</li>
+</ul>
+<p>cdn一般会为资源开启很长时间的缓存，可能会导致最新的发布不能用</p>
+<blockquote>
+<p>针对html入口文件，放到自己的服务器中，关闭自己服务器上的缓存，自己的服务器只提供html和数据接口</p>
+</blockquote>
+<blockquote>
+<p>针对静态的js，css，图片等文件，开启cdn和缓存，每个文件带自己内容的hash值</p>
+</blockquote>
+<ul>
+<li>使用</li>
+</ul>
+<blockquote>
+<p>在output.publicPath设置js的地址</p>
+</blockquote>
+<blockquote>
+<p>在css-loader.publicPath设置css导入的资源地址</p>
+</blockquote>
+<blockquote>
+<p>在webplugin.stylepublicpath设置css文件的地址</p>
+</blockquote>
+<h2 id="压缩代码"><a href="#压缩代码" class="headerlink" title="压缩代码"></a>压缩代码</h2><ul>
+<li>js</li>
+</ul>
+<blockquote>
+<p>使用 uglifyplugin和paralleugifyplugin（多线程）进行压缩</p>
+</blockquote>
+<ul>
+<li>压缩es6</li>
+</ul>
+<blockquote>
+<p>优点：对于一样的逻辑，es6代码量少于es5；js对es6的语法做了性能优化，例如针对const声明的变量有更快的读取速度。</p>
+</blockquote>
+<blockquote>
+<p>使用uglifyes进行压缩</p>
+</blockquote>
+<ul>
+<li>压缩css</li>
+</ul>
+<blockquote>
+<p>使用cssnano进行压缩</p>
+</blockquote>
+<h2 id="tree-shaking去除无用的死代码"><a href="#tree-shaking去除无用的死代码" class="headerlink" title="tree shaking去除无用的死代码"></a>tree shaking去除无用的死代码</h2><p>配置babel保留es6模块化语句，presets：modules：false</p>
+<p>启动时带上—display-used- exports参数，指出哪些函数有用和无用。</p>
+<p>启动时带上—optimize-minimize去除无用代码</p>
+<p>配置reslove.mainfields，优先采用jsnext：main（第三方包打包出的es6模块）</p>
+<p>export default无法做tree shaking，因为导出的是一整个对象</p>
+<h2 id="提取公共代码"><a href="#提取公共代码" class="headerlink" title="提取公共代码"></a>提取公共代码</h2><blockquote>
+<p>使用commonchunkplugin</p>
+</blockquote>
+<h2 id="分割代码按需加载"><a href="#分割代码按需加载" class="headerlink" title="分割代码按需加载"></a>分割代码按需加载</h2><blockquote>
+<p>原则</p>
+</blockquote>
+<p>1: 将整个网站划分成一个个小功能，再按照每个功能的相关程度将它们分成几类。</p>
+<p>2: 将每一类合并为一个chunk，按需加载对应的chunk</p>
+<p>3: 不要按需加载用户首次打开网站时需要看到的画面所对应的功能，将其放入执行入口所在的chunk中，以减少用户能感知的网页加载时间</p>
+<p>4: 对于不依赖大量代码的功能点，例如依赖echart画图，将其进行按需加载</p>
+<blockquote>
+<p>webpackChunkName：name</p>
+</blockquote>
+<p>import（&#x2F;* webpackChunkName：name *&#x2F; path）：为动态生成的chunk赋予一个名称，方便追踪和调试代码，若不指定名称，那么默认为[id].js</p>
+<p>以path路径下的文件为入口重新生成一个chunk，当代码执行到import所在的语句时，才会去加载chunk对应生成的文件。import会返回一个promise，当文件加载成功时可以在promise的then方法获取对应的文件内容。</p>
+<h2 id="scope-hoisting"><a href="#scope-hoisting" class="headerlink" title="scope hoisting"></a>scope hoisting</h2><blockquote>
+<p>实现原理</p>
+</blockquote>
+<p>分析模块之间的依赖关系，尽可能将被打散的模块合并到一个函数中。但前提是不能造成代码冗余，因此只有被引用了一次的模块才能被合并。</p>
+<h2 id="prepack"><a href="#prepack" class="headerlink" title="prepack"></a>prepack</h2><blockquote>
+<p>在保持运行结果一致的情况下，改变源码的运行逻辑，输出性能更好的js代码</p>
+</blockquote>
+<p>工作流程：</p>
+<p>1: 通过Babel将js源码解析成抽象语法树，以更细粒度地分析yuanma</p>
+<p>2: prepack实现了一个js解释器，用于执行源码。借助这个解释器，prepack才能理解源码具体是如何执行的，并将执行过程中的结果返回到输出中。</p>
+<p>使用prepack-webpack-plugin插件。</p>
+<h2 id="可视化打包结果"><a href="#可视化打包结果" class="headerlink" title="可视化打包结果"></a>可视化打包结果</h2><ul>
+<li><p>webpack-bundle- analyzer</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://wepack.github.io/analyse">http://wepack.github.io/analyse</a></p>
+</li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-id="cmek0pdau007i64fm0b6x6fsb" data-title="【webpack】工作流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E9%85%8D%E7%BD%AE%E9%A1%B9/" data-id="cmemqxrc7006x14fmgi5l2q2y" data-title="【webpack】配置项" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li></ul>
-
     </footer>
   </div>
   
@@ -1319,7 +1335,7 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 12px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
     </div>
   </div>
 
@@ -1341,6 +1357,10 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
       <ul>
         
           <li>
+            <a href="/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/">记录2</a>
+          </li>
+        
+          <li>
             <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">记录1</a>
           </li>
         
@@ -1354,10 +1374,6 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
         
           <li>
             <a href="/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【wasb】环境搭建</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E3%80%90RN%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【RN】环境搭建</a>
           </li>
         
       </ul>

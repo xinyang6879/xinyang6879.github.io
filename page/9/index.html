@@ -71,6 +71,159 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-HTTP/【Htpp】header" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/HTTP/%E3%80%90Htpp%E3%80%91header/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.271Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/http/">http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/HTTP/%E3%80%90Htpp%E3%80%91header/">【Htpp】header</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="通用头部"><a href="#通用头部" class="headerlink" title="通用头部"></a>通用头部</h2><h3 id="cache-control"><a href="#cache-control" class="headerlink" title="cache-control"></a>cache-control</h3><p>控制缓存，可以接收多个参数，参数之间以“，”隔空。</p>
+<blockquote>
+<p>请求和响应共用</p>
+</blockquote>
+<ul>
+<li><p>no-cache：表示强制使用最新的值而不使用缓存。请求头部包含no-cache，表示客户端不接收缓存过的响应，缓存服务器必须把客户端请求转发给源服务器；响应请求里面包含，那么缓存服务器不能对响应资源进行缓存。（协商缓存</p>
+</li>
+<li><p>no-store：不应该缓存当前内容，表示对应的报文中包含机密信息，不缓存</p>
+</li>
+<li><p>no-transform：缓存不能改变主体的媒体类型，能防止缓存服务器压缩图片资源等。</p>
+</li>
+<li><p>max-age：缓存有效期（以秒为单位）。请求包含时，如果缓存资源的缓存时间比指定时间数值更小时则接受缓存资源，当值为0时，缓存服务器会把请求转发给源服务器；当响应包含时，缓存服务器不再确认资源的有效期，而以max-age数值作为缓存保存时长。</p>
+</li>
+<li><p>s-maxage: 用于配置<strong>代理服务器</strong>的缓存，以秒为单位，优先级高于max-age，但只在代理服务器中生效，客户端依然使用max-age</p>
+</li>
+</ul>
+<h4 id="max-age-0和no-cache"><a href="#max-age-0和no-cache" class="headerlink" title="max-age&#x3D;0和no-cache"></a>max-age&#x3D;0和no-cache</h4><ul>
+<li><p><code>no-cache</code>：浏览器可以进行缓存，未定性缓存是否已经过期，禁用未经验证的缓存。但是在每次请求时，需要像服务端发送一个请求判断这次的资源是否过期。如果服务端返回304，说明资源还在有效期内，浏览器可以直接使用缓存资源；但是如果内容已经过期了，服务器会返回新的内容。比max-age&#x3D;0更严格，确保每次都需要进行验证</p>
+</li>
+<li><p><code>max-age=0</code>: 将缓存已经视为过期了，但允许客户端复用缓存（通过验证），需要像服务器发起请求，如果服务端返回304，那么客户端依旧使用缓存，如果是200，那么就视为需要重新获取新数据。</p>
+</li>
+</ul>
+<p>Cache-Control: no-cache, max-age&#x3D;0是冗余写法，但是可以确保浏览器的兼容性</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>max-age&#x3D;0</th>
+<th>no-cache</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>缓存是否保留</td>
+<td>保留，但被视为过期</td>
+<td>保留，但每次使用前需要验证</td>
+</tr>
+<tr>
+<td>验证条件</td>
+<td>可能被其他条件覆盖</td>
+<td>强制无条件</td>
+</tr>
+<tr>
+<td>优先级</td>
+<td>较低</td>
+<td>较高</td>
+</tr>
+<tr>
+<td>场景</td>
+<td>希望缓存快速更新，但允许复用</td>
+<td>强制要求数据一致性（如实时数据）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>请求头部</p>
+</blockquote>
+<ul>
+<li><p>min-fresh：要求缓存服务器指定时间内返回响应（以秒为单位）</p>
+</li>
+<li><p>only-if-cached：客户端仅在缓存服务器本地缓存目标资源的情况下才会要求其返回值，也就是说不会向源服务器转发请求。</p>
+</li>
+</ul>
+<blockquote>
+<p>响应头部</p>
+</blockquote>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mK0vouYv4BwgX190fSd/article/details/89880083">must-revalidate</a>：本地缓存过期前可以使用，否则必须进行有效性校验</p>
+</li>
+<li><p>public：响应可能会被任何对象缓存，没有限制</p>
+</li>
+<li><p>private： 响应只能被特定用户缓存，不能被其他用户使用</p>
+</li>
+<li><p>proxy-revalidate：仅适用于共享缓存，私有缓存时忽略</p>
+</li>
+</ul>
+<h3 id="connection"><a href="#connection" class="headerlink" title="connection"></a>connection</h3><ul>
+<li><p>close: 当一方的connection为close时，表示关闭此次连接</p>
+</li>
+<li><p>keep-live：持久化连接</p>
+</li>
+</ul>
+<h3 id="date"><a href="#date" class="headerlink" title="date"></a>date</h3><p>报文创建时间</p>
+<h2 id="请求头部"><a href="#请求头部" class="headerlink" title="请求头部"></a>请求头部</h2><h3 id="accept"><a href="#accept" class="headerlink" title="accept"></a>accept</h3><p>可以设置多个值，每个值通过“，”进行分割</p>
+<p>常用值：text&#x2F;html，application&#x2F;xml；q&#x3D;0.9等</p>
+<p>注：q&#x3D;x，是给当前类型赋予权重，范围为0～1，可精确到小数点后3位。和MIME子类型通过“，”分割，默认权重值为1。服务器会优先返回权重较大的类型，如果权重相等，则按照从左至右的顺序处理。</p>
+<h3 id="accept-charset"><a href="#accept-charset" class="headerlink" title="accept-charset"></a>accept-charset</h3><p>客户端可以处理的字符集类型，通常不需要额外设置此项，每种文件类型都有默认的值。和accept一样可以设置权重</p>
+<h3 id="accept-encoding"><a href="#accept-encoding" class="headerlink" title="accept-encoding"></a>accept-encoding</h3><p>客户端可以接收的编码方式，通常这个字段值会是某种压缩算法，比如gzip等。和accept一样可以设置权重</p>
+<h3 id="accept-language"><a href="#accept-language" class="headerlink" title="accept-language"></a>accept-language</h3><p>客户端可以解析的自然语言，可以一次性指定多个语言并设置权重。</p>
+<h3 id="authorization"><a href="#authorization" class="headerlink" title="authorization"></a>authorization</h3><p>告知服务端认证信息。通常在收到401后，在请求头里面加入authorization：type credentials</p>
+<h3 id="host（必传）"><a href="#host（必传）" class="headerlink" title="host（必传）"></a>host（必传）</h3><p>告知服务器请求资源所处的互联网主机名和端口号（不指定将使用默认端口号）。</p>
+<p>必传是因为服务器在接收到请求后将请求的主机号替换为ip地址，但是如果这个ip部署了多个域名，那么服务器无法转发到对应的请求</p>
+<h3 id="if-modified-since"><a href="#if-modified-since" class="headerlink" title="if-modified-since"></a>if-modified-since</h3><p>确认代理或者客户端本地资源的有效性。服务端在接受到这个值后，会与资源最近更新时间做对比，如果在字段指定的日期之后资源发生了变化，那么服务器会返回最新的资源，否则返回304</p>
+<h3 id="if-none-match"><a href="#if-none-match" class="headerlink" title="if-none-match"></a>if-none-match</h3><p>用于判断本地缓存是否失效。存储的是上个响应头部的etag值。当指定的值与资源的etag值不一致时，服务器端才会处理请求</p>
+<h2 id="响应头部"><a href="#响应头部" class="headerlink" title="响应头部"></a>响应头部</h2><h3 id="age"><a href="#age" class="headerlink" title="age"></a>age</h3><p>告知客户端服务端在多久前创建了响应，若创建该响应的是缓存服务器，age指的是缓存后响应再次发起认证到认证完成的时间。代理创建响应必须加上age字段</p>
+<h3 id="etag"><a href="#etag" class="headerlink" title="etag"></a>etag</h3><p>服务端在每次更新资源后生成一个唯一对应的标识，生成算法由服务器自行决定</p>
+<p>分类：</p>
+<ul>
+<li><p>强etag：资源发生变化就会改变</p>
+</li>
+<li><p>弱etag：资源发生了较大变化时才会改变。以W&#x2F;来表示</p>
+</li>
+</ul>
+<h3 id="location"><a href="#location" class="headerlink" title="location"></a>location</h3><p>使用头部字段location可以引导请求发起方至某个与请求url位置不同的资源，一般会配合3xx进行使用</p>
+<h3 id="www-authenticate"><a href="#www-authenticate" class="headerlink" title="www-authenticate"></a>www-authenticate</h3><p>告知客户端当前服务器端可接收的认证方案，然后客户端可以在authentication字段中返回对应的值</p>
+<h2 id="主体头部"><a href="#主体头部" class="headerlink" title="主体头部"></a>主体头部</h2><h3 id="allow"><a href="#allow" class="headerlink" title="allow"></a>allow</h3><p>通知客户端能够支持的http请求方法。当服务端接收到不支持http请求方法时，会响应状态信息405，同时把支持的方法写入allow字段</p>
+<h3 id="content-encoding"><a href="#content-encoding" class="headerlink" title="content-encoding"></a>content-encoding</h3><p>告知客户端当前响应内容的编码方式</p>
+<h3 id="content-length"><a href="#content-length" class="headerlink" title="content-length"></a>content-length</h3><p>表明主体部分的大小，单位为字节</p>
+<h3 id="content-type"><a href="#content-type" class="headerlink" title="content-type"></a>content-type</h3><p>表明响应主体内容的MIME类型</p>
+<h3 id="last-modified"><a href="#last-modified" class="headerlink" title="last-modified"></a>last-modified</h3><p>资源最后的修改时间，配合缓存使用</p>
+<h3 id="expires"><a href="#expires" class="headerlink" title="expires"></a>expires</h3><p>失效日期</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/HTTP/%E3%80%90Htpp%E3%80%91header/" data-id="cmemqxr98000f14fmao3b3r35" data-title="【Htpp】header" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/http/" rel="tag">http</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-HTTP/【http】队头阻塞" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/08/14/HTTP/%E3%80%90http%E3%80%91%E9%98%9F%E5%A4%B4%E9%98%BB%E5%A1%9E/" class="article-date">
@@ -201,109 +354,12 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/HTTP/%E3%80%90http%E3%80%91%E9%98%9F%E5%A4%B4%E9%98%BB%E5%A1%9E/" data-id="cmek0pd8o000q64fm6a45e502" data-title="【Htpp】队头阻塞" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/HTTP/%E3%80%90http%E3%80%91%E9%98%9F%E5%A4%B4%E9%98%BB%E5%A1%9E/" data-id="cmemqxr9c000l14fm1gkafb16" data-title="【Htpp】队头阻塞" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/http/" rel="tag">http</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-HTTP/【前端缓存】随机数位置区别" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/HTTP/%E3%80%90%E5%89%8D%E7%AB%AF%E7%BC%93%E5%AD%98%E3%80%91%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%88%AB/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.271Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/http/">http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/HTTP/%E3%80%90%E5%89%8D%E7%AB%AF%E7%BC%93%E5%AD%98%E3%80%91%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%88%AB/">【前端缓存】随机数位置区别</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="文件随机数存放位置区别"><a href="#文件随机数存放位置区别" class="headerlink" title="文件随机数存放位置区别"></a>文件随机数存放位置区别</h2><h3 id="文件url-随机数"><a href="#文件url-随机数" class="headerlink" title="文件url+?+随机数"></a>文件url+?+随机数</h3><ul>
-<li><p><code>https://xxx?v=1.x.x</code></p>
-<p>一般用于版本号对应的文件</p>
-</li>
-<li><p><code>https://xxx?c=s45sdf</code></p>
-<p>一般用于文件内容生成的hash值</p>
-</li>
-</ul>
-<h3 id="文件名-hash值"><a href="#文件名-hash值" class="headerlink" title="文件名+hash值"></a>文件名+hash值</h3><p><code>https://xxxs45sdf</code></p>
-<p>hash值一般由文件内容生成</p>
-<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>以上两种存放位置都可以使浏览器获取最新的文件，而不是走缓存拿文件</p>
-<p>当前主流的一般是用文件名+hash值的形式。原因如下</p>
-<blockquote>
-<p>一般发版时，是有html文件和js、css文件的。<br />浏览器首先去请求html文件，html嵌入了js、css等其他文件。<br />那么在请求html和js、css等文件的这个时间差内，如果采用第一种方式(文件url+?+随机数)，就容易出现问题</p>
-</blockquote>
-<ul>
-<li><p>如果先发html文件，再发js、css等文件</p>
-<ul>
-<li><p>客户请求时，浏览器不会走缓存，会去取最新的文件。</p>
-</li>
-<li><p>但是可能这个时候取的js、css文件还是老的文件。那么就导致客户端下次再去请求时，走的其实是缓存。</p>
-</li>
-</ul>
-</li>
-<li><p>先发js、css等文件，再发html文件</p>
-<ul>
-<li><p>对于有缓存的用户不会造成影响。</p>
-</li>
-<li><p>但是对于无缓存的用户，拿取数据时，会拿取到最新的js、css等文件，那么最直观的影响可能是页面样式问题。但当html发布成功后，页面会恢复正常</p>
-</li>
-</ul>
-</li>
-<li><p>对于异步加载的情况</p>
-<ul>
-<li><p>代码发布后，用户在使用过程中，进入了一个新路由</p>
-</li>
-<li><p>在新路由页面，获取的是最新的代码文件，但是在进入之前，获取的是老代码文件，那么这里就会导致新老代码文件交替，容易出现问题</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>因此，采用文件名+hash的方式，无论是先发html还是js、css文件，由于是直接通过文件名去获取的，那么就不会产生上述问题。</p>
-<ul>
-<li><p>先发js、css等文件</p>
-<ul>
-<li>由于文件名不同，由于文件名已经不一样了，所以不会覆盖掉之前存在的资源文件，客户端依旧可以安全的访问。</li>
-</ul>
-</li>
-<li><p>再发html文件</p>
-<ul>
-<li>因为js、css等文件已经发布完毕了，那么当html更新了之后，再获取的js、css等文件就已经是最新的了</li>
-</ul>
-</li>
-</ul>
-<h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><p><a target="_blank" rel="noopener" href="https://github.com/fouber/blog/issues/6">大公司里怎样开发和部署前端代码</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/HTTP/%E3%80%90%E5%89%8D%E7%AB%AF%E7%BC%93%E5%AD%98%E3%80%91%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%88%AB/" data-id="cmek0pd8p000t64fmhwadghwr" data-title="【前端缓存】随机数位置区别" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
     </footer>
   </div>
   
@@ -414,7 +470,104 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/HTTP/%E5%B0%8F%E7%82%B9/" data-id="cmek0pd8q000v64fm0uey4w3a" data-title="小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/HTTP/%E5%B0%8F%E7%82%B9/" data-id="cmemqxr9e000o14fmayrgbgrk" data-title="小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-HTTP/【前端缓存】随机数位置区别" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/HTTP/%E3%80%90%E5%89%8D%E7%AB%AF%E7%BC%93%E5%AD%98%E3%80%91%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.271Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/http/">http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/HTTP/%E3%80%90%E5%89%8D%E7%AB%AF%E7%BC%93%E5%AD%98%E3%80%91%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%88%AB/">【前端缓存】随机数位置区别</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="文件随机数存放位置区别"><a href="#文件随机数存放位置区别" class="headerlink" title="文件随机数存放位置区别"></a>文件随机数存放位置区别</h2><h3 id="文件url-随机数"><a href="#文件url-随机数" class="headerlink" title="文件url+?+随机数"></a>文件url+?+随机数</h3><ul>
+<li><p><code>https://xxx?v=1.x.x</code></p>
+<p>一般用于版本号对应的文件</p>
+</li>
+<li><p><code>https://xxx?c=s45sdf</code></p>
+<p>一般用于文件内容生成的hash值</p>
+</li>
+</ul>
+<h3 id="文件名-hash值"><a href="#文件名-hash值" class="headerlink" title="文件名+hash值"></a>文件名+hash值</h3><p><code>https://xxxs45sdf</code></p>
+<p>hash值一般由文件内容生成</p>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>以上两种存放位置都可以使浏览器获取最新的文件，而不是走缓存拿文件</p>
+<p>当前主流的一般是用文件名+hash值的形式。原因如下</p>
+<blockquote>
+<p>一般发版时，是有html文件和js、css文件的。<br />浏览器首先去请求html文件，html嵌入了js、css等其他文件。<br />那么在请求html和js、css等文件的这个时间差内，如果采用第一种方式(文件url+?+随机数)，就容易出现问题</p>
+</blockquote>
+<ul>
+<li><p>如果先发html文件，再发js、css等文件</p>
+<ul>
+<li><p>客户请求时，浏览器不会走缓存，会去取最新的文件。</p>
+</li>
+<li><p>但是可能这个时候取的js、css文件还是老的文件。那么就导致客户端下次再去请求时，走的其实是缓存。</p>
+</li>
+</ul>
+</li>
+<li><p>先发js、css等文件，再发html文件</p>
+<ul>
+<li><p>对于有缓存的用户不会造成影响。</p>
+</li>
+<li><p>但是对于无缓存的用户，拿取数据时，会拿取到最新的js、css等文件，那么最直观的影响可能是页面样式问题。但当html发布成功后，页面会恢复正常</p>
+</li>
+</ul>
+</li>
+<li><p>对于异步加载的情况</p>
+<ul>
+<li><p>代码发布后，用户在使用过程中，进入了一个新路由</p>
+</li>
+<li><p>在新路由页面，获取的是最新的代码文件，但是在进入之前，获取的是老代码文件，那么这里就会导致新老代码文件交替，容易出现问题</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>因此，采用文件名+hash的方式，无论是先发html还是js、css文件，由于是直接通过文件名去获取的，那么就不会产生上述问题。</p>
+<ul>
+<li><p>先发js、css等文件</p>
+<ul>
+<li>由于文件名不同，由于文件名已经不一样了，所以不会覆盖掉之前存在的资源文件，客户端依旧可以安全的访问。</li>
+</ul>
+</li>
+<li><p>再发html文件</p>
+<ul>
+<li>因为js、css等文件已经发布完毕了，那么当html更新了之后，再获取的js、css等文件就已经是最新的了</li>
+</ul>
+</li>
+</ul>
+<h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><p><a target="_blank" rel="noopener" href="https://github.com/fouber/blog/issues/6">大公司里怎样开发和部署前端代码</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/HTTP/%E3%80%90%E5%89%8D%E7%AB%AF%E7%BC%93%E5%AD%98%E3%80%91%E9%9A%8F%E6%9C%BA%E6%95%B0%E4%BD%8D%E7%BD%AE%E5%8C%BA%E5%88%AB/" data-id="cmemqxr9g000r14fmebrvdjcz" data-title="【前端缓存】随机数位置区别" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -824,7 +977,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/HTML/%E5%B0%8F%E7%82%B9/" data-id="cmek0pd8k000k64fm7afd6gje" data-title="【HTML】记录小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/HTML/%E5%B0%8F%E7%82%B9/" data-id="cmemqxr9c000k14fm743y3nfu" data-title="【HTML】记录小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -891,7 +1044,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/HTML/%E3%80%90HTML%E3%80%91%E8%AE%B0%E5%BD%95/" data-id="cmek0pd8g000e64fm6u6m7thu" data-title="【HTML】记录" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/HTML/%E3%80%90HTML%E3%80%91%E8%AE%B0%E5%BD%95/" data-id="cmemqxr99000g14fma2e0bvg4" data-title="【HTML】记录" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -966,7 +1119,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/HTML/%E3%80%90HTML%E3%80%91templates%20and%20slots/" data-id="cmek0pd8h000f64fmg01g8wq0" data-title="【HTML】templates and slots" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/HTML/%E3%80%90HTML%E3%80%91templates%20and%20slots/" data-id="cmemqxr96000c14fmet3eh418" data-title="【HTML】templates and slots" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1119,7 +1272,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/HTML/%E3%80%90HTML%E3%80%91Shadow%20DOM/" data-id="cmek0pd8f000b64fm3ly97yi3" data-title="【HTML】Shadow DOM" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/HTML/%E3%80%90HTML%E3%80%91Shadow%20DOM/" data-id="cmemqxr95000a14fm4nkxbviw" data-title="【HTML】Shadow DOM" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1234,7 +1387,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91%E5%B8%B8%E7%94%A8%E9%9D%A2%E6%9D%BF/" data-id="cmek0pd9h003564fm7570biu1" data-title="【devTools】常用面板" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91%E5%B8%B8%E7%94%A8%E9%9D%A2%E6%9D%BF/" data-id="cmemqxrad002r14fmczda1qu8" data-title="【devTools】常用面板" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1427,69 +1580,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91performance/" data-id="cmek0pd9j003a64fm622a0mje" data-title="【devTools】performance" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-devTools/【devTools】layers" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/devTools/%E3%80%90devTools%E3%80%91layers/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.211Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/devTools/%E3%80%90devTools%E3%80%91layers/">【devTools】layers</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="【devTools】layers"><a href="#【devTools】layers" class="headerlink" title="【devTools】layers"></a>【devTools】layers</h1><h2 id="元素绘制"><a href="#元素绘制" class="headerlink" title="元素绘制"></a>元素绘制</h2><p>可以查看哪些元素正在绘制</p>
-<h3 id="打开"><a href="#打开" class="headerlink" title="打开"></a>打开</h3><ul>
-<li><p>在devtools页面按esc，点击左上角的三个点，打开rendering分页</p>
-</li>
-<li><p>勾选对应的选项</p>
-</li>
-</ul>
-<h3 id="页面表现"><a href="#页面表现" class="headerlink" title="页面表现"></a>页面表现</h3><ul>
-<li>勾选了paint flashing</li>
-</ul>
-<p>元素正在绘制时，会由绿色小框表示</p>
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVha38"><img src="https://s1.ax1x.com/2023/06/11/pCVha38.png" alt="pCVha38.png"></a></p>
-<ul>
-<li>勾选layer borders</li>
-</ul>
-<p>可以显示每个图层的区域范围</p>
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVh4u4"><img src="https://s1.ax1x.com/2023/06/11/pCVh4u4.png" alt="pCVh4u4.png"></a></p>
-<h2 id="layers"><a href="#layers" class="headerlink" title="layers"></a>layers</h2><h3 id="打开-1"><a href="#打开-1" class="headerlink" title="打开"></a>打开</h3><p>在devtools右上角三个点，点击more tools，点击layers打开layers标签</p>
-<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCV4AxS"><img src="https://s1.ax1x.com/2023/06/11/pCV4AxS.png" alt="pCV4AxS.png"></a></p>
-<p>可以显示当前页面存在哪些图层，对于具体的图层，可以看到其对应的大小、产生原因及内存占有量</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91layers/" data-id="cmek0pd9f003164fmajje8897" data-title="【devTools】layers" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91performance/" data-id="cmemqxrab002l14fm9shraa46" data-title="【devTools】performance" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1536,7 +1627,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 12px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
     </div>
   </div>
 
@@ -1558,6 +1649,10 @@
       <ul>
         
           <li>
+            <a href="/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/">记录2</a>
+          </li>
+        
+          <li>
             <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">记录1</a>
           </li>
         
@@ -1571,10 +1666,6 @@
         
           <li>
             <a href="/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【wasb】环境搭建</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E3%80%90RN%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【RN】环境搭建</a>
           </li>
         
       </ul>

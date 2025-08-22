@@ -71,6 +71,181 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-css/【css】属性值定义语法" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/10/14/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%80%BC%E5%AE%9A%E4%B9%89%E8%AF%AD%E6%B3%95/" class="article-date">
+  <time class="dt-published" datetime="2023-10-14T06:00:00.000Z" itemprop="datePublished">2023-10-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/css/">css</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/10/14/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%80%BC%E5%AE%9A%E4%B9%89%E8%AF%AD%E6%B3%95/">【css】属性值定义语法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="【css】属性值定义语法"><a href="#【css】属性值定义语法" class="headerlink" title="【css】属性值定义语法"></a>【css】属性值定义语法</h1><p>css属性定义语法是专门用于限定css属性合法取值的语法，其包含3种基本组成元素：</p>
+<ul>
+<li><p>关键字</p>
+</li>
+<li><p>数据类型</p>
+</li>
+<li><p>符号</p>
+</li>
+</ul>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h3 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h3><p>其分为通用关键字和全局关键字</p>
+<ul>
+<li><p>通用关键字：</p>
+<p><code>auto</code>, <code>none</code>, <code>ease</code>等是通用关键字，或者称为普通关键字，这些只能被一部分的css属性支持</p>
+</li>
+<li><p>全局关键字</p>
+<p><code>inherit</code>, <code>initial</code>, <code>unset</code>和<code>revert</code>是全局关键字，被所有css属性支持的特殊关键字</p>
+</li>
+</ul>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>css的数据类型有很多，至少有50个，例如number、percent、rgb等，这些都是。以及还有<code>shape-box</code>，<code>basic-shape</code>，<code>image</code>也属于数据类型</p>
+<ul>
+<li><p>shape-box</p>
+<p>box、margin-box、content-box、padding-box、border-box都是属于其支持的属性值</p>
+</li>
+<li><p>basic-shape</p>
+<p>inset()、circle()、ellipse()、polygon()、path()、clip-path和offset-path都属于</p>
+</li>
+<li><p>image</p>
+<p><url>，<gradient>，element()，image()，image-set()，cross-fade()，paint()</p>
+</li>
+</ul>
+<h3 id="符号"><a href="#符号" class="headerlink" title="符号"></a>符号</h3><p>css的符号分为字面符号、组合符号以及数量符号</p>
+<h4 id="字面符号"><a href="#字面符号" class="headerlink" title="字面符号"></a>字面符号</h4><p>指css属性种原本就支持的合法符号，这些符号会在css语法中按照其原本的字面意思呈现</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>,</td>
+<td>并列分隔符</td>
+<td>用于分隔数个并列值，或者分隔函数的参数值</td>
+</tr>
+<tr>
+<td>&#x2F;</td>
+<td>缩写分隔符</td>
+<td>用于分隔一个值的多个部分，在css缩写中用于分离类型相同但属于不同css属性的值，以及用在部分css函数中</td>
+</tr>
+</tbody></table>
+<h4 id="组合符号"><a href="#组合符号" class="headerlink" title="组合符号"></a>组合符号</h4><p>用于表示数个基本元素之间的组合关系</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>并列</td>
+<td>符号为空格字符，表示各部分必须出现，同时需要按照顺序出现</td>
+</tr>
+<tr>
+<td>&amp;&amp;</td>
+<td>与</td>
+<td>各部分必须出现，但可以不按顺序出现</td>
+</tr>
+<tr>
+<td>||</td>
+<td>或</td>
+<td>各部分至少出现一个，可以不按顺序出现</td>
+</tr>
+<tr>
+<td>|</td>
+<td>互斥</td>
+<td>各部分恰好出现其中一个</td>
+</tr>
+<tr>
+<td>[]</td>
+<td>方括号</td>
+<td>将各部分进行分组以绕过上面几个符号的优先规则，其优先级最高</td>
+</tr>
+</tbody></table>
+<h4 id="数量符号"><a href="#数量符号" class="headerlink" title="数量符号"></a>数量符号</h4><p>用于描述一个元素可以出现次数，数量符号不能叠加，且优先级高于组合符号</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>无数量符号</td>
+<td>恰好出现一次</td>
+</tr>
+<tr>
+<td>*</td>
+<td>星号</td>
+<td>可以出现任意次数</td>
+</tr>
+<tr>
+<td>+</td>
+<td>加号</td>
+<td>可以出现一次或者多次</td>
+</tr>
+<tr>
+<td>？</td>
+<td>问号</td>
+<td>可以出现零次或者一次</td>
+</tr>
+<tr>
+<td>{A, B}</td>
+<td>花括号</td>
+<td>出现最少A次，最多B次</td>
+</tr>
+<tr>
+<td>#</td>
+<td>井号</td>
+<td>可以出现一次或者多次，但多次出现时必须以逗号分隔</td>
+</tr>
+<tr>
+<td>！</td>
+<td>叹号</td>
+<td>表示当前分组必须产生一个值，该符号多出现在组合符号方括号的后面</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/10/14/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%80%BC%E5%AE%9A%E4%B9%89%E8%AF%AD%E6%B3%95/" data-id="cmemqxrag002w14fma4gv6696" data-title="【css】属性值定义语法" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-css/【css】不常用属性总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/07/28/css/%E3%80%90css%E3%80%91%E4%B8%8D%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7%E6%80%BB%E7%BB%93/" class="article-date">
@@ -151,7 +326,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/07/28/css/%E3%80%90css%E3%80%91%E4%B8%8D%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7%E6%80%BB%E7%BB%93/" data-id="cmek0pd90001y64fm3n5g5agz" data-title="【css】不常用属性总结" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/07/28/css/%E3%80%90css%E3%80%91%E4%B8%8D%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7%E6%80%BB%E7%BB%93/" data-id="cmemqxrad002p14fm9ku57j79" data-title="【css】不常用属性总结" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -198,7 +373,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 12px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
     </div>
   </div>
 
@@ -220,6 +395,10 @@
       <ul>
         
           <li>
+            <a href="/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/">记录2</a>
+          </li>
+        
+          <li>
             <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">记录1</a>
           </li>
         
@@ -233,10 +412,6 @@
         
           <li>
             <a href="/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【wasb】环境搭建</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E3%80%90RN%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【RN】环境搭建</a>
           </li>
         
       </ul>

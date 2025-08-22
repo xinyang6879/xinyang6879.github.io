@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>记录2 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="(a &#x3D;&#x3D; 1 &amp;&amp; a &#x3D;&#x3D; 2 &amp;&amp; a &#x3D;&#x3D; 3) 为 true当时第一想法是使用 proxy 去进行 get 时的代理，但是缺陷是使用时需要使用时需要通过.value获取值 那么可以用&#x3D;&#x3D;时，会有数据转换的特性，去重写 a 的 valueOf 即可 1234let a &#x3D; &amp;#1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录2">
+<meta property="og:url" content="http://example.com/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="(a &#x3D;&#x3D; 1 &amp;&amp; a &#x3D;&#x3D; 2 &amp;&amp; a &#x3D;&#x3D; 3) 为 true当时第一想法是使用 proxy 去进行 get 时的代理，但是缺陷是使用时需要使用时需要通过.value获取值 那么可以用&#x3D;&#x3D;时，会有数据转换的特性，去重写 a 的 valueOf 即可 1234let a &#x3D; &amp;#1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-22T11:01:43.315Z">
+<meta property="article:modified_time" content="2025-08-22T11:27:32.360Z">
+<meta property="article:author" content="yangxin">
+<meta property="article:tag" content="面试">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-面试/【面试】汇总1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/" class="article-date">
+  <time class="dt-published" datetime="2025-08-22T11:01:43.315Z" itemprop="datePublished">2025-08-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      记录2
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="a-1-a-2-a-3-为-true"><a href="#a-1-a-2-a-3-为-true" class="headerlink" title="(a &#x3D;&#x3D; 1 &amp;&amp; a &#x3D;&#x3D; 2 &amp;&amp; a &#x3D;&#x3D; 3) 为 true"></a>(a &#x3D;&#x3D; 1 &amp;&amp; a &#x3D;&#x3D; 2 &amp;&amp; a &#x3D;&#x3D; 3) 为 true</h3><p>当时第一想法是使用 proxy 去进行 get 时的代理，但是缺陷是使用时需要使用时需要通过<code>.value</code>获取值</p>
+<p>那么可以用&#x3D;&#x3D;时，会有数据转换的特性，去重写 a 的 valueOf 即可</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = &#123; <span class="attr">value</span>: <span class="number">0</span> &#125;;</span><br><span class="line">a.<span class="property">valueOf</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> ++a.<span class="property">value</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="寻找缺失的最小正整数"><a href="#寻找缺失的最小正整数" class="headerlink" title="寻找缺失的最小正整数"></a>寻找缺失的最小正整数</h3><p>一开始的想法是过滤掉负数和0，然后排序再进行查找，但是这个复杂度最坏情况是nlogn + n</p>
+<p>那么可以用set，然后从1开始在set中查找，如果找到就继续查找，如果没有找到就返回这个数，时间复杂度最慢是n</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取数组中未出现的最小正整数</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums</span> - 输入的数字数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span> &#123;<span class="type">number</span>&#125; - 未出现的最小正整数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">findSmallestMissingPositive</span>(<span class="params">nums</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> numSet = <span class="keyword">new</span> <span class="title class_">Set</span>(nums); <span class="comment">// 使用 Set 去重并快速查找</span></span><br><span class="line">    <span class="keyword">let</span> smallestMissing = <span class="number">1</span>; <span class="comment">// 初始化为最小正整数 1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从 1 开始递增，找到第一个未出现在 Set 中的数字</span></span><br><span class="line">    <span class="keyword">while</span> (numSet.<span class="title function_">has</span>(smallestMissing)) &#123;</span><br><span class="line">        smallestMissing++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> smallestMissing;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>大O表示</th>
+<th>名称</th>
+<th>典型场景</th>
+<th>n&#x3D;1000时操作次数</th>
+<th>数据量×2时耗时变化</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>O(1)</td>
+<td>常数时间</td>
+<td>数组随机访问、哈希表查询</td>
+<td>1</td>
+<td>不变</td>
+</tr>
+<tr>
+<td>O(log n)</td>
+<td>对数时间</td>
+<td>二分查找、平衡树操作</td>
+<td>≈10</td>
+<td>增加极少 ✨</td>
+</tr>
+<tr>
+<td>O(n)</td>
+<td>线性时间	遍历数组、链表</td>
+<td>1000</td>
+<td></td>
+<td>×2</td>
+</tr>
+<tr>
+<td>O(n log n)</td>
+<td>线性对数时间</td>
+<td>快速排序、归并排序</td>
+<td>≈10,000</td>
+<td>略多于×2</td>
+</tr>
+<tr>
+<td>O(n²)</td>
+<td>平方时间</td>
+<td>冒泡排序、双层嵌套循环</td>
+<td>1,000,000</td>
+<td>×4</td>
+</tr>
+<tr>
+<td>O(2ⁿ)</td>
+<td>指数时间</td>
+<td>穷举算法（如子集生成）</td>
+<td>2¹⁰⁰⁰ ≈ 10³⁰⁰</td>
+<td>平方级爆炸</td>
+</tr>
+</tbody></table>
+<h3 id="员工-id-是-6-位数字，每个数字从-0-9-选一个，那么-id-开头不为-0，且相邻两个数字不相同的数据有多少"><a href="#员工-id-是-6-位数字，每个数字从-0-9-选一个，那么-id-开头不为-0，且相邻两个数字不相同的数据有多少" class="headerlink" title="员工 id 是 6 位数字，每个数字从 0-9 选一个，那么 id 开头不为 0，且相邻两个数字不相同的数据有多少"></a>员工 id 是 6 位数字，每个数字从 0-9 选一个，那么 id 开头不为 0，且相邻两个数字不相同的数据有多少</h3><p>第一位数字：不能为 0，因此有 9 种选择（1 到 9）。<br>后续每一位数字：从第二位到第六位，每个位置都不能与前一位数字相同（例如，第二位不能与第一位相同，第三位不能与第二位相同，依此类推）。由于每位有 10 个可能数字（0-9），排除前一位后，每个位置都有 9 种选择。</p>
+<p>9（第一位） × 9（第二位） × 9（第三位） × 9（第四位） × 9（第五位） × 9（第六位） &#x3D; 9^6 &#x3D; 531,441</p>
+<h3 id="泛型组件"><a href="#泛型组件" class="headerlink" title="泛型组件"></a>泛型组件</h3><p>泛型组件是一种不预先指定具体类型，而在使用时才指定类型的组件。</p>
+<p>你可以把它理解为一个 “组件模板” 。它定义了组件的结构和逻辑，但其中涉及的数据类型可以作为参数，由使用该组件的父组件来动态决定。</p>
+<ul>
+<li>vue</li>
+</ul>
+<p>Vue 中的泛型组件允许你创建可处理多种数据类型的组件，同时保持类型安全。这在创建可复用的列表、表格或表单组件时特别有用。</p>
+<p>组件参数的泛型，依据不同的参数显示不同的内容</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=<span class="string">&quot;ts&quot;</span> generic=<span class="string">&quot;T&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义 props 接口</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">GenericListProps</span>&lt;T&gt; &#123;</span><br><span class="line">  <span class="attr">items</span>: T[]</span><br><span class="line">  <span class="attr">itemRenderer</span>: <span class="function">(<span class="params"><span class="attr">item</span>: T</span>) =&gt;</span> <span class="built_in">any</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用泛型参数</span></span><br><span class="line"><span class="keyword">const</span> props = defineProps&lt;<span class="title class_">GenericListProps</span>&lt;T&gt;&gt;()</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;(item, index) in props.items&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;index&quot;</span>&gt;</span></span><br><span class="line">    &#123;&#123; itemRenderer(item) &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>react</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个泛型组件 List</span></span><br><span class="line"><span class="comment">// &lt;T,&gt; 这里的逗号是为了避免与 JSX 标签混淆，告诉编译器这是泛型参数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title class_">List</span>&lt;T&gt;(&#123; </span><br><span class="line">  items, </span><br><span class="line">  renderItem </span><br><span class="line">&#125;: &#123; </span><br><span class="line">  <span class="attr">items</span>: T[];</span><br><span class="line">  <span class="attr">renderItem</span>: <span class="function">(<span class="params">item: T</span>) =&gt;</span> <span class="title class_">React</span>.<span class="property">ReactNode</span>;</span><br><span class="line">&#125;) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;items.map((item, index) =&gt; (</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">key</span>=<span class="string">&#123;index&#125;</span>&gt;</span>&#123;renderItem(item)&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      ))&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用方法</span></span><br><span class="line">interface <span class="title class_">User</span> &#123;</span><br><span class="line">  <span class="attr">id</span>: number;</span><br><span class="line">  <span class="attr">name</span>: string;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface <span class="title class_">Product</span> &#123;</span><br><span class="line">  <span class="attr">sku</span>: string;</span><br><span class="line">  <span class="attr">price</span>: number;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">MyApp</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="attr">users</span>: <span class="title class_">User</span>[] = [ &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&#x27;Alice&#x27;</span> &#125;, &#123; <span class="attr">id</span>: <span class="number">2</span>, <span class="attr">name</span>: <span class="string">&#x27;Bob&#x27;</span> &#125; ];</span><br><span class="line">  <span class="keyword">const</span> <span class="attr">products</span>: <span class="title class_">Product</span>[] = [ &#123; <span class="attr">sku</span>: <span class="string">&#x27;123&#x27;</span>, <span class="attr">price</span>: <span class="number">9.99</span> &#125;, &#123; <span class="attr">sku</span>: <span class="string">&#x27;456&#x27;</span>, <span class="attr">price</span>: <span class="number">20.99</span> &#125; ];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &#123;/* 渲染用户列表 */&#125;</span><br><span class="line">      &lt;List&lt;User&gt; // 显式传入类型 T = User</span><br><span class="line">        items=&#123;users&#125;</span><br><span class="line">        renderItem=&#123;(user) =&gt; ( // 这里的 `user` 自动被推断为 User 类型</span><br><span class="line">          &lt;span&gt;&#123;user.name&#125; (ID: &#123;user.id&#125;)&lt;/span&gt;</span><br><span class="line">        )&#125;</span><br><span class="line">      /&gt;</span><br><span class="line">      </span><br><span class="line">      &#123;/* 渲染产品列表 */&#125;</span><br><span class="line">      &lt;List&lt;Product&gt; // 显式传入类型 T = Product</span><br><span class="line">        items=&#123;products&#125;</span><br><span class="line">        renderItem=&#123;(product) =&gt; ( // 这里的 `product` 自动被推断为 Product 类型</span><br><span class="line">          &lt;span&gt;&#123;product.sku&#125;: $&#123;product.price&#125;&lt;/span&gt;</span><br><span class="line">        )&#125;</span><br><span class="line">      /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="vue3生命周期"><a href="#vue3生命周期" class="headerlink" title="vue3生命周期"></a>vue3生命周期</h3><table>
+<thead>
+<tr>
+<th align="left">Vue 2 生命周期钩子</th>
+<th align="left">Vue 3 生命周期钩子 (Options API)</th>
+<th align="left">Vue 3 组合式 API (Composition API)</th>
+<th align="left">触发时机与常见用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>beforeCreate</strong></td>
+<td align="left">beforeCreate</td>
+<td align="left">无</td>
+<td align="left">实例初始化后，数据观测和事件&#x2F;侦听器配置之前被调用。 使用组合式 API 时，<code>setup()</code> 函数本身围绕 beforeCreate 和 created 生命周期钩子运行。</td>
+</tr>
+<tr>
+<td align="left"><strong>created</strong></td>
+<td align="left">created</td>
+<td align="left">无直接对应，使用 <code>setup()</code></td>
+<td align="left">实例创建完成，已完成数据观测、属性和方法的运算，watch&#x2F;event 事件回调。 此时可调用 methods 中的方法，修改 data 的数据。 使用组合式 API 时，<code>setup()</code> 函数本身围绕 beforeCreate 和 created 生命周期钩子运行。</td>
+</tr>
+<tr>
+<td align="left"><strong>beforeMount</strong></td>
+<td align="left">beforeMount</td>
+<td align="left"><strong>onBeforeMount</strong></td>
+<td align="left">在挂载开始之前被调用，此时模板编译完成，但尚未挂载到 DOM 上。</td>
+</tr>
+<tr>
+<td align="left"><strong>mounted</strong></td>
+<td align="left">mounted</td>
+<td align="left"><strong>onMounted</strong></td>
+<td align="left">实例挂载到 DOM 后调用。 适合进行<strong>DOM 操作</strong>、初始化第三方库。</td>
+</tr>
+<tr>
+<td align="left"><strong>beforeUpdate</strong></td>
+<td align="left">beforeUpdate</td>
+<td align="left"><strong>onBeforeUpdate</strong></td>
+<td align="left">数据变化导致虚拟 DOM 重新渲染和打补丁之前调用。 <strong>应避免在此钩子中修改状态</strong>，以免可能引发无限循环的更新。</td>
+</tr>
+<tr>
+<td align="left"><strong>updated</strong></td>
+<td align="left">updated</td>
+<td align="left"><strong>onUpdated</strong></td>
+<td align="left">数据变化导致虚拟 DOM 重新渲染和打补丁之后调用。 组件 DOM 已更新，可执行依赖 DOM 的操作。 <strong>同样应避免在此修改状态</strong>。</td>
+</tr>
+<tr>
+<td align="left"><strong>beforeDestroy</strong></td>
+<td align="left"><strong>beforeUnmount</strong> (Vue3 改名)</td>
+<td align="left"><strong>onBeforeUnmount</strong></td>
+<td align="left">实例销毁之前调用。 实例仍然完全可用。 常用于<strong>清理副作用</strong>，如定时器、事件监听器。</td>
+</tr>
+<tr>
+<td align="left"><strong>destroyed</strong></td>
+<td align="left"><strong>unmounted</strong> (Vue3 改名)</td>
+<td align="left"><strong>onUnmounted</strong></td>
+<td align="left">实例销毁后调用。 所有指令解绑，事件监听器移除，子实例销毁。</td>
+</tr>
+<tr>
+<td align="left"><strong>errorCaptured</strong></td>
+<td align="left">errorCaptured</td>
+<td align="left"><strong>onErrorCaptured</strong></td>
+<td align="left">捕获子孙组件的错误时被调用。</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/" data-id="cmemqxrbk005h14fmfb9ug7t1" data-title="记录2" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">记录1</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PWA/">PWA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Typescript/">Typescript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VueTest/">VueTest</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web3/">Web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/axios-%E6%BA%90%E7%A0%81/">axios 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vuex-%E6%BA%90%E7%A0%81/">vuex 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web3/">web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webAssembly/">webAssembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webwork/">webwork</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/">业务场景</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/">扩展阅读</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/">额外内容</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typescript/" rel="tag">Typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VueTest/" rel="tag">VueTest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios-%E6%BA%90%E7%A0%81/" rel="tag">axios 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/" rel="tag">chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/console/" rel="tag">console</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuex-%E6%BA%90%E7%A0%81/" rel="tag">vuex 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web3/" rel="tag">web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webAssembly/" rel="tag">webAssembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webRTC/" rel="tag">webRTC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webwork/" rel="tag">webwork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" rel="tag">业务场景</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" rel="tag">扩展阅读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" rel="tag">浏览器 Performance Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" rel="tag">额外内容</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 12px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/">记录2</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">记录1</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/14/%E6%89%8B%E5%86%99%E9%A2%98/">手写题</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/14/%E3%80%90%E6%89%8B%E5%86%99%E3%80%91call%E3%80%81apply%E3%80%81bind/">【手写】call、apply、bind</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【wasb】环境搭建</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 yangxin<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

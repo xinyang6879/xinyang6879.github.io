@@ -71,14 +71,14 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-读书笔记/js/【js】this指向" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-读书笔记/WEB3/【Web3】二层网络" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91this%E6%8C%87%E5%90%91/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.689Z" itemprop="datePublished">2025-08-14</time>
+    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E4%BA%8C%E5%B1%82%E7%BD%91%E7%BB%9C/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.693Z" itemprop="datePublished">2025-08-14</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/js/">js</a>
+    <a class="article-category-link" href="/categories/Web3/">Web3</a>
   </div>
 
   </div>
@@ -89,7 +89,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91this%E6%8C%87%E5%90%91/">【js】this指向</a>
+      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E4%BA%8C%E5%B1%82%E7%BD%91%E7%BB%9C/">【Web3】二层网络</a>
     </h1>
   
 
@@ -97,30 +97,53 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="this"><a href="#this" class="headerlink" title="this"></a>this</h1><h2 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h2><ul>
-<li>通过 new 进行创建的，this 指向创建的对象</li>
+        <h2 id="二层网络"><a href="#二层网络" class="headerlink" title="二层网络"></a>二层网络</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>指构建在现有区块链系统之上的二级框架或者协议，这些协议的主要目的是解决主要加密货币网络面临的交易速度低和扩展困难的问题</p>
+<p>“二层”指的是针对区块链可扩展性问题提出的多种解决方案。例如早期的二层解决方案：比特币闪电网络和以太坊等离子体，虽然受限于自身工作机制和特殊性，但这两种解决方案都尽量为区块链系统提供更高的吞吐量</p>
+<h2 id="二层网络技术"><a href="#二层网络技术" class="headerlink" title="二层网络技术"></a>二层网络技术</h2><h3 id="侧链"><a href="#侧链" class="headerlink" title="侧链"></a>侧链</h3><p>它是一条平行于主链的独立运行的链。不依赖于主链的安全策略，有自己独立的安全策略。</p>
+<h3 id="状态通道"><a href="#状态通道" class="headerlink" title="状态通道"></a>状态通道</h3><p>只记录出入该通道的某一瞬间的交易。但其安全性不足，因为需要保证状态通道的运营者是可以信任的，否则投入就会有不安全性</p>
+<h3 id="卷叠"><a href="#卷叠" class="headerlink" title="卷叠"></a>卷叠</h3><p>把一切复杂的交易都交给二层网络，复杂的数据都交给卷叠处理，处理完成后只返回数据摘要或处理结果。这样对性能有一定的提升。</p>
+<h2 id="ZK-Rollups"><a href="#ZK-Rollups" class="headerlink" title="ZK-Rollups"></a>ZK-Rollups</h2><p>ZK-Rollups协议促进了交易者和中继者的交互。</p>
+<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><ul>
+<li><p>交易者创建并将其交易数据广播到网络，此信息包括索引的双方地址、交易价值、网络费用和仅使用一次的数字。利用索引地址减少资源处理，交易价值产生存款和取款金额。然后智能合约将地址记录到一个Merkle树，并将交易值记录到另一个Merkle树</p>
+</li>
+<li><p>中继器负责收集创建汇总的事务。中继器生成一个简洁的非交互零知识论证证明，用于比较每笔交易前后的区块链状态（钱包余额）。由此产生的变化以可验证的方式散列并到达主链。</p>
+</li>
 </ul>
-<p>如果构造函数返回了一个对象，那么绑定的 this 就是返回对象的</p>
-<p>如果构造函数没有返回对象，返回的是 number 或者 boolean，那么实际返回的也是这个构造函数</p>
+<h2 id="Optimistic-Rollups"><a href="#Optimistic-Rollups" class="headerlink" title="Optimistic Rollups"></a>Optimistic Rollups</h2><p>和ZK-Rollups类似，但ORs仅向主链发布最少的信息，仅在欺诈案件中生成证明。</p>
+<h3 id="工作流程-1"><a href="#工作流程-1" class="headerlink" title="工作流程"></a>工作流程</h3><ul>
+<li><p>当用户将交易发送到链外ORs时，聚合器注册并提交欺诈证明</p>
+</li>
+<li><p>聚合器在本地部署交易以生成新的智能合约。计算新的状态根，聚合器将交易和状态根发送回主链</p>
+</li>
+<li><p>如果用户认为聚合器返回了欺诈状态根，包括无效交易，他们可以质疑聚合器。用户可以通过发布正确的状态根和验证它所需的Merkle证明在注册这一挑战。对于违规的聚合器，以及任何建立在无效区块之上的聚合器，其保证金被削减，这些收益流向报告用户</p>
+</li>
+<li><p>一旦识别出无效块并完成欺诈证明，二层链就会回滚，并在前一个非欺诈块处恢复</p>
+</li>
+</ul>
+<h3 id="优劣"><a href="#优劣" class="headerlink" title="优劣"></a>优劣</h3><blockquote>
+<p>劣势</p>
+</blockquote>
 <ul>
-<li>显示绑定（bind&#x2F;apply）：如果传的是 null 或者 undefined，实际应用的是默认绑定规则</li>
-<li>隐式绑定，绑定的是那个的上下文对象</li>
+<li><p>无效状态：OP允许存在无效的区块链状态。因此，在提交欺诈证明前，可能会存在无效状态</p>
+</li>
+<li><p>安全性：由于其基于博弈论模型，OP可能更容易受到攻击，因为用户可以参与报告欺诈</p>
+</li>
+<li><p>可扩展性：随着交易规模的扩大，在某些情况下，OP可能需要更多的主链计算资源，从而导致更高的成本。</p>
+</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Var fn()&#123;&#125;</span><br><span class="line">Var obj = &#123;fun: fun&#125;</span><br><span class="line">Obj.fun();//指向的是obj</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>默认绑定，严格模式下是 undefined，非严格模式下是全局对象</li>
-</ul>
-<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = &#123;</span><br><span class="line">  <span class="attr">text</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">fn</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">text</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> b = &#123;</span><br><span class="line">  <span class="attr">text</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">fn</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> aa = a.<span class="property">fn</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">aa</span>(); <span class="comment">// 输出undefined，因为是在window层调用的</span></span><br><span class="line">    <span class="keyword">return</span> a.<span class="title function_">fn</span>() <span class="comment">// 指向的是a，因为是直接调用a走的</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Arbitrum"><a href="#Arbitrum" class="headerlink" title="Arbitrum"></a>Arbitrum</h2><p>是解决以太坊网络拥塞和高费用问题的解决方案之一</p>
+<h3 id="工作流程-2"><a href="#工作流程-2" class="headerlink" title="工作流程"></a>工作流程</h3><p>Arbitrum生态系统中包含四个角色：验证者、虚拟机、密钥和管理器。</p>
+<p>Arbitrum基于简单的加密货币设计，其中各方可以将智能合约实现为对合约规则进行编码的VM，它是中Arbitrum虚拟机架构上运行的程序。虚拟机的一组管理器由VM的设计者指定。</p>
+<p>基于Arbitrum协议，任何一个管理者都可以强制VM根据VM的代码运行，与VM的结果有利害关系的各方可以选择各自信任的人代表他们这样做或者直接担任管理者。VM的状态可以通过依赖管理者器以及降低验证者的成本来提升，验证者只需跟踪虚拟机状态的hash值，而不是整个状态。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91this%E6%8C%87%E5%90%91/" data-id="cmek0pdax007q64fmb5ou8its" data-title="【js】this指向" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E4%BA%8C%E5%B1%82%E7%BD%91%E7%BB%9C/" data-id="cmemqxrcl008414fmh4az2u9z" data-title="【Web3】二层网络" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web3/" rel="tag">web3</a></li></ul>
 
     </footer>
   </div>
@@ -201,7 +224,66 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6/" data-id="cmek0pdbr00ax64fm5uizhq4d" data-title="【js】属性描述符" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6/" data-id="cmemqxrca007914fm5qfyb37u" data-title="【js】属性描述符" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-读书笔记/js/【js】this指向" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91this%E6%8C%87%E5%90%91/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.689Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91this%E6%8C%87%E5%90%91/">【js】this指向</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="this"><a href="#this" class="headerlink" title="this"></a>this</h1><h2 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h2><ul>
+<li>通过 new 进行创建的，this 指向创建的对象</li>
+</ul>
+<p>如果构造函数返回了一个对象，那么绑定的 this 就是返回对象的</p>
+<p>如果构造函数没有返回对象，返回的是 number 或者 boolean，那么实际返回的也是这个构造函数</p>
+<ul>
+<li>显示绑定（bind&#x2F;apply）：如果传的是 null 或者 undefined，实际应用的是默认绑定规则</li>
+<li>隐式绑定，绑定的是那个的上下文对象</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Var fn()&#123;&#125;</span><br><span class="line">Var obj = &#123;fun: fun&#125;</span><br><span class="line">Obj.fun();//指向的是obj</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>默认绑定，严格模式下是 undefined，非严格模式下是全局对象</li>
+</ul>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = &#123;</span><br><span class="line">  <span class="attr">text</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">fn</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">text</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> b = &#123;</span><br><span class="line">  <span class="attr">text</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">fn</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> aa = a.<span class="property">fn</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">aa</span>(); <span class="comment">// 输出undefined，因为是在window层调用的</span></span><br><span class="line">    <span class="keyword">return</span> a.<span class="title function_">fn</span>() <span class="comment">// 指向的是a，因为是直接调用a走的</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91this%E6%8C%87%E5%90%91/" data-id="cmemqxrcb007d14fm0qgh5tna" data-title="【js】this指向" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -294,7 +376,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91js%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86/" data-id="cmek0pdat007d64fmdvdw6qid" data-title="js核心原理" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91js%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86/" data-id="cmemqxrc6006u14fmdjltejqg" data-title="js核心原理" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -410,7 +492,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/docker/" data-id="cmek0pdaa005i64fm3o8b8i74" data-title="docker" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/docker/" data-id="cmemqxrbo005n14fma02n3c3z" data-title="docker" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -482,7 +564,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%85%B3%E9%94%AE%E5%AD%97/" data-id="cmek0pdaq007364fm9rvp3vl8" data-title="【css】属性关键字" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%85%B3%E9%94%AE%E5%AD%97/" data-id="cmemqxrc0006h14fm6ztp17rk" data-title="【css】属性关键字" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -637,7 +719,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E6%B5%81%E5%90%91%E4%BF%AE%E6%94%B9/" data-id="cmek0pdar007664fm2tvufyyt" data-title="【css】流向修改" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E6%B5%81%E5%90%91%E4%BF%AE%E6%94%B9/" data-id="cmemqxrc2006m14fmhso4hga4" data-title="【css】流向修改" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -697,12 +779,74 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E5%8F%96%E5%80%BC%E8%A7%84%E5%88%99/" data-id="cmek0pdap006x64fm5yxj3cen" data-title="【css】取值规则" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E5%8F%96%E5%80%BC%E8%A7%84%E5%88%99/" data-id="cmemqxrby006a14fm02ea1mex" data-title="【css】取值规则" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
 
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-vueTest/【vueTest】测试vuex" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95vuex/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.571Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/VueTest/">VueTest</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95vuex/">【vueTest】测试vuex</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="文件分开测试"><a href="#文件分开测试" class="headerlink" title="文件分开测试"></a>文件分开测试</h1><p>需要将 getter、mutations 分成不同的文件。</p>
+<p>在测试文件内，传递一个假数据给 vuex，然后拿到经过处理后的数据，去判断是否符合预期</p>
+<h2 id="getter"><a href="#getter" class="headerlink" title="getter"></a>getter</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">test</span>(<span class="string">&quot;getter&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> name = <span class="string">&quot;啦啦啦啦&quot;</span>;</span><br><span class="line">  <span class="keyword">const</span> origin_name = &#123;</span><br><span class="line">    name,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">const</span> data = getter.<span class="title function_">getter_name</span>(origin_name);</span><br><span class="line">  <span class="title function_">expect</span>(data).<span class="title function_">toBe</span>(name);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="mutation-测试"><a href="#mutation-测试" class="headerlink" title="mutation 测试"></a>mutation 测试</h2><p>mutation 内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">mutation_name</span>(<span class="params">state, val</span>)&#123;</span><br><span class="line">    state.<span class="property">name</span> = val</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试文件内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">test</span>(<span class="string">&quot;mutation&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> new_name = <span class="string">&quot;啦啦啦啦&quot;</span>;</span><br><span class="line">  <span class="comment">//   创建一个假的state存储对象</span></span><br><span class="line">  <span class="keyword">const</span> origin_name = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;哇哇哇&quot;</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">//   调用方法，修改内容</span></span><br><span class="line">  mutations.<span class="title function_">mutation_name</span>(origin_name, new_name);</span><br><span class="line">  <span class="title function_">expect</span>(origin_name.<span class="property">name</span>).<span class="title function_">toBe</span>(new_name);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>origin_name 的 name 变为了 new_name 的内容</p>
+<h2 id="action"><a href="#action" class="headerlink" title="action"></a>action</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; flushPromises &#125; <span class="keyword">from</span> <span class="string">&quot;@vue/test-utils&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; httpTest1 &#125; <span class="keyword">from</span> <span class="string">&quot;./mock&quot;</span>;</span><br><span class="line">jest.<span class="title function_">mock</span>(<span class="string">&quot;./mock.js&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&quot;action&quot;</span>, <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">  expect.<span class="title function_">assertions</span>(<span class="number">1</span>);</span><br><span class="line">  <span class="keyword">const</span> name = <span class="string">&quot;哈哈哈&quot;</span>;</span><br><span class="line">  <span class="comment">// 创建一个假的上下文</span></span><br><span class="line">  <span class="keyword">const</span> ctx = &#123;</span><br><span class="line">    <span class="attr">commit</span>: jest.<span class="title function_">fn</span>(),</span><br><span class="line">  &#125;;</span><br><span class="line">  httpTest1.<span class="title function_">mockImplemntationNoce</span>(<span class="function">(<span class="params">calledWith</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>();</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">//  调用actions</span></span><br><span class="line">  action.<span class="title function_">action_state_name</span>(ctx, name);</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">flushPromises</span>();</span><br><span class="line">  <span class="comment">//  判断是否调用对应的mutation</span></span><br><span class="line">  <span class="title function_">expect</span>(ctx.<span class="property">commit</span>).<span class="title function_">toHaveBeenCalledWith</span>(<span class="string">&quot;mutation_name&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>actions 测试流程比 mutation 和 getter 复杂,因为涉及到请求和调用 commit,所以需要去模拟一个 mock,以此来拦截数据.</p>
+<p>通过创建一个假的上下文,传给 action,以此来判断是否调用了 mutation</p>
+<h1 id="放在一个-Store"><a href="#放在一个-Store" class="headerlink" title="放在一个 Store"></a>放在一个 Store</h1><p>在beforeEach中,创建一个store,那么在此之后的测试代码中,每次都会调用这个beforeEach的函数,以便每个测试都有一个全新的store</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> localStore, store;</span><br><span class="line"><span class="title function_">test</span>(<span class="string">&quot;store&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">beforeEach</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    localStore = &#123;</span><br><span class="line">      <span class="attr">getters</span>: &#123;</span><br><span class="line">        <span class="attr">getter_age</span>: jest.<span class="title function_">fn</span>(),</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">mutations</span>: &#123;</span><br><span class="line">        <span class="attr">mutation_age</span>: jest.<span class="title function_">fn</span>(),</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;;</span><br><span class="line">    store = <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title class_">Store</span>(localStore);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&quot;vue&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;localStore&quot;</span>, localStore);</span><br><span class="line"><span class="comment">//   组件可以通过$store拿到测试的vuex数据</span></span><br><span class="line">  <span class="title function_">shallowMount</span>(componentName, &#123;</span><br><span class="line">    <span class="attr">$store</span>: localStore,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h1 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h1><h2 id="分开写"><a href="#分开写" class="headerlink" title="分开写"></a>分开写</h2><p>需要模拟许多vuex方法,可能使测试通过,但是实际的测试还是不正确,因为完全是由外部传入的state</p>
+<h2 id="一起写"><a href="#一起写" class="headerlink" title="一起写"></a>一起写</h2><p>测试不够具体,如果测试失败,那么排查问题比较困难</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95vuex/" data-id="cmemqxral003714fm9x407ap4" data-title="【vueTest】测试vuex" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
     </footer>
   </div>
   
@@ -823,135 +967,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95/" data-id="cmek0pd9n003h64fmbuqwdgzv" data-title="【vueTest】测试方法" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-vueTest/【vueTest】测试vuex" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95vuex/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.571Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/VueTest/">VueTest</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95vuex/">【vueTest】测试vuex</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="文件分开测试"><a href="#文件分开测试" class="headerlink" title="文件分开测试"></a>文件分开测试</h1><p>需要将 getter、mutations 分成不同的文件。</p>
-<p>在测试文件内，传递一个假数据给 vuex，然后拿到经过处理后的数据，去判断是否符合预期</p>
-<h2 id="getter"><a href="#getter" class="headerlink" title="getter"></a>getter</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">test</span>(<span class="string">&quot;getter&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> name = <span class="string">&quot;啦啦啦啦&quot;</span>;</span><br><span class="line">  <span class="keyword">const</span> origin_name = &#123;</span><br><span class="line">    name,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">const</span> data = getter.<span class="title function_">getter_name</span>(origin_name);</span><br><span class="line">  <span class="title function_">expect</span>(data).<span class="title function_">toBe</span>(name);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h2 id="mutation-测试"><a href="#mutation-测试" class="headerlink" title="mutation 测试"></a>mutation 测试</h2><p>mutation 内容</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">mutation_name</span>(<span class="params">state, val</span>)&#123;</span><br><span class="line">    state.<span class="property">name</span> = val</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>测试文件内容</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">test</span>(<span class="string">&quot;mutation&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> new_name = <span class="string">&quot;啦啦啦啦&quot;</span>;</span><br><span class="line">  <span class="comment">//   创建一个假的state存储对象</span></span><br><span class="line">  <span class="keyword">const</span> origin_name = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;哇哇哇&quot;</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">//   调用方法，修改内容</span></span><br><span class="line">  mutations.<span class="title function_">mutation_name</span>(origin_name, new_name);</span><br><span class="line">  <span class="title function_">expect</span>(origin_name.<span class="property">name</span>).<span class="title function_">toBe</span>(new_name);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>origin_name 的 name 变为了 new_name 的内容</p>
-<h2 id="action"><a href="#action" class="headerlink" title="action"></a>action</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; flushPromises &#125; <span class="keyword">from</span> <span class="string">&quot;@vue/test-utils&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; httpTest1 &#125; <span class="keyword">from</span> <span class="string">&quot;./mock&quot;</span>;</span><br><span class="line">jest.<span class="title function_">mock</span>(<span class="string">&quot;./mock.js&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&quot;action&quot;</span>, <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">  expect.<span class="title function_">assertions</span>(<span class="number">1</span>);</span><br><span class="line">  <span class="keyword">const</span> name = <span class="string">&quot;哈哈哈&quot;</span>;</span><br><span class="line">  <span class="comment">// 创建一个假的上下文</span></span><br><span class="line">  <span class="keyword">const</span> ctx = &#123;</span><br><span class="line">    <span class="attr">commit</span>: jest.<span class="title function_">fn</span>(),</span><br><span class="line">  &#125;;</span><br><span class="line">  httpTest1.<span class="title function_">mockImplemntationNoce</span>(<span class="function">(<span class="params">calledWith</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>();</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">//  调用actions</span></span><br><span class="line">  action.<span class="title function_">action_state_name</span>(ctx, name);</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">flushPromises</span>();</span><br><span class="line">  <span class="comment">//  判断是否调用对应的mutation</span></span><br><span class="line">  <span class="title function_">expect</span>(ctx.<span class="property">commit</span>).<span class="title function_">toHaveBeenCalledWith</span>(<span class="string">&quot;mutation_name&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>actions 测试流程比 mutation 和 getter 复杂,因为涉及到请求和调用 commit,所以需要去模拟一个 mock,以此来拦截数据.</p>
-<p>通过创建一个假的上下文,传给 action,以此来判断是否调用了 mutation</p>
-<h1 id="放在一个-Store"><a href="#放在一个-Store" class="headerlink" title="放在一个 Store"></a>放在一个 Store</h1><p>在beforeEach中,创建一个store,那么在此之后的测试代码中,每次都会调用这个beforeEach的函数,以便每个测试都有一个全新的store</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> localStore, store;</span><br><span class="line"><span class="title function_">test</span>(<span class="string">&quot;store&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">beforeEach</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    localStore = &#123;</span><br><span class="line">      <span class="attr">getters</span>: &#123;</span><br><span class="line">        <span class="attr">getter_age</span>: jest.<span class="title function_">fn</span>(),</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">mutations</span>: &#123;</span><br><span class="line">        <span class="attr">mutation_age</span>: jest.<span class="title function_">fn</span>(),</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;;</span><br><span class="line">    store = <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title class_">Store</span>(localStore);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&quot;vue&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;localStore&quot;</span>, localStore);</span><br><span class="line"><span class="comment">//   组件可以通过$store拿到测试的vuex数据</span></span><br><span class="line">  <span class="title function_">shallowMount</span>(componentName, &#123;</span><br><span class="line">    <span class="attr">$store</span>: localStore,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h1 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h1><h2 id="分开写"><a href="#分开写" class="headerlink" title="分开写"></a>分开写</h2><p>需要模拟许多vuex方法,可能使测试通过,但是实际的测试还是不正确,因为完全是由外部传入的state</p>
-<h2 id="一起写"><a href="#一起写" class="headerlink" title="一起写"></a>一起写</h2><p>测试不够具体,如果测试失败,那么排查问题比较困难</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95vuex/" data-id="cmek0pd9p003m64fmfmsg452o" data-title="【vueTest】测试vuex" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-vueTest/【vueTest】快照和端到端测试" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E5%BF%AB%E7%85%A7%E5%92%8C%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.569Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/VueTest/">VueTest</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E5%BF%AB%E7%85%A7%E5%92%8C%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95/">【vueTest】快照和端到端测试</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="快照测试"><a href="#快照测试" class="headerlink" title="快照测试"></a>快照测试</h1><h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>快照测试是获取代码的快照，如果之前对应的文件有快照的文件，那么会与之前保存的快照文件进行比较，如果不匹配那么测试失败</p>
-<p>jest 在比对快早文件时，是比对的序列化值。</p>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><h3 id="基本测试"><a href="#基本测试" class="headerlink" title="基本测试"></a>基本测试</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">test</span>(<span class="string">&quot;snapshot-test1&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> wrap = <span class="title function_">shallowMount</span>(<span class="title class_">Button</span>);</span><br><span class="line">  <span class="title function_">expect</span>(wrap.<span class="property">element</span>).<span class="title function_">toMatchSnapshot</span>();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>运行之后，如果该文件之前没有快照文件，那么会在测试文件同目录下的<code>__snapshots__</code>文件夹新增一个<code>snap</code>文件，后续比对就是依据这个文件进行比对的</p>
-<p>可以在命令后加<code>-- -u</code>(<code>npm run test -- -u</code>)表示每次都更新 snap 比对失败文件。也可以加上<code>-- --watch</code>(<code>npm run test -- --watch</code>)会在有失败快照时，在命令行按<code>i</code>可以浏览失败的快照测试，按<code>u</code>更新快照文件</p>
-<h1 id="端到端测试"><a href="#端到端测试" class="headerlink" title="端到端测试"></a>端到端测试</h1><h2 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h2><p>自动运行浏览器和测试文件检查文件行为是否正确。</p>
-<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
-<li>需要配置 java 环境</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/downloads/#jdk19-windows">java 文件下载</a></p>
-<ul>
-<li><p>安装包</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i nightwatch selenium-server chromedriver</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>nightwatch.config.js</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> seleniumServer = <span class="built_in">require</span>(<span class="string">&quot;selenium-server&quot;</span>);</span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">src_folders</span>: [<span class="string">&quot;test/e2e&quot;</span>],</span><br><span class="line">  <span class="attr">output_folder</span>: <span class="string">&quot;test/e2e/reports&quot;</span>,</span><br><span class="line">  <span class="attr">selenium</span>: &#123;</span><br><span class="line">    <span class="attr">start_process</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">server_path</span>: seleniumServer.<span class="property">path</span>,</span><br><span class="line">    <span class="attr">host</span>: <span class="string">&quot;127.0.0.1&quot;</span>,</span><br><span class="line">    <span class="attr">port</span>: <span class="number">4444</span>,</span><br><span class="line">    <span class="attr">cli_args</span>: &#123;</span><br><span class="line">      <span class="string">&quot;WebDriver.chrome.driver&quot;</span>: <span class="built_in">require</span>(<span class="string">&quot;chromedriver&quot;</span>).<span class="property">path</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">test_settings</span>: &#123;</span><br><span class="line">    <span class="attr">chrome</span>: &#123;</span><br><span class="line">      <span class="attr">desiredCapabilities</span>: &#123;</span><br><span class="line">        <span class="attr">browserName</span>: <span class="string">&quot;chrome&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>命令配置</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;test:e2e&quot;</span>: <span class="string">&quot;nightwatch --config nightwatch.config.js --env chrome&quot;</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="测试-1"><a href="#测试-1" class="headerlink" title="测试"></a>测试</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">test1</span>: <span class="keyword">function</span> (<span class="params">browser</span>) &#123;</span><br><span class="line">    browser</span><br><span class="line">      .<span class="title function_">url</span>(<span class="string">&quot;http://localhost:3000/#/&quot;</span>)</span><br><span class="line">      <span class="comment">// 测试页面元素</span></span><br><span class="line">      .<span class="title function_">waitForElementVisible</span>(<span class="string">&quot;.button&quot;</span>, <span class="number">2000</span>)</span><br><span class="line">      <span class="comment">// 测试路由</span></span><br><span class="line">      .<span class="property">assert</span>.<span class="title function_">urlContains</span>(<span class="string">&quot;WlButton&quot;</span>)</span><br><span class="line">      .<span class="title function_">end</span>();</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>运行时，需要先将项目跑起来，然后再执行e2e的执行命令</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E5%BF%AB%E7%85%A7%E5%92%8C%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95/" data-id="cmek0pd9k003d64fm44bsejit" data-title="【vueTest】快照和端到端测试" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95/" data-id="cmemqxral003b14fm3lhy9fli" data-title="【vueTest】测试方法" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -998,7 +1014,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 12px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
     </div>
   </div>
 
@@ -1020,6 +1036,10 @@
       <ul>
         
           <li>
+            <a href="/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/">记录2</a>
+          </li>
+        
+          <li>
             <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">记录1</a>
           </li>
         
@@ -1033,10 +1053,6 @@
         
           <li>
             <a href="/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【wasb】环境搭建</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E3%80%90RN%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【RN】环境搭建</a>
           </li>
         
       </ul>

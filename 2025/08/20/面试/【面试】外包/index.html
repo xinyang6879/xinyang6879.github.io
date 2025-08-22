@@ -14,7 +14,7 @@
 <meta property="og:description" content="vite性能调优Vite 的快，主要源于其“开发环境用 ES Module，生产环境用 Rollup”的架构。 本地开发 预构建  vite 会先将你的 node_modules 中的 CommonJS 或 UMD 格式的依赖，转换为 ESM 格式并打包成一个模块，以减少浏览器请求次数。 因此当依赖非常多且没有esm格式时，预构建非常消耗时间 123456789&#x2F;&#x2F; vite.config.jse">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-08-20T11:17:23.821Z">
-<meta property="article:modified_time" content="2025-08-20T13:37:10.940Z">
+<meta property="article:modified_time" content="2025-08-21T04:27:14.848Z">
 <meta property="article:author" content="yangxin">
 <meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
@@ -497,11 +497,60 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
 <li>协商缓存、强缓存</li>
 <li>cdn</li>
 </ul>
+<h2 id="前端工程化理解"><a href="#前端工程化理解" class="headerlink" title="前端工程化理解"></a>前端工程化理解</h2><p>工程化是为了解决传统开发模式的根本问题：</p>
+<p>效率低下：重复的手工操作（如文件合并、压缩、刷新浏览器）。</p>
+<p>质量参差：代码风格不一，潜在 Bug 多，兼容性问题频发。</p>
+<p>维护困难：代码结构混乱，牵一发而动全身，不敢修改。</p>
+<p>协作不畅：多人开发时冲突不断，部署上线流程混乱。</p>
+<p>核心组成部分：</p>
+<ul>
+<li><p>开发阶段</p>
+<ul>
+<li>模块化：从过去的 IIFE、AMD、CMD 到现在的 ES Module 成为标准，使得我们可以将代码拆分、复用、按需加载。</li>
+<li>CSS 模块化：CSS-in-JS、CSS Modules 等技术解决了样式冲突、作用域和依赖管理的问题。</li>
+<li>资源模块化：通过构建工具，图片、字体等资源都可以作为模块处理，并优化（压缩、转 Base64）。</li>
+</ul>
+</li>
+<li><p>组件化</p>
+<ul>
+<li>将 UI 拆分为一个个独立、可复用、高内聚、低耦合的组件（如 Vue&#x2F;React 组件），这是开发复杂应用的基石。它背后是分治的软件工程思想。</li>
+</ul>
+</li>
+<li><p>规范化 </p>
+<ul>
+<li>代码规范：使用 ESLint 强制统一代码风格，避免因风格不一造成的可读性问题和潜在 Bug。</li>
+<li>提交规范：使用 Commitizen 或 Conventional Commits 规范 Git 提交信息，便于生成变更日志和回溯历史。</li>
+<li>目录结构规范：约定好的项目结构，让任何新成员都能快速理解项目。</li>
+</ul>
+</li>
+<li><p>自动化 </p>
+<ul>
+<li>构建 (Build)：这是工程化的核心。利用 Webpack、Vite、Rollup 等工具，将开发阶段的源代码（TS、Sass、Vue）转译(Transpile)、打包(Bundle)、压缩(Minify)、优化(Optimize) 成浏览器高效可执行的代码（JS、CSS、HTML）。</li>
+<li>调试：借助构建工具提供的 Dev Server、Hot Module Replacement (HMR - 热更新) 等功能，获得极致的开发调试体验。</li>
+</ul>
+</li>
+<li><p>测试与质量保障阶段</p>
+<p>  单元测试 (Unit Testing)：使用 Jest、Vitest 等工具为工具函数、自定义 Hooks、组件工具逻辑编写测试，保证代码块的正确性。</p>
+<p>  组件测试 (Component Testing)：使用 Testing Library、Vue Test Utils 等测试组件的渲染和交互。</p>
+<p>  端到端测试 (E2E Testing)：使用 Cypress、Playwright 模拟真实用户操作，测试整个应用流程。</p>
+<p>  持续集成 (Continuous Integration, CI)：通过 GitHub Actions、GitLab CI 等工具，在代码提交后自动运行 lint、测试、构建等流程，确保合并到主分支的代码是高质量的。</p>
+</li>
+<li><p>部署与运维阶段</p>
+<p>  持续部署 (Continuous Deployment, CD)：在 CI 通过后，自动将代码部署到测试或生产环境。</p>
+<p>  自动化部署：利用脚本或平台工具（如 Jenkins）实现一键或自动部署，替代手动 FTP 上传。</p>
+<p>  性能监控与分析：上线后，使用 APM（应用性能监控）工具（如 Sentry）监控错误、性能指标（LCP, FCP），形成开发闭环。</p>
+</li>
+</ul>
+<p>核心价值在于：</p>
+<p>对开发者：解放生产力，聚焦业务逻辑而非繁琐流程，开发体验更愉悦。</p>
+<p>对团队：降低协作成本，保证代码质量和一致性，方便新人 onboarding。</p>
+<p>对产品：提升性能、稳定性和用户体验，支持快速迭代和稳定上线。</p>
+<p>对公司：降低长期维护成本和风险，提升开发效率，从而节约人力成本。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/" data-id="cmek0pda6005664fmd0u7fkoa" data-title="记录1" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/" data-id="cmemqxrbn005k14fm801abwpl" data-title="记录1" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -512,6 +561,15 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
   
     
 <nav id="article-nav">
+  
+    <a href="/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          记录2
+        
+      </div>
+    </a>
   
   
     <a href="/2025/08/14/%E6%89%8B%E5%86%99%E9%A2%98/" id="article-nav-older" class="article-nav-link-wrap">
@@ -553,7 +611,7 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 12px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
     </div>
   </div>
 
@@ -575,6 +633,10 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
       <ul>
         
           <li>
+            <a href="/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/">记录2</a>
+          </li>
+        
+          <li>
             <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">记录1</a>
           </li>
         
@@ -588,10 +650,6 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
         
           <li>
             <a href="/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【wasb】环境搭建</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E3%80%90RN%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【RN】环境搭建</a>
           </li>
         
       </ul>
