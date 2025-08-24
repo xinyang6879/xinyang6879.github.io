@@ -14,7 +14,7 @@
 <meta property="og:description" content="vite性能调优Vite 的快，主要源于其“开发环境用 ES Module，生产环境用 Rollup”的架构。 本地开发 预构建  vite 会先将你的 node_modules 中的 CommonJS 或 UMD 格式的依赖，转换为 ESM 格式并打包成一个模块，以减少浏览器请求次数。 因此当依赖非常多且没有esm格式时，预构建非常消耗时间 123456789&#x2F;&#x2F; vite.config.jse">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-08-20T11:17:23.821Z">
-<meta property="article:modified_time" content="2025-08-21T04:27:14.848Z">
+<meta property="article:modified_time" content="2025-08-24T06:42:31.116Z">
 <meta property="article:author" content="yangxin">
 <meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
@@ -268,6 +268,119 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
 <td>面向现代浏览器（对旧版浏览器支持需额外处理）</td>
 </tr>
 </tbody></table>
+<h2 id="vue2-Vite和Vue3-Vite区别"><a href="#vue2-Vite和Vue3-Vite区别" class="headerlink" title="vue2+Vite和Vue3+Vite区别"></a>vue2+Vite和Vue3+Vite区别</h2><p>将 Vue 2 项目的打包工具从 Webpack 更换为 Vite，并与 Vue 3 进行打包上的比较，同时对比 Vue 2 + Webpack 的优化，确实是一个值得关注的话题。Vite 带来的提升是显著的，但它与 Vue 3 的组合能带来更多框架层面的优化。</p>
+<p>下面是一个表格，帮你快速了解 Vue 2 + Vite、Vue 3 + Vite 以及 Vue 2 + Webpack 这三者在打包上的主要区别和优化点：</p>
+<table>
+<thead>
+<tr>
+<th align="left">特性维度</th>
+<th align="left">Vue 2 + Vite (对比 Vue 2 + Webpack)</th>
+<th align="left">Vue 3 + Vite (对比 Vue 2 + Vite)</th>
+<th align="left">Vue 2 + Webpack (作为基准)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>构建工具与原理</strong></td>
+<td align="left">开发环境基于 <strong>ESM</strong> 和 <strong>浏览器原生支持</strong>，无需打包；生产环境使用 <strong>Rollup</strong></td>
+<td align="left">同 Vue 2 + Vite (Vite 特性)</td>
+<td align="left">开发和生产环境均需<strong>打包和编译</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>开发服务器启动</strong></td>
+<td align="left"><strong>极快</strong> (提升显著，例如从 40秒 降至 3秒 内，或从 76秒 降至 647ms)</td>
+<td align="left">同 Vue 2 + Vite (Vite 特性)</td>
+<td align="left"><strong>较慢</strong> (需先打包所有资源)</td>
+</tr>
+<tr>
+<td align="left"><strong>热更新 (HMR)</strong></td>
+<td align="left"><strong>更快</strong> (仅更新修改的模块)</td>
+<td align="left">同 Vue 2 + Vite (Vite 特性)</td>
+<td align="left"><strong>较慢</strong> (需重新构建变动的模块链)</td>
+</tr>
+<tr>
+<td align="left"><strong>生产构建速度</strong></td>
+<td align="left"><strong>更快</strong> (例如从 2分30秒 降至 40秒，或从 98秒 降至 33秒)</td>
+<td align="left"><strong>可能更快</strong> (Vue 3 源码结构优化，Tree-shaking 更高效)</td>
+<td align="left"><strong>较慢</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>产出物体积</strong></td>
+<td align="left"><strong>可能减小</strong> (得益于 Rollup 高效的 Tree-shaking 和代码分割)</td>
+<td align="left"><strong>通常更小</strong> (Vue 3 本身更轻量，Tree-shaking 效果更好，Composition API 更利于代码分割)</td>
+<td align="left"><strong>较大</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>Tree-shaking</strong></td>
+<td align="left"><strong>更好</strong> (Rollup 默认支持)</td>
+<td align="left"><strong>最优</strong> (Vue 3 自身采用模块化设计，对 Tree-shaking 更友好)</td>
+<td align="left"><strong>支持</strong> (但效果可能不如 Rollup)</td>
+</tr>
+<tr>
+<td align="left"><strong>语法支持</strong></td>
+<td align="left">需额外配置支持 Vue 2 的 <code>.vue</code> 单文件组件 (如使用 <code>vite-plugin-vue2</code>)</td>
+<td align="left"><strong>原生支持</strong> Vue 3 的 <code>.vue</code> 单文件组件</td>
+<td align="left">通过 <code>vue-loader</code> 支持 Vue 2</td>
+</tr>
+<tr>
+<td align="left"><strong>代码组织与复用</strong></td>
+<td align="left">Options API</td>
+<td align="left"><strong>Composition API</strong> (更灵活的代码组织和复用，利于打包优化)</td>
+<td align="left">Options API</td>
+</tr>
+<tr>
+<td align="left"><strong>迁移成本</strong></td>
+<td align="left"><strong>中等</strong> (主要处理 Webpack 与 Vite 的差异，如环境变量、CJS 模块、路径别名等)</td>
+<td align="left"><strong>较高</strong> (如需从 Vue 2 升级至 Vue 3，涉及语法、API 和破坏性变更)</td>
+<td align="left"><strong>无</strong> (基准)</td>
+</tr>
+</tbody></table>
+<p> <strong>Vite 带来的提升（相较于 Webpack）</strong></p>
+<p>从表格中可以看出，无论是 Vue 2 还是 Vue 3，从 Webpack 迁移到 Vite 都能在<strong>开发体验</strong>和<strong>构建效率</strong>上带来显著的提升：</p>
+<ol>
+<li><strong>开发服务器启动速度极快</strong>：Vite 利用浏览器原生 ESM 支持，在开发环境无需打包，实现秒级启动。</li>
+<li><strong>热更新 (HMR) 速度更快</strong>：Vite 的 HMR 是在原生 ESM 上执行的，仅精确更新变更的模块，完全无需重新打包。</li>
+<li><strong>生产构建效率提升</strong>：Vite 使用 Rollup 进行生产构建，其构建速度通常快于 Webpack。</li>
+<li><strong>可能的产出物体积优化</strong>：Rollup 的 Tree-shaking 和代码分割机制非常高效，有助于减小打包体积。</li>
+</ol>
+<p>🔧 <strong>迁移注意事项（Vue 2 + Webpack → Vue 2 + Vite）</strong></p>
+<p>虽然 Vite 好处很多，但迁移过程可能会遇到一些常见问题，需要留意：</p>
+<ul>
+<li><strong>环境变量</strong>：Vite 使用 <code>import.meta.env</code> 而非 Webpack 的 <code>process.env</code>，需替换。</li>
+<li><strong>CommonJS 模块</strong>：Vite 开发环境默认使用 ESM。对 CJS 模块，可使用 <code>vite-plugin-commonjs</code> 或优先替换为 ESM 版本。</li>
+<li><strong>Webpack 特定配置和插件</strong>：需要寻找 Vite 对应的替代方案或插件。</li>
+<li><strong>路径和别名</strong>：正确配置 <code>resolve.alias</code>。</li>
+<li><strong>HTML 模板</strong>：Vite 的 <code>index.html</code> 在项目根目录且需显式引入 JS [<code>&lt;script type=&quot;module&quot; src=&quot;/src/main.js&quot;&gt;&lt;/script&gt;</code>](citation:3]。</li>
+</ul>
+<p> <strong>Vue 3 的额外优势（Vue 2 + Vite vs Vue 3 + Vite）</strong></p>
+<p>将项目升级到 Vue 3，除了享受 Vite 带来的所有好处外，还能获得 Vue 3 本身带来的优势：</p>
+<ol>
+<li><p><strong>更高效的 Tree-shaking</strong>：Vue 3 的模块化设计和 Composition API 写法，使得打包工具能更有效地移除未使用的代码，进一步减小打包体积。</p>
+<ul>
+<li><p>vue2是一个单一的大对象，如果某些功能没有使用，但是在打包结果中也会把未使用的功能模块进行打包</p>
+</li>
+<li><p>vue3被彻底重写为由多个独立 ES 模块组成的集合。你可以按需导入特定的 API。</p>
+</li>
+<li><p>vue2使用options api，依赖于一个固定的对象结构（data, methods, computed 等）。很多语法（如 filter）是在全局定义的。构建工具很难静态分析出这些选项内部是否使用了某些全局 API，因此为了安全起见，往往不敢轻易移除任何代码。</p>
+</li>
+<li><p>Composition API 基于函数的导入和调用。这是一种对静态分析极度友好的模式。例如，如果你没有显式地 import { watch } from ‘vue’ 并在代码中调用它，构建工具可以 100% 确定 watch 相关的代码是“死代码”，可以安全地移除。这就是为什么 Composition API 不仅是代码组织方式的变革，更是对打包优化的一种强力支持。</p>
+</li>
+<li><p>Vue 3 的模板编译器能够识别出模板中使用了哪些指令或功能。它会自动为这些功能导入对应的辅助函数，而不是整个运行时库。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Composition API</strong>：除了更好的逻辑复用和代码组织，其函数式写法也更利于 Tree-shaking。</p>
+</li>
+<li><p><strong>更小的核心库体积</strong>：Vue 3 本身比 Vue 2 更轻量。</p>
+</li>
+<li><p><strong>性能优化</strong>：Vue 3 在运行时性能上的优化（如基于 Proxy 的响应式、静态提升等）虽然主要影响运行时，但也间接使得编译后的代码可能更高效。</p>
+</li>
+</ol>
+<p>💡 <strong>总结与建议</strong></p>
+<ul>
+<li>如果你目前是 <strong>Vue 2 + Webpack</strong>，迁移到 <strong>Vue 2 + Vite</strong> 能带来<strong>开发体验上的巨大提升</strong>（启动和热更新极快），生产构建通常也会更快。这是<strong>性价比很高</strong>的优化手段。</li>
+<li>如果在 <strong>Vue 2 + Vite</strong> 的基础上，进一步升级到 <strong>Vue 3 + Vite</strong>，则能<strong>同时享受构建工具和框架的双重优化</strong>，尤其是在打包体积和运行时性能方面会更出色，但需要评估升级 Vue 3 的成本。</li>
+<li>Vite 在生产构建中默认使用 Rollup，其打包优化（如 Tree-shaking、代码分割）通常非常高效。</li>
+</ul>
 <h2 id="项目中如何使用ts"><a href="#项目中如何使用ts" class="headerlink" title="项目中如何使用ts"></a>项目中如何使用ts</h2><ul>
 <li><p>安装 TypeScript</p>
 </li>
@@ -550,7 +663,7 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/" data-id="cmemqxrbn005k14fm801abwpl" data-title="记录1" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/" data-id="cmepc0uix006et0fmda3c5br2" data-title="记录1" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       

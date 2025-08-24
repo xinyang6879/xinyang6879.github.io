@@ -71,9 +71,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-读书笔记/WEB3/【Web3】二层网络" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-读书笔记/WEB3/【Web3】SocialFi" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E4%BA%8C%E5%B1%82%E7%BD%91%E7%BB%9C/" class="article-date">
+    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91SocialFi/" class="article-date">
   <time class="dt-published" datetime="2025-08-14T03:18:06.693Z" itemprop="datePublished">2025-08-14</time>
 </a>
     
@@ -89,7 +89,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E4%BA%8C%E5%B1%82%E7%BD%91%E7%BB%9C/">【Web3】二层网络</a>
+      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91SocialFi/">【Web3】SocialFi</a>
     </h1>
   
 
@@ -97,53 +97,92 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="二层网络"><a href="#二层网络" class="headerlink" title="二层网络"></a>二层网络</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>指构建在现有区块链系统之上的二级框架或者协议，这些协议的主要目的是解决主要加密货币网络面临的交易速度低和扩展困难的问题</p>
-<p>“二层”指的是针对区块链可扩展性问题提出的多种解决方案。例如早期的二层解决方案：比特币闪电网络和以太坊等离子体，虽然受限于自身工作机制和特殊性，但这两种解决方案都尽量为区块链系统提供更高的吞吐量</p>
-<h2 id="二层网络技术"><a href="#二层网络技术" class="headerlink" title="二层网络技术"></a>二层网络技术</h2><h3 id="侧链"><a href="#侧链" class="headerlink" title="侧链"></a>侧链</h3><p>它是一条平行于主链的独立运行的链。不依赖于主链的安全策略，有自己独立的安全策略。</p>
-<h3 id="状态通道"><a href="#状态通道" class="headerlink" title="状态通道"></a>状态通道</h3><p>只记录出入该通道的某一瞬间的交易。但其安全性不足，因为需要保证状态通道的运营者是可以信任的，否则投入就会有不安全性</p>
-<h3 id="卷叠"><a href="#卷叠" class="headerlink" title="卷叠"></a>卷叠</h3><p>把一切复杂的交易都交给二层网络，复杂的数据都交给卷叠处理，处理完成后只返回数据摘要或处理结果。这样对性能有一定的提升。</p>
-<h2 id="ZK-Rollups"><a href="#ZK-Rollups" class="headerlink" title="ZK-Rollups"></a>ZK-Rollups</h2><p>ZK-Rollups协议促进了交易者和中继者的交互。</p>
-<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><ul>
-<li><p>交易者创建并将其交易数据广播到网络，此信息包括索引的双方地址、交易价值、网络费用和仅使用一次的数字。利用索引地址减少资源处理，交易价值产生存款和取款金额。然后智能合约将地址记录到一个Merkle树，并将交易值记录到另一个Merkle树</p>
-</li>
-<li><p>中继器负责收集创建汇总的事务。中继器生成一个简洁的非交互零知识论证证明，用于比较每笔交易前后的区块链状态（钱包余额）。由此产生的变化以可验证的方式散列并到达主链。</p>
-</li>
-</ul>
-<h2 id="Optimistic-Rollups"><a href="#Optimistic-Rollups" class="headerlink" title="Optimistic Rollups"></a>Optimistic Rollups</h2><p>和ZK-Rollups类似，但ORs仅向主链发布最少的信息，仅在欺诈案件中生成证明。</p>
-<h3 id="工作流程-1"><a href="#工作流程-1" class="headerlink" title="工作流程"></a>工作流程</h3><ul>
-<li><p>当用户将交易发送到链外ORs时，聚合器注册并提交欺诈证明</p>
-</li>
-<li><p>聚合器在本地部署交易以生成新的智能合约。计算新的状态根，聚合器将交易和状态根发送回主链</p>
-</li>
-<li><p>如果用户认为聚合器返回了欺诈状态根，包括无效交易，他们可以质疑聚合器。用户可以通过发布正确的状态根和验证它所需的Merkle证明在注册这一挑战。对于违规的聚合器，以及任何建立在无效区块之上的聚合器，其保证金被削减，这些收益流向报告用户</p>
-</li>
-<li><p>一旦识别出无效块并完成欺诈证明，二层链就会回滚，并在前一个非欺诈块处恢复</p>
-</li>
-</ul>
-<h3 id="优劣"><a href="#优劣" class="headerlink" title="优劣"></a>优劣</h3><blockquote>
-<p>劣势</p>
-</blockquote>
+        <p>SocialFi汇集了社交媒体和defi的原则，它提供了一种去中心化的方法来创建、管理和存储社交媒体几其参与者生产的内容。</p>
+<p>在SocialFi的核心，应用程序是内容创建者、影响者和参与者，它们希望更好的控制自己的数据，保障言论自由以及通过参与社交媒体获利。货币化通常发生在加密货币中，而身份管理和数字所有权则由nft驱动。</p>
+<h2 id="构建模块"><a href="#构建模块" class="headerlink" title="构建模块"></a>构建模块</h2><h3 id="货币化"><a href="#货币化" class="headerlink" title="货币化"></a>货币化</h3><p>SocialFi应用程序通过使用社交代币或者应用内实用代币，这些代币不仅可以在应用程序级别创建，而且可以在用户级别创建，创作者可以通过社交代币管理自己的经济。</p>
+<p>模型的基本设计原则：</p>
 <ul>
-<li><p>无效状态：OP允许存在无效的区块链状态。因此，在提交欺诈证明前，可能会存在无效状态</p>
+<li><p>只有那些持有创作者社交代币的人才能参与他们的帖子，</p>
 </li>
-<li><p>安全性：由于其基于博弈论模型，OP可能更容易受到攻击，因为用户可以参与报告欺诈</p>
+<li><p>如果想引起影响者的注意，持有最多数量的社交代币时，消息回复会出现在回复页面首页</p>
 </li>
-<li><p>可扩展性：随着交易规模的扩大，在某些情况下，OP可能需要更多的主链计算资源，从而导致更高的成本。</p>
+<li><p>创作者和影响者可以设置阈值，允许拥有超过一定数量社交代币的追随者直接向他们发送消息</p>
+</li>
+<li><p>当用户想要通过点赞或者分享与某人进行互动时，需要花钱。</p>
 </li>
 </ul>
-<h2 id="Arbitrum"><a href="#Arbitrum" class="headerlink" title="Arbitrum"></a>Arbitrum</h2><p>是解决以太坊网络拥塞和高费用问题的解决方案之一</p>
-<h3 id="工作流程-2"><a href="#工作流程-2" class="headerlink" title="工作流程"></a>工作流程</h3><p>Arbitrum生态系统中包含四个角色：验证者、虚拟机、密钥和管理器。</p>
-<p>Arbitrum基于简单的加密货币设计，其中各方可以将智能合约实现为对合约规则进行编码的VM，它是中Arbitrum虚拟机架构上运行的程序。虚拟机的一组管理器由VM的设计者指定。</p>
-<p>基于Arbitrum协议，任何一个管理者都可以强制VM根据VM的代码运行，与VM的结果有利害关系的各方可以选择各自信任的人代表他们这样做或者直接担任管理者。VM的状态可以通过依赖管理者器以及降低验证者的成本来提升，验证者只需跟踪虚拟机状态的hash值，而不是整个状态。</p>
+<h3 id="审查与言论自由"><a href="#审查与言论自由" class="headerlink" title="审查与言论自由"></a>审查与言论自由</h3><p>SocialFi平台通过标记链上数据进行去中心化管理。SocialFi平台所有可公开查看的帖子都在链上，因此，这些链上数据可供规则引擎根据主题和所用词的性质来解析和快速标记帖子。</p>
+<p>每个单独的节点都可以选择阻止一些标签并与其他标签互动。如果一个节点选择参与和认可一个有害帖子时，它将收到法律起诉。因此，在网络中必须允许非中央机构或中央组织内的小团体做出选择，控制器和责任在于个人。</p>
+<h3 id="数字所有权和身份"><a href="#数字所有权和身份" class="headerlink" title="数字所有权和身份"></a>数字所有权和身份</h3><p>如果用户想创建一个SocialFi资料，可以使用自己的nft作为个人头像，并通过连接他们的钱包来确认自己的nft所有权。</p>
+<p>SocialFi平台中的nft为创作者提供分发功能来广播他们的作品。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E4%BA%8C%E5%B1%82%E7%BD%91%E7%BB%9C/" data-id="cmemqxrcl008414fmh4az2u9z" data-title="【Web3】二层网络" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91SocialFi/" data-id="cmepc0uj0006wt0fm11bs8xan" data-title="【Web3】SocialFi" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web3/" rel="tag">web3</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-读书笔记/js/【js】this指向" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91this%E6%8C%87%E5%90%91/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.689Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/js/">js</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91this%E6%8C%87%E5%90%91/">【js】this指向</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="this"><a href="#this" class="headerlink" title="this"></a>this</h1><h2 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h2><ul>
+<li>通过 new 进行创建的，this 指向创建的对象</li>
+</ul>
+<p>如果构造函数返回了一个对象，那么绑定的 this 就是返回对象的</p>
+<p>如果构造函数没有返回对象，返回的是 number 或者 boolean，那么实际返回的也是这个构造函数</p>
+<ul>
+<li>显示绑定（bind&#x2F;apply）：如果传的是 null 或者 undefined，实际应用的是默认绑定规则</li>
+<li>隐式绑定，绑定的是那个的上下文对象</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Var fn()&#123;&#125;</span><br><span class="line">Var obj = &#123;fun: fun&#125;</span><br><span class="line">Obj.fun();//指向的是obj</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>默认绑定，严格模式下是 undefined，非严格模式下是全局对象</li>
+</ul>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = &#123;</span><br><span class="line">  <span class="attr">text</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">fn</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">text</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> b = &#123;</span><br><span class="line">  <span class="attr">text</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">fn</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> aa = a.<span class="property">fn</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">aa</span>(); <span class="comment">// 输出undefined，因为是在window层调用的</span></span><br><span class="line">    <span class="keyword">return</span> a.<span class="title function_">fn</span>() <span class="comment">// 指向的是a，因为是直接调用a走的</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91this%E6%8C%87%E5%90%91/" data-id="cmepc0ujo00a0t0fmalpaaqec" data-title="【js】this指向" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
 
     </footer>
   </div>
@@ -224,66 +263,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6/" data-id="cmemqxrca007914fm5qfyb37u" data-title="【js】属性描述符" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-读书笔记/js/【js】this指向" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91this%E6%8C%87%E5%90%91/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.689Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/js/">js</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91this%E6%8C%87%E5%90%91/">【js】this指向</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="this"><a href="#this" class="headerlink" title="this"></a>this</h1><h2 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h2><ul>
-<li>通过 new 进行创建的，this 指向创建的对象</li>
-</ul>
-<p>如果构造函数返回了一个对象，那么绑定的 this 就是返回对象的</p>
-<p>如果构造函数没有返回对象，返回的是 number 或者 boolean，那么实际返回的也是这个构造函数</p>
-<ul>
-<li>显示绑定（bind&#x2F;apply）：如果传的是 null 或者 undefined，实际应用的是默认绑定规则</li>
-<li>隐式绑定，绑定的是那个的上下文对象</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Var fn()&#123;&#125;</span><br><span class="line">Var obj = &#123;fun: fun&#125;</span><br><span class="line">Obj.fun();//指向的是obj</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>默认绑定，严格模式下是 undefined，非严格模式下是全局对象</li>
-</ul>
-<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = &#123;</span><br><span class="line">  <span class="attr">text</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">fn</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">text</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> b = &#123;</span><br><span class="line">  <span class="attr">text</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">fn</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> aa = a.<span class="property">fn</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">aa</span>(); <span class="comment">// 输出undefined，因为是在window层调用的</span></span><br><span class="line">    <span class="keyword">return</span> a.<span class="title function_">fn</span>() <span class="comment">// 指向的是a，因为是直接调用a走的</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91this%E6%8C%87%E5%90%91/" data-id="cmemqxrcb007d14fm0qgh5tna" data-title="【js】this指向" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91%E5%B1%9E%E6%80%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6/" data-id="cmepc0ujo00a3t0fme9wsdn9n" data-title="【js】属性描述符" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -376,7 +356,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91js%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86/" data-id="cmemqxrc6006u14fmdjltejqg" data-title="js核心原理" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/js/%E3%80%90js%E3%80%91js%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86/" data-id="cmepc0ujn009wt0fm4bo9e4mq" data-title="js核心原理" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -492,7 +472,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/docker/" data-id="cmemqxrbo005n14fma02n3c3z" data-title="docker" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/docker/" data-id="cmepc0uis005lt0fm2rkw8psx" data-title="docker" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -564,7 +544,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%85%B3%E9%94%AE%E5%AD%97/" data-id="cmemqxrc0006h14fm6ztp17rk" data-title="【css】属性关键字" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%85%B3%E9%94%AE%E5%AD%97/" data-id="cmepc0ujl009pt0fm9nf3f02f" data-title="【css】属性关键字" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -719,7 +699,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E6%B5%81%E5%90%91%E4%BF%AE%E6%94%B9/" data-id="cmemqxrc2006m14fmhso4hga4" data-title="【css】流向修改" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E6%B5%81%E5%90%91%E4%BF%AE%E6%94%B9/" data-id="cmepc0ujm009ut0fmdjod5wn2" data-title="【css】流向修改" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -779,7 +759,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E5%8F%96%E5%80%BC%E8%A7%84%E5%88%99/" data-id="cmemqxrby006a14fm02ea1mex" data-title="【css】取值规则" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/css/%E3%80%90css%E3%80%91%E5%8F%96%E5%80%BC%E8%A7%84%E5%88%99/" data-id="cmepc0ujk009ot0fmhez56bgx" data-title="【css】取值规则" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -843,7 +823,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95vuex/" data-id="cmemqxral003714fm9x407ap4" data-title="【vueTest】测试vuex" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95vuex/" data-id="cmepc0ui9003rt0fm4i0ibpum" data-title="【vueTest】测试vuex" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -967,7 +947,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95/" data-id="cmemqxral003b14fm3lhy9fli" data-title="【vueTest】测试方法" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95/" data-id="cmepc0ui9003vt0fm6wstfd1q" data-title="【vueTest】测试方法" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
