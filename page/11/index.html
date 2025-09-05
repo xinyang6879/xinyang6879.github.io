@@ -71,6 +71,226 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-css/【css】层叠上下文" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/css/%E3%80%90css%E3%80%91%E5%B1%82%E5%8F%A0%E4%B8%8A%E4%B8%8B%E6%96%87/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.178Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/css/">css</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/css/%E3%80%90css%E3%80%91%E5%B1%82%E5%8F%A0%E4%B8%8A%E4%B8%8B%E6%96%87/">【css】层叠上下文</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="【css】层叠上下文"><a href="#【css】层叠上下文" class="headerlink" title="【css】层叠上下文"></a>【css】层叠上下文</h1><h2 id="层叠水平"><a href="#层叠水平" class="headerlink" title="层叠水平"></a>层叠水平</h2><p>层叠水平，stacking level，其决定了同一个层叠上下文中元素在z轴上的显示顺序</p>
+<p>所有元素都有层叠水平，包括层叠上下文和普通元素。但对于普通元素的层叠水平只局限于当前的层叠上下文中。</p>
+<p>zindex在某些情况下可以影响层叠水平，但仅限于定位元素以及flex盒子的子元素，而层叠水平是所有元素都存在。</p>
+<h3 id="flex与zindex"><a href="#flex与zindex" class="headerlink" title="flex与zindex"></a>flex与zindex</h3><p>flex布局下zindex生效是父元素设置了flex，子元素设置了zindex，子元素的zindex生效，flex当前元素是不生效的</p>
+<ul>
+<li><p>非flex布局下：<br>遵循后来者居上原则，son3覆盖了son2</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">.father&#123;</span><br><span class="line">  width: 600px;</span><br><span class="line">  height: 150px;</span><br><span class="line">  z-index: 3;</span><br><span class="line">  background-color: aquamarine;</span><br><span class="line">&#125;</span><br><span class="line">.son2&#123;</span><br><span class="line">  z-index: 2;</span><br><span class="line">  width: 150px;</span><br><span class="line">  height: 150px;</span><br><span class="line">  display: inline-block;</span><br><span class="line">  background-color: white;</span><br><span class="line">&#125;</span><br><span class="line">.son3&#123;</span><br><span class="line">  z-index: 1;</span><br><span class="line">  width: 150px;</span><br><span class="line">  height: 150px;</span><br><span class="line">  display: inline-block;</span><br><span class="line">  margin-left: -20px;</span><br><span class="line">  background-color: chocolate;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;father&quot;</span>&gt;</span></span><br><span class="line">  son1</span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;son2&quot;</span>&gt;</span>son2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;son3&quot;</span>&gt;</span>son3<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pEkTk1U"><img src="https://s21.ax1x.com/2025/01/20/pEkTk1U.png" alt="pEkTk1U.png"></a></p>
+</li>
+<li><p>flex布局下</p>
+<p>遵循zindex谁大谁上的原则，son2覆盖了son3</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">  .father&#123;</span><br><span class="line">    width: 600px;</span><br><span class="line">    height: 150px;</span><br><span class="line">    z-index: 3;</span><br><span class="line"><span class="addition">+ display: flex;</span></span><br><span class="line">    background-color: aquamarine;</span><br><span class="line">  &#125;</span><br><span class="line">  .son2&#123;</span><br><span class="line">    z-index: 2;</span><br><span class="line">    width: 150px;</span><br><span class="line">    height: 150px;</span><br><span class="line">    display: inline-block;</span><br><span class="line">    background-color: white;</span><br><span class="line">  &#125;</span><br><span class="line">  .son3&#123;</span><br><span class="line">    z-index: 1;</span><br><span class="line">    width: 150px;</span><br><span class="line">    height: 150px;</span><br><span class="line">    display: inline-block;</span><br><span class="line">    margin-left: -20px;</span><br><span class="line">    background-color: chocolate;</span><br><span class="line">  &#125;</span><br><span class="line">  &lt;div class=&quot;father&quot;&gt;</span><br><span class="line">    son1</span><br><span class="line">    &lt;div class=&quot;son2&quot;&gt;son2&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;son3&quot;&gt;son3&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pEkTZnJ"><img src="https://s21.ax1x.com/2025/01/20/pEkTZnJ.png" alt="pEkTZnJ.png"></a></p>
+</li>
+</ul>
+<h2 id="层叠顺序"><a href="#层叠顺序" class="headerlink" title="层叠顺序"></a>层叠顺序</h2><p>stacking order，其表示元素层叠时有特定的垂直显示顺序，其是规则而非概念</p>
+<h3 id="层叠顺序规则"><a href="#层叠顺序规则" class="headerlink" title="层叠顺序规则"></a>层叠顺序规则</h3><p>从下到上的顺序为：</p>
+<p>层叠上下文 background&#x2F;border -&gt; 负zindex -&gt; block块状水平盒子 -&gt; float浮动盒子 -&gt; inline水平盒子 -&gt; zindex&#x3D;auto&#x2F;0 -&gt; 正zindex</p>
+<p>注：</p>
+<ul>
+<li><p>位于最下面的background&#x2F;border指层叠上下文元素的边框和背景色，每个层叠顺序规则仅适用于当前层叠上下文元素的小世界</p>
+</li>
+<li><p>inline水平盒子指的是 inline&#x2F;inline-block&#x2F;inline- table</p>
+</li>
+<li><p>background&#x2F;border作为装饰属性，float&#x2F;block一般用于布局，inline都是内容，而内容的重要性是相对优先的</p>
+</li>
+</ul>
+<h2 id="层叠准则"><a href="#层叠准则" class="headerlink" title="层叠准则"></a>层叠准则</h2><p>当元素发生层叠的时候，其覆盖关系遵循下面两天准则</p>
+<ul>
+<li><p>谁大谁上：当有明显的层叠水平标识时，如生效的zindex，在同一个层叠上下文领域，层叠水平值大的一个覆盖小的一个</p>
+</li>
+<li><p>后来居上：当元素的层叠水平一致、层叠顺序相同时，在dom流中处于后面的元素覆盖前面的元素</p>
+</li>
+</ul>
+<h2 id="层叠上下文"><a href="#层叠上下文" class="headerlink" title="层叠上下文"></a>层叠上下文</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>层叠上下文（Stacking Context）是一个HTML元素的三维概念。在CSS2.1规范中，每个盒模型的位置是三维的，分别是平面画布上的x轴、y轴和表示层叠的z轴。</p>
+<p>它是页面中的一部分，决定了元素在<strong>Z轴</strong>上的堆叠顺序。在层叠上下文中，元素可以在三维空间中相对于其他元素前后排列，类似于一叠卡片。</p>
+<p>层叠上下文的创建是可以嵌套的，也就是说一个层叠上下文内部可以包含另一个层叠上下文.在这种情况下，内部的层叠上下文会被整体地放在外部层叠上下文的某个层叠等级上，而内部层叠上下文的z-index值不会影响到外部层叠上下文的堆叠顺序。</p>
+<blockquote>
+<p>作用</p>
+</blockquote>
+<p>这个概念主要用于解决覆盖和重叠元素的问题，例如当元素的部分透明或定位不同导致元素重叠时，层叠上下文就会决定哪个元素在上面，哪个在下面。</p>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul>
+<li><p>层叠上下文的层叠水平高于普通元素</p>
+</li>
+<li><p>层叠上下文可以阻断元素的混合模式</p>
+</li>
+<li><p>层叠上下文可以嵌套，内部层叠上下文及其所有子元素均受制于外部的层叠上下文</p>
+</li>
+<li><p>每个层叠上下文和兄弟元素独立，即当进行层叠变化或者渲染时，只需要考虑后代元素</p>
+</li>
+<li><p>每个层叠上下文是自成体系的，当元素发生层叠时，整个元素被认为是在父层叠上下文的层叠顺序中</p>
+</li>
+</ul>
+<h3 id="层叠等级"><a href="#层叠等级" class="headerlink" title="层叠等级"></a>层叠等级</h3><h1></h1>
+
+<p>层叠等级（stacking level），又称层叠级别、层叠水平。在<strong>同一个</strong>层叠上下文中有作用。</p>
+<blockquote>
+<p>作用</p>
+</blockquote>
+<ul>
+<li><p>决定该层叠上下文中的层叠上下文元素在z轴上的上下顺序</p>
+</li>
+<li><p>在普通元素中，它决定这些普通元素在z轴上的上下顺序</p>
+</li>
+</ul>
+<h3 id="层叠顺序-1"><a href="#层叠顺序-1" class="headerlink" title="层叠顺序"></a>层叠顺序</h3><h1></h1>
+
+<p>层叠顺序（stacking order）表示元素发生层叠时有着特定的垂直显示顺序。</p>
+<p>注: 层叠上下文和层叠水平是概念，层叠顺序是规则</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCzHpgf"><img src="https://s1.ax1x.com/2023/07/28/pCzHpgf.png" alt="堆叠顺序规则"></a></p>
+<h3 id="层叠上下文与层叠顺序"><a href="#层叠上下文与层叠顺序" class="headerlink" title="层叠上下文与层叠顺序"></a>层叠上下文与层叠顺序</h3><ul>
+<li><p>如果层叠上下文元素不依赖于zindex，其层叠顺序是zindex：auto，可看成zindex&#x3D;0</p>
+</li>
+<li><p>如果层叠上下文依赖于zindex数值，则层叠顺序由zindex决定</p>
+</li>
+</ul>
+<p>从下到上的顺序为：</p>
+<p>层叠上下文 background&#x2F;border -&gt; 负zindex -&gt; block块状水平盒子 -&gt; float浮动盒子 -&gt; inline水平盒子 -&gt; zindex&#x3D;auto&#x2F;0 ，不依赖zindex的层叠上下文-&gt; 正zindex</p>
+<p>因此，元素一旦成为定位元素，其zindex会自动生效，此时其zindex就是默认的auto，即0级别，根据上面的层叠顺序表，其会覆盖float&#x2F;block&#x2F;inline元素</p>
+<h2 id="触发条件"><a href="#触发条件" class="headerlink" title="触发条件"></a>触发条件</h2><h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><h4 id="根层叠上下文"><a href="#根层叠上下文" class="headerlink" title="根层叠上下文"></a>根层叠上下文</h4><p>指页面根元素，可以看成是html元素.  HTML中的根元素<html></html>本身就具有层叠上下文，称为“根层叠上下文”。这也时绝对定位元素在没有其他定位元素限制时，会相对于浏览器窗口定位的原因。</p>
+<p>页面中所有元素一定处于至少一个层叠结界中</p>
+<h4 id="定位元素与传统层叠上下文"><a href="#定位元素与传统层叠上下文" class="headerlink" title="定位元素与传统层叠上下文"></a>定位元素与传统层叠上下文</h4><ul>
+<li><p>position&#x3D;relative&#x2F;absolute</p>
+</li>
+<li><p>position&#x3D;fixed（Firefox&#x2F;ie，不包括chrome</p>
+</li>
+</ul>
+<p>chrome在此情景下，会将此元素作为天然层叠上下文元素</p>
+<p>当满足上面其一条件时，zindex！&#x3D;auto时，会创建层叠上下文</p>
+<h4 id="css3"><a href="#css3" class="headerlink" title="css3"></a>css3</h4><ul>
+<li><p>flex元素，同时zindex！&#x3D; auto</p>
+</li>
+<li><p>opacity ！&#x3D; 1</p>
+</li>
+<li><p>mix-blend-mode ！&#x3D; normal</p>
+</li>
+<li><p>filter ！&#x3D; none</p>
+</li>
+<li><p>isolation &#x3D; isolate</p>
+</li>
+<li><p>will-change为上面2～6的任意一个</p>
+</li>
+<li><p>-webkit- overflow-scrolling &#x3D; touch</p>
+</li>
+</ul>
+<h2 id="比较规则"><a href="#比较规则" class="headerlink" title="比较规则"></a>比较规则</h2><ul>
+<li><p>同一个层叠上下文中，</p>
+<ul>
+<li><p>元素层级不同</p>
+<p>比较“内部元素层叠级别”，层叠等级大的元素显示在上，层叠等级小的显示在下</p>
+</li>
+<li><p>两个元素的层叠等级相同</p>
+<p>后面元素堆叠到前面元素的上面，即“后来者居上”</p>
+</li>
+</ul>
+</li>
+<li><p>在不同层叠上下文中</p>
+<p>比较“父级元素层叠等级”，元素显示顺序以“父级”的层叠级别来决定元素的先后顺序，与自身的层叠顺序无关</p>
+</li>
+<li><p>当页面中两个元素发生堆叠时，其或其祖先元素必处于同一层叠上下文（最差情况下同处根层叠上下文）</p>
+</li>
+</ul>
+<h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_56229413/article/details/115458436">层叠上下文、层叠等级、层叠顺序</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E5%B1%82%E5%8F%A0%E4%B8%8A%E4%B8%8B%E6%96%87/" data-id="cmf67fxdi002kbcfm3p3t2g6s" data-title="【css】层叠上下文" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/hello-world/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T02:32:21.332Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/hello-world/" data-id="cmf67fxcg0001bcfmdflw67ot" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-css/【css】属性值定义语法" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/10/14/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%80%BC%E5%AE%9A%E4%B9%89%E8%AF%AD%E6%B3%95/" class="article-date">
@@ -232,7 +452,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/10/14/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%80%BC%E5%AE%9A%E4%B9%89%E8%AF%AD%E6%B3%95/" data-id="cmepc0ui40031t0fmfw9ic171" data-title="【css】属性值定义语法" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/10/14/css/%E3%80%90css%E3%80%91%E5%B1%9E%E6%80%A7%E5%80%BC%E5%AE%9A%E4%B9%89%E8%AF%AD%E6%B3%95/" data-id="cmf67fxdi002nbcfm0o32hg5t" data-title="【css】属性值定义语法" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -326,7 +546,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/07/28/css/%E3%80%90css%E3%80%91%E4%B8%8D%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7%E6%80%BB%E7%BB%93/" data-id="cmepc0ui1002qt0fm94x40wob" data-title="【css】不常用属性总结" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/07/28/css/%E3%80%90css%E3%80%91%E4%B8%8D%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7%E6%80%BB%E7%BB%93/" data-id="cmf67fxdl002sbcfmgaktg9os" data-title="【css】不常用属性总结" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -373,7 +593,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 12px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 14px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 14px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
     </div>
   </div>
 
@@ -382,7 +602,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">September 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
     </div>
   </div>
 
@@ -395,6 +615,14 @@
       <ul>
         
           <li>
+            <a href="/2025/09/05/Vue/%E3%80%90vue%E3%80%91%E8%AF%A6%E8%A7%A3computed/">详解computed</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/25/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB2/">记录3</a>
+          </li>
+        
+          <li>
             <a href="/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/">记录2</a>
           </li>
         
@@ -404,14 +632,6 @@
         
           <li>
             <a href="/2025/08/14/%E6%89%8B%E5%86%99%E9%A2%98/">手写题</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E3%80%90%E6%89%8B%E5%86%99%E3%80%91call%E3%80%81apply%E3%80%81bind/">【手写】call、apply、bind</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【wasb】环境搭建</a>
           </li>
         
       </ul>

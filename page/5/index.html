@@ -71,6 +71,376 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-读书笔记/WebRTC/【WebRTC】介绍" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WebRTC/%E3%80%90WebRTC%E3%80%91%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.709Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/">扩展阅读</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WebRTC/%E3%80%90WebRTC%E3%80%91%E4%BB%8B%E7%BB%8D/">webRTC介绍</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="webRTC-介绍"><a href="#webRTC-介绍" class="headerlink" title="webRTC 介绍"></a>webRTC 介绍</h2><p>webrtc，Web Real-time Communication，web 实时通信技术，其开创性的使浏览器能直接与其他浏览器进行交互，从而形成包括三角模式和梯形模式在内的多种体系结构</p>
+<p>实时通信技术通过标准 api 和 web 应用程序交互，并使用浏览器与操作系统通信。</p>
+<p>webrtc 增加新的特点 - 浏览器和浏览器之间的交互（对等连接）。在此类交互上，一个浏览器中的实时通信功能使用线上标准协议（非 http），与另一个浏览器或网络电话或视频应用程序之中的实时通信功能进行通信。虽然使用 tcp 传输 web 流量，但浏览器之间的线上可使用其他传输协议，例如 udp。</p>
+<pre><code>- 提供信令服务，该服务器在浏览器和对等连接另一端提供信令通道
+</code></pre>
+<h3 id="webrtc-所包含的元素"><a href="#webrtc-所包含的元素" class="headerlink" title="webrtc 所包含的元素"></a>webrtc 所包含的元素</h3><ul>
+<li>web 服务器</li>
+<li>运行于各种设备和操作系统之上的浏览器，包括台式机、pad、手机和其他服务器</li>
+<li>其他：共用交换电话网（PSTN）门户、其他互联网通信终端（会话发起协议电话、客户端，或者 Jingle 客户端</li>
+</ul>
+<p>webrtc 支持以上所有设备的通信</p>
+<h3 id="三角模式和梯形模式"><a href="#三角模式和梯形模式" class="headerlink" title="三角模式和梯形模式"></a>三角模式和梯形模式</h3><ul>
+<li><p>三角模式</p>
+<p>最常见的情况可能是两个浏览器都运行从同一个 web 服务器下载的同一个 webrtc web 应用程序，因为这三个元素之间的信令路线和媒体或数据流动路线所构成的形状恰好是一个三角形，因此成为 webrtc 三角形。两个浏览器之间直接通过建立对等连接来传输语音、视频媒体，以及附加数据</p>
+<p>信令在 webrtc 中并未标准化，其只被视作未应用程序的一部分。信令可以通过 http 或 websocket 传送到向浏览器提供 html 页面的同一 web 服务器，也可传送到只负责处理信令的一个完全不同的 web 服务器</p>
+</li>
+<li><p>梯形模式</p>
+<p>其包含两台 web 服务器和两个浏览器，web 服务器之间采用标准的信令协议。例如 SIP 或 Jingle，也可以使用专有的信令协议。客户端和三角模式一样，通过对等连接传输音视频</p>
+</li>
+</ul>
+<h3 id="webrtc-与协议"><a href="#webrtc-与协议" class="headerlink" title="webrtc 与协议"></a>webrtc 与协议</h3><ul>
+<li><p>SIP</p>
+<p>web 服务器有一个内置的 sip 信令网关，浏览器与 sip 客户端之间可以通过此网关来交换呼叫建立信息，直接在浏览器和 sip 客户端之间形成媒体流，因为对等连接与 sip 用户代理建立标准的实时传输协议 RTP 媒体会话</p>
+<p>web 服务器 &lt;— SIP —&gt; SIP 服务器 &lt;— SIP —&gt; SIP 客户端 &lt;— 对等连接（音视频） —&gt; 浏览器 &lt;——&gt; web 服务器</p>
+</li>
+<li><p>Jingle</p>
+<p>web 服务器有一个内置的可扩展消息现场协议，该内置服务器通过另一个 xmpp 服务器与 jingle 客户端进行通信</p>
+<p>web 服务器 &lt;— Jingle —&gt; XMPP 服务器 &lt;— Jingle —&gt; Jingle 客户端 &lt;— 对等连接（音视频） —&gt; 浏览器 &lt;——&gt; web 服务器</p>
+</li>
+<li><p>公共交换电话网（PSTN）</p>
+<p>PSTN 网关是纯音频媒体流的终结点，负责 PSTN 电话呼叫与媒体相连。在 web 服务器与 PSTN 网关之间需要有某种形式的信令，可以是 SIP，也可以是主从控制协议。</p>
+<p>互联网通信服务可以为用户分配一个电话号码，用户可以使用 webrtc 访问此服务。这样拨叫该电话号码时浏览器会发出“响铃”声，应答呼叫时则会通过与 PSTN 呼叫方相连的互联网建立语音会话，其他服务可能包括能在 webrtc 应用程序中“拨打电话”，这种拨打会通过互联网与 PSTN 建立语音通道</p>
+<p>PSTN 网关 &lt;——&gt; 浏览器 &lt;——&gt; Web 服务器 &lt;——&gt; PSTN 网关 &lt;——&gt; 电话</p>
+</li>
+</ul>
+<h3 id="媒体流"><a href="#媒体流" class="headerlink" title="媒体流"></a>媒体流</h3><p>点对点 webrtc 会话中的多媒体流包括但不限于：麦克风音频流、应用程序共享视频流、前置摄像头视频流、后置摄像头视频流、网络摄像头视频流、立体声音频流</p>
+<p>多方会话：</p>
+<ul>
+<li><p>每个浏览器都与其他参与会话的浏览器建立一个对等连接<br>优势：不需要媒体服务器基础架构、媒体延迟最低且质量高</p>
+<p>缺点：不适用于大型多方会议，每次新的浏览器加入都会导致其他浏览器带宽增加</p>
+</li>
+<li><p>通过一个集中式媒体服务器&#x2F;混合器&#x2F;选择器，每个浏览器与媒体服务器之间建立单个对等连接。每个浏览器向服务器发送媒体数据，由服务器混合后不经将其分发给其他浏览器。这样每次有新的浏览器加入后，其他浏览器不需要对这个新的浏览器建立连接<br>优势：能扩展非常大的会话，同时可以最大幅度减少当有新参与者加入会话时每个浏览器所需的处理工作量</p>
+<p>缺点：只有一个浏览器或少量浏览器参与时，会降低效率</p>
+</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="建立-webRTC-会话"><a href="#建立-webRTC-会话" class="headerlink" title="建立 webRTC 会话"></a>建立 webRTC 会话</h3><ul>
+<li>获取本地媒体</li>
+<li>在浏览器和对等端（其他浏览器或终端）之间建立连接</li>
+<li>将媒体和数据通道关联至该连接</li>
+<li>交换会话描述</li>
+</ul>
+<h4 id="获取本地媒体"><a href="#获取本地媒体" class="headerlink" title="获取本地媒体"></a>获取本地媒体</h4><p>有多种方式可以获取，webRTC 定义了一种常见方式：<code>getUserMedia</code>，此方法可以用于获取单个本地 MediaStream，在获取一个或多个媒体后，可以使用 MediaStream API 将它们组合到所需要的流中。为保护隐私，只有当浏览器获取用户许可后，才会批准 web 应用程序访问用户麦克风或摄像头的请求</p>
+<h4 id="建立对等连接"><a href="#建立对等连接" class="headerlink" title="建立对等连接"></a>建立对等连接</h4><p><code>RTCPeerConnection</code>是 webrtc 核心，其可以在两个对等端之间建立连接。这不是通过服务器请求通信，而是直接在两个实体之间进行通信。就 webrtc 本身而言，对等连接就是两个或更多浏览器之间的本地媒体连接，这种模式很适用于多向通信</p>
+<p>建立此连接需要一个新的<code>RTCPeerConnection</code>对象，其构造函数方法的唯一输入项是一个配置对象，该对象包括交互式连接建立技术（ICE）“打洞”通过各种网络地址切换（NAT）设备和防火墙所使用的信息</p>
+<h4 id="交换媒体或数据"><a href="#交换媒体或数据" class="headerlink" title="交换媒体或数据"></a>交换媒体或数据</h4><p>建立连接后，可将任意数量的本地媒体流关联到对等连接，以通过该连接发送至远端浏览器。同样也可以将任意数量的远端媒体流发送至对等连接的本地端，这样本地端就有了新的媒体流，而且可以像操作其他本地媒体流那样处理他们</p>
+<p>每次更改媒体时，都需要在两个浏览器之间协商如何在连接通道中表示媒体。当从本地端或远程端发出添加或删除媒体的请求时，可请求浏览器生成相应的 RTCSessionDescription 对象（此容器存放会话描述，即有关如何建立媒体会话的信息），用于表示通过对等连接传输的所有媒体集合。利用 RTCPeerConnection，开发者可在会话描述被发送到远端前，根据需要查看或编辑会话描述。这样浏览器既可以处理编码器协商和编写会话描述协议 W（SDP），同时允许应用程序根据需要进行微调。</p>
+<p>当两个浏览器交换完 RTCSessionDescription 对象后，即可建立媒体或数据会话。此时两个浏览器将开始打洞，打洞完毕后，即可协商密钥，以确保媒体会话的安全，最后可开始媒体或数据会话。交换对象后的所有活动通过浏览器执行 js 代码完成，应用程序的 js 代码还可以添加&#x2F;删除 STUN 和 TURN 服务器</p>
+<h4 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h4><p>在对等连接中，任一端浏览器都可以关闭连接，通过对 RTCPeerConnection 对象调用<code>close()</code>来指示连接已使用完毕，此操作会停止 ICE 处理和媒体流传输，同样，如果某一端的浏览器断开 Internet 连接或发送崩溃，媒体或数据通道中发送的持久连接请求将失效，另一端的浏览器将尝试重新开始打洞，并且在打洞失败后关闭会话。会话结束后，浏览器将删除会话授予的任何访问设备麦克风和摄像头的许可，因此在新的会话中，需要向用户请求新的许可</p>
+<h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><p>提议&#x2F;应答是一种媒体协商方式，为了确保双方在流媒体传输之前达成一致</p>
+<pre><code>提议：一方向一方发送其支持并要设置的媒体类型和功能
+
+应答：另一方回应，提示在所提议的媒体类型和功能中，哪些是此会话支持并可以接受的
+</code></pre>
+<p>临时应答：对提议的应答，但是临时性或实验性，可能不是实际应答中提供的最终应答，最终应答将在后面的提议&#x2F;应答交换中给出。临时应答可选，通常只在与某些模拟电话网络特征的 VoIP 系统或 PSTN 进行互操作时才会出现</p>
+<p>当浏览器 A 与浏览器 B 的用户进行通信时，浏览器 A 的 js 将针对其需要的媒体提供基于约束的描述、请求媒体数据并获取用户许可。用户授予的许可必须绑定到网页所在的域，并且不能扩展到网页上的弹出窗口和其他框架。所需要的媒体会话信息由会话描述对象捕获。该对象是通过 web 服务器向浏览器 B 发送的提议。对于 A 如何将此提议发送到 B，webRTC 没有标准化方法，因此此过程可以通过多种方式完成，例如 xhr，收到会话描述对象提议后，B 将生成会话描述对象应答，并以相同的方式发送到 A，当交换完成后，开始打洞（和密钥协商），并最终交换媒体数据包</p>
+<p>当关闭连接时，将导致对等连接关闭，对麦克风和摄像头的许可也全部失效</p>
+<h4 id="建立-WebRTC-会话"><a href="#建立-WebRTC-会话" class="headerlink" title="建立 WebRTC 会话"></a>建立 WebRTC 会话</h4><pre><code>- 浏览器A从web服务器请求网页
+- 服务器想A提供带有WebRTC JS的网页
+- 浏览器B从web服务器请求网页
+- 服务器向B提供带有webRTC js的网页
+- A希望与B进行通信，并通过A的JS将A的会话描述对象（提议）发送到web服务器
+- 服务器将A的会话描述对象发送给B的JS
+- B的JS将B的会话描述对象（应答）发送到服务器
+- 服务器将B的会话描述对象发送到A
+- A和B开始打洞，以确认访问对方的最佳方式
+- 完成打洞后，A和B以安全的媒体通信协议密钥
+- AB开始交换语音、视频或数据
+</code></pre>
+<h4 id="三角模式建立会话"><a href="#三角模式建立会话" class="headerlink" title="三角模式建立会话"></a>三角模式建立会话</h4><pre><code>- 浏览器A、B向web服务器请求数据
+- 服务器响应（h5、css、js
+- 服务器返回AB HTTPS（SDP对象B A）
+- AB连接成功后，ICE打洞
+- 密钥协商
+- 安全的媒体或数据会话
+</code></pre>
+<h4 id="梯形模式"><a href="#梯形模式" class="headerlink" title="梯形模式"></a>梯形模式</h4><pre><code>- 浏览器A向服务器1请求，B向服务器2请求
+- web服务器分别向浏览器响应
+- 浏览器A向服务器1发起https（SDP对象A）
+- 服务器1向服务器2发送jingle（`&lt;jingle action=&#39;session-initiate&#39;&gt;`
+- 服务器2向B发送浏览器A的信息
+- 浏览器A向服务器2发送https SDP对象B
+- 服务器2向服务器1发送同意jingle(`&lt;jingle action=&#39;session-accept&#39;&gt;`)
+- 服务器1向浏览器A发送B的信息
+- 浏览器AB开始ICE打洞、密钥协商、传输数据等
+- 浏览器A向服务器1发送关闭连接
+- 服务器1向服务器2发送jingle关闭（`&lt;jingle action=&#39;session-terminate&#39;&gt;`）
+- 浏览器B关闭连接
+</code></pre>
+<h4 id="SIP"><a href="#SIP" class="headerlink" title="SIP"></a>SIP</h4><pre><code>- 浏览器A向服务器发送请求，服务器返回响应
+- SIP用户代理向SIP服务器发送`REGISTER`，SIP服务器响应
+- 浏览器向服务器发送浏览器相关信息SDP A
+- 服务器向SIP服务器发送浏览器相关信息InVite SDP A
+- SIP服务器向SIP用户代理发送InVite SDP A
+- SIP用户代理响应接受，并将自己信息响应SDP S
+- SIP服务器接收到用户代理信息后，将其响应给web服务器
+- web服务器接收到后发送给浏览器
+- web服务器和sip服务器连接，sip服务器与sip用户代理连接（ACK）
+- 浏览器和sip用户代理开始ICE打洞、密钥协商、传输数据等
+- 浏览器A向web服务器发送关闭连接
+- web服务器向sip服务器发送关闭
+- SIP用户代理向SIP服务器发送CLOSE
+</code></pre>
+<h4 id="Jingle"><a href="#Jingle" class="headerlink" title="Jingle"></a>Jingle</h4><pre><code>- 浏览器A向服务器发送请求，服务器返回响应
+- 浏览器向服务器发送浏览器相关信息SDP A
+- 服务器向XMPP服务器发送jingle（`&lt;jingle action=&#39;session-initiate&#39;&gt;`
+- XMPP服务器向Jingle客户端发送jingle（`&lt;jingle action=&#39;session-initiate&#39;&gt;`
+- Jingle客户端发送同意jingle(`&lt;jingle action=&#39;session-accept&#39;&gt;`)，XMPP服务器将其响应发送到web服务器
+- web服务器接收到后发送给浏览器，附带SDP对象J
+- 浏览器和Jingle客户端开始ICE打洞、密钥协商、传输数据等
+- Jingle客户端向XMPP服务器发送关闭（`&lt;jingle action=&#39;session-terminate&#39;&gt;`）
+- XMPP服务器向web服务器发送关闭（`&lt;jingle action=&#39;session-terminate&#39;&gt;`）
+- 服务器和浏览器关闭
+</code></pre>
+<h4 id="PSTN"><a href="#PSTN" class="headerlink" title="PSTN"></a>PSTN</h4><p>web服务器和pstn网关之间的信令可利用任意数量的信令和控制协议，甚至sip中继。pstn网关终止webRTC媒体会话并将音频连接到pstn中继或线路。应在浏览器和pstn网关之间协商G.711（PCM）编码格式，否则将需要对音频信号进行转码</p>
+<pre><code>- 浏览器A向服务器请求
+- web服务器分别向浏览器响应
+- 浏览器A向服务器发起https（SDP对象A）
+- web服务器与PSIN网连建立连接，PSIN网联呼叫电话
+- 电话挂机PSIN网联，PSIN应答web服务器
+- 服务器与浏览器发送https，传输SDP对象网关
+- 浏览器与PSIN网联ICE打洞、密钥协商
+- 浏览器与PSIN传输媒体音频，语音会话时，还需要通过PSIN网联和电话进行连接，才做到浏览器与电话进行语音会话
+- 电话挂机，PSIN网联销毁与服务器连接，浏览器关闭
+</code></pre>
+<h4 id="与媒体网关建立"><a href="#与媒体网关建立" class="headerlink" title="与媒体网关建立"></a>与媒体网关建立</h4><p>不再采取完全的端到端传输，而是使用媒体网关来终止ice和SRTP，并且将媒体转发给SIP UA，转发时甚至可能采取未加密的RTP形式。不过只有在VoIP网络利用某种其他安全协议时才能如此</p>
+<p>媒体网关可以是一个边界元素，称为会话边界控制器(SBC)，用于穿透企业或服务提供的商网络的防火墙</p>
+<pre><code>- 浏览器向web服务器/网关发送请求，服务器响应
+- SIP用户管理向SIP服务器/媒体中继发送REGISTER，SIP服务器响应
+- 浏览器和服务器发送SDP对象 A
+- web服务器向SIP服务器/媒体中继发送Invite，携带浏览器的SDP
+- SIP服务器/媒体中继向SIP用户管理发送Invite，携带浏览器的SDP
+- SIP响应并携带SIP用户管理的SDP，SIP服务器响应到web服务器，web服务器相应到浏览器
+- 浏览器与SIP服务器进行ICE打洞、密钥协商、安全的媒体会话，媒体会话需要SIP服务器发送给SIP用户管理
+- SIP服务器关闭。。。。。
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WebRTC/%E3%80%90WebRTC%E3%80%91%E4%BB%8B%E7%BB%8D/" data-id="cmf67fxeo0086bcfm4mkre5cv" data-title="webRTC介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webRTC/" rel="tag">webRTC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" rel="tag">扩展阅读</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-读书笔记/WEB3/【Web3】基本介绍" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.702Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Web3/">Web3</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/">【Web3】基本介绍</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="钱包"><a href="#钱包" class="headerlink" title="钱包"></a>钱包</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>用硬件或软件的方式，可以访问资金，与去中心化应用程序进行交互，充当无银行金融服务的网关、收集NFT、创建链上身份与社区，并提供比传统钱包更多的用途</p>
+<h3 id="组成条件"><a href="#组成条件" class="headerlink" title="组成条件"></a>组成条件</h3><ul>
+<li>公钥：链接到自己可以发售和接收交易的地址</li>
+<li>私钥：用于签署新交易并允许访问资金，必须保密</li>
+<li>种子短语：用于生成多个私钥。作为根密钥，可以访问用户钱包中其他密钥和地址，也可以创建新的密钥</li>
+</ul>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><h4 id="热钱包（软钱包）"><a href="#热钱包（软钱包）" class="headerlink" title="热钱包（软钱包）"></a>热钱包（软钱包）</h4><p>可以存储、发送、接收和查看代币，所以比其他类型的钱包更加方便</p>
+<ul>
+<li>托管地：可以访问互联网和加密货币网络的设备上</li>
+<li>实用性：最高</li>
+<li>安全性：容易收到黑客攻击，因为连接到网络了</li>
+</ul>
+<h4 id="桌面钱包"><a href="#桌面钱包" class="headerlink" title="桌面钱包"></a>桌面钱包</h4><p>会被作为应用程序下载到电脑上，在本地运行<br>被认为是可用的，最安全的热钱包类型</p>
+<ul>
+<li>托管地：电脑</li>
+</ul>
+<h4 id="网络钱包"><a href="#网络钱包" class="headerlink" title="网络钱包"></a>网络钱包</h4><p>允许通过浏览器界面进行交互和访问，无须在本地设备上下载或者安装任何内容<br>具有与桌面钱包完全相同的功能，使用相同的区块链和区块浏览器来搜索区块和交易</p>
+<ul>
+<li>托管地：其他人的计算机或者服务器上</li>
+</ul>
+<h4 id="手机钱包"><a href="#手机钱包" class="headerlink" title="手机钱包"></a>手机钱包</h4><p>与桌面钱包类似，只是托管地是手机<br>与桌面钱包相比，手机钱包的功能相对更简单一些</p>
+<h4 id="冷钱包"><a href="#冷钱包" class="headerlink" title="冷钱包"></a>冷钱包</h4><p>无须连接到互联网，那么这就使得冷钱包是存储加密货币的更安全的替代方案，因为有物理介质可以离线存储密钥</p>
+<ul>
+<li>安全性：抵抗黑客能力更强，对长期投资者来说很实用</li>
+</ul>
+<h4 id="硬件钱包"><a href="#硬件钱包" class="headerlink" title="硬件钱包"></a>硬件钱包</h4><p>使用随机生成器生成公钥和私钥的物理电子设备<br>最适合长期投资和存储使用，因为它们不太容易获得</p>
+<ul>
+<li>主要用例：确保未分配的、用于持续使用的大笔资金的安全性</li>
+<li>安全性：最安全的存储方案之一，因为能够在设备中保存公钥和私钥，而无须借助任何互联网连接。这样对加密货币的访问是处于离线状态</li>
+</ul>
+<h4 id="纸钱包"><a href="#纸钱包" class="headerlink" title="纸钱包"></a>纸钱包</h4><p>由物理打印出的区块链地址和私钥组成，到纸上。这些信息会被打印成二维码，可以通过扫描二维码来汇款</p>
+<ul>
+<li>托管地：纸</li>
+<li>缺点；只能一次性发送全部余额，不能多次发送部分</li>
+</ul>
+<h4 id="市面上主流钱包"><a href="#市面上主流钱包" class="headerlink" title="市面上主流钱包"></a>市面上主流钱包</h4><blockquote>
+<p>以太坊钱包</p>
+</blockquote>
+<ul>
+<li><p>metamask</p>
+</li>
+<li><p>trust Wallet</p>
+</li>
+<li><p>argent</p>
+</li>
+<li><p>imToken</p>
+</li>
+</ul>
+<blockquote>
+<p>其他生态</p>
+</blockquote>
+<ul>
+<li><p>phantom：Solana生态</p>
+</li>
+<li><p>keplr：Cosmos生态</p>
+</li>
+<li><p>polkadot：Polkadot生态</p>
+</li>
+<li><p>tezos：Temple生态</p>
+</li>
+</ul>
+<h2 id="助记词"><a href="#助记词" class="headerlink" title="助记词"></a>助记词</h2><p>由于私钥一般情况下，都非常冗长复杂，不适合记忆，为了方便使用，密码学家将其简化成了12或者24位不等的单词或者中文字符，简化之后的就被称为助记词</p>
+<p>即：</p>
+<ul>
+<li><p>助记词是密钥的另外一种形式</p>
+</li>
+<li><p>通过助记词可以获取相关的多个私钥，但是通过私钥无法获取助记词</p>
+</li>
+</ul>
+<h2 id="区块链浏览器"><a href="#区块链浏览器" class="headerlink" title="区块链浏览器"></a>区块链浏览器</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>区块链浏览器是一种软件，它使用api和区块链节点从区块链中提取各种数据，然后使用数据库来排列搜索到的数据，并以可搜索的格式将数据呈现给用户</p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>区块链钱包可以提供不同类型的数据，但仅限于与钱包管理的密钥相关的数据。区块链浏览器用于查看与在给定区块链的所有钱包上执行的交易相关的数据。<br>特殊之处就是在于透明度，它允许用户检查智能合约地址的余额和支出，如当用户参数首次代币发行时。</p>
+<h3 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h3><ul>
+<li>查看任何钱包地址的交易历史<br>能够审计任何钱包地址并提高区块链的透明度</li>
+<li>查看接收和更改地址<br>可以查看交易接收地址、更改地址。将加密货币返回给支出者，以防输入值过多用于交易费用，提高了交易的透明度</li>
+<li>查看当天最大的交易</li>
+<li>查看内存池的状态<br>可以查看区块链上未确认的交易及其详细信息</li>
+<li>查看双花交易<br>部门浏览器支持</li>
+<li>查看孤立和陈旧区块<br>孤立区块：挖掘之后没有附加到最长的区块链上，并且它们的父区块链是未知的</li>
+</ul>
+<p>陈旧区块：已知父区块链，但未链接到已知最长链的区块</p>
+<ul>
+<li><p>查看发现或开采特点区块的个人或矿池</p>
+</li>
+<li><p>查看创世区块</p>
+</li>
+<li><p>允许用户查看交易费用、区块链难度、哈希率和其他数据</p>
+</li>
+</ul>
+<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><ul>
+<li><p>将加密货币发送给某人之前会检查钱包地址是否对区块链有效</p>
+</li>
+<li><p>检查加密货币是否已经发送给目标个人。所有者可以检查他们的钱包余额</p>
+</li>
+<li><p>可以帮助解释尚未通过或确认的交易出现的问题以及查看确认jieduan</p>
+</li>
+<li><p>帮助用户了解交易或Gas当前的成本，从而帮助计划未来的Gas支出</p>
+</li>
+<li><p>帮助用户了解某个组是不是挖掘交易的人，并有助于决定是否为未来的挖掘活动投入更多的计算资源</p>
+</li>
+<li><p>可以帮助正在开发钱包的人，如果它可以进行正常的工作（发送、接收、存储和加密货币）</p>
+</li>
+<li><p>与其他软件一起使用，可以证实数据和信息</p>
+</li>
+</ul>
+<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><ul>
+<li><p>资源管理器首先使用节点接口提取给定区块链中的所有数据，一旦它导出数据，就会将其存储在可搜索的表格中</p>
+</li>
+<li><p>将收集最新的交易和区块，根据定义的可搜索类别进行排列。它为用户提供了一个界面用于搜索。在技术方面，资源管理器可以使用关系数据库、sql数据库和api</p>
+</li>
+</ul>
+<p>每个区块链节点都可以直接读取区块链上的数据，获取最新交易和挖掘区块等数据等详细信息，然后将其发送到数据库，其中数据以可搜索表格的形式排列，使得资源管理器可以快速使用这些数据。</p>
+<p>大部分的区块链使用表格，每一行都有唯一的id或者键用于区分</p>
+<h2 id="域名系统"><a href="#域名系统" class="headerlink" title="域名系统"></a>域名系统</h2><p>在区块链中，域名系统和网络中的域名概念不同。区块链中，域名指向的是钱包地址，是一种身份的关联和映射，解决了ip或钱包地址过长的问题</p>
+<h3 id="ENS域名系统"><a href="#ENS域名系统" class="headerlink" title="ENS域名系统"></a>ENS域名系统</h3><h4 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h4><p>ens由两个以太坊智能合约组成：记录域名的ens注册表和将域名与机器的可读地址互相转换的解析器</p>
+<h4 id="获取"><a href="#获取" class="headerlink" title="获取"></a>获取</h4><p>在ens app上注册</p>
+<h3 id="DAS域名账户系统"><a href="#DAS域名账户系统" class="headerlink" title="DAS域名账户系统"></a>DAS域名账户系统</h3><h4 id="含义-1"><a href="#含义-1" class="headerlink" title="含义"></a>含义</h4><p>das是web3的去中心化身份认证系统，和ens类似，允许用户将个人域名绑定都适用所有链的人类可读地址。</p>
+<h2 id="预言机"><a href="#预言机" class="headerlink" title="预言机"></a>预言机</h2><p>预言机充当区块链上的app接口，通过查询可以获取智能合约的相关信息。预言机也可以向真实世界发送数据</p>
+<h3 id="背景-1"><a href="#背景-1" class="headerlink" title="背景"></a>背景</h3><p>大多数区块链都有用于转移价值、启用协议操作或促进治理的本地加密货币，一些区块链支持智能合约，而智能合约可以在没有第三方的情况下执行，并且可以设计为执行几乎任何可以想象得到的合约。</p>
+<p>区块链和链上智能合约需要一种方法来利用外部的链下数据，以便智能合约执行影响现实世界的app，因此预言机就需要被用到</p>
+<h3 id="分类-1"><a href="#分类-1" class="headerlink" title="分类"></a>分类</h3><ul>
+<li>软件预言机</li>
+</ul>
+<p>提供来自网站、服务器或数据库等数字源的数据。可以提供实时信息</p>
+<ul>
+<li>硬件预言机</li>
+</ul>
+<p>提供来自现实世界的数据，可以传递和中继来自项目运动传感器</p>
+<ul>
+<li>集中式预言机</li>
+</ul>
+<p>它由单个实体控制，并充当智能合约的唯一数据提供者。它要求合同参与者对一个实体给予极大的信任；它还代表单点故障，这可能会威胁到智能合约的安全性，如果预言机被破坏，智能合约也会被破坏。智能合约的准确性和有效性在很大程度上取决于所提供数据的质量，因此预言机对智能合约有很大的权利。</p>
+<p>预言机问题：预言机可以使智能合约在去信任方之间执行，但当他变得过度中心化时，可能会有它试图成为中间人的风险。</p>
+<ul>
+<li>去中心化预言机</li>
+</ul>
+<p>去中心化预言机试图实现依赖因果关系而不是个人关系的去信任和确定性结果。它以与区块链网络相同的方式实现这些结果，在许多网络参与者之间分配信任。通过利用许多不同的数据源并实施不受单个实体控制的预言机系统，去中心化的预言机网络可能成为为智能合约提供更高级别的安全性和公平性。</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>Chainlink</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/" data-id="cmf67fxet0092bcfm0x5v5xxk" data-title="【Web3】基本介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-读书笔记/webpack/【webpack】工作流程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" class="article-date">
@@ -243,7 +613,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-id="cmepc0ujp00a7t0fmbhc29on4" data-title="【webpack】工作流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-id="cmf67fxeu0096bcfmbxed3uu2" data-title="【webpack】工作流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -490,7 +860,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E9%85%8D%E7%BD%AE%E9%A1%B9/" data-id="cmepc0ujp00aat0fmguzg02km" data-title="【webpack】配置项" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E9%85%8D%E7%BD%AE%E9%A1%B9/" data-id="cmf67fxex009cbcfmdk668ene" data-title="【webpack】配置项" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -578,7 +948,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webwork%E3%80%91%E4%BB%8B%E7%BB%8D/" data-id="cmepc0ujq00aft0fmgeea9s69" data-title="【webwork】介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webwork%E3%80%91%E4%BB%8B%E7%BB%8D/" data-id="cmf67fxez009qbcfm14sjf6c4" data-title="【webwork】介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -712,7 +1082,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96%E5%AD%98%E5%82%A8%E5%8D%8F%E8%AE%AE/" data-id="cmepc0uj10073t0fmfye0ah0r" data-title="【Web3】去中心化存储协议" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96%E5%AD%98%E5%82%A8%E5%8D%8F%E8%AE%AE/" data-id="cmf67fxes0090bcfm3k339oge" data-title="【Web3】去中心化存储协议" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -898,7 +1268,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%85%AC%E9%93%BE/" data-id="cmepc0uj1006zt0fmhgb513vh" data-title="【Web3】公链" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%85%AC%E9%93%BE/" data-id="cmf67fxer008ubcfm4h7o24px" data-title="【Web3】公链" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1001,203 +1371,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91DAO/" data-id="cmepc0uix006ht0fm5v2ga9wj" data-title="【Web3】DAO" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91DAO/" data-id="cmf67fxep008dbcfm2o4s8hdd" data-title="【Web3】DAO" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web3/" rel="tag">web3</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-读书笔记/WEB3/【Web3】Defi" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91Defi/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.693Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Web3/">Web3</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91Defi/">【Web3】DAO</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>defi是“去中心化金融”的缩写，是加密货币或者区块链中各种金融app的总称。</p>
-<p>defi从区块链中获取灵感。区块链是数字货币背后的技术，它允许多个实体持有交易历史的副本，这意味着它不受单一的中央来源控制。</p>
-<h2 id="主流的defi应用"><a href="#主流的defi应用" class="headerlink" title="主流的defi应用"></a>主流的defi应用</h2><ul>
-<li><p>去中心化交易所（dex）。它帮助用户将货币兑换为其他货币，它直接连接用户，因此他们可以直接交易加密货币，而无须信任中介机构的资金</p>
-</li>
-<li><p>稳定币：一种与加密货币以外的资产挂钩并具有稳定价格的加密货币</p>
-</li>
-<li><p>借贷平台：这些平台使用智能合约来代替中间管理借贷的银行等中介机构</p>
-</li>
-<li><p>跨链比特币（wbtc）。将比特币发送到以太坊网络的方式，因此比特币可以直接在以太坊的defi系统中使用。wbtc允许用户通过在上述去中心化借出的btc赚取利息。</p>
-</li>
-<li><p>预测市场。投注未来事件结果的市场。defi版本的预测市场目标是提供相同的功能但没有中介机构。</p>
-</li>
-</ul>
-<h2 id="dex：去中心化交易所"><a href="#dex：去中心化交易所" class="headerlink" title="dex：去中心化交易所"></a>dex：去中心化交易所</h2><p>dex是一个点对点市场，交易直接发生在加密交易者之间。处理加密货币之间的交易</p>
-<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><p>通过cex（中心化交易所），可以将加密货币与法定货币之间互换。这些所有交易都是由交易所自己通过“订单薄”处理的，该订单薄根据当前的买卖订单确定特定加密货币的价格。而dex是不允许法定与加密货币之间的交易。</p>
-<p>dex只是一种智能合约，它通过算法确定各种加密货币的价格，并促进流动性池（投资者锁定资金以换取类似的利息奖励来促进交易。</p>
-<p>cex的交易记录在该交易所的内部数据库中，而dex的交易直接在区块链上结算</p>
-<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><blockquote>
-<p>优点</p>
-</blockquote>
-<ul>
-<li><p>种类繁多。dex几乎提供了无限的代币种类</p>
-</li>
-<li><p>降低黑客风险。由于dex交易中的所有资金都存储在交易者自己的钱包中，因此理论上它们不太容易受到黑客攻击。dex还降低了“交易对手风险”（违约的可能性）</p>
-</li>
-<li><p>匿名性。使用主流的dex不需要个人信息</p>
-</li>
-</ul>
-<blockquote>
-<p>缺点</p>
-</blockquote>
-<ul>
-<li><p>需要用户做大量的前期研究准备，不能指望dex本身提供很多帮助。在dex中进行复杂交易需要一些专业知识</p>
-</li>
-<li><p>智能合约漏洞。任何defi协议的安全性都取决于为其提供支持的智能合约，而合约代码可能存在可利用的漏洞。</p>
-</li>
-<li><p>风险更高的代币。dex上面存在未经审查的代币</p>
-</li>
-</ul>
-<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><p>uniswap</p>
-<h2 id="稳定币"><a href="#稳定币" class="headerlink" title="稳定币"></a>稳定币</h2><p>稳定币是一种储备资产挂钩的数字货币，旨在降低相对于比特币等非挂钩加密货币的波动性。</p>
-<p>常用的稳定币包括USDT、USDC、DAI等</p>
-<h3 id="DAI"><a href="#DAI" class="headerlink" title="DAI"></a>DAI</h3><p>dai是一种加密资产，试图通过将其他加密资产锁定在合约中与美元保持1:1的价值关系。dai是一种名为maker协议的开源软件的产品，运行在以太坊区块链之上的dapp。dai保持其价值的方式是使用以ETH计价的抵押债务。抵押债务为贷方提供了一种使用他们拥有的资产获得贷款的方式。</p>
-<p>maker协议通过以太坊运行的智能合约，使借款人能锁定ETH和其他加密资产，从而对其进行抵押，以便贷款的形式生成新的dai。如果借款人想收回抵押的eth，必须将dai返回给协议并且支付费用，如果发生清算，maker协议将使用基于市场的内部拍卖机制获取抵押品并出售。</p>
-<h3 id="工作流程-1"><a href="#工作流程-1" class="headerlink" title="工作流程"></a>工作流程</h3><p>dai是一种由其他加密货币抵押的加密资产。如果用户想获取dai，那么可以在交易所花费eth购买等值的dai，也可以使用maker协议抵押eth和其他资产。</p>
-<p>抵押债务头寸（cdp）是maker上的智能合约，用户可以利用它来锁定其抵押资产（eth或bat）并生成dai。cdp可以视为存储抵押品的安全保险库。dai一般会被超额抵押，即所需的存款金额通常要高于dai的价值。</p>
-<h2 id="借贷平台"><a href="#借贷平台" class="headerlink" title="借贷平台"></a>借贷平台</h2><p>借贷市场将借款人与加密货币的贷方联系起来。主流平台Compound允许用户借用加密货币或者提供自己的钱款，用户可以通过借款获取利息。Compound通过算法设置利率，因此如果借入加密货币的需求更高，利率将被推高。</p>
-<p>defi借贷是基于抵押品的。</p>
-<h4 id="Compound"><a href="#Compound" class="headerlink" title="Compound"></a>Compound</h4><p>它是建立在以太坊上的可公开访问的智能合约系统，允许借款人通过将其加密资产锁定到协议中来获取贷款和为贷方提供钱款。借款人和贷款人支付和收取的利率由每种加密货币的供求关系决定。每个区块的开采都会产生利率，贷款可随时还款，锁定资产可以随时提现。</p>
-<p>原生代币是cToken，它允许用户从他们的钱中赚取利息，也能在其他应用程序转移、交易和使用</p>
-<h2 id="流动性质押"><a href="#流动性质押" class="headerlink" title="流动性质押"></a>流动性质押</h2><p>质押是赚取资产被动收入的一种方式，同时可以支持区块链网络的安全和运营。流动性质押协议提供与常规pos质押相同的好处，减少了潜在的缺点。</p>
-<p>流动性质押协议处于加密货币质押经济的最前沿，改变了defi行业的流动性准入。流动质押的优势之一就是能够在互动和使用资产的同时获取奖励，流动性质押协议为借贷协议和单产农业等活动提供可基础。</p>
-<h3 id="质押"><a href="#质押" class="headerlink" title="质押"></a>质押</h3><p>将加密资产锁定在协议中以获取回报的过程。通过将闲置资产投入使用，抵押加密货币是赚取被动收入的一种方式。质押协议可以协助pos共识机制，该机制促进关于区块链交易有效性的网络协议。因此，与比特币等pow区块链相比，降低可能源需求。</p>
-<p>质押在一定时期内无法使用资金。</p>
-<h3 id="流动性质押-1"><a href="#流动性质押-1" class="headerlink" title="流动性质押"></a>流动性质押</h3><p>锁定资金以赚取奖励的同时仍然可以使用资金的方式。</p>
-<h3 id="流动性质押运作"><a href="#流动性质押运作" class="headerlink" title="流动性质押运作"></a>流动性质押运作</h3><p>用户有一个ETH，将eth放入流动质押协议中，然后会收到一个价值等值的stETH（质押的eth）作为回报。</p>
-<p>该用户将从协议中保留的原始eth存款中获取奖励。为了获取被抵押的eth，需要一个stETH才能将其兑换回来。</p>
-<h3 id="流动质押优点"><a href="#流动质押优点" class="headerlink" title="流动质押优点"></a>流动质押优点</h3><ul>
-<li>高产农业</li>
-</ul>
-<p>流动性质押是收益农业活动的基本基石。收益农业是指交易者将资金锁定在一个协议中并收到这些资金的打包或者代币化版本。</p>
-<ul>
-<li><p>加密贷款</p>
-</li>
-<li><p>快速存取资金</p>
-</li>
-</ul>
-<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul>
-<li>有风险</li>
-</ul>
-<h2 id="预测市场"><a href="#预测市场" class="headerlink" title="预测市场"></a>预测市场</h2><p>预测市场就是可以买卖预测的市场，即分享事件的结果。</p>
-<p>预测市场是利用群体智慧来进行的，那么由于defi是一个去中心化的市场，普通民众也能参与，更加自由。</p>
-<p>实例：Augur、Gnosis</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91Defi/" data-id="cmepc0uiy006kt0fme6evgitj" data-title="【Web3】DAO" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-读书笔记/WEB3/【Web3】GameFi" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91GameFi/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.693Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Web3/">Web3</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91GameFi/">【Web3】GameFi</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>GameFi是游戏和金融的组合，涉及到区块链游戏，对玩家提供经济激励。奖励包含游戏内部的奖励或者以nft为载体的奖励。</p>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><ul>
-<li><p>Decentraland（MANA和LAND代币）、</p>
-</li>
-<li><p>the sandbox（结合DAO和NFT）</p>
-</li>
-<li><p>axie infinity（AXS代币）</p>
-</li>
-</ul>
-<p>前期需要准备3个axie nft作为起始，后续可以通过此游戏赚取回报获取slp代币，可以兑换为金钱</p>
-<ul>
-<li>Gala Games（以GALA为代币）</li>
-</ul>
-<p>将自己定位为一个游戏区块链生态孵化者，经济驱动剂是根据以太坊区块链上的erc-20标准创建的gala代币，兼容币安智能链。</p>
-<p>其生态系统包含游戏、游戏发布平台、nft市场、游戏云托管服务和平台自身的代币经济学。</p>
-<p>玩家可以通过特定的投票机制决定gala games平台应该添加哪些游戏。</p>
-<ul>
-<li>Enjin（是生态系统范围的解决方案，旨在通过对游戏内资产进行代币化并注入项目的原生代币ENJ）</li>
-</ul>
-<p>基础设施包含GraphQL和可信云。由于enjin允许开发人员用sdk和api以便根据需求访问响应功能，因此它采用graphql简化访问资源的方式，促进了虚拟世界和智能合约区块链之间的交互。而可信云允许enjin网络sdk和api的游戏与以太坊区块链互联</p>
-<h2 id="游戏公会YGG"><a href="#游戏公会YGG" class="headerlink" title="游戏公会YGG"></a>游戏公会YGG</h2><p>ygg是专注于区块链p2p游戏的游戏公会，投资nft资产并将全球的区块链游玩家连接到一起的社区。</p>
-<p>目标是建立一个属于玩家和投资者的网络，帮助彼此在nft游戏领域起步和成长。</p>
-<h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>投资于区块链游戏中使用nft的dao？游戏包含较为广义的元宇宙，具有基于区块链的数字世界中的众多元素，包括数字土地&#x2F;货币等。</p>
-<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><p>结合了defi和nft，在以太坊区块链上创建了一种元宇宙经济。</p>
-<p>ygg由多个subDAO（依附于DAO的较小DAO）组成，而这些subdao由来自特定nft游戏或地理位置的玩家群体组成。每个subdao都有自己的一套规则，用于管理各自的p2e游戏的活动和资产。</p>
-<p>在ygg上，所有nft和数字资产都存储于社区控制的ygg金库中，金库为每个subdao提供nft，包括多个区块链游戏的p2e资产。</p>
-<h3 id="代币"><a href="#代币" class="headerlink" title="代币"></a>代币</h3><p>ygg代币是一种赋予持有人对ygg dao的治理权利的erc-20代币。ygg代币可以用于支付网络上的服务费用，也可以在质押后在ygg收益池中获取奖励，或用于解锁ygg discord频道上的独家内容。此外，ygg代币持有者还可以提交提案，并对公会的技术、产品、项目、代币分配和整体治理结构等决策进行投票，最终在dao中得到实施的获胜建议将获得ygg代币奖励。</p>
-<h2 id="dappradar-常用信息平台"><a href="#dappradar-常用信息平台" class="headerlink" title="dappradar 常用信息平台"></a>dappradar 常用信息平台</h2><p>该平台通过包括以太坊、eos和ont在内的20多个协议跟踪1w+dapps，使用户可以分析和比较各自dapps。</p>
-<h3 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h3><p>网站自称为为全球用户带来了关于去中心化应用程序的高质量、准确的见解，迅速成为值得信赖的行业信息来源；发现dapps的起点，托管来自30多个协议的9k个dapps；能提供全面的nft估值和投资组合管理，并在数据主导、可操作的行业报告方面处于领先地位。</p>
-<p>它的代币RADAR具有多种功能：持有人可以质押radar以赚取被动收入；是一种治理代币，允许持有者对生态系统的未来发展进行投票；用户可以获得对特定功能和见解的独占访问权限。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91GameFi/" data-id="cmepc0uiz006nt0fm7nqn1srn" data-title="【Web3】GameFi" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li></ul>
 
     </footer>
   </div>
@@ -1283,7 +1461,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91NFT/" data-id="cmepc0uiz006qt0fmd2ex67un" data-title="【Web3】NFT" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91NFT/" data-id="cmf67fxep008hbcfmeffz82ru" data-title="【Web3】NFT" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1297,9 +1475,9 @@
 
 
   
-    <article id="post-读书笔记/WEB3/【Web3】二层网络" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-读书笔记/WEB3/【Web3】GameFi" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E4%BA%8C%E5%B1%82%E7%BD%91%E7%BB%9C/" class="article-date">
+    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91GameFi/" class="article-date">
   <time class="dt-published" datetime="2025-08-14T03:18:06.693Z" itemprop="datePublished">2025-08-14</time>
 </a>
     
@@ -1315,7 +1493,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E4%BA%8C%E5%B1%82%E7%BD%91%E7%BB%9C/">【Web3】二层网络</a>
+      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91GameFi/">【Web3】GameFi</a>
     </h1>
   
 
@@ -1323,53 +1501,45 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="二层网络"><a href="#二层网络" class="headerlink" title="二层网络"></a>二层网络</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>指构建在现有区块链系统之上的二级框架或者协议，这些协议的主要目的是解决主要加密货币网络面临的交易速度低和扩展困难的问题</p>
-<p>“二层”指的是针对区块链可扩展性问题提出的多种解决方案。例如早期的二层解决方案：比特币闪电网络和以太坊等离子体，虽然受限于自身工作机制和特殊性，但这两种解决方案都尽量为区块链系统提供更高的吞吐量</p>
-<h2 id="二层网络技术"><a href="#二层网络技术" class="headerlink" title="二层网络技术"></a>二层网络技术</h2><h3 id="侧链"><a href="#侧链" class="headerlink" title="侧链"></a>侧链</h3><p>它是一条平行于主链的独立运行的链。不依赖于主链的安全策略，有自己独立的安全策略。</p>
-<h3 id="状态通道"><a href="#状态通道" class="headerlink" title="状态通道"></a>状态通道</h3><p>只记录出入该通道的某一瞬间的交易。但其安全性不足，因为需要保证状态通道的运营者是可以信任的，否则投入就会有不安全性</p>
-<h3 id="卷叠"><a href="#卷叠" class="headerlink" title="卷叠"></a>卷叠</h3><p>把一切复杂的交易都交给二层网络，复杂的数据都交给卷叠处理，处理完成后只返回数据摘要或处理结果。这样对性能有一定的提升。</p>
-<h2 id="ZK-Rollups"><a href="#ZK-Rollups" class="headerlink" title="ZK-Rollups"></a>ZK-Rollups</h2><p>ZK-Rollups协议促进了交易者和中继者的交互。</p>
-<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><ul>
-<li><p>交易者创建并将其交易数据广播到网络，此信息包括索引的双方地址、交易价值、网络费用和仅使用一次的数字。利用索引地址减少资源处理，交易价值产生存款和取款金额。然后智能合约将地址记录到一个Merkle树，并将交易值记录到另一个Merkle树</p>
+        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>GameFi是游戏和金融的组合，涉及到区块链游戏，对玩家提供经济激励。奖励包含游戏内部的奖励或者以nft为载体的奖励。</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><ul>
+<li><p>Decentraland（MANA和LAND代币）、</p>
 </li>
-<li><p>中继器负责收集创建汇总的事务。中继器生成一个简洁的非交互零知识论证证明，用于比较每笔交易前后的区块链状态（钱包余额）。由此产生的变化以可验证的方式散列并到达主链。</p>
+<li><p>the sandbox（结合DAO和NFT）</p>
+</li>
+<li><p>axie infinity（AXS代币）</p>
 </li>
 </ul>
-<h2 id="Optimistic-Rollups"><a href="#Optimistic-Rollups" class="headerlink" title="Optimistic Rollups"></a>Optimistic Rollups</h2><p>和ZK-Rollups类似，但ORs仅向主链发布最少的信息，仅在欺诈案件中生成证明。</p>
-<h3 id="工作流程-1"><a href="#工作流程-1" class="headerlink" title="工作流程"></a>工作流程</h3><ul>
-<li><p>当用户将交易发送到链外ORs时，聚合器注册并提交欺诈证明</p>
-</li>
-<li><p>聚合器在本地部署交易以生成新的智能合约。计算新的状态根，聚合器将交易和状态根发送回主链</p>
-</li>
-<li><p>如果用户认为聚合器返回了欺诈状态根，包括无效交易，他们可以质疑聚合器。用户可以通过发布正确的状态根和验证它所需的Merkle证明在注册这一挑战。对于违规的聚合器，以及任何建立在无效区块之上的聚合器，其保证金被削减，这些收益流向报告用户</p>
-</li>
-<li><p>一旦识别出无效块并完成欺诈证明，二层链就会回滚，并在前一个非欺诈块处恢复</p>
-</li>
-</ul>
-<h3 id="优劣"><a href="#优劣" class="headerlink" title="优劣"></a>优劣</h3><blockquote>
-<p>劣势</p>
-</blockquote>
+<p>前期需要准备3个axie nft作为起始，后续可以通过此游戏赚取回报获取slp代币，可以兑换为金钱</p>
 <ul>
-<li><p>无效状态：OP允许存在无效的区块链状态。因此，在提交欺诈证明前，可能会存在无效状态</p>
-</li>
-<li><p>安全性：由于其基于博弈论模型，OP可能更容易受到攻击，因为用户可以参与报告欺诈</p>
-</li>
-<li><p>可扩展性：随着交易规模的扩大，在某些情况下，OP可能需要更多的主链计算资源，从而导致更高的成本。</p>
-</li>
+<li>Gala Games（以GALA为代币）</li>
 </ul>
-<h2 id="Arbitrum"><a href="#Arbitrum" class="headerlink" title="Arbitrum"></a>Arbitrum</h2><p>是解决以太坊网络拥塞和高费用问题的解决方案之一</p>
-<h3 id="工作流程-2"><a href="#工作流程-2" class="headerlink" title="工作流程"></a>工作流程</h3><p>Arbitrum生态系统中包含四个角色：验证者、虚拟机、密钥和管理器。</p>
-<p>Arbitrum基于简单的加密货币设计，其中各方可以将智能合约实现为对合约规则进行编码的VM，它是中Arbitrum虚拟机架构上运行的程序。虚拟机的一组管理器由VM的设计者指定。</p>
-<p>基于Arbitrum协议，任何一个管理者都可以强制VM根据VM的代码运行，与VM的结果有利害关系的各方可以选择各自信任的人代表他们这样做或者直接担任管理者。VM的状态可以通过依赖管理者器以及降低验证者的成本来提升，验证者只需跟踪虚拟机状态的hash值，而不是整个状态。</p>
+<p>将自己定位为一个游戏区块链生态孵化者，经济驱动剂是根据以太坊区块链上的erc-20标准创建的gala代币，兼容币安智能链。</p>
+<p>其生态系统包含游戏、游戏发布平台、nft市场、游戏云托管服务和平台自身的代币经济学。</p>
+<p>玩家可以通过特定的投票机制决定gala games平台应该添加哪些游戏。</p>
+<ul>
+<li>Enjin（是生态系统范围的解决方案，旨在通过对游戏内资产进行代币化并注入项目的原生代币ENJ）</li>
+</ul>
+<p>基础设施包含GraphQL和可信云。由于enjin允许开发人员用sdk和api以便根据需求访问响应功能，因此它采用graphql简化访问资源的方式，促进了虚拟世界和智能合约区块链之间的交互。而可信云允许enjin网络sdk和api的游戏与以太坊区块链互联</p>
+<h2 id="游戏公会YGG"><a href="#游戏公会YGG" class="headerlink" title="游戏公会YGG"></a>游戏公会YGG</h2><p>ygg是专注于区块链p2p游戏的游戏公会，投资nft资产并将全球的区块链游玩家连接到一起的社区。</p>
+<p>目标是建立一个属于玩家和投资者的网络，帮助彼此在nft游戏领域起步和成长。</p>
+<h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>投资于区块链游戏中使用nft的dao？游戏包含较为广义的元宇宙，具有基于区块链的数字世界中的众多元素，包括数字土地&#x2F;货币等。</p>
+<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><p>结合了defi和nft，在以太坊区块链上创建了一种元宇宙经济。</p>
+<p>ygg由多个subDAO（依附于DAO的较小DAO）组成，而这些subdao由来自特定nft游戏或地理位置的玩家群体组成。每个subdao都有自己的一套规则，用于管理各自的p2e游戏的活动和资产。</p>
+<p>在ygg上，所有nft和数字资产都存储于社区控制的ygg金库中，金库为每个subdao提供nft，包括多个区块链游戏的p2e资产。</p>
+<h3 id="代币"><a href="#代币" class="headerlink" title="代币"></a>代币</h3><p>ygg代币是一种赋予持有人对ygg dao的治理权利的erc-20代币。ygg代币可以用于支付网络上的服务费用，也可以在质押后在ygg收益池中获取奖励，或用于解锁ygg discord频道上的独家内容。此外，ygg代币持有者还可以提交提案，并对公会的技术、产品、项目、代币分配和整体治理结构等决策进行投票，最终在dao中得到实施的获胜建议将获得ygg代币奖励。</p>
+<h2 id="dappradar-常用信息平台"><a href="#dappradar-常用信息平台" class="headerlink" title="dappradar 常用信息平台"></a>dappradar 常用信息平台</h2><p>该平台通过包括以太坊、eos和ont在内的20多个协议跟踪1w+dapps，使用户可以分析和比较各自dapps。</p>
+<h3 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h3><p>网站自称为为全球用户带来了关于去中心化应用程序的高质量、准确的见解，迅速成为值得信赖的行业信息来源；发现dapps的起点，托管来自30多个协议的9k个dapps；能提供全面的nft估值和投资组合管理，并在数据主导、可操作的行业报告方面处于领先地位。</p>
+<p>它的代币RADAR具有多种功能：持有人可以质押radar以赚取被动收入；是一种治理代币，允许持有者对生态系统的未来发展进行投票；用户可以获得对特定功能和见解的独占访问权限。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E4%BA%8C%E5%B1%82%E7%BD%91%E7%BB%9C/" data-id="cmepc0uj0006st0fmhthh3j5t" data-title="【Web3】二层网络" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91GameFi/" data-id="cmf67fxeq008kbcfm9ixe84za" data-title="【Web3】GameFi" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web3/" rel="tag">web3</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li></ul>
 
     </footer>
   </div>
@@ -1414,7 +1584,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 12px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 14px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 14px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
     </div>
   </div>
 
@@ -1423,7 +1593,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">September 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
     </div>
   </div>
 
@@ -1436,6 +1606,14 @@
       <ul>
         
           <li>
+            <a href="/2025/09/05/Vue/%E3%80%90vue%E3%80%91%E8%AF%A6%E8%A7%A3computed/">详解computed</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/25/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB2/">记录3</a>
+          </li>
+        
+          <li>
             <a href="/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/">记录2</a>
           </li>
         
@@ -1445,14 +1623,6 @@
         
           <li>
             <a href="/2025/08/14/%E6%89%8B%E5%86%99%E9%A2%98/">手写题</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E3%80%90%E6%89%8B%E5%86%99%E3%80%91call%E3%80%81apply%E3%80%81bind/">【手写】call、apply、bind</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【wasb】环境搭建</a>
           </li>
         
       </ul>

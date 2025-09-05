@@ -71,6 +71,428 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-浏览器/页面渲染流程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.746Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B/">页面渲染流程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="从输入url到页面渲染浏览器流程"><a href="#从输入url到页面渲染浏览器流程" class="headerlink" title="从输入url到页面渲染浏览器流程"></a>从输入url到页面渲染浏览器流程</h2><ul>
+<li>输入url回车<ul>
+<li>触发BeforeUnload事件（允许当前页阻止导航</li>
+</ul>
+</li>
+<li>判断是ip还是网址，如果是网站，需要去进行dns查询。浏览器先检查缓存（Service Worker、HTTP Cache等）<ul>
+<li>dns预解析</li>
+<li>dns查询流程</li>
+</ul>
+</li>
+<li>进行网络请求<ul>
+<li>tcp三次握手</li>
+<li>http1、http2和http3</li>
+<li>ssl加密</li>
+</ul>
+</li>
+<li>获取到html后，开始进行解析</li>
+<li>开始解析html，如果这个html文件遇到被分片的情况，浏览器不会等到所有的html全部接收到之后再进行解析，而是拿到一部分之后就已经开始解析了</li>
+<li>解析过程中，如果遇到资源，那么就开始进行资源的加载（除了defer、async和preload的资源</li>
+<li>html解析完成后，然后生成一个DOM树，JS在DOMContentLoaded事件前defer加载的资源<ul>
+<li>js执行过程中，会阻塞html的渲染，因为js可能会修改dom的位置</li>
+</ul>
+</li>
+<li>开始解析css，生成一个css树<ul>
+<li>css会影响元素样式，js中可能会获取元素的样式，为了保证js获取的样式无问题，因此css可能会影响到js的执行</li>
+</ul>
+</li>
+<li>css和dom树进行叠加，得出一个渲染树<ul>
+<li>仅包含可见节点（排除display:none等）</li>
+<li>@font-face外部字体加载时机：在构建渲染树时，如果遇到非空节点，那么才会进行字体文件的加载；如果整个文件都没有文本，那么即使引入了字体文件，也不会去加载这个字体文件</li>
+</ul>
+</li>
+<li>浏览器并不知道每个元素应该在什么位置，因此会遍历一次渲染树，把元素位置、大小等转为屏幕上的绝对像素，css和模型、flex等是在这个时候执行的，得到一个布局树</li>
+<li>页面开始渲染，在渲染过程前，会依据每个元素的层级（zindex、3d变换等），进行分层，在每层上进行对应元素的绘制<ul>
+<li>分层通常发生在布局之后、绘制之前。</li>
+<li>浏览器引擎（如Blink）在布局完成后，会根据特定规则（不仅是z-index和transform: translate3d&#x2F;scale3d&#x2F;rotate3d，还包括willchange、opacity &lt; 1、filter、position: fixed、&lt;video&gt;、&lt;canvas&gt;等）决定将渲染树中的某些部分提升为独立的合成层（Compositing Layer）</li>
+</ul>
+</li>
+<li>分层完成后，主线程为每个合成层生成一个绘制记录（Paint Record）（包含绘制该层所需的所有绘制指令）。然后，主线程将这些层信息（包括绘制记录）提交（Commit）给合成线程（Compositor Thread）。合成线程将层划分为更小的图块（Tiles）。光栅化线程（Raster Threads）（通常在GPU进程中）负责将每个图块的绘制指令光栅化（Rasterize） 成GPU内存中的位图纹理（Bitmap Texture）。<ul>
+<li>浏览器不会无限创建层。层过多会消耗大量内存（特别是GPU内存）和管理开销。浏览器有启发式规则来决定何时真正提升一个元素为合成层（即使有will-change等提示）。不必要的层提升（层爆炸）反而可能损害性能。</li>
+</ul>
+</li>
+<li>获取到所有图层后，开始进行页面的绘制，将每个元素的信息输出为具体的像素点，这个过程成为光栅化<ul>
+<li>绘制（Painting）：也称为 栅格化（Rasterization） 的前一步。主线程遍历层（Layer）（更准确地说，是遍历层内的绘制指令列表），将元素的视觉表现（颜色、边框、文本、阴影等）转换成一系列绘制指令（Draw Commands）。这些指令描述的是“画什么”和“在哪里画”（相对于层本身），但还不是最终像素。</li>
+<li>绘制指令被实际执行，转换成位图像素的过程。这通常发生在合成线程（Compositor Thread） 控制下，由光栅化线程（Raster Threads）（通常是GPU进程中的线程）执行。输入是绘制指令，输出是存储在GPU内存中的纹理（Texture）（即包含RGBA像素数据的位图）。光栅化通常是按图块（Tiles） 进行的。</li>
+</ul>
+</li>
+<li>每个层绘制完成后，会进行合并，这个过程称为合成   </li>
+<li>合成线程把得到的层分块，然后把需要渲染的块交给光栅化线程，由其完成分块的光栅化并储存在gpu中</li>
+<li>光栅化线程结束后，合成线程会把这些得到的创建一个合成帧，直接发送给GPU完成屏幕的显示<ul>
+<li>合成线程生成一个合成帧（Compositor Frame），其中包含如何将这些纹理组合（合成）成最终屏幕图像的指令（通常是描述一个场景图的 Quad 信息）</li>
+<li>这个合成帧被提交给浏览器进程（Browser Process）。</li>
+<li>浏览器进程通过VIZ组件将合成帧数据（通过IPC）传递给GPU进程。</li>
+<li>GPU进程的GPU线程最终驱动GPU硬件执行合成（Compositing） 操作：将各个图块纹理按照合成帧的指令，通过OpenGL&#x2F;DirectX&#x2F;Vulkan API绘制到后缓冲区（Back Buffer）。</li>
+<li>最后，GPU发出垂直同步（VSync） 信号时，系统（通常是窗口管理器或显示服务器）将后缓冲区交换（Swap） 到前缓冲区（Front Buffer），完成屏幕的显示（Display）。</li>
+<li>总结流向： 合成线程 -&gt; (合成帧) -&gt; 浏览器进程 -&gt; GPU进程 (GPU线程) -&gt; GPU硬件 -&gt; 屏幕。</li>
+</ul>
+</li>
+<li>当页面滚动和纯合成动画发生时，合成器只需要重新合成一个合成帧，并发送给GPU即可，此时就不再需要主线程的参与</li>
+<li>纯合成动画高度依赖gpu，不影响页面的主线程，因此其会有更好的性能；解析、执行js、重新布局等依赖主线程完成的动画都不是纯合成动画，因此性能会比其更差些<ul>
+<li>纯合成动画通常既不触发重排也不触发重绘，只触发合成</li>
+</ul>
+</li>
+</ul>
+<p>主线程  dom -&gt; 计算样式 -&gt; 布局 -&gt; 分层 ⬇</p>
+<p>合成线程                           分层-&gt;    分块 ⬇     光栅化-&gt; 合成⬇</p>
+<p>光栅化线程                                  分块 -&gt; 光栅化 ⬆</p>
+<p>GPU                                                         合成 -&gt; 显示</p>
+<p>纯合成动画的优势（再强调）<br>绕过主线程： 动画逻辑（如滚动位置更新、变换计算）在合成线程执行。</p>
+<p>无 JS、样式计算、布局、绘制： 不需要主线程参与这些昂贵操作。</p>
+<p>重用光栅化结果： 通常只需改变纹理的变换矩阵（位置、旋转、缩放）或透明度，无需重新光栅化图块内容。</p>
+<p>GPU 高效合成： GPU 极其擅长执行这种纹理变换和混合操作。</p>
+<p>与 VSync 更好同步： 减少卡顿</p>
+<h2 id="回流与重绘"><a href="#回流与重绘" class="headerlink" title="回流与重绘"></a>回流与重绘</h2><h3 id="重绘"><a href="#重绘" class="headerlink" title="重绘"></a>重绘</h3><p>重绘一般是只需要改动某些页面元素的样式，例如背景色、字号色等，不会影响其他元素的布局，因此只需要重新渲染这个dom，性能会好些</p>
+<p>如果连续多次修改样式，浏览器会合并执行，一般是60ms内的</p>
+<p>元素的视觉样式发生改变（如颜色、背景色、边框样式等），但不影响其几何属性和其他元素的位置。这跳过了布局阶段，但需要重新执行绘制（Painting）（生成新的绘制指令）和受影响区域的重新光栅化（Rasterization）。比重排开销小，但也不可忽视。</p>
+<h3 id="回流"><a href="#回流" class="headerlink" title="回流"></a>回流</h3><p>元素的几何属性（位置、尺寸）发生改变，影响了文档流或其他元素的位置。这必须触发整个或部分渲染树的重新布局（Layout）。这是最昂贵的操作。</p>
+<h4 id="影响因素"><a href="#影响因素" class="headerlink" title="影响因素"></a>影响因素</h4><ul>
+<li><p>元素大小、位置等的变化，会影响到其他布局</p>
+</li>
+<li><p>强制重排：js获取一些与排版有关的信息时，为了保证信息的准确性，会进行同步计算样式和排版信息给js</p>
+<ul>
+<li>获取元素、窗口大小</li>
+<li>滚动</li>
+<li>获取鼠标指针位置</li>
+<li>进行样式计算（getCompitedStyle</li>
+</ul>
+</li>
+</ul>
+<h2 id="资源加载"><a href="#资源加载" class="headerlink" title="资源加载"></a>资源加载</h2><h3 id="script"><a href="#script" class="headerlink" title="script"></a>script</h3><p>js有三种加载方式，<code>normal</code>、<code>defer</code>、<code>async</code>，normal是script标签上不会添加属性，defer是script标签上添加defer属性，async是script标签上添加async属性</p>
+<p>normal：js加载执行和html解析互斥，即在加载解析js时会停止html的解析</p>
+<p>defer和async都可以让js加载和html同步进行，在加载时不影响html的解析，但是在解析时依旧影响</p>
+<ul>
+<li><p>defer</p>
+<ul>
+<li>加载完不会立马执行，而是等所有元素解析完后再执行，在<code>DOMContentLoaded</code>事件触发时执行</li>
+<li>可以保证加载顺序</li>
+</ul>
+</li>
+<li><p>async</p>
+<ul>
+<li>加载完后立马解析</li>
+<li>无法保证执行顺序，因为可能每个文件加载完成时间不同，可能文件靠后的反而先加载完成，那么也会先执行</li>
+</ul>
+</li>
+</ul>
+<h3 id="link"><a href="#link" class="headerlink" title="link"></a>link</h3><p>css加载可以通过<code>normal</code>、<code>import</code>、<code>prefetch</code>和<code>preload</code></p>
+<ul>
+<li><p>normal</p>
+<ul>
+<li>默认加载方式，会阻塞html的解析,浏览器必须等待CSS加载并构建CSSOM</li>
+</ul>
+</li>
+<li><p>import</p>
+<ul>
+<li>在css文件中使用import引入其他css文件</li>
+<li>链式依赖导致浏览器需按顺序加载所有关联CSS</li>
+</ul>
+</li>
+<li><p>prefetch: 空闲，低优先级</p>
+<ul>
+<li>预先加载，可以在浏览器空闲的时候加载文件，一般是对用户行为的一种判断</li>
+<li>不会阻塞页面渲染</li>
+<li>资源下载优先级为 Lowest（浏览器空闲时才加载）</li>
+<li>下载过程完全在后台进行，与 DOM 解析、CSSOM 构建并行</li>
+</ul>
+</li>
+<li><p>preload：通用预加载，高优先级</p>
+<ul>
+<li>对当前页面的资源进行提前加载，但不解析</li>
+<li>可能会阻塞页面渲染</li>
+<li>preload 资源在 HTML 解析过程中被立即发现时启动加载。浏览器在构建 DOM 树的过程中，首次遇到带有 rel&#x3D;”preload” 的标签时，会立即以高优先级发起网络请求，无需等待其他资源。</li>
+</ul>
+</li>
+<li><p>modulepreftech：主要Chromium支持，高优先级</p>
+<ul>
+<li>转为es模块设计</li>
+<li>不仅加载模块，还会递归加载依赖树</li>
+<li>加载且解析模块（不执行，将解析结果放在模块映射中</li>
+<li>使用 modulepreload 时，获取请求的模式始终是 cors，并使用 crossorigin 属性来确定请求凭证模式。如果 crossorigin 设置为 anonymous 或 “”（默认），则凭证模式是 same-origin，并且仅对同源请求发送用户凭证，如 cookies 和身份验证信息。如果 crossorigin 设置为 use-credentials，则凭证模式是 include，用于单源和跨源请求的用户凭证。</li>
+</ul>
+</li>
+</ul>
+<p>如果是js文件，那么这里的加载都只是加载，但是不会执行，只有遇到script的标签才会执行，且遵循async&#x2F;defer&#x2F;normal的规则。</p>
+<p>如果同一个js文件被preload和script引入，那么在script执行时，如果该js文件未加载完成（preload速度慢了），那么会重新发起js的下载。</p>
+<h3 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h3><ul>
+<li>dsn-prefetch</li>
+</ul>
+<p>可以在浏览器空闲的时候把域名转为ip</p>
+<p><code>&lt;link rel=&quot;dns-prefetch&quot; href=&quot;//baidu.com&quot; /&gt;</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B/" data-id="cmf67fxef006wbcfm7oriabdp" data-title="页面渲染流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-浏览器/小点" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%B0%8F%E7%82%B9/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.744Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%B0%8F%E7%82%B9/">小点</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="IP"><a href="#IP" class="headerlink" title="IP"></a>IP</h3><ul>
+<li><p>ip地址指的是互联网协议地址，又译为网络协议地址。ip地址是ip协议提供的一种统一的地址格式，其为互联网的每一个网络和每一台主机分配一个逻辑地址，以此来屏蔽物理地址的差异</p>
+</li>
+<li><p>ip协议：是为计算机网络相互连接进行通信而设计的协议。其给因特网上的每台计算机和其他设备都规定了一个唯一的地址，就是ip地址</p>
+</li>
+</ul>
+<h3 id="浏览器内核"><a href="#浏览器内核" class="headerlink" title="浏览器内核"></a>浏览器内核</h3><p>浏览器内核是用来渲染网页内容的，将开发者写的代码转换为用户可以看见的网页。由于涉及排版样式问题，因此可能会出现排版错误等问题，原因可能包括浏览器的渲染不标准。</p>
+<table>
+<thead>
+<tr>
+<th>浏览器</th>
+<th>内核</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IE</td>
+<td>Trident内核</td>
+</tr>
+<tr>
+<td>chrome</td>
+<td>Blink内核</td>
+</tr>
+<tr>
+<td>firefox</td>
+<td>Gecko内核</td>
+</tr>
+<tr>
+<td>safari</td>
+<td>Webkit内核</td>
+</tr>
+<tr>
+<td>Opera</td>
+<td>Blink内核</td>
+</tr>
+</tbody></table>
+<p>浏览器内核包括：渲染引擎和js引擎</p>
+<ul>
+<li><p>渲染引擎：负责取得网页的内容、整理讯息，以及计算网页的显示方式，然后会输出到显示器或者打印机。浏览器不同内核会对网页语法解释也有不同。所有网页浏览器、Email及其他需要编辑显示网络内容的应用程序都需要内核</p>
+</li>
+<li><p>js引擎：解释和执行js来实现网页动态效果。一开始渲染引擎和js引擎没有独立区分，后面js引擎越来越独立，浏览器内容更指向于渲染引擎</p>
+</li>
+</ul>
+<h3 id="多个标签页通信"><a href="#多个标签页通信" class="headerlink" title="多个标签页通信"></a>多个标签页通信</h3><ul>
+<li>localStorage</li>
+<li>cookie+轮询</li>
+<li>websocket</li>
+</ul>
+<h3 id="垃圾回收机制"><a href="#垃圾回收机制" class="headerlink" title="垃圾回收机制"></a>垃圾回收机制</h3><p>垃圾回收机制:一块被分配的内存既不能使用,又不能回收,直到浏览器进程结束</p>
+<p>垃圾收集: c语言开发者可以手动释放内存,但js无法手动释放</p>
+<p>内存生命周期</p>
+<ul>
+<li><p>分配</p>
+<p>  内存由操作系统分配,允许开发者使用</p>
+</li>
+<li><p>使用</p>
+<p>  程序实际使用之前分配的内存,在代码中使用分配的变量时,会发生读取操作</p>
+</li>
+<li><p>释放</p>
+<p>  释放所有不再使用的内存,使之成为自由内存,并可以重新被利用</p>
+</li>
+</ul>
+<h3 id="开发测试浏览去差异"><a href="#开发测试浏览去差异" class="headerlink" title="开发测试浏览去差异"></a>开发测试浏览去差异</h3><p>ie: ie8中文本可能显示有问题,按钮点击有问题或者页面之间无法加载等问题,因为长时间运行的脚本在ie8中表现非常慢.这个情况下,只能减少文档对象模型的递归、循环和操作&#x2F;</p>
+<p>firefox: 在css中需要加上-moz前缀</p>
+<p>chrome: 浏览器在页面加载期间只验证一次主资源;当图片的exif方向与实际方向不匹配时,会发生图片方向不正确,需要在服务端处理</p>
+<p>safari: 由于safari内置了防止网络钓鱼,因此会排除通过浏览器上传文件中的元数据,例如上传图片时会把定位删除</p>
+<h3 id="移动端视口"><a href="#移动端视口" class="headerlink" title="移动端视口"></a>移动端视口</h3><p>视口指的是浏览器的可视区域,其宽度和浏览器窗口的宽度保持一致.在css标准文档中,视口被称为初始包含块,其是所有css百分比宽度推算的根源</p>
+<p>移动端视口包括:</p>
+<ul>
+<li><p>布局视口(Layout ViewPort)</p>
+<p>  计算机视口与浏览器窗口宽度一致,但手机中视口与移动端浏览器屏幕宽度是不关联的.</p>
+</li>
+<li><p>视觉视口(Visual ViewPort)</p>
+<p>  用户正在看的网站区域,但手机端可以通过缩放来查看网页内容</p>
+</li>
+<li><p>理想视口</p>
+</li>
+</ul>
+<h3 id="理想视口"><a href="#理想视口" class="headerlink" title="理想视口"></a>理想视口</h3><p>ideal viewport: 理想视口,通常指屏幕分辨率</p>
+<p>dip(设备逻辑像素)与设备的硬件像素无关,一个dip在任意像素密度的设备屏幕上都占据相同的空间</p>
+<p>例如:显示器硬件像素是2880x1800, 当屏幕分辨率是1920x1200时, 理想视口的宽度是1920像素,dip宽度是1920, 设备像素比&#x3D;2880&#x2F;1920&#x3D;1.5</p>
+<p>设备的逻辑像素宽度和物理像素宽度(像素分辨率): 逻辑像素宽度*倍率-物理像素宽度</p>
+<h3 id="解决移动端300ms点击延迟"><a href="#解决移动端300ms点击延迟" class="headerlink" title="解决移动端300ms点击延迟"></a>解决移动端300ms点击延迟</h3><p>浏览器开发商的解决方案:</p>
+<ul>
+<li><p>禁用缩放</p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;initial-scale=1, maximum-scale=1, user-scalable=no&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>  表面页面无法缩放,那么双击缩放功能失效.</p>
+</li>
+<li><p>更改默认的视口宽度</p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>  因为双击缩放主要用于改善桌面站点在移动端浏览体验的</p>
+</li>
+<li><p>touch-action</p>
+<p>  指定了相应元素上能够触发的用户代理(浏览器)的默认行为.如果将该属性值设置为<code>touch-action:none</code>,那么表示在该元素上的操作不会触发浏览器的任何默认行为</p>
+</li>
+</ul>
+<p>上面都没有提供很好的兼容性,safari还是双击滚动的操作,因此上面的1和2会导致双击滚动也会被禁用.方案3其他浏览器不支持,但ie支持</p>
+<p>js方案</p>
+<ul>
+<li><p>指针事件的polyfill</p>
+</li>
+<li><p>fastclick</p>
+<p>  FT Labs专门为解决移动端浏览器300ms点击延迟问题开发的轻量级库.</p>
+<p>  FastClick在检测到touchend事件是,会通过DOM自定义事件立即触发模拟一个click事件,并把浏览器300ms之后的click事件阻止</p>
+</li>
+</ul>
+<h3 id="固定定位布局时键盘挡住输入框内容"><a href="#固定定位布局时键盘挡住输入框内容" class="headerlink" title="固定定位布局时键盘挡住输入框内容"></a>固定定位布局时键盘挡住输入框内容</h3><ul>
+<li>绑定窗口改变事件,监听键盘弹出,然后改变固定定位元素的位置</li>
+<li>通过定时器监听是否触发input,如果触发了input就将固定定位改为静态定位</li>
+</ul>
+<h3 id="判断是否是横屏"><a href="#判断是否是横屏" class="headerlink" title="判断是否是横屏"></a>判断是否是横屏</h3><ul>
+<li><p>通过窗口宽高值比值来判断</p>
+</li>
+<li><p>orientationchange事件</p>
+<p>  h5新特性,在用户水平或垂直翻转设备时触发</p>
+</li>
+</ul>
+<h3 id="移动端开发的兼容性问题"><a href="#移动端开发的兼容性问题" class="headerlink" title="移动端开发的兼容性问题"></a>移动端开发的兼容性问题</h3><ul>
+<li><p>ios下input的type&#x3D;button的属性disable&#x3D;true时,会出现样式问题和背景异常</p>
+<p>  解决: opacity&#x3D;1</p>
+</li>
+<li><p>对非可点击元素,如果监听click事件,部分ios版本下不会被触发</p>
+<p>  css增加cursor: pointer;</p>
+</li>
+<li><p>input为fixed定位,在ios下固定定位在顶部或者底部,在页面滚动一些距离后,点击input弹出键盘,input会出现在中间位置</p>
+<p>  内容列表框也设置fixed定位</p>
+</li>
+<li><p>移动端字体小于12px,会出现四周边框或背景色块的bug问题</p>
+<p>  使用整体放大屏幕的dpr倍再使用transform缩放,使用canvas在移动端模糊也可以这样处理</p>
+</li>
+<li><p>在h5嵌入app时,ios如果出现垂直滚动条,手机滑动页面滚动后,滚动不会丝滑</p>
+<p>  对webview设置更低的<code>self.webView.scrollView.decelerationRate=UIScrollViewDecelerationRateNormal</code></p>
+</li>
+<li><p>安卓机上placeholder文字设置行高会偏上</p>
+<p>  input有placeholder不设置</p>
+</li>
+<li><p>overflow:scroll&#x2F;auto在ios滚动卡顿</p>
+<p>  加入<code>-webkit-overflow-scrolling: touch</code></p>
+</li>
+<li><p>移动端适配可以使用lib-flexible,使用rem布局移动端的问题是px小数点问题,有些浏览器会四舍五入,有些会之间舍弃去掉,因此在设置图片时,周围适当留2px空间,防止图标被裁切</p>
+</li>
+<li><p>iphoneX适配</p>
+  <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta <span class="attribute">content</span>=&quot;viewport-fit=cover&quot; /&gt;</span><br><span class="line"><span class="selector-tag">body</span>&#123;</span><br><span class="line">    <span class="attribute">padding-top</span>: <span class="built_in">constant</span>(safa-area-inset-top);</span><br><span class="line">    <span class="attribute">padding-top</span>: <span class="built_in">env</span>(safa-area-inset-top);</span><br><span class="line">    <span class="attribute">padding-bottom</span>: <span class="built_in">constant</span>(safa-area-inset-bottom);</span><br><span class="line">    <span class="attribute">padding-bottom</span>: <span class="built_in">env</span>(safa-area-inset-bottom);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="移动端手势"><a href="#移动端手势" class="headerlink" title="移动端手势"></a>移动端手势</h3><p>常见手势包括:长按,单击,双击,旋转,放大缩小,滑动,拖拽</p>
+<ul>
+<li><p>长按</p>
+<p>  使用touchstart,touchmove和touchend三个事件去做</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">target.<span class="title function_">addEventListener</span>(<span class="string">&quot;touchstart&quot;</span>, <span class="keyword">function</span>(<span class="params">e</span>)&#123;</span><br><span class="line">    <span class="comment">// 在800ms后触发长按事件</span></span><br><span class="line">    timer=<span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;, <span class="number">800</span>)</span><br><span class="line">&#125;)</span><br><span class="line">target.<span class="title function_">addEventListener</span>(<span class="string">&quot;touchmove/touchend&quot;</span>, <span class="keyword">function</span>(<span class="params">e</span>)&#123;</span><br><span class="line">    <span class="comment">// 未达到800ms中触发,那么就取消长按事件</span></span><br><span class="line">    <span class="built_in">clearTimeout</span>(timer)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>单击</p>
+<p>  监听touchend事件,如果没有移动或移动不是很明显情况下,则视为单击.</p>
+<p>  click事件会比touchend慢200ms</p>
+</li>
+<li><p>双击</p>
+<p>  普通点击事件的叠加,如果两次点击时间小于300ms且位置偏移差的不多,那么就触发双击且需要清楚单击事件</p>
+</li>
+<li><p>旋转</p>
+<p>  在touchmove中,需要实时记录当前和之前的手指位置,且中间不能触发touchend事件</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">target.<span class="title function_">addEventListener</span>(<span class="string">&#x27;touchmove&#x27;</span>, <span class="keyword">function</span>(<span class="params">e</span>)&#123;</span><br><span class="line">    <span class="comment">// 获取当前和之前手指分别对应的竖直和水平差信息</span></span><br><span class="line">    <span class="keyword">const</span> cos=(curX*lastX+curY*lastY)/ * (<span class="title class_">Math</span>.<span class="title function_">sqrt</span>(curY*curY+curX*curX) * <span class="title class_">Math</span>.<span class="title function_">sqrt</span>(lastY*lastY+lastX*lastX))</span><br><span class="line">    e.<span class="property">angle</span>=<span class="title class_">Math</span>.<span class="title function_">acos</span>(cos)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>缩放</p>
+<p>  获取touchmove之间两指的手指间距</p>
+</li>
+<li><p>滚动</p>
+<p>  监听touchstart和touchend事件,判断其两次相差的坐标</p>
+</li>
+<li><p>拖拽</p>
+<p>  监听touchmove事件,监听每次手指的移动距离</p>
+</li>
+</ul>
+<h3 id="视觉滚动差"><a href="#视觉滚动差" class="headerlink" title="视觉滚动差"></a>视觉滚动差</h3><p>实际上就是页面在滚动时,元素发生位置的变化,各个不同的元素位置变化速读不同,导致网页内元素有层次错落的错觉.这样会有不同空间角度和用户体验</p>
+<p>固定背景不让其随滚动,但包含背景的容器是跟着滚动的,所造成的视觉差异看起来和转换场景一样</p>
+<ul>
+<li><p>运用大背景</p>
+<p>  背景图片一般是高分辨率,大图,覆盖整个网站</p>
+</li>
+<li><p>简单的配色</p>
+<p>  颜色太多会导致页面杂乱,可以调整颜色透明度,达到各种视觉效果</p>
+</li>
+<li><p>定位好背景层,贴图层和内容层之间的关系</p>
+<p>  依据页面自身的功能来定义是否需要贴图层,贴图层的存在是为了更有效地传达视觉效果</p>
+<p>  内容层展示最主要,优先以内容层为主</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%B0%8F%E7%82%B9/" data-id="cmf67fxdv0046bcfmg1iy7v8e" data-title="小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-浏览器/PerformanceObserver" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/PerformanceObserver/" class="article-date">
@@ -195,7 +617,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/PerformanceObserver/" data-id="cmepc0uig004jt0fm9kj59k32" data-title="PerformanceObserver" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E6%B5%8F%E8%A7%88%E5%99%A8/PerformanceObserver/" data-id="cmf67fxdv004abcfm9114cbd5" data-title="PerformanceObserver" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -282,7 +704,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0%E6%A8%A1%E5%9E%8B/" data-id="cmepc0uiv0063t0fm0zima2ys" data-title="性能评估模型" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0%E6%A8%A1%E5%9E%8B/" data-id="cmf67fxek007ibcfmh02oaoil" data-title="性能评估模型" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -370,7 +792,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8/" data-id="cmepc0uiw006at0fmatqtfugl" data-title="浏览器安全" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8/" data-id="cmf67fxel007pbcfm4njsf675" data-title="浏览器安全" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -430,7 +852,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90Wasm%E3%80%91%E4%BB%8B%E7%BB%8D----1/" data-id="cmepc0uis005pt0fmhli9cexj" data-title="【Wasm】介绍(未完成)" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90Wasm%E3%80%91%E4%BB%8B%E7%BB%8D----1/" data-id="cmf67fxeh0074bcfmgoqaalt4" data-title="【Wasm】介绍(未完成)" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -631,7 +1053,7 @@ list2</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90markdown%E3%80%91%E8%AF%AD%E6%B3%95/" data-id="cmepc0uit005xt0fmbjipaejh" data-title="【markdown】语法" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90markdown%E3%80%91%E8%AF%AD%E6%B3%95/" data-id="cmf67fxej007abcfmgwx5774k" data-title="【markdown】语法" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -722,7 +1144,7 @@ list2</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90vue%E3%80%91%E8%99%9A%E6%8B%9Fdom%E5%9F%BA%E6%9C%AC/" data-id="cmepc0uiu005zt0fm2l5lh9m0" data-title="【vue】虚拟dom基本" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90vue%E3%80%91%E8%99%9A%E6%8B%9Fdom%E5%9F%BA%E6%9C%AC/" data-id="cmf67fxek007mbcfmclo54icy" data-title="【vue】虚拟dom基本" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -792,7 +1214,7 @@ list2</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90console%E3%80%91API/" data-id="cmepc0uit005tt0fmcu4c1mr2" data-title="consoleAPI" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%90console%E3%80%91API/" data-id="cmf67fxei0075bcfm8tr6d9cs" data-title="consoleAPI" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -852,381 +1274,11 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WebRTC/%E3%80%90webRTC%E3%80%91%E5%AA%92%E4%BD%93/" data-id="cmepc0ujf009mt0fmg0tl8hhl" data-title="webRTC媒体" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WebRTC/%E3%80%90webRTC%E3%80%91%E5%AA%92%E4%BD%93/" data-id="cmf67fxeo008abcfma0vreq07" data-title="webRTC媒体" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webRTC/" rel="tag">webRTC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" rel="tag">扩展阅读</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-读书笔记/WebRTC/【WebRTC】介绍" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WebRTC/%E3%80%90WebRTC%E3%80%91%E4%BB%8B%E7%BB%8D/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.709Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/">扩展阅读</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WebRTC/%E3%80%90WebRTC%E3%80%91%E4%BB%8B%E7%BB%8D/">webRTC介绍</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="webRTC-介绍"><a href="#webRTC-介绍" class="headerlink" title="webRTC 介绍"></a>webRTC 介绍</h2><p>webrtc，Web Real-time Communication，web 实时通信技术，其开创性的使浏览器能直接与其他浏览器进行交互，从而形成包括三角模式和梯形模式在内的多种体系结构</p>
-<p>实时通信技术通过标准 api 和 web 应用程序交互，并使用浏览器与操作系统通信。</p>
-<p>webrtc 增加新的特点 - 浏览器和浏览器之间的交互（对等连接）。在此类交互上，一个浏览器中的实时通信功能使用线上标准协议（非 http），与另一个浏览器或网络电话或视频应用程序之中的实时通信功能进行通信。虽然使用 tcp 传输 web 流量，但浏览器之间的线上可使用其他传输协议，例如 udp。</p>
-<pre><code>- 提供信令服务，该服务器在浏览器和对等连接另一端提供信令通道
-</code></pre>
-<h3 id="webrtc-所包含的元素"><a href="#webrtc-所包含的元素" class="headerlink" title="webrtc 所包含的元素"></a>webrtc 所包含的元素</h3><ul>
-<li>web 服务器</li>
-<li>运行于各种设备和操作系统之上的浏览器，包括台式机、pad、手机和其他服务器</li>
-<li>其他：共用交换电话网（PSTN）门户、其他互联网通信终端（会话发起协议电话、客户端，或者 Jingle 客户端</li>
-</ul>
-<p>webrtc 支持以上所有设备的通信</p>
-<h3 id="三角模式和梯形模式"><a href="#三角模式和梯形模式" class="headerlink" title="三角模式和梯形模式"></a>三角模式和梯形模式</h3><ul>
-<li><p>三角模式</p>
-<p>最常见的情况可能是两个浏览器都运行从同一个 web 服务器下载的同一个 webrtc web 应用程序，因为这三个元素之间的信令路线和媒体或数据流动路线所构成的形状恰好是一个三角形，因此成为 webrtc 三角形。两个浏览器之间直接通过建立对等连接来传输语音、视频媒体，以及附加数据</p>
-<p>信令在 webrtc 中并未标准化，其只被视作未应用程序的一部分。信令可以通过 http 或 websocket 传送到向浏览器提供 html 页面的同一 web 服务器，也可传送到只负责处理信令的一个完全不同的 web 服务器</p>
-</li>
-<li><p>梯形模式</p>
-<p>其包含两台 web 服务器和两个浏览器，web 服务器之间采用标准的信令协议。例如 SIP 或 Jingle，也可以使用专有的信令协议。客户端和三角模式一样，通过对等连接传输音视频</p>
-</li>
-</ul>
-<h3 id="webrtc-与协议"><a href="#webrtc-与协议" class="headerlink" title="webrtc 与协议"></a>webrtc 与协议</h3><ul>
-<li><p>SIP</p>
-<p>web 服务器有一个内置的 sip 信令网关，浏览器与 sip 客户端之间可以通过此网关来交换呼叫建立信息，直接在浏览器和 sip 客户端之间形成媒体流，因为对等连接与 sip 用户代理建立标准的实时传输协议 RTP 媒体会话</p>
-<p>web 服务器 &lt;— SIP —&gt; SIP 服务器 &lt;— SIP —&gt; SIP 客户端 &lt;— 对等连接（音视频） —&gt; 浏览器 &lt;——&gt; web 服务器</p>
-</li>
-<li><p>Jingle</p>
-<p>web 服务器有一个内置的可扩展消息现场协议，该内置服务器通过另一个 xmpp 服务器与 jingle 客户端进行通信</p>
-<p>web 服务器 &lt;— Jingle —&gt; XMPP 服务器 &lt;— Jingle —&gt; Jingle 客户端 &lt;— 对等连接（音视频） —&gt; 浏览器 &lt;——&gt; web 服务器</p>
-</li>
-<li><p>公共交换电话网（PSTN）</p>
-<p>PSTN 网关是纯音频媒体流的终结点，负责 PSTN 电话呼叫与媒体相连。在 web 服务器与 PSTN 网关之间需要有某种形式的信令，可以是 SIP，也可以是主从控制协议。</p>
-<p>互联网通信服务可以为用户分配一个电话号码，用户可以使用 webrtc 访问此服务。这样拨叫该电话号码时浏览器会发出“响铃”声，应答呼叫时则会通过与 PSTN 呼叫方相连的互联网建立语音会话，其他服务可能包括能在 webrtc 应用程序中“拨打电话”，这种拨打会通过互联网与 PSTN 建立语音通道</p>
-<p>PSTN 网关 &lt;——&gt; 浏览器 &lt;——&gt; Web 服务器 &lt;——&gt; PSTN 网关 &lt;——&gt; 电话</p>
-</li>
-</ul>
-<h3 id="媒体流"><a href="#媒体流" class="headerlink" title="媒体流"></a>媒体流</h3><p>点对点 webrtc 会话中的多媒体流包括但不限于：麦克风音频流、应用程序共享视频流、前置摄像头视频流、后置摄像头视频流、网络摄像头视频流、立体声音频流</p>
-<p>多方会话：</p>
-<ul>
-<li><p>每个浏览器都与其他参与会话的浏览器建立一个对等连接<br>优势：不需要媒体服务器基础架构、媒体延迟最低且质量高</p>
-<p>缺点：不适用于大型多方会议，每次新的浏览器加入都会导致其他浏览器带宽增加</p>
-</li>
-<li><p>通过一个集中式媒体服务器&#x2F;混合器&#x2F;选择器，每个浏览器与媒体服务器之间建立单个对等连接。每个浏览器向服务器发送媒体数据，由服务器混合后不经将其分发给其他浏览器。这样每次有新的浏览器加入后，其他浏览器不需要对这个新的浏览器建立连接<br>优势：能扩展非常大的会话，同时可以最大幅度减少当有新参与者加入会话时每个浏览器所需的处理工作量</p>
-<p>缺点：只有一个浏览器或少量浏览器参与时，会降低效率</p>
-</li>
-</ul>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="建立-webRTC-会话"><a href="#建立-webRTC-会话" class="headerlink" title="建立 webRTC 会话"></a>建立 webRTC 会话</h3><ul>
-<li>获取本地媒体</li>
-<li>在浏览器和对等端（其他浏览器或终端）之间建立连接</li>
-<li>将媒体和数据通道关联至该连接</li>
-<li>交换会话描述</li>
-</ul>
-<h4 id="获取本地媒体"><a href="#获取本地媒体" class="headerlink" title="获取本地媒体"></a>获取本地媒体</h4><p>有多种方式可以获取，webRTC 定义了一种常见方式：<code>getUserMedia</code>，此方法可以用于获取单个本地 MediaStream，在获取一个或多个媒体后，可以使用 MediaStream API 将它们组合到所需要的流中。为保护隐私，只有当浏览器获取用户许可后，才会批准 web 应用程序访问用户麦克风或摄像头的请求</p>
-<h4 id="建立对等连接"><a href="#建立对等连接" class="headerlink" title="建立对等连接"></a>建立对等连接</h4><p><code>RTCPeerConnection</code>是 webrtc 核心，其可以在两个对等端之间建立连接。这不是通过服务器请求通信，而是直接在两个实体之间进行通信。就 webrtc 本身而言，对等连接就是两个或更多浏览器之间的本地媒体连接，这种模式很适用于多向通信</p>
-<p>建立此连接需要一个新的<code>RTCPeerConnection</code>对象，其构造函数方法的唯一输入项是一个配置对象，该对象包括交互式连接建立技术（ICE）“打洞”通过各种网络地址切换（NAT）设备和防火墙所使用的信息</p>
-<h4 id="交换媒体或数据"><a href="#交换媒体或数据" class="headerlink" title="交换媒体或数据"></a>交换媒体或数据</h4><p>建立连接后，可将任意数量的本地媒体流关联到对等连接，以通过该连接发送至远端浏览器。同样也可以将任意数量的远端媒体流发送至对等连接的本地端，这样本地端就有了新的媒体流，而且可以像操作其他本地媒体流那样处理他们</p>
-<p>每次更改媒体时，都需要在两个浏览器之间协商如何在连接通道中表示媒体。当从本地端或远程端发出添加或删除媒体的请求时，可请求浏览器生成相应的 RTCSessionDescription 对象（此容器存放会话描述，即有关如何建立媒体会话的信息），用于表示通过对等连接传输的所有媒体集合。利用 RTCPeerConnection，开发者可在会话描述被发送到远端前，根据需要查看或编辑会话描述。这样浏览器既可以处理编码器协商和编写会话描述协议 W（SDP），同时允许应用程序根据需要进行微调。</p>
-<p>当两个浏览器交换完 RTCSessionDescription 对象后，即可建立媒体或数据会话。此时两个浏览器将开始打洞，打洞完毕后，即可协商密钥，以确保媒体会话的安全，最后可开始媒体或数据会话。交换对象后的所有活动通过浏览器执行 js 代码完成，应用程序的 js 代码还可以添加&#x2F;删除 STUN 和 TURN 服务器</p>
-<h4 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h4><p>在对等连接中，任一端浏览器都可以关闭连接，通过对 RTCPeerConnection 对象调用<code>close()</code>来指示连接已使用完毕，此操作会停止 ICE 处理和媒体流传输，同样，如果某一端的浏览器断开 Internet 连接或发送崩溃，媒体或数据通道中发送的持久连接请求将失效，另一端的浏览器将尝试重新开始打洞，并且在打洞失败后关闭会话。会话结束后，浏览器将删除会话授予的任何访问设备麦克风和摄像头的许可，因此在新的会话中，需要向用户请求新的许可</p>
-<h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><p>提议&#x2F;应答是一种媒体协商方式，为了确保双方在流媒体传输之前达成一致</p>
-<pre><code>提议：一方向一方发送其支持并要设置的媒体类型和功能
-
-应答：另一方回应，提示在所提议的媒体类型和功能中，哪些是此会话支持并可以接受的
-</code></pre>
-<p>临时应答：对提议的应答，但是临时性或实验性，可能不是实际应答中提供的最终应答，最终应答将在后面的提议&#x2F;应答交换中给出。临时应答可选，通常只在与某些模拟电话网络特征的 VoIP 系统或 PSTN 进行互操作时才会出现</p>
-<p>当浏览器 A 与浏览器 B 的用户进行通信时，浏览器 A 的 js 将针对其需要的媒体提供基于约束的描述、请求媒体数据并获取用户许可。用户授予的许可必须绑定到网页所在的域，并且不能扩展到网页上的弹出窗口和其他框架。所需要的媒体会话信息由会话描述对象捕获。该对象是通过 web 服务器向浏览器 B 发送的提议。对于 A 如何将此提议发送到 B，webRTC 没有标准化方法，因此此过程可以通过多种方式完成，例如 xhr，收到会话描述对象提议后，B 将生成会话描述对象应答，并以相同的方式发送到 A，当交换完成后，开始打洞（和密钥协商），并最终交换媒体数据包</p>
-<p>当关闭连接时，将导致对等连接关闭，对麦克风和摄像头的许可也全部失效</p>
-<h4 id="建立-WebRTC-会话"><a href="#建立-WebRTC-会话" class="headerlink" title="建立 WebRTC 会话"></a>建立 WebRTC 会话</h4><pre><code>- 浏览器A从web服务器请求网页
-- 服务器想A提供带有WebRTC JS的网页
-- 浏览器B从web服务器请求网页
-- 服务器向B提供带有webRTC js的网页
-- A希望与B进行通信，并通过A的JS将A的会话描述对象（提议）发送到web服务器
-- 服务器将A的会话描述对象发送给B的JS
-- B的JS将B的会话描述对象（应答）发送到服务器
-- 服务器将B的会话描述对象发送到A
-- A和B开始打洞，以确认访问对方的最佳方式
-- 完成打洞后，A和B以安全的媒体通信协议密钥
-- AB开始交换语音、视频或数据
-</code></pre>
-<h4 id="三角模式建立会话"><a href="#三角模式建立会话" class="headerlink" title="三角模式建立会话"></a>三角模式建立会话</h4><pre><code>- 浏览器A、B向web服务器请求数据
-- 服务器响应（h5、css、js
-- 服务器返回AB HTTPS（SDP对象B A）
-- AB连接成功后，ICE打洞
-- 密钥协商
-- 安全的媒体或数据会话
-</code></pre>
-<h4 id="梯形模式"><a href="#梯形模式" class="headerlink" title="梯形模式"></a>梯形模式</h4><pre><code>- 浏览器A向服务器1请求，B向服务器2请求
-- web服务器分别向浏览器响应
-- 浏览器A向服务器1发起https（SDP对象A）
-- 服务器1向服务器2发送jingle（`&lt;jingle action=&#39;session-initiate&#39;&gt;`
-- 服务器2向B发送浏览器A的信息
-- 浏览器A向服务器2发送https SDP对象B
-- 服务器2向服务器1发送同意jingle(`&lt;jingle action=&#39;session-accept&#39;&gt;`)
-- 服务器1向浏览器A发送B的信息
-- 浏览器AB开始ICE打洞、密钥协商、传输数据等
-- 浏览器A向服务器1发送关闭连接
-- 服务器1向服务器2发送jingle关闭（`&lt;jingle action=&#39;session-terminate&#39;&gt;`）
-- 浏览器B关闭连接
-</code></pre>
-<h4 id="SIP"><a href="#SIP" class="headerlink" title="SIP"></a>SIP</h4><pre><code>- 浏览器A向服务器发送请求，服务器返回响应
-- SIP用户代理向SIP服务器发送`REGISTER`，SIP服务器响应
-- 浏览器向服务器发送浏览器相关信息SDP A
-- 服务器向SIP服务器发送浏览器相关信息InVite SDP A
-- SIP服务器向SIP用户代理发送InVite SDP A
-- SIP用户代理响应接受，并将自己信息响应SDP S
-- SIP服务器接收到用户代理信息后，将其响应给web服务器
-- web服务器接收到后发送给浏览器
-- web服务器和sip服务器连接，sip服务器与sip用户代理连接（ACK）
-- 浏览器和sip用户代理开始ICE打洞、密钥协商、传输数据等
-- 浏览器A向web服务器发送关闭连接
-- web服务器向sip服务器发送关闭
-- SIP用户代理向SIP服务器发送CLOSE
-</code></pre>
-<h4 id="Jingle"><a href="#Jingle" class="headerlink" title="Jingle"></a>Jingle</h4><pre><code>- 浏览器A向服务器发送请求，服务器返回响应
-- 浏览器向服务器发送浏览器相关信息SDP A
-- 服务器向XMPP服务器发送jingle（`&lt;jingle action=&#39;session-initiate&#39;&gt;`
-- XMPP服务器向Jingle客户端发送jingle（`&lt;jingle action=&#39;session-initiate&#39;&gt;`
-- Jingle客户端发送同意jingle(`&lt;jingle action=&#39;session-accept&#39;&gt;`)，XMPP服务器将其响应发送到web服务器
-- web服务器接收到后发送给浏览器，附带SDP对象J
-- 浏览器和Jingle客户端开始ICE打洞、密钥协商、传输数据等
-- Jingle客户端向XMPP服务器发送关闭（`&lt;jingle action=&#39;session-terminate&#39;&gt;`）
-- XMPP服务器向web服务器发送关闭（`&lt;jingle action=&#39;session-terminate&#39;&gt;`）
-- 服务器和浏览器关闭
-</code></pre>
-<h4 id="PSTN"><a href="#PSTN" class="headerlink" title="PSTN"></a>PSTN</h4><p>web服务器和pstn网关之间的信令可利用任意数量的信令和控制协议，甚至sip中继。pstn网关终止webRTC媒体会话并将音频连接到pstn中继或线路。应在浏览器和pstn网关之间协商G.711（PCM）编码格式，否则将需要对音频信号进行转码</p>
-<pre><code>- 浏览器A向服务器请求
-- web服务器分别向浏览器响应
-- 浏览器A向服务器发起https（SDP对象A）
-- web服务器与PSIN网连建立连接，PSIN网联呼叫电话
-- 电话挂机PSIN网联，PSIN应答web服务器
-- 服务器与浏览器发送https，传输SDP对象网关
-- 浏览器与PSIN网联ICE打洞、密钥协商
-- 浏览器与PSIN传输媒体音频，语音会话时，还需要通过PSIN网联和电话进行连接，才做到浏览器与电话进行语音会话
-- 电话挂机，PSIN网联销毁与服务器连接，浏览器关闭
-</code></pre>
-<h4 id="与媒体网关建立"><a href="#与媒体网关建立" class="headerlink" title="与媒体网关建立"></a>与媒体网关建立</h4><p>不再采取完全的端到端传输，而是使用媒体网关来终止ice和SRTP，并且将媒体转发给SIP UA，转发时甚至可能采取未加密的RTP形式。不过只有在VoIP网络利用某种其他安全协议时才能如此</p>
-<p>媒体网关可以是一个边界元素，称为会话边界控制器(SBC)，用于穿透企业或服务提供的商网络的防火墙</p>
-<pre><code>- 浏览器向web服务器/网关发送请求，服务器响应
-- SIP用户管理向SIP服务器/媒体中继发送REGISTER，SIP服务器响应
-- 浏览器和服务器发送SDP对象 A
-- web服务器向SIP服务器/媒体中继发送Invite，携带浏览器的SDP
-- SIP服务器/媒体中继向SIP用户管理发送Invite，携带浏览器的SDP
-- SIP响应并携带SIP用户管理的SDP，SIP服务器响应到web服务器，web服务器相应到浏览器
-- 浏览器与SIP服务器进行ICE打洞、密钥协商、安全的媒体会话，媒体会话需要SIP服务器发送给SIP用户管理
-- SIP服务器关闭。。。。。
-</code></pre>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WebRTC/%E3%80%90WebRTC%E3%80%91%E4%BB%8B%E7%BB%8D/" data-id="cmepc0ujd009it0fm0v7g3ygn" data-title="webRTC介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webRTC/" rel="tag">webRTC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" rel="tag">扩展阅读</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-读书笔记/WEB3/【Web3】基本介绍" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.702Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Web3/">Web3</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/">【Web3】基本介绍</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="钱包"><a href="#钱包" class="headerlink" title="钱包"></a>钱包</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>用硬件或软件的方式，可以访问资金，与去中心化应用程序进行交互，充当无银行金融服务的网关、收集NFT、创建链上身份与社区，并提供比传统钱包更多的用途</p>
-<h3 id="组成条件"><a href="#组成条件" class="headerlink" title="组成条件"></a>组成条件</h3><ul>
-<li>公钥：链接到自己可以发售和接收交易的地址</li>
-<li>私钥：用于签署新交易并允许访问资金，必须保密</li>
-<li>种子短语：用于生成多个私钥。作为根密钥，可以访问用户钱包中其他密钥和地址，也可以创建新的密钥</li>
-</ul>
-<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><h4 id="热钱包（软钱包）"><a href="#热钱包（软钱包）" class="headerlink" title="热钱包（软钱包）"></a>热钱包（软钱包）</h4><p>可以存储、发送、接收和查看代币，所以比其他类型的钱包更加方便</p>
-<ul>
-<li>托管地：可以访问互联网和加密货币网络的设备上</li>
-<li>实用性：最高</li>
-<li>安全性：容易收到黑客攻击，因为连接到网络了</li>
-</ul>
-<h4 id="桌面钱包"><a href="#桌面钱包" class="headerlink" title="桌面钱包"></a>桌面钱包</h4><p>会被作为应用程序下载到电脑上，在本地运行<br>被认为是可用的，最安全的热钱包类型</p>
-<ul>
-<li>托管地：电脑</li>
-</ul>
-<h4 id="网络钱包"><a href="#网络钱包" class="headerlink" title="网络钱包"></a>网络钱包</h4><p>允许通过浏览器界面进行交互和访问，无须在本地设备上下载或者安装任何内容<br>具有与桌面钱包完全相同的功能，使用相同的区块链和区块浏览器来搜索区块和交易</p>
-<ul>
-<li>托管地：其他人的计算机或者服务器上</li>
-</ul>
-<h4 id="手机钱包"><a href="#手机钱包" class="headerlink" title="手机钱包"></a>手机钱包</h4><p>与桌面钱包类似，只是托管地是手机<br>与桌面钱包相比，手机钱包的功能相对更简单一些</p>
-<h4 id="冷钱包"><a href="#冷钱包" class="headerlink" title="冷钱包"></a>冷钱包</h4><p>无须连接到互联网，那么这就使得冷钱包是存储加密货币的更安全的替代方案，因为有物理介质可以离线存储密钥</p>
-<ul>
-<li>安全性：抵抗黑客能力更强，对长期投资者来说很实用</li>
-</ul>
-<h4 id="硬件钱包"><a href="#硬件钱包" class="headerlink" title="硬件钱包"></a>硬件钱包</h4><p>使用随机生成器生成公钥和私钥的物理电子设备<br>最适合长期投资和存储使用，因为它们不太容易获得</p>
-<ul>
-<li>主要用例：确保未分配的、用于持续使用的大笔资金的安全性</li>
-<li>安全性：最安全的存储方案之一，因为能够在设备中保存公钥和私钥，而无须借助任何互联网连接。这样对加密货币的访问是处于离线状态</li>
-</ul>
-<h4 id="纸钱包"><a href="#纸钱包" class="headerlink" title="纸钱包"></a>纸钱包</h4><p>由物理打印出的区块链地址和私钥组成，到纸上。这些信息会被打印成二维码，可以通过扫描二维码来汇款</p>
-<ul>
-<li>托管地：纸</li>
-<li>缺点；只能一次性发送全部余额，不能多次发送部分</li>
-</ul>
-<h4 id="市面上主流钱包"><a href="#市面上主流钱包" class="headerlink" title="市面上主流钱包"></a>市面上主流钱包</h4><blockquote>
-<p>以太坊钱包</p>
-</blockquote>
-<ul>
-<li><p>metamask</p>
-</li>
-<li><p>trust Wallet</p>
-</li>
-<li><p>argent</p>
-</li>
-<li><p>imToken</p>
-</li>
-</ul>
-<blockquote>
-<p>其他生态</p>
-</blockquote>
-<ul>
-<li><p>phantom：Solana生态</p>
-</li>
-<li><p>keplr：Cosmos生态</p>
-</li>
-<li><p>polkadot：Polkadot生态</p>
-</li>
-<li><p>tezos：Temple生态</p>
-</li>
-</ul>
-<h2 id="助记词"><a href="#助记词" class="headerlink" title="助记词"></a>助记词</h2><p>由于私钥一般情况下，都非常冗长复杂，不适合记忆，为了方便使用，密码学家将其简化成了12或者24位不等的单词或者中文字符，简化之后的就被称为助记词</p>
-<p>即：</p>
-<ul>
-<li><p>助记词是密钥的另外一种形式</p>
-</li>
-<li><p>通过助记词可以获取相关的多个私钥，但是通过私钥无法获取助记词</p>
-</li>
-</ul>
-<h2 id="区块链浏览器"><a href="#区块链浏览器" class="headerlink" title="区块链浏览器"></a>区块链浏览器</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>区块链浏览器是一种软件，它使用api和区块链节点从区块链中提取各种数据，然后使用数据库来排列搜索到的数据，并以可搜索的格式将数据呈现给用户</p>
-<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>区块链钱包可以提供不同类型的数据，但仅限于与钱包管理的密钥相关的数据。区块链浏览器用于查看与在给定区块链的所有钱包上执行的交易相关的数据。<br>特殊之处就是在于透明度，它允许用户检查智能合约地址的余额和支出，如当用户参数首次代币发行时。</p>
-<h3 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h3><ul>
-<li>查看任何钱包地址的交易历史<br>能够审计任何钱包地址并提高区块链的透明度</li>
-<li>查看接收和更改地址<br>可以查看交易接收地址、更改地址。将加密货币返回给支出者，以防输入值过多用于交易费用，提高了交易的透明度</li>
-<li>查看当天最大的交易</li>
-<li>查看内存池的状态<br>可以查看区块链上未确认的交易及其详细信息</li>
-<li>查看双花交易<br>部门浏览器支持</li>
-<li>查看孤立和陈旧区块<br>孤立区块：挖掘之后没有附加到最长的区块链上，并且它们的父区块链是未知的</li>
-</ul>
-<p>陈旧区块：已知父区块链，但未链接到已知最长链的区块</p>
-<ul>
-<li><p>查看发现或开采特点区块的个人或矿池</p>
-</li>
-<li><p>查看创世区块</p>
-</li>
-<li><p>允许用户查看交易费用、区块链难度、哈希率和其他数据</p>
-</li>
-</ul>
-<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><ul>
-<li><p>将加密货币发送给某人之前会检查钱包地址是否对区块链有效</p>
-</li>
-<li><p>检查加密货币是否已经发送给目标个人。所有者可以检查他们的钱包余额</p>
-</li>
-<li><p>可以帮助解释尚未通过或确认的交易出现的问题以及查看确认jieduan</p>
-</li>
-<li><p>帮助用户了解交易或Gas当前的成本，从而帮助计划未来的Gas支出</p>
-</li>
-<li><p>帮助用户了解某个组是不是挖掘交易的人，并有助于决定是否为未来的挖掘活动投入更多的计算资源</p>
-</li>
-<li><p>可以帮助正在开发钱包的人，如果它可以进行正常的工作（发送、接收、存储和加密货币）</p>
-</li>
-<li><p>与其他软件一起使用，可以证实数据和信息</p>
-</li>
-</ul>
-<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><ul>
-<li><p>资源管理器首先使用节点接口提取给定区块链中的所有数据，一旦它导出数据，就会将其存储在可搜索的表格中</p>
-</li>
-<li><p>将收集最新的交易和区块，根据定义的可搜索类别进行排列。它为用户提供了一个界面用于搜索。在技术方面，资源管理器可以使用关系数据库、sql数据库和api</p>
-</li>
-</ul>
-<p>每个区块链节点都可以直接读取区块链上的数据，获取最新交易和挖掘区块等数据等详细信息，然后将其发送到数据库，其中数据以可搜索表格的形式排列，使得资源管理器可以快速使用这些数据。</p>
-<p>大部分的区块链使用表格，每一行都有唯一的id或者键用于区分</p>
-<h2 id="域名系统"><a href="#域名系统" class="headerlink" title="域名系统"></a>域名系统</h2><p>在区块链中，域名系统和网络中的域名概念不同。区块链中，域名指向的是钱包地址，是一种身份的关联和映射，解决了ip或钱包地址过长的问题</p>
-<h3 id="ENS域名系统"><a href="#ENS域名系统" class="headerlink" title="ENS域名系统"></a>ENS域名系统</h3><h4 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h4><p>ens由两个以太坊智能合约组成：记录域名的ens注册表和将域名与机器的可读地址互相转换的解析器</p>
-<h4 id="获取"><a href="#获取" class="headerlink" title="获取"></a>获取</h4><p>在ens app上注册</p>
-<h3 id="DAS域名账户系统"><a href="#DAS域名账户系统" class="headerlink" title="DAS域名账户系统"></a>DAS域名账户系统</h3><h4 id="含义-1"><a href="#含义-1" class="headerlink" title="含义"></a>含义</h4><p>das是web3的去中心化身份认证系统，和ens类似，允许用户将个人域名绑定都适用所有链的人类可读地址。</p>
-<h2 id="预言机"><a href="#预言机" class="headerlink" title="预言机"></a>预言机</h2><p>预言机充当区块链上的app接口，通过查询可以获取智能合约的相关信息。预言机也可以向真实世界发送数据</p>
-<h3 id="背景-1"><a href="#背景-1" class="headerlink" title="背景"></a>背景</h3><p>大多数区块链都有用于转移价值、启用协议操作或促进治理的本地加密货币，一些区块链支持智能合约，而智能合约可以在没有第三方的情况下执行，并且可以设计为执行几乎任何可以想象得到的合约。</p>
-<p>区块链和链上智能合约需要一种方法来利用外部的链下数据，以便智能合约执行影响现实世界的app，因此预言机就需要被用到</p>
-<h3 id="分类-1"><a href="#分类-1" class="headerlink" title="分类"></a>分类</h3><ul>
-<li>软件预言机</li>
-</ul>
-<p>提供来自网站、服务器或数据库等数字源的数据。可以提供实时信息</p>
-<ul>
-<li>硬件预言机</li>
-</ul>
-<p>提供来自现实世界的数据，可以传递和中继来自项目运动传感器</p>
-<ul>
-<li>集中式预言机</li>
-</ul>
-<p>它由单个实体控制，并充当智能合约的唯一数据提供者。它要求合同参与者对一个实体给予极大的信任；它还代表单点故障，这可能会威胁到智能合约的安全性，如果预言机被破坏，智能合约也会被破坏。智能合约的准确性和有效性在很大程度上取决于所提供数据的质量，因此预言机对智能合约有很大的权利。</p>
-<p>预言机问题：预言机可以使智能合约在去信任方之间执行，但当他变得过度中心化时，可能会有它试图成为中间人的风险。</p>
-<ul>
-<li>去中心化预言机</li>
-</ul>
-<p>去中心化预言机试图实现依赖因果关系而不是个人关系的去信任和确定性结果。它以与区块链网络相同的方式实现这些结果，在许多网络参与者之间分配信任。通过利用许多不同的数据源并实施不受单个实体控制的预言机系统，去中心化的预言机网络可能成为为智能合约提供更高级别的安全性和公平性。</p>
-<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>Chainlink</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/" data-id="cmepc0ujd009jt0fme1iw7oh6" data-title="【Web3】基本介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li></ul>
 
     </footer>
   </div>
@@ -1271,7 +1323,7 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 12px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 14px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 14px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
     </div>
   </div>
 
@@ -1280,7 +1332,7 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">September 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
     </div>
   </div>
 
@@ -1293,6 +1345,14 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
       <ul>
         
           <li>
+            <a href="/2025/09/05/Vue/%E3%80%90vue%E3%80%91%E8%AF%A6%E8%A7%A3computed/">详解computed</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/25/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB2/">记录3</a>
+          </li>
+        
+          <li>
             <a href="/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/">记录2</a>
           </li>
         
@@ -1302,14 +1362,6 @@ ended：表示其源当前没有且永远无法提供更多数据，例如拔掉
         
           <li>
             <a href="/2025/08/14/%E6%89%8B%E5%86%99%E9%A2%98/">手写题</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E3%80%90%E6%89%8B%E5%86%99%E3%80%91call%E3%80%81apply%E3%80%81bind/">【手写】call、apply、bind</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【wasb】环境搭建</a>
           </li>
         
       </ul>

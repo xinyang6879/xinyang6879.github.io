@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>详解computed | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="computed 基于其内部依赖的响应式数据进行缓存的计算值。只有当其依赖的数据发生变化时，它才会重新计算。 当你创建一个 computed 时，它不会立即执行计算函数。它返回的是一个 class ComputedImp 对象，其 .value 属性在第一次被读取时才会进行首次计算。 computed这个是我们在项目中调用的 computed 函数，那么它在内部还会调用一次 computed 这个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="详解computed">
+<meta property="og:url" content="http://example.com/2025/09/05/Vue/%E3%80%90vue%E3%80%91%E8%AF%A6%E8%A7%A3computed/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="computed 基于其内部依赖的响应式数据进行缓存的计算值。只有当其依赖的数据发生变化时，它才会重新计算。 当你创建一个 computed 时，它不会立即执行计算函数。它返回的是一个 class ComputedImp 对象，其 .value 属性在第一次被读取时才会进行首次计算。 computed这个是我们在项目中调用的 computed 函数，那么它在内部还会调用一次 computed 这个">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-09-05T00:15:42.875Z">
+<meta property="article:modified_time" content="2025-09-05T02:16:53.528Z">
+<meta property="article:author" content="yangxin">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Vue/【vue】详解computed" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/09/05/Vue/%E3%80%90vue%E3%80%91%E8%AF%A6%E8%A7%A3computed/" class="article-date">
+  <time class="dt-published" datetime="2025-09-05T00:15:42.875Z" itemprop="datePublished">2025-09-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/vue/">vue</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      详解computed
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>computed 基于其内部依赖的响应式数据进行缓存的计算值。只有当其依赖的数据发生变化时，它才会重新计算。</p>
+<p>当你创建一个 computed 时，它不会立即执行计算函数。它返回的是一个 class ComputedImp 对象，其 .value 属性在第一次被读取时才会进行首次计算。</p>
+<h3 id="computed"><a href="#computed" class="headerlink" title="computed"></a>computed</h3><p>这个是我们在项目中调用的 computed 函数，那么它在内部还会调用一次 computed</p>
+<p>这个实际调用的 computed 参数，会把我们传入的依赖函数和参数传入进去，vue3 会判断当前是否是 ssr</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">computed$1</span> = (<span class="params">getterOrOptions, debugOptions</span>) =&gt; &#123;</span><br><span class="line">  <span class="comment">// @ts-ignore</span></span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">computed</span>(getterOrOptions, debugOptions, isInSSRComponentSetup);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在这里会把我们传入的回调判断是否有<code>getter</code>和<code>setter</code>，如果我们只传入了一个回调，那么把这个回调作为<code>getter</code>，<code>setter</code>会输出一个 warning；如果是我们自己传入的，那么就把我们传入的作为对应的回调</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">computed</span>(<span class="params">getterOrOptions, debugOptions, isSSR = <span class="literal">false</span></span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> getter;</span><br><span class="line">  <span class="keyword">let</span> setter;</span><br><span class="line">  <span class="comment">//   判断传入的是一个回调还是带有getter和setter的对象</span></span><br><span class="line">  <span class="keyword">const</span> onlyGetter = <span class="title function_">isFunction</span>(getterOrOptions);</span><br><span class="line">  <span class="comment">//   如果只传入了一个回调，那么就自己内部定义一个setter</span></span><br><span class="line">  <span class="keyword">if</span> (onlyGetter) &#123;</span><br><span class="line">    getter = getterOrOptions;</span><br><span class="line">    setter = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">&quot;Write operation failed: computed value is readonly&quot;</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//   如果我们传入的是对象，那么就获取到对应的getter和setter函数</span></span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    getter = getterOrOptions.<span class="property">get</span>;</span><br><span class="line">    setter = getterOrOptions.<span class="property">set</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> cRef = <span class="keyword">new</span> <span class="title class_">ComputedRefImpl</span>(</span><br><span class="line">    getter,</span><br><span class="line">    setter,</span><br><span class="line">    onlyGetter || !setter,</span><br><span class="line">    isSSR</span><br><span class="line">  );</span><br><span class="line">  <span class="keyword">if</span> (debugOptions &amp;&amp; !isSSR) &#123;</span><br><span class="line">    cRef.<span class="property">effect</span>.<span class="property">onTrack</span> = debugOptions.<span class="property">onTrack</span>;</span><br><span class="line">    cRef.<span class="property">effect</span>.<span class="property">onTrigger</span> = debugOptions.<span class="property">onTrigger</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> cRef;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="ComputedRefImpl"><a href="#ComputedRefImpl" class="headerlink" title="ComputedRefImpl"></a>ComputedRefImpl</h4><p>这个是我们实际的 computed 对象，那么这个和基础数据类型拦截器一样，用的 class+属性作为一个返回</p>
+<p>在这里面可以看到为什么说 computed 可以缓存数据，利用<strong>_dirty</strong>来去标识是否需要重新计算</p>
+<p>我们在新建一个副作用的时候，ReactiveEffect 第二个参数是一个调度器，那么如果传入了这个调度器，在依赖变化时就不会直接执行对应的回调，而是执行这个调度器</p>
+<p>因为 computed 在加了 ReactiveEffect 中的调度器是会把<strong>_dirty</strong>来标志如果下次触发了 getter，那么需要重新执行对应的回调函数，所以这就是为什么 computed 可以缓存数据的原因</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ComputedRefImpl</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">getter, _setter, isReadonly, isSSR</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_setter</span> = _setter;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">dep</span> = <span class="literal">undefined</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">__v_isRef</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">//   用于标志在getter是否需要重新执行回调</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_dirty</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">//   副作用，即依赖变化时会触发的，类似于vue2里面的Watcher</span></span><br><span class="line">    <span class="comment">// 传入的第二个参数是调度器，那么在依赖变化时不会直接执行回调，而是执行对应的调度器，在这里就是执行第二个参数</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">effect</span> = <span class="keyword">new</span> <span class="title class_">ReactiveEffect</span>(getter, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">_dirty</span>) &#123;</span><br><span class="line">        <span class="comment">// 标识下次执行getter需要重新执行函数</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">_dirty</span> = <span class="literal">true</span>;</span><br><span class="line">        <span class="comment">//   触发其他依赖到这个computed的地方，通知他们数据修改了</span></span><br><span class="line">        <span class="title function_">triggerRefValue</span>(<span class="variable language_">this</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">effect</span>.<span class="property">computed</span> = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">effect</span>.<span class="property">active</span> = <span class="variable language_">this</span>.<span class="property">_cacheable</span> = !isSSR;</span><br><span class="line">    <span class="variable language_">this</span>[<span class="string">&quot;__v_isReadonly&quot;</span> <span class="comment">/* IS_READONLY */</span>] = isReadonly;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">value</span>() &#123;</span><br><span class="line">    <span class="comment">// the computed ref may get wrapped by other proxies e.g. readonly() #3376</span></span><br><span class="line">    <span class="keyword">const</span> self = <span class="title function_">toRaw</span>(<span class="variable language_">this</span>);</span><br><span class="line">    <span class="comment">//   收集用到这个computed的依赖地方</span></span><br><span class="line">    <span class="title function_">trackRefValue</span>(self);</span><br><span class="line">    <span class="comment">//   ！！！这里就表明只有_dirty为true时或者在ssr情况下才会执行对应的computed回调</span></span><br><span class="line">    <span class="keyword">if</span> (self.<span class="property">_dirty</span> || !self.<span class="property">_cacheable</span>) &#123;</span><br><span class="line">      <span class="comment">// 把标志位置为false，下次就不需要再次执行回调</span></span><br><span class="line">      self.<span class="property">_dirty</span> = <span class="literal">false</span>;</span><br><span class="line">      <span class="comment">//   执行对应的回调，这里是执行ReactiveEffect的run函数，run里面会执行fn即getter</span></span><br><span class="line">      self.<span class="property">_value</span> = self.<span class="property">effect</span>.<span class="title function_">run</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//   返回回调的返回值</span></span><br><span class="line">    <span class="keyword">return</span> self.<span class="property">_value</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">set</span> <span class="title function_">value</span>(<span class="params">newValue</span>) &#123;</span><br><span class="line">    <span class="comment">// 这个将值作为参数传递给我们定义的setter</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">_setter</span>(newValue);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="副作用"><a href="#副作用" class="headerlink" title="副作用"></a>副作用</h3><ul>
+<li>主要功能</li>
+</ul>
+<ol>
+<li><p><strong>执行副作用函数</strong></p>
+<ul>
+<li>当 <code>active</code> 为 <code>false</code> 时，直接执行 <code>fn</code> 并返回结果</li>
+<li>当 <code>active</code> 为 <code>true</code> 时，进行完整的依赖追踪和执行流程</li>
+</ul>
+</li>
+<li><p><strong>依赖追踪管理</strong></p>
+<ul>
+<li>设置 <code>activeEffect</code> 为当前的 <code>ReactiveEffect</code> 实例</li>
+<li>维护 effect 栈结构，通过 <code>parent</code> 属性处理嵌套的 effect</li>
+<li>控制 <code>shouldTrack</code> 状态来决定是否应该追踪依赖</li>
+</ul>
+</li>
+<li><p><strong>执行前准备</strong></p>
+<ul>
+<li>保存当前的 <code>activeEffect</code> 和 <code>shouldTrack</code> 状态</li>
+<li>检查是否存在循环依赖（通过遍历 parent 链）</li>
+<li>初始化依赖标记和清理工作</li>
+</ul>
+</li>
+<li><p><strong>执行后清理</strong></p>
+<ul>
+<li>恢复之前的 <code>activeEffect</code> 和 <code>shouldTrack</code> 状态</li>
+<li>处理依赖标记的最终化</li>
+<li>如果在执行过程中被要求停止，则进行清理</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ReactiveEffect</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">fn, scheduler = <span class="literal">null</span>, scope</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fn</span> = fn;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">scheduler</span> = scheduler;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">active</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">deps</span> = [];</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">parent</span> = <span class="literal">undefined</span>;</span><br><span class="line">    <span class="title function_">recordEffectScope</span>(<span class="variable language_">this</span>, scope);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">run</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">active</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">fn</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> parent = activeEffect;</span><br><span class="line">    <span class="keyword">let</span> lastShouldTrack = shouldTrack;</span><br><span class="line">    <span class="keyword">while</span> (parent) &#123;</span><br><span class="line">      <span class="keyword">if</span> (parent === <span class="variable language_">this</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      parent = parent.<span class="property">parent</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 核心执行逻辑</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">parent</span> = activeEffect;</span><br><span class="line">      <span class="comment">// 设置当前活跃的 effect</span></span><br><span class="line">      activeEffect = <span class="variable language_">this</span>;</span><br><span class="line">      shouldTrack = <span class="literal">true</span>;</span><br><span class="line">      <span class="comment">//   effectTrackDepth: 表示当前嵌套的 effect 深度层级</span></span><br><span class="line">      <span class="comment">// maxMarkerBits: 最大标记位数，通常是 30（因为 JavaScript 中位运算使用 32 位整数，需要保留一些位用于其他用途）</span></span><br><span class="line">      trackOpBit = <span class="number">1</span> &lt;&lt; ++effectTrackDepth;</span><br><span class="line">      <span class="comment">//   当嵌套层级未超过最大限制时，使用高效的位运算标记机制</span></span><br><span class="line">      <span class="keyword">if</span> (effectTrackDepth &lt;= maxMarkerBits) &#123;</span><br><span class="line">        <span class="comment">// 初始化依赖标记，通过位运算来追踪依赖关系</span></span><br><span class="line">        <span class="title function_">initDepMarkers</span>(<span class="variable language_">this</span>);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 清除之前这个的副作用（依赖项</span></span><br><span class="line">        <span class="title function_">cleanupEffect</span>(<span class="variable language_">this</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 执行用户定义的副作用函数</span></span><br><span class="line">      <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">fn</span>();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      <span class="comment">// 执行后恢复状态</span></span><br><span class="line">      <span class="keyword">if</span> (effectTrackDepth &lt;= maxMarkerBits) &#123;</span><br><span class="line">        <span class="title function_">finalizeDepMarkers</span>(<span class="variable language_">this</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      trackOpBit = <span class="number">1</span> &lt;&lt; --effectTrackDepth;</span><br><span class="line">      activeEffect = <span class="variable language_">this</span>.<span class="property">parent</span>;</span><br><span class="line">      shouldTrack = lastShouldTrack;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">parent</span> = <span class="literal">undefined</span>;</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">deferStop</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">stop</span>();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">stop</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// stopped while running itself - defer the cleanup</span></span><br><span class="line">    <span class="keyword">if</span> (activeEffect === <span class="variable language_">this</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">deferStop</span> = <span class="literal">true</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">active</span>) &#123;</span><br><span class="line">      <span class="title function_">cleanupEffect</span>(<span class="variable language_">this</span>);</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">onStop</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">onStop</span>();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">active</span> = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="依赖收集"><a href="#依赖收集" class="headerlink" title="依赖收集"></a>依赖收集</h4><p>当执行<code>this.fn();</code>会触发 track 收集器</p>
+<p>activeEffect 是个全局变量，在 ReactiveEffec t 执行<code>this.fn</code>之前，就会执行<code>activeEffect = this;</code>，因此这里的 activeEffect 指向的是 ReactiveEffect</p>
+<p>这里主要是把对应的依赖收集到 targetMap ，再把这个依赖的具体 key 收集到 dep 中，而 dep 就是 targetMap 中具体依赖的 key 值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">track</span>(<span class="params">target, type, key</span>) &#123;</span><br><span class="line">  <span class="comment">// 只有在有活跃的副作用函数时才需要收集</span></span><br><span class="line">  <span class="keyword">if</span> (activeEffect) &#123;</span><br><span class="line">    <span class="comment">// 1. 从 targetMap 中获取 target 对应的 depsMap</span></span><br><span class="line">    <span class="keyword">let</span> depsMap = targetMap.<span class="title function_">get</span>(target);</span><br><span class="line">    <span class="keyword">if</span> (!depsMap) &#123;</span><br><span class="line">      <span class="comment">// 如果不存在，则为 target 创建一个新的 depsMap 并存入 targetMap</span></span><br><span class="line">      targetMap.<span class="title function_">set</span>(target, (depsMap = <span class="keyword">new</span> <span class="title class_">Map</span>()));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 2. 从 depsMap 中获取 key 对应的 dep Set</span></span><br><span class="line">    <span class="keyword">let</span> dep = depsMap.<span class="title function_">get</span>(key);</span><br><span class="line">    <span class="keyword">if</span> (!dep) &#123;</span><br><span class="line">      <span class="comment">// 如果不存在，则为 key 创建一个新的 dep Set 并存入 depsMap</span></span><br><span class="line">      depsMap.<span class="title function_">set</span>(key, (dep = <span class="title function_">createDep</span>()));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> eventInfo = &#123; <span class="attr">effect</span>: activeEffect, target, type, key &#125;;</span><br><span class="line">    <span class="title function_">trackEffects</span>(dep, eventInfo);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>检查 activeEffect 是否存在，确保是在一个副作用函数中读取数据。</p>
+<p>从 targetMap 中获取当前 target 对象对应的 depsMap。没有则创建。</p>
+<p>从 depsMap 中获取当前 key 对应的 dep Set（即依赖集合）。没有则创建。</p>
+<p>将当前活跃的副作用函数 (activeEffect) 添加到这个 dep Set 中。</p>
+<p>反向记录：同时将这个 dep 集合也添加到 activeEffect.deps 数组中，方便后续清理。</p>
+<h4 id="触发更新"><a href="#触发更新" class="headerlink" title="触发更新"></a>触发更新</h4><p>当响应式数据的属性被修改（Set） 时，会触发 setter 拦截器中的 trigger 函数。</p>
+<p>这里就包含了调度器函数的使用（即 ReactiveEffect 的第二个参数</p>
+<p>这里也表明了，vue3 是依据具体的属性 key 去进行依赖更新的，而不是把所有用到对象（不管是不是用到了此次修改的 key 值）全部更新</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">trigger</span>(<span class="params">target, key</span>) &#123;</span><br><span class="line">  <span class="comment">// 1. 通过 target 从 targetMap 中获取 depsMap</span></span><br><span class="line">  <span class="keyword">const</span> depsMap = targetMap.<span class="title function_">get</span>(target);</span><br><span class="line">  <span class="keyword">if</span> (!depsMap) <span class="keyword">return</span>; <span class="comment">// 如果 target 没有收集过任何依赖，直接返回</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2. 通过 key 从 depsMap 中获取 dep Set</span></span><br><span class="line">  <span class="keyword">const</span> dep = depsMap.<span class="title function_">get</span>(key);</span><br><span class="line">  <span class="keyword">if</span> (dep) &#123;</span><br><span class="line">    <span class="comment">// 3. 如果 dep 存在，遍历并执行其中的所有副作用函数</span></span><br><span class="line">    <span class="keyword">const</span> effects = [...dep]; <span class="comment">// 创建一个副本以避免无限循环</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> effect <span class="keyword">of</span> effects) &#123;</span><br><span class="line">      <span class="comment">// ！！这里就是computed可以在依赖更新后不会立马执行回调的原因</span></span><br><span class="line">      <span class="keyword">if</span> (effect.<span class="property">scheduler</span>) &#123;</span><br><span class="line">        <span class="comment">// 如果有调度器（如 computed, watch），则执行调度器</span></span><br><span class="line">        effect.<span class="title function_">scheduler</span>();</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 否则直接运行副作用函数</span></span><br><span class="line">        effect.<span class="title function_">run</span>();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过 target 从 targetMap 中获取对应的 depsMap。</p>
+<p>通过 key 从 depsMap 中获取对应的 dep Set（依赖集合）。</p>
+<p>如果 dep 存在，遍历这个 Set 中的所有副作用函数，并执行它们（或它们的调度器）</p>
+<h3 id="依赖清理"><a href="#依赖清理" class="headerlink" title="依赖清理"></a>依赖清理</h3><p>在 ReactiveEffect 的 run 函数中，会有清理依赖，一个是在执行前的 cleanupEffect，一个是在 fn 执行后的 finalizeDepMarkers</p>
+<ul>
+<li><p>vue3会在之前遍历所有的旧依赖，标记上w，表明执行之前的依赖</p>
+</li>
+<li><p>然后在函数执行触发的track中，会触发设置dep的n标记为新依赖表明这个 effect 在本次执行中又用到了这个 dep。</p>
+</li>
+<li><p>在fn执行后，会比较n和w，然后清理这次没有用到的这些依赖</p>
+</li>
+</ul>
+<h4 id="ReactiveEffect"><a href="#ReactiveEffect" class="headerlink" title="ReactiveEffect"></a>ReactiveEffect</h4><ol>
+<li>++effectTrackDepth</li>
+</ol>
+<p>effectTrackDepth 是一个计数器，记录当前正在执行的 effect 嵌套层级</p>
+<p>++effectTrackDepth 先将该计数器加 1，然后返回新值</p>
+<ol start="2">
+<li>1 &lt;&lt; n (左移运算)</li>
+</ol>
+<p>这是位运算中的左移操作</p>
+<p>将数字 1 的二进制表示向左移动 n 位</p>
+<p>相当于 1 乘以 2 的 n 次方 (1 * 2^n)</p>
+<p>作用：用于标记不同层级的 effect 追踪状态：</p>
+<p>唯一标识：每个嵌套层级的 effect 都有唯一的 trackOpBit 值</p>
+<p>状态标记：在依赖收集过程中，使用这些位来标记依赖是否被追踪过</p>
+<p>优化清理：通过位运算快速判断依赖的追踪状态，避免重复追踪或遗漏清理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="comment">// 这里是用于依赖收集的</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">parent</span> = activeEffect;</span><br><span class="line">  activeEffect = <span class="variable language_">this</span>;</span><br><span class="line">  shouldTrack = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 假设 effectTrackDepth 初始为 0</span></span><br><span class="line">  trackOpBit = <span class="number">1</span> &lt;&lt; ++effectTrackDepth;</span><br><span class="line">  <span class="comment">// 步骤：</span></span><br><span class="line">  <span class="comment">// 1. ++effectTrackDepth → effectTrackDepth = 1</span></span><br><span class="line">  <span class="comment">// 2. 1 &lt;&lt; 1 → 将二进制 1 (01) 左移 1 位 → 二进制 10 → 十进制 2</span></span><br><span class="line">  <span class="comment">// 结果：trackOpBit = 2</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 下一次执行：</span></span><br><span class="line">  trackOpBit = <span class="number">1</span> &lt;&lt; ++effectTrackDepth;</span><br><span class="line">  <span class="comment">// 步骤：</span></span><br><span class="line">  <span class="comment">// 1. ++effectTrackDepth → effectTrackDepth = 2</span></span><br><span class="line">  <span class="comment">// 2. 1 &lt;&lt; 2 → 将二进制 1 (01) 左移 2 位 → 二进制 100 → 十进制 4</span></span><br><span class="line">  <span class="comment">// 结果：trackOpBit = 4</span></span><br><span class="line">  <span class="keyword">if</span> (effectTrackDepth &lt;= maxMarkerBits) &#123;</span><br><span class="line">    <span class="comment">// 用于标记旧依赖</span></span><br><span class="line">    <span class="title function_">initDepMarkers</span>(<span class="variable language_">this</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 如果已经超出限制了，那就把之前的依赖删除，反正后面执行fn也会重新收集依赖</span></span><br><span class="line">    <span class="title function_">cleanupEffect</span>(<span class="variable language_">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">fn</span>();</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (effectTrackDepth &lt;= maxMarkerBits) &#123;</span><br><span class="line">    <span class="comment">// 只有没有清理依赖（没执行cleanupEffect）的时候才需要把旧依赖清除掉</span></span><br><span class="line">    <span class="title function_">finalizeDepMarkers</span>(<span class="variable language_">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  trackOpBit = <span class="number">1</span> &lt;&lt; --effectTrackDepth;</span><br><span class="line">  activeEffect = <span class="variable language_">this</span>.<span class="property">parent</span>;</span><br><span class="line">  shouldTrack = lastShouldTrack;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">parent</span> = <span class="literal">undefined</span>;</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">deferStop</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">stop</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="标志位修改"><a href="#标志位修改" class="headerlink" title="标志位修改"></a>标志位修改</h4><p>这里会在每个 dep 上做一个“was tracked”（曾被跟踪）的标记，标记这个 effect 在上一次执行时属于这个 dep</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">initDepMarkers</span> = (<span class="params">&#123; deps &#125;</span>) =&gt; &#123;</span><br><span class="line">     <span class="keyword">if</span> (deps.<span class="property">length</span>) &#123;</span><br><span class="line">         <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; deps.<span class="property">length</span>; i++) &#123;</span><br><span class="line">             deps[i].<span class="property">w</span> |= trackOpBit; <span class="comment">// set was tracked</span></span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这里是track在最后调用的函数，这里会在每个dep上加上n标识，表面这次最新的一个追踪</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">trackEffects</span>(<span class="params">dep, debuggerEventExtraInfo</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> shouldTrack = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (effectTrackDepth &lt;= maxMarkerBits) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="title function_">newTracked</span>(dep)) &#123;</span><br><span class="line">            dep.<span class="property">n</span> |= trackOpBit; <span class="comment">// set newly tracked</span></span><br><span class="line">            shouldTrack = !<span class="title function_">wasTracked</span>(dep);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// Full cleanup mode.</span></span><br><span class="line">        shouldTrack = !dep.<span class="title function_">has</span>(activeEffect);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (shouldTrack) &#123;</span><br><span class="line">        dep.<span class="title function_">add</span>(activeEffect);</span><br><span class="line">        activeEffect.<span class="property">deps</span>.<span class="title function_">push</span>(dep);</span><br><span class="line">        <span class="keyword">if</span> (activeEffect.<span class="property">onTrack</span>) &#123;</span><br><span class="line">            activeEffect.<span class="title function_">onTrack</span>(<span class="title class_">Object</span>.<span class="title function_">assign</span>(&#123; <span class="attr">effect</span>: activeEffect &#125;, debuggerEventExtraInfo));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里是在fn执行后，会清除之前没有用到的依赖</p>
+<p>通过对比每个 dep 上的 “was tracked” 和 “new tracked” 标记，它可以判断出：</p>
+<p>  如果一个 dep 只有“was”标记，没有“new”标记：说明这个依赖在本次执行中已经不再需要了。于是，将 effect 从这个 dep 中删除。</p>
+<p>  如果一个 dep 有“new”标记：说明这个依赖在本次执行中仍然被需要或者是新添加的。那就保留它，并清除标记以备下次使用。</p>
+<p>这样就实现了一种增量更新，只删除了失效的依赖，而保留仍然有效的依赖，避免了全量清理的开销。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">finalizeDepMarkers</span> = (<span class="params">effect</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; deps &#125; = effect;</span><br><span class="line">    <span class="keyword">if</span> (deps.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> ptr = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; deps.<span class="property">length</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">const</span> dep = deps[i];</span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_">wasTracked</span>(dep) &amp;&amp; !<span class="title function_">newTracked</span>(dep)) &#123;</span><br><span class="line">                dep.<span class="title function_">delete</span>(effect);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                deps[ptr++] = dep;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// clear bits</span></span><br><span class="line">            dep.<span class="property">w</span> &amp;= ~trackOpBit;</span><br><span class="line">            dep.<span class="property">n</span> &amp;= ~trackOpBit;</span><br><span class="line">        &#125;</span><br><span class="line">        deps.<span class="property">length</span> = ptr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><p>computed缓存实现原理</p>
+<p> computed中有个<code>dirty</code>标志位，结合调度器使用，只有当<code>dirty</code>为true时才会重新执行函数，并重新计算，得到值；调度器保证依赖变化时不会触发函数的回调</p>
+</li>
+<li><p>依赖清理</p>
+<p>在执行回调前，会如果嵌套深度大于了最大深度，那么会把之前的依赖清除，但是由于在执行函数时会触发getter的track，会重新收集依赖，因此不用担心依赖没了的问题</p>
+<p>如果嵌套深度没有大于最大深度，那么会执行函数前，对每个dep打上旧的trackd标志位，在执行track时会对dep加上新的trackd标志位。当函数执行结束后，会判断新旧的trackd标志位，只有旧的没有新的旧会被剔除</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/09/05/Vue/%E3%80%90vue%E3%80%91%E8%AF%A6%E8%A7%A3computed/" data-id="cmf67fxdf0025bcfm6xojetgy" data-title="详解computed" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/" rel="tag">vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2025/08/25/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">记录3</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PWA/">PWA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Typescript/">Typescript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VueTest/">VueTest</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web3/">Web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/axios-%E6%BA%90%E7%A0%81/">axios 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vuex-%E6%BA%90%E7%A0%81/">vuex 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web3/">web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webAssembly/">webAssembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webwork/">webwork</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/">业务场景</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/">扩展阅读</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/">额外内容</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typescript/" rel="tag">Typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VueTest/" rel="tag">VueTest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios-%E6%BA%90%E7%A0%81/" rel="tag">axios 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/" rel="tag">chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/console/" rel="tag">console</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuex-%E6%BA%90%E7%A0%81/" rel="tag">vuex 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web3/" rel="tag">web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webAssembly/" rel="tag">webAssembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webRTC/" rel="tag">webRTC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webwork/" rel="tag">webwork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" rel="tag">业务场景</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" rel="tag">扩展阅读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" rel="tag">浏览器 Performance Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" rel="tag">额外内容</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 14px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 14px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">September 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/09/05/Vue/%E3%80%90vue%E3%80%91%E8%AF%A6%E8%A7%A3computed/">详解computed</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/25/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB2/">记录3</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/">记录2</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">记录1</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/14/%E6%89%8B%E5%86%99%E9%A2%98/">手写题</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 yangxin<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

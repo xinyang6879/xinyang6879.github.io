@@ -71,6 +71,723 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Vue/【vue】详解computed" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/09/05/Vue/%E3%80%90vue%E3%80%91%E8%AF%A6%E8%A7%A3computed/" class="article-date">
+  <time class="dt-published" datetime="2025-09-05T00:15:42.875Z" itemprop="datePublished">2025-09-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/vue/">vue</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/09/05/Vue/%E3%80%90vue%E3%80%91%E8%AF%A6%E8%A7%A3computed/">详解computed</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>computed 基于其内部依赖的响应式数据进行缓存的计算值。只有当其依赖的数据发生变化时，它才会重新计算。</p>
+<p>当你创建一个 computed 时，它不会立即执行计算函数。它返回的是一个 class ComputedImp 对象，其 .value 属性在第一次被读取时才会进行首次计算。</p>
+<h3 id="computed"><a href="#computed" class="headerlink" title="computed"></a>computed</h3><p>这个是我们在项目中调用的 computed 函数，那么它在内部还会调用一次 computed</p>
+<p>这个实际调用的 computed 参数，会把我们传入的依赖函数和参数传入进去，vue3 会判断当前是否是 ssr</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">computed$1</span> = (<span class="params">getterOrOptions, debugOptions</span>) =&gt; &#123;</span><br><span class="line">  <span class="comment">// @ts-ignore</span></span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">computed</span>(getterOrOptions, debugOptions, isInSSRComponentSetup);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在这里会把我们传入的回调判断是否有<code>getter</code>和<code>setter</code>，如果我们只传入了一个回调，那么把这个回调作为<code>getter</code>，<code>setter</code>会输出一个 warning；如果是我们自己传入的，那么就把我们传入的作为对应的回调</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">computed</span>(<span class="params">getterOrOptions, debugOptions, isSSR = <span class="literal">false</span></span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> getter;</span><br><span class="line">  <span class="keyword">let</span> setter;</span><br><span class="line">  <span class="comment">//   判断传入的是一个回调还是带有getter和setter的对象</span></span><br><span class="line">  <span class="keyword">const</span> onlyGetter = <span class="title function_">isFunction</span>(getterOrOptions);</span><br><span class="line">  <span class="comment">//   如果只传入了一个回调，那么就自己内部定义一个setter</span></span><br><span class="line">  <span class="keyword">if</span> (onlyGetter) &#123;</span><br><span class="line">    getter = getterOrOptions;</span><br><span class="line">    setter = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">&quot;Write operation failed: computed value is readonly&quot;</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//   如果我们传入的是对象，那么就获取到对应的getter和setter函数</span></span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    getter = getterOrOptions.<span class="property">get</span>;</span><br><span class="line">    setter = getterOrOptions.<span class="property">set</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> cRef = <span class="keyword">new</span> <span class="title class_">ComputedRefImpl</span>(</span><br><span class="line">    getter,</span><br><span class="line">    setter,</span><br><span class="line">    onlyGetter || !setter,</span><br><span class="line">    isSSR</span><br><span class="line">  );</span><br><span class="line">  <span class="keyword">if</span> (debugOptions &amp;&amp; !isSSR) &#123;</span><br><span class="line">    cRef.<span class="property">effect</span>.<span class="property">onTrack</span> = debugOptions.<span class="property">onTrack</span>;</span><br><span class="line">    cRef.<span class="property">effect</span>.<span class="property">onTrigger</span> = debugOptions.<span class="property">onTrigger</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> cRef;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="ComputedRefImpl"><a href="#ComputedRefImpl" class="headerlink" title="ComputedRefImpl"></a>ComputedRefImpl</h4><p>这个是我们实际的 computed 对象，那么这个和基础数据类型拦截器一样，用的 class+属性作为一个返回</p>
+<p>在这里面可以看到为什么说 computed 可以缓存数据，利用<strong>_dirty</strong>来去标识是否需要重新计算</p>
+<p>我们在新建一个副作用的时候，ReactiveEffect 第二个参数是一个调度器，那么如果传入了这个调度器，在依赖变化时就不会直接执行对应的回调，而是执行这个调度器</p>
+<p>因为 computed 在加了 ReactiveEffect 中的调度器是会把<strong>_dirty</strong>来标志如果下次触发了 getter，那么需要重新执行对应的回调函数，所以这就是为什么 computed 可以缓存数据的原因</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ComputedRefImpl</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">getter, _setter, isReadonly, isSSR</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_setter</span> = _setter;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">dep</span> = <span class="literal">undefined</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">__v_isRef</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">//   用于标志在getter是否需要重新执行回调</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_dirty</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">//   副作用，即依赖变化时会触发的，类似于vue2里面的Watcher</span></span><br><span class="line">    <span class="comment">// 传入的第二个参数是调度器，那么在依赖变化时不会直接执行回调，而是执行对应的调度器，在这里就是执行第二个参数</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">effect</span> = <span class="keyword">new</span> <span class="title class_">ReactiveEffect</span>(getter, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">_dirty</span>) &#123;</span><br><span class="line">        <span class="comment">// 标识下次执行getter需要重新执行函数</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">_dirty</span> = <span class="literal">true</span>;</span><br><span class="line">        <span class="comment">//   触发其他依赖到这个computed的地方，通知他们数据修改了</span></span><br><span class="line">        <span class="title function_">triggerRefValue</span>(<span class="variable language_">this</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">effect</span>.<span class="property">computed</span> = <span class="variable language_">this</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">effect</span>.<span class="property">active</span> = <span class="variable language_">this</span>.<span class="property">_cacheable</span> = !isSSR;</span><br><span class="line">    <span class="variable language_">this</span>[<span class="string">&quot;__v_isReadonly&quot;</span> <span class="comment">/* IS_READONLY */</span>] = isReadonly;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">value</span>() &#123;</span><br><span class="line">    <span class="comment">// the computed ref may get wrapped by other proxies e.g. readonly() #3376</span></span><br><span class="line">    <span class="keyword">const</span> self = <span class="title function_">toRaw</span>(<span class="variable language_">this</span>);</span><br><span class="line">    <span class="comment">//   收集用到这个computed的依赖地方</span></span><br><span class="line">    <span class="title function_">trackRefValue</span>(self);</span><br><span class="line">    <span class="comment">//   ！！！这里就表明只有_dirty为true时或者在ssr情况下才会执行对应的computed回调</span></span><br><span class="line">    <span class="keyword">if</span> (self.<span class="property">_dirty</span> || !self.<span class="property">_cacheable</span>) &#123;</span><br><span class="line">      <span class="comment">// 把标志位置为false，下次就不需要再次执行回调</span></span><br><span class="line">      self.<span class="property">_dirty</span> = <span class="literal">false</span>;</span><br><span class="line">      <span class="comment">//   执行对应的回调，这里是执行ReactiveEffect的run函数，run里面会执行fn即getter</span></span><br><span class="line">      self.<span class="property">_value</span> = self.<span class="property">effect</span>.<span class="title function_">run</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//   返回回调的返回值</span></span><br><span class="line">    <span class="keyword">return</span> self.<span class="property">_value</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">set</span> <span class="title function_">value</span>(<span class="params">newValue</span>) &#123;</span><br><span class="line">    <span class="comment">// 这个将值作为参数传递给我们定义的setter</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">_setter</span>(newValue);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="副作用"><a href="#副作用" class="headerlink" title="副作用"></a>副作用</h3><ul>
+<li>主要功能</li>
+</ul>
+<ol>
+<li><p><strong>执行副作用函数</strong></p>
+<ul>
+<li>当 <code>active</code> 为 <code>false</code> 时，直接执行 <code>fn</code> 并返回结果</li>
+<li>当 <code>active</code> 为 <code>true</code> 时，进行完整的依赖追踪和执行流程</li>
+</ul>
+</li>
+<li><p><strong>依赖追踪管理</strong></p>
+<ul>
+<li>设置 <code>activeEffect</code> 为当前的 <code>ReactiveEffect</code> 实例</li>
+<li>维护 effect 栈结构，通过 <code>parent</code> 属性处理嵌套的 effect</li>
+<li>控制 <code>shouldTrack</code> 状态来决定是否应该追踪依赖</li>
+</ul>
+</li>
+<li><p><strong>执行前准备</strong></p>
+<ul>
+<li>保存当前的 <code>activeEffect</code> 和 <code>shouldTrack</code> 状态</li>
+<li>检查是否存在循环依赖（通过遍历 parent 链）</li>
+<li>初始化依赖标记和清理工作</li>
+</ul>
+</li>
+<li><p><strong>执行后清理</strong></p>
+<ul>
+<li>恢复之前的 <code>activeEffect</code> 和 <code>shouldTrack</code> 状态</li>
+<li>处理依赖标记的最终化</li>
+<li>如果在执行过程中被要求停止，则进行清理</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ReactiveEffect</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">fn, scheduler = <span class="literal">null</span>, scope</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fn</span> = fn;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">scheduler</span> = scheduler;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">active</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">deps</span> = [];</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">parent</span> = <span class="literal">undefined</span>;</span><br><span class="line">    <span class="title function_">recordEffectScope</span>(<span class="variable language_">this</span>, scope);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">run</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">active</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">fn</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> parent = activeEffect;</span><br><span class="line">    <span class="keyword">let</span> lastShouldTrack = shouldTrack;</span><br><span class="line">    <span class="keyword">while</span> (parent) &#123;</span><br><span class="line">      <span class="keyword">if</span> (parent === <span class="variable language_">this</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      parent = parent.<span class="property">parent</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 核心执行逻辑</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">parent</span> = activeEffect;</span><br><span class="line">      <span class="comment">// 设置当前活跃的 effect</span></span><br><span class="line">      activeEffect = <span class="variable language_">this</span>;</span><br><span class="line">      shouldTrack = <span class="literal">true</span>;</span><br><span class="line">      <span class="comment">//   effectTrackDepth: 表示当前嵌套的 effect 深度层级</span></span><br><span class="line">      <span class="comment">// maxMarkerBits: 最大标记位数，通常是 30（因为 JavaScript 中位运算使用 32 位整数，需要保留一些位用于其他用途）</span></span><br><span class="line">      trackOpBit = <span class="number">1</span> &lt;&lt; ++effectTrackDepth;</span><br><span class="line">      <span class="comment">//   当嵌套层级未超过最大限制时，使用高效的位运算标记机制</span></span><br><span class="line">      <span class="keyword">if</span> (effectTrackDepth &lt;= maxMarkerBits) &#123;</span><br><span class="line">        <span class="comment">// 初始化依赖标记，通过位运算来追踪依赖关系</span></span><br><span class="line">        <span class="title function_">initDepMarkers</span>(<span class="variable language_">this</span>);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 清除之前这个的副作用（依赖项</span></span><br><span class="line">        <span class="title function_">cleanupEffect</span>(<span class="variable language_">this</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 执行用户定义的副作用函数</span></span><br><span class="line">      <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">fn</span>();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      <span class="comment">// 执行后恢复状态</span></span><br><span class="line">      <span class="keyword">if</span> (effectTrackDepth &lt;= maxMarkerBits) &#123;</span><br><span class="line">        <span class="title function_">finalizeDepMarkers</span>(<span class="variable language_">this</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      trackOpBit = <span class="number">1</span> &lt;&lt; --effectTrackDepth;</span><br><span class="line">      activeEffect = <span class="variable language_">this</span>.<span class="property">parent</span>;</span><br><span class="line">      shouldTrack = lastShouldTrack;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">parent</span> = <span class="literal">undefined</span>;</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">deferStop</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">stop</span>();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">stop</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// stopped while running itself - defer the cleanup</span></span><br><span class="line">    <span class="keyword">if</span> (activeEffect === <span class="variable language_">this</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">deferStop</span> = <span class="literal">true</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">active</span>) &#123;</span><br><span class="line">      <span class="title function_">cleanupEffect</span>(<span class="variable language_">this</span>);</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">onStop</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">onStop</span>();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">active</span> = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="依赖收集"><a href="#依赖收集" class="headerlink" title="依赖收集"></a>依赖收集</h4><p>当执行<code>this.fn();</code>会触发 track 收集器</p>
+<p>activeEffect 是个全局变量，在 ReactiveEffec t 执行<code>this.fn</code>之前，就会执行<code>activeEffect = this;</code>，因此这里的 activeEffect 指向的是 ReactiveEffect</p>
+<p>这里主要是把对应的依赖收集到 targetMap ，再把这个依赖的具体 key 收集到 dep 中，而 dep 就是 targetMap 中具体依赖的 key 值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">track</span>(<span class="params">target, type, key</span>) &#123;</span><br><span class="line">  <span class="comment">// 只有在有活跃的副作用函数时才需要收集</span></span><br><span class="line">  <span class="keyword">if</span> (activeEffect) &#123;</span><br><span class="line">    <span class="comment">// 1. 从 targetMap 中获取 target 对应的 depsMap</span></span><br><span class="line">    <span class="keyword">let</span> depsMap = targetMap.<span class="title function_">get</span>(target);</span><br><span class="line">    <span class="keyword">if</span> (!depsMap) &#123;</span><br><span class="line">      <span class="comment">// 如果不存在，则为 target 创建一个新的 depsMap 并存入 targetMap</span></span><br><span class="line">      targetMap.<span class="title function_">set</span>(target, (depsMap = <span class="keyword">new</span> <span class="title class_">Map</span>()));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 2. 从 depsMap 中获取 key 对应的 dep Set</span></span><br><span class="line">    <span class="keyword">let</span> dep = depsMap.<span class="title function_">get</span>(key);</span><br><span class="line">    <span class="keyword">if</span> (!dep) &#123;</span><br><span class="line">      <span class="comment">// 如果不存在，则为 key 创建一个新的 dep Set 并存入 depsMap</span></span><br><span class="line">      depsMap.<span class="title function_">set</span>(key, (dep = <span class="title function_">createDep</span>()));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> eventInfo = &#123; <span class="attr">effect</span>: activeEffect, target, type, key &#125;;</span><br><span class="line">    <span class="title function_">trackEffects</span>(dep, eventInfo);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>检查 activeEffect 是否存在，确保是在一个副作用函数中读取数据。</p>
+<p>从 targetMap 中获取当前 target 对象对应的 depsMap。没有则创建。</p>
+<p>从 depsMap 中获取当前 key 对应的 dep Set（即依赖集合）。没有则创建。</p>
+<p>将当前活跃的副作用函数 (activeEffect) 添加到这个 dep Set 中。</p>
+<p>反向记录：同时将这个 dep 集合也添加到 activeEffect.deps 数组中，方便后续清理。</p>
+<h4 id="触发更新"><a href="#触发更新" class="headerlink" title="触发更新"></a>触发更新</h4><p>当响应式数据的属性被修改（Set） 时，会触发 setter 拦截器中的 trigger 函数。</p>
+<p>这里就包含了调度器函数的使用（即 ReactiveEffect 的第二个参数</p>
+<p>这里也表明了，vue3 是依据具体的属性 key 去进行依赖更新的，而不是把所有用到对象（不管是不是用到了此次修改的 key 值）全部更新</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">trigger</span>(<span class="params">target, key</span>) &#123;</span><br><span class="line">  <span class="comment">// 1. 通过 target 从 targetMap 中获取 depsMap</span></span><br><span class="line">  <span class="keyword">const</span> depsMap = targetMap.<span class="title function_">get</span>(target);</span><br><span class="line">  <span class="keyword">if</span> (!depsMap) <span class="keyword">return</span>; <span class="comment">// 如果 target 没有收集过任何依赖，直接返回</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2. 通过 key 从 depsMap 中获取 dep Set</span></span><br><span class="line">  <span class="keyword">const</span> dep = depsMap.<span class="title function_">get</span>(key);</span><br><span class="line">  <span class="keyword">if</span> (dep) &#123;</span><br><span class="line">    <span class="comment">// 3. 如果 dep 存在，遍历并执行其中的所有副作用函数</span></span><br><span class="line">    <span class="keyword">const</span> effects = [...dep]; <span class="comment">// 创建一个副本以避免无限循环</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> effect <span class="keyword">of</span> effects) &#123;</span><br><span class="line">      <span class="comment">// ！！这里就是computed可以在依赖更新后不会立马执行回调的原因</span></span><br><span class="line">      <span class="keyword">if</span> (effect.<span class="property">scheduler</span>) &#123;</span><br><span class="line">        <span class="comment">// 如果有调度器（如 computed, watch），则执行调度器</span></span><br><span class="line">        effect.<span class="title function_">scheduler</span>();</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 否则直接运行副作用函数</span></span><br><span class="line">        effect.<span class="title function_">run</span>();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过 target 从 targetMap 中获取对应的 depsMap。</p>
+<p>通过 key 从 depsMap 中获取对应的 dep Set（依赖集合）。</p>
+<p>如果 dep 存在，遍历这个 Set 中的所有副作用函数，并执行它们（或它们的调度器）</p>
+<h3 id="依赖清理"><a href="#依赖清理" class="headerlink" title="依赖清理"></a>依赖清理</h3><p>在 ReactiveEffect 的 run 函数中，会有清理依赖，一个是在执行前的 cleanupEffect，一个是在 fn 执行后的 finalizeDepMarkers</p>
+<ul>
+<li><p>vue3会在之前遍历所有的旧依赖，标记上w，表明执行之前的依赖</p>
+</li>
+<li><p>然后在函数执行触发的track中，会触发设置dep的n标记为新依赖表明这个 effect 在本次执行中又用到了这个 dep。</p>
+</li>
+<li><p>在fn执行后，会比较n和w，然后清理这次没有用到的这些依赖</p>
+</li>
+</ul>
+<h4 id="ReactiveEffect"><a href="#ReactiveEffect" class="headerlink" title="ReactiveEffect"></a>ReactiveEffect</h4><ol>
+<li>++effectTrackDepth</li>
+</ol>
+<p>effectTrackDepth 是一个计数器，记录当前正在执行的 effect 嵌套层级</p>
+<p>++effectTrackDepth 先将该计数器加 1，然后返回新值</p>
+<ol start="2">
+<li>1 &lt;&lt; n (左移运算)</li>
+</ol>
+<p>这是位运算中的左移操作</p>
+<p>将数字 1 的二进制表示向左移动 n 位</p>
+<p>相当于 1 乘以 2 的 n 次方 (1 * 2^n)</p>
+<p>作用：用于标记不同层级的 effect 追踪状态：</p>
+<p>唯一标识：每个嵌套层级的 effect 都有唯一的 trackOpBit 值</p>
+<p>状态标记：在依赖收集过程中，使用这些位来标记依赖是否被追踪过</p>
+<p>优化清理：通过位运算快速判断依赖的追踪状态，避免重复追踪或遗漏清理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="comment">// 这里是用于依赖收集的</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">parent</span> = activeEffect;</span><br><span class="line">  activeEffect = <span class="variable language_">this</span>;</span><br><span class="line">  shouldTrack = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 假设 effectTrackDepth 初始为 0</span></span><br><span class="line">  trackOpBit = <span class="number">1</span> &lt;&lt; ++effectTrackDepth;</span><br><span class="line">  <span class="comment">// 步骤：</span></span><br><span class="line">  <span class="comment">// 1. ++effectTrackDepth → effectTrackDepth = 1</span></span><br><span class="line">  <span class="comment">// 2. 1 &lt;&lt; 1 → 将二进制 1 (01) 左移 1 位 → 二进制 10 → 十进制 2</span></span><br><span class="line">  <span class="comment">// 结果：trackOpBit = 2</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 下一次执行：</span></span><br><span class="line">  trackOpBit = <span class="number">1</span> &lt;&lt; ++effectTrackDepth;</span><br><span class="line">  <span class="comment">// 步骤：</span></span><br><span class="line">  <span class="comment">// 1. ++effectTrackDepth → effectTrackDepth = 2</span></span><br><span class="line">  <span class="comment">// 2. 1 &lt;&lt; 2 → 将二进制 1 (01) 左移 2 位 → 二进制 100 → 十进制 4</span></span><br><span class="line">  <span class="comment">// 结果：trackOpBit = 4</span></span><br><span class="line">  <span class="keyword">if</span> (effectTrackDepth &lt;= maxMarkerBits) &#123;</span><br><span class="line">    <span class="comment">// 用于标记旧依赖</span></span><br><span class="line">    <span class="title function_">initDepMarkers</span>(<span class="variable language_">this</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 如果已经超出限制了，那就把之前的依赖删除，反正后面执行fn也会重新收集依赖</span></span><br><span class="line">    <span class="title function_">cleanupEffect</span>(<span class="variable language_">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">fn</span>();</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (effectTrackDepth &lt;= maxMarkerBits) &#123;</span><br><span class="line">    <span class="comment">// 只有没有清理依赖（没执行cleanupEffect）的时候才需要把旧依赖清除掉</span></span><br><span class="line">    <span class="title function_">finalizeDepMarkers</span>(<span class="variable language_">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  trackOpBit = <span class="number">1</span> &lt;&lt; --effectTrackDepth;</span><br><span class="line">  activeEffect = <span class="variable language_">this</span>.<span class="property">parent</span>;</span><br><span class="line">  shouldTrack = lastShouldTrack;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">parent</span> = <span class="literal">undefined</span>;</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">deferStop</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">stop</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="标志位修改"><a href="#标志位修改" class="headerlink" title="标志位修改"></a>标志位修改</h4><p>这里会在每个 dep 上做一个“was tracked”（曾被跟踪）的标记，标记这个 effect 在上一次执行时属于这个 dep</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">initDepMarkers</span> = (<span class="params">&#123; deps &#125;</span>) =&gt; &#123;</span><br><span class="line">     <span class="keyword">if</span> (deps.<span class="property">length</span>) &#123;</span><br><span class="line">         <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; deps.<span class="property">length</span>; i++) &#123;</span><br><span class="line">             deps[i].<span class="property">w</span> |= trackOpBit; <span class="comment">// set was tracked</span></span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这里是track在最后调用的函数，这里会在每个dep上加上n标识，表面这次最新的一个追踪</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">trackEffects</span>(<span class="params">dep, debuggerEventExtraInfo</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> shouldTrack = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (effectTrackDepth &lt;= maxMarkerBits) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="title function_">newTracked</span>(dep)) &#123;</span><br><span class="line">            dep.<span class="property">n</span> |= trackOpBit; <span class="comment">// set newly tracked</span></span><br><span class="line">            shouldTrack = !<span class="title function_">wasTracked</span>(dep);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// Full cleanup mode.</span></span><br><span class="line">        shouldTrack = !dep.<span class="title function_">has</span>(activeEffect);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (shouldTrack) &#123;</span><br><span class="line">        dep.<span class="title function_">add</span>(activeEffect);</span><br><span class="line">        activeEffect.<span class="property">deps</span>.<span class="title function_">push</span>(dep);</span><br><span class="line">        <span class="keyword">if</span> (activeEffect.<span class="property">onTrack</span>) &#123;</span><br><span class="line">            activeEffect.<span class="title function_">onTrack</span>(<span class="title class_">Object</span>.<span class="title function_">assign</span>(&#123; <span class="attr">effect</span>: activeEffect &#125;, debuggerEventExtraInfo));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里是在fn执行后，会清除之前没有用到的依赖</p>
+<p>通过对比每个 dep 上的 “was tracked” 和 “new tracked” 标记，它可以判断出：</p>
+<p>  如果一个 dep 只有“was”标记，没有“new”标记：说明这个依赖在本次执行中已经不再需要了。于是，将 effect 从这个 dep 中删除。</p>
+<p>  如果一个 dep 有“new”标记：说明这个依赖在本次执行中仍然被需要或者是新添加的。那就保留它，并清除标记以备下次使用。</p>
+<p>这样就实现了一种增量更新，只删除了失效的依赖，而保留仍然有效的依赖，避免了全量清理的开销。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">finalizeDepMarkers</span> = (<span class="params">effect</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; deps &#125; = effect;</span><br><span class="line">    <span class="keyword">if</span> (deps.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> ptr = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; deps.<span class="property">length</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">const</span> dep = deps[i];</span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_">wasTracked</span>(dep) &amp;&amp; !<span class="title function_">newTracked</span>(dep)) &#123;</span><br><span class="line">                dep.<span class="title function_">delete</span>(effect);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                deps[ptr++] = dep;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// clear bits</span></span><br><span class="line">            dep.<span class="property">w</span> &amp;= ~trackOpBit;</span><br><span class="line">            dep.<span class="property">n</span> &amp;= ~trackOpBit;</span><br><span class="line">        &#125;</span><br><span class="line">        deps.<span class="property">length</span> = ptr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><p>computed缓存实现原理</p>
+<p> computed中有个<code>dirty</code>标志位，结合调度器使用，只有当<code>dirty</code>为true时才会重新执行函数，并重新计算，得到值；调度器保证依赖变化时不会触发函数的回调</p>
+</li>
+<li><p>依赖清理</p>
+<p>在执行回调前，会如果嵌套深度大于了最大深度，那么会把之前的依赖清除，但是由于在执行函数时会触发getter的track，会重新收集依赖，因此不用担心依赖没了的问题</p>
+<p>如果嵌套深度没有大于最大深度，那么会执行函数前，对每个dep打上旧的trackd标志位，在执行track时会对dep加上新的trackd标志位。当函数执行结束后，会判断新旧的trackd标志位，只有旧的没有新的旧会被剔除</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/09/05/Vue/%E3%80%90vue%E3%80%91%E8%AF%A6%E8%A7%A3computed/" data-id="cmf67fxdf0025bcfm6xojetgy" data-title="详解computed" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/" rel="tag">vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-面试/【面试】汇总2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/25/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB2/" class="article-date">
+  <time class="dt-published" datetime="2025-08-25T02:42:18.061Z" itemprop="datePublished">2025-08-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/25/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB2/">记录3</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="vue-router不同传参模式"><a href="#vue-router不同传参模式" class="headerlink" title="vue-router不同传参模式"></a>vue-router不同传参模式</h3><p>了解 Vue Router 的不同传参方式很重要，它们各有特点，适用于不同的场景。下面我用一个表格汇总它们的核心区别，然后详细解释：</p>
+<table>
+<thead>
+<tr>
+<th>特性维度</th>
+<th>动态路由传参 (Dynamic Routes)</th>
+<th>Params 传参 (不显示在 URL)</th>
+<th>Query 传参 (Query Parameters)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>URL 中的表现</strong></td>
+<td>路径的一部分 (e.g., <code>/user/123</code>)</td>
+<td><strong>不在 URL 中显示</strong></td>
+<td>查询字符串 (e.g., <code>?id=123&amp;name=zhangsan</code>)</td>
+</tr>
+<tr>
+<td><strong>路由配置</strong></td>
+<td>需在 path 中定义参数 (<code>:id</code>)</td>
+<td>无需在 path 中定义参数</td>
+<td>无需在 path 中定义参数</td>
+</tr>
+<tr>
+<td><strong>跳转方式</strong></td>
+<td><code>path</code> 或 <code>name</code></td>
+<td>必须使用 <code>name</code></td>
+<td><code>path</code> 或 <code>name</code></td>
+</tr>
+<tr>
+<td><strong>参数传递语法</strong></td>
+<td><code>path: &#39;/user/&#39; + userId</code> 或 <code>params</code></td>
+<td><code>params: &#123; id: 123 &#125;</code></td>
+<td><code>query: &#123; id: 123 &#125;</code></td>
+</tr>
+<tr>
+<td><strong>参数获取语法</strong></td>
+<td><code>$route.params.id</code></td>
+<td><code>$route.params.id</code></td>
+<td><code>$route.query.id</code></td>
+</tr>
+<tr>
+<td><strong>页面刷新后</strong></td>
+<td><strong>参数保留</strong></td>
+<td><strong>参数丢失</strong></td>
+<td><strong>参数保留</strong></td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>资源ID、必要参数</td>
+<td>敏感数据、临时参数</td>
+<td>筛选条件、可选参数、分享链接</td>
+</tr>
+</tbody></table>
+<p> <strong>其他传参方式</strong><br>除了上述三种主要方式，还有：</p>
+<ul>
+<li><strong>通过 <code>props</code> 解耦</strong>：在路由配置中设置 <code>props: true</code>，可以将 <code>$route.params</code> 作为组件的 <strong>props</strong> 接收，让组件更独立，不直接依赖 <code>$route</code> 对象。</li>
+<li>**通过路由元信息 <code>meta</code>**：可以在路由配置的 <code>meta</code> 字段中添加一些静态信息（如页面标题、权限要求），常用于全局导航守卫中进行逻辑判断。</li>
+</ul>
+<p><strong>如何选择传参方式</strong></p>
+<p>选择哪种方式，可以根据你的具体需求来定：</p>
+<ul>
+<li>需要参数在<strong>页面刷新后仍然保留</strong>，或者希望参数<strong>体现在 URL 中以便分享或收藏</strong>？优先考虑 <strong>动态路由传参</strong> 或 <strong>Query 传参</strong>。</li>
+<li>传递的是<strong>敏感信息</strong>（如临时令牌）或<strong>不希望参数暴露在 URL 中</strong>？可以考虑 <strong>Params 传参（不显示）</strong>，但需注意刷新会丢失。</li>
+<li>参数是<strong>可选的、非必需的</strong>，比如列表的<strong>筛选、排序条件</strong>？<strong>Query 传参</strong> 很合适。</li>
+<li>参数是<strong>资源的唯一标识</strong>（如用户ID、文章ID）？<strong>动态路由传参</strong> 更语义化。</li>
+<li>希望组件能<strong>更独立于路由</strong>，减少对 <code>$route</code> 的依赖？试试 <strong><code>props</code> 传参</strong>。</li>
+</ul>
+<p> <strong>简单的使用建议</strong></p>
+<ul>
+<li><strong>重要且必要的参数</strong>，尤其像对象ID这类，常用<strong>动态路由传参</strong>。</li>
+<li><strong>可选参数</strong>或<strong>多个参数</strong>，常用 <strong>Query 传参</strong>。</li>
+<li><strong>Params传参（不显示）</strong> 需谨慎使用，注意其刷新页面参数会丢失的特性。</li>
+</ul>
+<p>希望这些信息能帮助你更好地选择和使用 Vue Router 的传参方式。</p>
+<h3 id="路由模式区别"><a href="#路由模式区别" class="headerlink" title="路由模式区别"></a>路由模式区别</h3><p>这两个模式的核心区别在于<strong>如何模拟和操作浏览器的历史记录</strong>，从而带来了一系列不同的特性。下面这个表格汇总了它们的主要区别。</p>
+<table>
+<thead>
+<tr>
+<th align="left">特性维度</th>
+<th align="left">Hash 模式</th>
+<th align="left">History 模式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>URL 美观度</strong></td>
+<td align="left">不美观 (含 <code>#</code>)</td>
+<td align="left">美观 (与普通URL无异)</td>
+</tr>
+<tr>
+<td align="left"><strong>SEO 友好性</strong></td>
+<td align="left">不友好</td>
+<td align="left">友好 (需服务器配合)</td>
+</tr>
+<tr>
+<td align="left"><strong>服务器配置需求</strong></td>
+<td align="left">无需特殊配置</td>
+<td align="left">需要配置支持 (避免刷新404)</td>
+</tr>
+<tr>
+<td align="left"><strong>浏览器兼容性</strong></td>
+<td align="left">所有浏览器</td>
+<td align="left">需要 HTML5 History API 支持 (现代浏览器均支持)</td>
+</tr>
+<tr>
+<td align="left"><strong>实现方式</strong></td>
+<td align="left">监听 <code>hashchange</code> 事件</td>
+<td align="left">使用 History API (<code>pushState</code>, <code>replaceState</code>) 和监听 <code>popstate</code> 事件</td>
+</tr>
+<tr>
+<td align="left"><strong>适用场景</strong></td>
+<td align="left">内部工具、管理后台、兼容性要求高的场景</td>
+<td align="left">面向公众的网站、对SEO和URL美观度有要求的场景</td>
+</tr>
+</tbody></table>
+<h4 id="工作原理与特点"><a href="#工作原理与特点" class="headerlink" title="工作原理与特点"></a>工作原理与特点</h4><ol>
+<li>Hash 模式</li>
+</ol>
+<ul>
+<li>原理：</li>
+</ul>
+<p>通过 URL 中的 #（哈希值）管理路由。例如：<a href="http://example.com/#/user%E3%80%82%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8D%E4%BC%9A%E5%B0%86">http://example.com/#/user。浏览器不会将</a> # 后的内容发送到服务器（仅客户端处理）。</p>
+<p>依赖 hashchange 事件监听变化，更新组件无页面重载。</p>
+<ul>
+<li>优点：</li>
+</ul>
+<p>零服务器配置：适用于 GitHub Pages、Netlify 等静态托管。</p>
+<p>兼容性强：支持旧版浏览器（如 IE9）。</p>
+<ul>
+<li>缺点：<br>URL 不美观：# 影响可读性。</li>
+</ul>
+<p>SEO 受限：搜索引擎忽略 # 后内容，无法直接索引路由页面。<br>2. History 模式</p>
+<ul>
+<li>原理：</li>
+</ul>
+<p>使用 HTML5 History API（pushState() 和 replaceState()）模拟完整路径。例如：<a href="http://example.com/user%E3%80%82">http://example.com/user。</a><br>URL 无 #，路径由 Vue Router 在客户端管理。</p>
+<ul>
+<li><p>优点：<br>URL 简洁美观：更符合用户习惯，利于品牌形象。<br>SEO 优化：完整路径可被爬虫抓取（需配合 SSR 或预渲染）。</p>
+</li>
+<li><p>缺点：</p>
+</li>
+</ul>
+<p>需服务器配置：必须将所有路径重定向到 index.html，否则刷新页面会触发 404 错误。</p>
+<p>兼容性要求：不支持 IE9 及以下（需 Polyfill）。</p>
+<h4 id="如何编写两种模式"><a href="#如何编写两种模式" class="headerlink" title="如何编写两种模式"></a>如何编写两种模式</h4><p>在 <strong>Vue Router</strong> 中，设置模式非常简单，主要在创建路由实例时进行配置。</p>
+<ol>
+<li><p><strong>Hash 模式</strong><br>使用 <code>createWebHashHistory</code> 函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createRouter, createWebHashHistory &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">  <span class="attr">history</span>: <span class="title function_">createWebHashHistory</span>(), <span class="comment">// 使用 hash 模式</span></span><br><span class="line">  <span class="attr">routes</span>: [...], <span class="comment">// 你的路由配置</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>此后，你的 URL 会形如 <code>http://example.com/#/user/id</code>。</p>
+</li>
+<li><p><strong>History 模式</strong><br>使用 <code>createWebHistory</code> 函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createRouter, createWebHistory &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">  <span class="attr">history</span>: <span class="title function_">createWebHistory</span>(), <span class="comment">// 使用 history 模式</span></span><br><span class="line">  <span class="attr">routes</span>: [...], <span class="comment">// 你的路由配置</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>此后，你的 URL 会形如 <code>http://example.com/user/id</code>。</p>
+</li>
+</ol>
+<h4 id="服务器配置（History-模式关键）"><a href="#服务器配置（History-模式关键）" class="headerlink" title="服务器配置（History 模式关键）"></a>服务器配置（History 模式关键）</h4><p>选择 <strong>History 模式</strong>，必须在服务器端进行相应配置，以确保用户在浏览器中直接输入 URL 或刷新页面时不会收到 404 错误。这是因为这些 URL 在实际的文件系统中并不存在，需要由 SPA 的入口文件（通常是 <code>index.html</code>）来处理。</p>
+<p>以下是常见服务器的配置示例：</p>
+<ul>
+<li><p><strong>Nginx</strong></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">  <span class="attribute">try_files</span> <span class="variable">$uri</span> <span class="variable">$uri</span>/ /index.html; <span class="comment"># 尝试按顺序寻找资源，最终均返回 index.html</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Apache</strong> (在 <code>.htaccess</code> 文件中)</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">&lt;IfModule mod_rewrite.c&gt;</span></span><br><span class="line">  <span class="attribute">RewriteEngine</span> <span class="literal">On</span></span><br><span class="line">  <span class="attribute">RewriteBase</span> /</span><br><span class="line">  <span class="attribute">RewriteRule</span> ^index\.html$ -<span class="meta"> [L]</span></span><br><span class="line">  <span class="attribute">RewriteCond</span> <span class="variable">%&#123;REQUEST_FILENAME&#125;</span> !-f</span><br><span class="line">  <span class="attribute">RewriteCond</span> <span class="variable">%&#123;REQUEST_FILENAME&#125;</span> !-d</span><br><span class="line">  <span class="attribute">RewriteRule</span> . /index.html<span class="meta"> [L]</span></span><br><span class="line"><span class="section">&lt;/IfModule&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Node.js (Express)</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 静态资源服务</span></span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">static</span>(path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;dist&#x27;</span>)));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 所有 GET 请求均返回 index.html</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;*&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.<span class="title function_">sendFile</span>(path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;dist/index.html&#x27;</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="选择模式的建议"><a href="#选择模式的建议" class="headerlink" title="选择模式的建议"></a>选择模式的建议</h4><p>选择哪种模式取决于你的项目需求：</p>
+<ul>
+<li><p><strong>选择 Hash 模式，如果</strong>：</p>
+<ul>
+<li>你的应用是<strong>内部后台管理系统</strong>、工具类应用或原型demo。</li>
+<li>你<strong>没有权限或不想配置</strong>服务器。</li>
+<li>需要支持<strong>非常古老的浏览器</strong>。</li>
+<li><strong>SEO 无关紧要</strong>。</li>
+</ul>
+</li>
+<li><p><strong>选择 History 模式，如果</strong>：</p>
+<ul>
+<li>你的应用是<strong>面向公众的网站</strong>，如博客、电商平台、企业官网等。</li>
+<li>你<strong>非常看重 URL 的美观性和专业性</strong>。</li>
+<li><strong>SEO（搜索引擎优化）</strong> 对你的应用至关重要。</li>
+<li>你可以<strong>控制并配置服务器</strong>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><ol>
+<li><strong>History 模式的 404 问题</strong>：这是最常见的问题。再次强调，<strong>务必确保你的服务器已正确配置</strong>，否则用户直接访问或刷新深度链接时会得到 404。</li>
+<li><strong>Hash 模式与锚点</strong>：URL 中的 <code>#</code> 原本用于页面内锚点导航。在 Hash 模式下，<strong>避免使用与路由路径同名的 HTML 元素 ID</strong>，以免造成冲突和意外滚动。</li>
+<li><strong>Abstract 模式</strong>：Vue Router 还支持第三种 <code>abstract</code> 模式（在 Vue Router 4 中通过 <code>createMemoryHistory</code> 实现）。它主要用于 <strong>非浏览器环境</strong>，如 <strong>Node.js（SSR）、Weex 或移动端原生应用</strong>测试，不会改变地址栏的 URL。</li>
+</ol>
+<ul>
+<li>hash+mpa</li>
+</ul>
+<p>监听hashchange事件，然后加载对应的页面</p>
+<p>通常情况下，hash模式用于单页应用，history模式用于多页面应用。</p>
+<h3 id="导航栏"><a href="#导航栏" class="headerlink" title="导航栏"></a>导航栏</h3><ul>
+<li><p>自定义导航栏 uni-nav-bar</p>
+</li>
+<li><p>navigation-bar： 指定导航栏的一些属性</p>
+</li>
+</ul>
+<h3 id="uniapp自定义tabbar"><a href="#uniapp自定义tabbar" class="headerlink" title="uniapp自定义tabbar"></a>uniapp自定义tabbar</h3><ul>
+<li><p>custom-tab-bar</p>
+<p>  只能用于h5端，可以自定义排列顺序、icon等</p>
+</li>
+<li><p>自己写tabbar组件</p>
+<p>  在pages.json中配置原生TabBar并设置custom: true</p>
+<p>  创建自定义TabBar组件</p>
+<p>  在每个页面中使用自定义TabBar组件</p>
+<p>  使用Pinia管理TabBar状态</p>
+<p>  处理页面跳转和选中状态</p>
+</li>
+</ul>
+<h3 id="vue3虚拟dom和vue2虚拟dom算法区别"><a href="#vue3虚拟dom和vue2虚拟dom算法区别" class="headerlink" title="vue3虚拟dom和vue2虚拟dom算法区别"></a>vue3虚拟dom和vue2虚拟dom算法区别</h3><ul>
+<li><p>Vue2虚拟DOM原理</p>
+<ul>
+<li>全树比较算法：每次更新时递归比较整个虚拟DOM树</li>
+<li>简单VNode结构：使用基本的虚拟节点数据结构</li>
+<li>组件级别渲染：以组件为单位进行重新渲染</li>
+<li>静态节点处理：每次重新渲染都会重新创建所有节点</li>
+<li>事件处理：每次更新都会重新创建事件处理函数</li>
+</ul>
+</li>
+<li><p>Vue3虚拟DOM优化</p>
+<ul>
+<li><p>Block Tree机制：将动态节点组织为Block，只追踪动态节点</p>
+</li>
+<li><p>Patch Flags：为动态节点添加标志，指示需要更新的类型</p>
+<p>  标记动态节点需要更新的类型，当元素有多个需要改变的部分时，可以通过位运算组合多个标志。</p>
+<p>  每种Patch Flag对应一个二进制位，diff时使用按位与(&amp;)操作符检查需要更新的类型</p>
+</li>
+<li><p>静态提升：静态节点提升到渲染函数外部，避免重复创建</p>
+</li>
+<li><p>树结构扁平化：减少嵌套层级，提高diff效率</p>
+<p>  Vue3在编译阶段会将模板中的嵌套结构转换为扁平化的Block树结构，从而提高diff效率。</p>
+<p>  减少递归深度，提高diff效率； 更少的内存占用； 更快的初始渲染和更新</p>
+</li>
+<li><p>事件监听器缓存：缓存事件处理函数，避免不必要的更新</p>
+</li>
+</ul>
+</li>
+<li><p>核心区别详解</p>
+</li>
+</ul>
+<ol>
+<li><p>静态提升 (Static Hoisting)<br>Vue3能够检测和提升静态节点，在重新渲染时直接复用，避免不必要的创建和比较。</p>
+</li>
+<li><p>补丁标志 (Patch Flags)<br>Vue3为动态节点添加补丁标志，指示需要更新的类型，减少比较次数。</p>
+</li>
+<li><p>Block Tree机制<br>Vue3引入Block Tree概念，将动态节点组织在一起，只追踪动态节点。</p>
+</li>
+<li><p>树结构扁平化<br>Vue3将嵌套的区块结构扁平化，减少了递归深度，提高了diff效率。</p>
+</li>
+<li><p>事件监听器缓存<br>Vue3会缓存事件处理函数，避免不必要的更新。</p>
+</li>
+</ol>
+<h3 id="如何防止小程序支付的攻击"><a href="#如何防止小程序支付的攻击" class="headerlink" title="如何防止小程序支付的攻击"></a>如何防止小程序支付的攻击</h3><ul>
+<li><p>支付参数由后端返回</p>
+</li>
+<li><p>API 密钥与证书安全密钥管理：</p>
+<p>  将微信支付的 API Key、商户证书存储在服务端环境变量或密钥管理系统（如 AWS KMS）。<br>  禁止硬编码在客户端或代码仓库。</p>
+</li>
+<li><p>启用微信支付安全模式</p>
+<p>  登录微信商户平台 → 开启：<br>  API 证书：用于更高安全级别的接口（如退款）。<br>  IP 白名单：限制调用支付 API 的服务器 IP。<br>  转账收款姓名校验：防止资金被转移到陌生账户。</p>
+</li>
+<li><p>监控用户支付次数、频率</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>攻击类型</th>
+<th>防护措施</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>参数篡改</td>
+<td>服务端签名 + 客户端禁用构造参数</td>
+</tr>
+<tr>
+<td>重放攻击</td>
+<td>Nonce 随机数 + 请求时效控制</td>
+</tr>
+<tr>
+<td>中间人攻击</td>
+<td>HTTPS + HSTS 强制加密</td>
+</tr>
+<tr>
+<td>恶意刷单</td>
+<td>订单状态机 + 支付频次限额</td>
+</tr>
+<tr>
+<td>未授权支付</td>
+<td>敏感操作二次验证</td>
+</tr>
+<tr>
+<td>回调伪造</td>
+<td>严格校验微信签名 + 金额匹配</td>
+</tr>
+</tbody></table>
+<h3 id="虚拟dom为什么可以优化性能"><a href="#虚拟dom为什么可以优化性能" class="headerlink" title="虚拟dom为什么可以优化性能"></a>虚拟dom为什么可以优化性能</h3><p>createElement 是 虚拟 DOM 体系中的核心 API，用于创建描述 DOM 结构的 JavaScript 对象（虚拟节点&#x2F;VNode）。它与直接操作真实 DOM 的 document.createElement() 有本质区别</p>
+<p>纯 JS 对象：不涉及任何浏览器 DOM 操作</p>
+<p>轻量级：比真实 DOM 节点内存占用小 10-100 倍</p>
+<p>平台无关：同一套逻辑可渲染到 Web、小程序、原生应用</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>createElement (虚拟 DOM)</th>
+<th>document.createElement() (真实 DOM)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>所属体系</td>
+<td>框架级虚拟 DOM 库（Vue&#x2F;React）</td>
+<td>浏览器原生 DOM API</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>描述 DOM 的 JS 对象（VNode）</td>
+<td>浏览器内存中的真实 DOM 元素</td>
+</tr>
+<tr>
+<td>执行成本</td>
+<td>极低（仅 JS 对象操作）</td>
+<td>高（触发浏览器底层 C++ 对象创建）</td>
+</tr>
+<tr>
+<td>是否触发重排&#x2F;重绘</td>
+<td>❌ 否（内存操作）</td>
+<td>✅ 是（立即影响渲染管线）</td>
+</tr>
+<tr>
+<td>使用场景</td>
+<td>构建虚拟 DOM 树（框架内部）</td>
+<td>手动操作 DOM 时调用</td>
+</tr>
+<tr>
+<td>跨平台能力</td>
+<td>✅ 一套代码多端渲染</td>
+<td>❌ 仅限浏览器环境</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>减少直接DOM操作<br>  直接操作DOM非常昂贵，因为每次DOM修改都可能触发浏览器的重排（reflow）和重绘（repaint）。虚拟DOM通过在内存中操作轻量级的JavaScript对象，减少了对真实DOM的直接操作次数。</p>
+<p>  用js去处理此次需要的更新</p>
+</li>
+<li><p>批量更新<br> 虚拟DOM可以收集多次状态变化，然后一次性更新真实DOM,核心机制是通过「异步更新队列 + DocumentFragment 批处理 + 浏览器渲染优化」。这避免了频繁的布局计算和渲染，大幅提升性能。</p>
+<p> Vue的虚拟DOM更新并不总是使用DocumentFragment，在初始渲染和移动节点时使用，而更新则通过patch进行最小化操作</p>
+<p> 节点移动优化：先移除需要移动的节点到 Fragment-》再一次性插入新位置</p>
+<blockquote>
+<p>核心机制：异步更新队列（nextTick）将多个数据变更合并为一个更新任务。<br>在更新任务执行时，虚拟DOM的Diff算法会计算出所有需要更新的节点，形成一个更新列表。<br>对于需要新增的多个节点，Vue会使用DocumentFragment来批量插入。<br>对于已存在的节点的更新（如文本变化），Vue会直接修改这些节点，但由于是在同一个任务中，浏览器会将这些DOM操作收集起来，在微任务结束后统一进行重排重绘。</p>
+</blockquote>
+</li>
+<li><p>高效的Diff算法<br>  虚拟DOM使用高效的算法比较新旧虚拟DOM树的差异，找出最小变更集，只更新需要变化的部分，而不是重新渲染整个界面。</p>
+</li>
+<li><p>跨平台能力<br>  虚拟DOM是抽象的UI描述，可以映射到不同平台（Web、Native、Server），使得代码复用和跨平台开发变得更加容易。</p>
+</li>
+<li><p>开发者体验提升<br>  虚拟DOM让开发者专注于状态管理，而不是繁琐的DOM操作，提高了开发效率和代码可维护性。</p>
+</li>
+</ul>
+<h3 id="git中间有一笔commit不需要了如何只回退这一笔"><a href="#git中间有一笔commit不需要了如何只回退这一笔" class="headerlink" title="git中间有一笔commit不需要了如何只回退这一笔"></a>git中间有一笔commit不需要了如何只回退这一笔</h3><p>要回退 Git 中的某笔特定提交（且不保留历史记录），可通过<strong>交互式变基（Interactive Rebase）</strong> 实现。以下是步骤：</p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --oneline</span><br></pre></td></tr></table></figure>
+<p>记录需要删除的提交的哈希值（例如 <code>abc123d</code>），并确定它<strong>之前一个提交</strong>的哈希值（假设为 <code>def456e</code>）。</p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i def456e</span><br></pre></td></tr></table></figure>
+<p>（这里用 <code>def456e</code> 表示目标提交的前一个提交）</p>
+<hr>
+<p>文本编辑器会打开一个提交列表，找到需要删除的提交行（如 <code>pick abc123d 提交消息</code>），将其前的 <code>pick</code> 改为 **<code>drop</code>**（或直接删除该行）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">drop abc123d 不需要的提交</span><br><span class="line">pick 28fcdd2 其他提交</span><br><span class="line">pick a1b2c3d 另一笔提交</span><br></pre></td></tr></table></figure>
+<p>保存并关闭编辑器。</p>
+<hr>
+<p>若变基过程中发生冲突：</p>
+<ul>
+<li>手动解决冲突文件；</li>
+<li>执行 <code>git add &lt;文件&gt;</code> 标记已解决；</li>
+<li>继续变基：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase --<span class="built_in">continue</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<p>如果分支已推送到远程仓库，需强制推送：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git push origin &lt;分支名&gt; --force</span><br><span class="line"><span class="comment"># 或使用更安全的 --force-with-lease</span></span><br><span class="line">git push origin &lt;分支名&gt; --force-with-lease</span><br></pre></td></tr></table></figure>
+
+<hr>
+<ul>
+<li><strong>风险提示</strong>：修改历史记录会影响协作分支，确保其他开发者知晓此次变更。</li>
+<li><strong>备份分支</strong>：操作前建议备份当前分支（<code>git branch backup-branch</code>）。</li>
+<li>若只想撤销更改但保留历史，可用 <code>git revert</code>（生成反向提交）。</li>
+</ul>
+<hr>
+<p>如果希望保留历史记录仅撤销更改，使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git revert abc123d</span><br></pre></td></tr></table></figure>
+<p>这会生成一个新的提交来抵消目标提交的更改，无需变基或强制推送。</p>
+<h3 id="git-merge和cherry-pick"><a href="#git-merge和cherry-pick" class="headerlink" title="git merge和cherry pick"></a>git merge和cherry pick</h3><p>好的，<code>git merge</code>、<code>git rebase</code> 和 <code>git cherry-pick</code> 是 Git 中三个用于整合更改的核心命令，但它们的工作方式和目的截然不同。</p>
+<p>理解它们的区别是掌握 Git 工作流的关键。下面我将对它们进行全面的对比和解释。</p>
+<hr>
+<h4 id="核心概念一句话总结"><a href="#核心概念一句话总结" class="headerlink" title="核心概念一句话总结"></a>核心概念一句话总结</h4><ol>
+<li><strong><code>git merge</code><strong>：</strong>整合分支</strong>。将两个分支的历史记录合并在一起，创建一个新的提交（合并提交）来记录这个汇合点。</li>
+<li><strong><code>git rebase</code><strong>：</strong>重整历史</strong>。将一个分支上的所有提交“移动”到另一个分支的最新提交之后，从而创造出更线性的项目历史。</li>
+<li><strong><code>git cherry-pick</code><strong>：</strong>复制提交</strong>。选择某个分支上的一个或多个特定提交，将其更改“重新应用”到当前分支，就像它们是在当前分支上编写的一样。</li>
+</ol>
+<hr>
+<h4 id="对比表格"><a href="#对比表格" class="headerlink" title="对比表格"></a>对比表格</h4><table>
+<thead>
+<tr>
+<th align="left">特性</th>
+<th align="left"><code>git merge</code></th>
+<th align="left"><code>git rebase</code></th>
+<th align="left"><code>git cherry-pick</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>操作对象</strong></td>
+<td align="left">一个<strong>分支</strong>（的所有更改）</td>
+<td align="left">一个<strong>分支</strong>（的所有提交）</td>
+<td align="left">一个或多个<strong>特定提交</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>结果</strong></td>
+<td align="left">创建一个新的<strong>合并提交</strong></td>
+<td align="left"><strong>重新书写</strong>提交历史，将提交序列置于新基址</td>
+<td align="left">将指定提交的更改作为<strong>新提交</strong>应用到当前分支</td>
+</tr>
+<tr>
+<td align="left"><strong>历史记录</strong></td>
+<td align="left"><strong>非线性</strong>，保留完整分支结构</td>
+<td align="left"><strong>线性、整洁</strong>，仿佛所有开发都是顺序进行的</td>
+<td align="left"><strong>线性</strong>，但可能导致<strong>重复的提交</strong>（相同更改有不同哈希值）</td>
+</tr>
+<tr>
+<td align="left"><strong>主要目的</strong></td>
+<td align="left"><strong>集成</strong>完整的功能或分支</td>
+<td align="left"><strong>清理</strong>本地分支历史 before merging</td>
+<td align="left"><strong>移植</strong>特定的修复或功能</td>
+</tr>
+<tr>
+<td align="left"><strong>风险</strong></td>
+<td align="left">低风险，安全操作</td>
+<td align="left"><strong>高风险</strong>，会重写历史（<strong>不要对公共分支使用</strong>）</td>
+<td align="left">中等风险，可能产生冲突，造成历史重复</td>
+</tr>
+<tr>
+<td align="left"><strong>比喻</strong></td>
+<td align="left"><strong>合影</strong>：把两拨人叫到一起拍张新照片</td>
+<td align="left"><strong>重新排队</strong>：让你和你的朋友排到另一队的最前面</td>
+<td align="left"><strong>复制粘贴</strong>：把别人文章里写得好的一段话，抄到你的文章里</td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="可视化示例与场景分析"><a href="#可视化示例与场景分析" class="headerlink" title="可视化示例与场景分析"></a>可视化示例与场景分析</h4><p>假设我们从一个共同的基础提交 <code>C2</code> 开始，之后有了不同的开发线：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">          C3---C4 (feature)</span><br><span class="line">         /</span><br><span class="line">C0---C1---C2 (main)</span><br><span class="line">               \</span><br><span class="line">                C5 (hotfix)</span><br></pre></td></tr></table></figure>
+
+<h5 id="场景-1-使用-git-merge"><a href="#场景-1-使用-git-merge" class="headerlink" title="场景 1: 使用 git merge"></a>场景 1: 使用 <code>git merge</code></h5><p><strong>目标：将 <code>hotfix</code> 分支的更改合并到 <code>main</code> 分支。</strong></p>
+<ol>
+<li><code>git checkout main</code></li>
+<li><code>git merge hotfix</code></li>
+</ol>
+<p><strong>结果：</strong> 创建一个新的合并提交 <code>M1</code>，它有两个父提交 (<code>C2</code> 和 <code>C5</code>)。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">          C3---C4 (feature)</span><br><span class="line">         /</span><br><span class="line">C0---C1---C2---M1 (main)</span><br><span class="line">               \ /</span><br><span class="line">                C5 (hotfix)</span><br></pre></td></tr></table></figure>
+<p><strong>何时使用：</strong> 这是标准操作，用于将任何完整的分支（如功能、修复、发布分支）合并回主分支。</p>
+<hr>
+<h5 id="场景-2-使用-git-rebase"><a href="#场景-2-使用-git-rebase" class="headerlink" title="场景 2: 使用 git rebase"></a>场景 2: 使用 <code>git rebase</code></h5><p><strong>目标：在将 <code>feature</code> 分支合并到 <code>main</code> 之前，先整理其历史，使其包含 <code>main</code> 的最新更新。</strong></p>
+<ol>
+<li><code>git checkout feature</code></li>
+<li><code>git rebase main</code> （这会将 <code>C3</code> 和 <code>C4</code> 的更改“重新播放”在 <code>main</code> 的 <code>C2</code> 之后）</li>
+</ol>
+<p><strong>结果：</strong> 创建了两个新的提交 <code>C3&#39;</code> 和 <code>C4&#39;</code>，它们有新的哈希值。<code>feature</code> 分支的历史变基到了 <code>main</code> 分支的顶端。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">                      C3&#x27;---C4&#x27; (feature)</span><br><span class="line">                     /</span><br><span class="line">C0---C1---C2 (main)</span><br><span class="line">               \</span><br><span class="line">                C5 (hotfix)</span><br></pre></td></tr></table></figure>
+<p>现在，再合并 <code>feature</code> 到 <code>main</code> 会是一次快进合并，历史是线性的。<br><strong>何时使用：</strong> 在本地整理个人特性分支的历史，使其更清晰后再合并。</p>
+<hr>
+<h5 id="场景-3-使用-git-cherry-pick"><a href="#场景-3-使用-git-cherry-pick" class="headerlink" title="场景 3: 使用 git cherry-pick"></a>场景 3: 使用 <code>git cherry-pick</code></h5><p><strong>目标：只需要将 <code>hotfix</code> 分支上的修复 <code>C5</code> 应用到 <code>feature</code> 分支上，而不需要合并整个 <code>hotfix</code> 分支。</strong></p>
+<ol>
+<li><code>git checkout feature</code></li>
+<li><code>git cherry-pick &lt;C5的哈希值&gt;</code></li>
+</ol>
+<p><strong>结果：</strong> 将 <code>C5</code> 的更改应用到 <code>feature</code> 分支，生成一个内容相同但哈希值不同的新提交 <code>C5&#39;</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">          C3---C4---C5&#x27; (feature) // C5&#x27; 包含了 C5 的更改</span><br><span class="line">         /</span><br><span class="line">C0---C1---C2 (main)</span><br><span class="line">               \</span><br><span class="line">                C5 (hotfix)</span><br></pre></td></tr></table></figure>
+<p><strong>何时使用：</strong> 将一个紧急修复从一个分支（如 <code>production</code>）移植到另一个分支（如 <code>development</code>），而不需要执行全部分支合并。</p>
+<hr>
+<h4 id="如何选择？决策流程图"><a href="#如何选择？决策流程图" class="headerlink" title="如何选择？决策流程图"></a>如何选择？决策流程图</h4><p>面对整合代码的需求时，你可以遵循以下决策流程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    A[开始：需要整合更改] --&gt; B&#123;操作对象是什么？&#125;</span><br><span class="line">    B -- 整个分支 --&gt; C&#123;目标是公共分支吗？&#125;</span><br><span class="line">    B -- 特定提交 --&gt; D[使用 git cherry-pick&lt;br&gt;移植单个修复或功能]</span><br><span class="line"></span><br><span class="line">    C -- 是 --&gt; E[使用 git merge&lt;br&gt;安全地集成，保留历史]</span><br><span class="line">    C -- 否（个人特性分支） --&gt; F&#123;想要线性历史吗？&#125;</span><br><span class="line"></span><br><span class="line">    F -- 是 --&gt; G[使用 git rebase&lt;br&gt;整理历史后再合并]</span><br><span class="line">    F -- 否 --&gt; E</span><br></pre></td></tr></table></figure>
+
+<h4 id="黄金法则与最佳实践"><a href="#黄金法则与最佳实践" class="headerlink" title="黄金法则与最佳实践"></a>黄金法则与最佳实践</h4><ol>
+<li><p>**<code>git merge</code>**：</p>
+<ul>
+<li><strong>用于</strong>：集成公共分支、发布版本、合并长期运行的功能分支。</li>
+<li><strong>优点</strong>：安全，保留历史真相。</li>
+</ul>
+</li>
+<li><p>**<code>git rebase</code>**：</p>
+<ul>
+<li><strong>黄金法则</strong>：<strong>只对你尚未推送到远程仓库的本地分支进行变基。永远不要对公共分支变基。</strong></li>
+<li><strong>用于</strong>：清理本地提交历史（如压缩、修改提交信息），在合并前使历史更清晰。</li>
+<li><strong>优点</strong>：创造更干净的历史。</li>
+</ul>
+</li>
+<li><p>**<code>git cherry-pick</code>**：</p>
+<ul>
+<li><strong>用于</strong>：将特定的提交（如热修复）从一个分支应用到另一个分支，而不需要合并无关的更改。</li>
+<li><strong>谨慎使用</strong>：过度使用会导致历史中出现重复的提交，使跟踪代码变更来源变得困难。</li>
+</ul>
+</li>
+</ol>
+<p><strong>总结：</strong> 没有哪个命令是绝对最好的，每个命令都有其特定的用途。根据你的目标（是整合、整理还是移植）和分支的公共性来做出正确选择，是高效使用 Git 的关键。</p>
+<h3 id="企微sdk登录授权流程"><a href="#企微sdk登录授权流程" class="headerlink" title="企微sdk登录授权流程"></a>企微sdk登录授权流程</h3><h3 id="websocket和wxx协议"><a href="#websocket和wxx协议" class="headerlink" title="websocket和wxx协议"></a>websocket和wxx协议</h3><h3 id="微前端怎么用，有什么好处"><a href="#微前端怎么用，有什么好处" class="headerlink" title="微前端怎么用，有什么好处"></a>微前端怎么用，有什么好处</h3><h3 id="小程序中，购物车页面会有很多列表以及付钱的一个倒计时，那么应该如何按照小程序双线程的原理去进行优化倒计时"><a href="#小程序中，购物车页面会有很多列表以及付钱的一个倒计时，那么应该如何按照小程序双线程的原理去进行优化倒计时" class="headerlink" title="小程序中，购物车页面会有很多列表以及付钱的一个倒计时，那么应该如何按照小程序双线程的原理去进行优化倒计时"></a>小程序中，购物车页面会有很多列表以及付钱的一个倒计时，那么应该如何按照小程序双线程的原理去进行优化倒计时</h3><ul>
+<li><p>长列表</p>
+<p>  使用虚拟列表：recycle-view </p>
+</li>
+<li><p>定时器：</p>
+<p>  使用一个定时器+一个map去进行页面的显示</p>
+</li>
+<li><p>使用Worker处理复杂计算</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建Worker处理倒计时逻辑</span></span><br><span class="line"><span class="keyword">const</span> timerWorker = wx.<span class="title function_">createWorker</span>(<span class="string">&#x27;workers/timer.js&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 主线程与Worker通信</span></span><br><span class="line">timerWorker.<span class="title function_">postMessage</span>(&#123;</span><br><span class="line"><span class="attr">action</span>: <span class="string">&#x27;init&#x27;</span>,</span><br><span class="line"><span class="attr">data</span>: countdownData</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">timerWorker.<span class="title function_">onMessage</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line"><span class="comment">// 接收Worker传来的倒计时数据</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="title function_">setData</span>(&#123; <span class="attr">countdowns</span>: res.<span class="property">countdowns</span> &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/25/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB2/" data-id="cmf67fxei0079bcfm4nz534dw" data-title="记录3" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-面试/【面试】汇总1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/" class="article-date">
@@ -473,7 +1190,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/" data-id="cmepc0uiv0067t0fm37o2alrx" data-title="记录2" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/" data-id="cmf67fxeg006zbcfm0c4yf72y" data-title="记录2" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1076,7 +1793,7 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/" data-id="cmepc0uix006et0fmda3c5br2" data-title="记录1" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/" data-id="cmf67fxeg006xbcfm5vtie753" data-title="记录1" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1145,7 +1862,7 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E6%89%8B%E5%86%99%E9%A2%98/" data-id="cmepc0uh5000bt0fmbgbl4cxd" data-title="手写题" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E6%89%8B%E5%86%99%E9%A2%98/" data-id="cmf67fxcw0008bcfm7fdm4uf0" data-title="手写题" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1277,7 +1994,7 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E3%80%90%E6%89%8B%E5%86%99%E3%80%91call%E3%80%81apply%E3%80%81bind/" data-id="cmepc0uh40007t0fmaab1h0tz" data-title="【手写】call、apply、bind" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E3%80%90%E6%89%8B%E5%86%99%E3%80%91call%E3%80%81apply%E3%80%81bind/" data-id="cmf67fxcv0007bcfmaci4erv0" data-title="【手写】call、apply、bind" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1390,7 +2107,7 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" data-id="cmepc0uh30006t0fmazk0cs2l" data-title="【wasb】环境搭建" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" data-id="cmf67fxcu0005bcfme9zcdc6l" data-title="【wasb】环境搭建" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1527,7 +2244,7 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E3%80%90RN%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" data-id="cmepc0uh10003t0fmf9i4h9l9" data-title="【RN】环境搭建" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E3%80%90RN%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" data-id="cmf67fxcj0002bcfm7atxdto7" data-title="【RN】环境搭建" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1598,7 +2315,7 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E3%80%90AST%E3%80%91-%E8%A7%A3%E6%9E%90attrs/" data-id="cmepc0ugz0002t0fmbuui60pz" data-title="解析 attrs" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E3%80%90AST%E3%80%91-%E8%A7%A3%E6%9E%90attrs/" data-id="cmf67fxco0003bcfm5q2k821l" data-title="解析 attrs" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1708,253 +2425,7 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91vuex-%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0/" data-id="cmepc0uip005bt0fm8npjbruo" data-title="vuex-执行函数" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vuex-%E6%BA%90%E7%A0%81/" rel="tag">vuex 源码</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-源码/【源码】axios-流程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91axios-%E6%B5%81%E7%A8%8B/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:33.944Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/axios-%E6%BA%90%E7%A0%81/">axios 源码</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91axios-%E6%B5%81%E7%A8%8B/">axios请求流程</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h2><p>axios的入口是<code>/lib/axios.js</code>，实际主要的流程在<code>/lib/core/Axios.js</code>中</p>
-<p>在<code>/lib/axios.js</code>中，创建了一个<code>/lib/core/Axios.js</code>实例，并继承了其父类的方法，其中就包括<code>get</code>&#x2F;<code>post</code>&#x2F;<code>delete</code>等方法</p>
-<p><code>axios</code>实际是从<code>request</code>方法发起全部请求的，只是封装了<code>get</code>&#x2F;<code>post</code>&#x2F;<code>delete</code>等方法，</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// /lib/core/Axios.js</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Axios</span>(<span class="params">instanceConfig</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">defaults</span> = instanceConfig;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">interceptors</span> = &#123;</span><br><span class="line">    <span class="attr">request</span>: <span class="keyword">new</span> <span class="title class_">InterceptorManager</span>(),</span><br><span class="line">    <span class="attr">response</span>: <span class="keyword">new</span> <span class="title class_">InterceptorManager</span>()</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// /lib/axios.js</span></span><br><span class="line"><span class="keyword">var</span> <span class="title class_">Axios</span> = <span class="built_in">require</span>(<span class="string">&#x27;./core/Axios&#x27;</span>);</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createInstance</span>(<span class="params">defaultConfig</span>) &#123;</span><br><span class="line">  <span class="comment">// context的prototype上已经包含了get等方法</span></span><br><span class="line">  <span class="keyword">var</span> context = <span class="keyword">new</span> <span class="title class_">Axios</span>(defaultConfig);</span><br><span class="line">  <span class="comment">// 直接调用instance时，实际就是调用了request方法</span></span><br><span class="line">  <span class="comment">// 这就是为什么在调用axios时，除了可以通过get/post进行请求，也可以直接作为一个函数进行直接调用</span></span><br><span class="line">  <span class="keyword">var</span> instance = <span class="title function_">bind</span>(<span class="title class_">Axios</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">request</span>, context);</span><br><span class="line"></span><br><span class="line">  utils.<span class="title function_">extend</span>(instance, <span class="title class_">Axios</span>.<span class="property"><span class="keyword">prototype</span></span>, context);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Copy context to instance</span></span><br><span class="line">  utils.<span class="title function_">extend</span>(instance, context);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Factory for creating new instances</span></span><br><span class="line">  instance.<span class="property">create</span> = <span class="keyword">function</span> <span class="title function_">create</span>(<span class="params">instanceConfig</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">createInstance</span>(<span class="title function_">mergeConfig</span>(defaultConfig, instanceConfig));</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> instance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="请求流程"><a href="#请求流程" class="headerlink" title="请求流程"></a>请求流程</h2><p>主要的请求流程都在<code>request</code>方法里，方法存在于<code>/lib/core/Axios.js</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// /lib/core/Axios.js</span></span><br><span class="line"><span class="title class_">Axios</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">request</span> = <span class="keyword">function</span> <span class="title function_">request</span>(<span class="params">configOrUrl, config</span>) &#123;</span><br><span class="line">  <span class="comment">// 适配无额外配置，直接传入url的情况</span></span><br><span class="line">  <span class="comment">// 比如 axios(&#x27;example/url&#x27;)</span></span><br><span class="line">  <span class="comment">// Allow for axios(&#x27;example/url&#x27;[, config]) a la fetch API</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> configOrUrl === <span class="string">&#x27;string&#x27;</span>) &#123;</span><br><span class="line">    config = config || &#123;&#125;;</span><br><span class="line">    config.<span class="property">url</span> = configOrUrl;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    config = configOrUrl || &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 将默认配置和传入的配置合并</span></span><br><span class="line">  config = <span class="title function_">mergeConfig</span>(<span class="variable language_">this</span>.<span class="property">defaults</span>, config);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 设置请求方法</span></span><br><span class="line">  <span class="keyword">if</span> (config.<span class="property">method</span>) &#123;</span><br><span class="line">    config.<span class="property">method</span> = config.<span class="property">method</span>.<span class="title function_">toLowerCase</span>();</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">defaults</span>.<span class="property">method</span>) &#123;</span><br><span class="line">    config.<span class="property">method</span> = <span class="variable language_">this</span>.<span class="property">defaults</span>.<span class="property">method</span>.<span class="title function_">toLowerCase</span>();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    config.<span class="property">method</span> = <span class="string">&#x27;get&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> transitional = config.<span class="property">transitional</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (transitional !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">    validator.<span class="title function_">assertOptions</span>(transitional, &#123;</span><br><span class="line">      <span class="comment">// 版本兼容配置-返回值转换为 Json 出错时是否置为 null 返回</span></span><br><span class="line">      <span class="attr">silentJSONParsing</span>: validators.<span class="title function_">transitional</span>(validators.<span class="property">boolean</span>),</span><br><span class="line">      <span class="comment">// 版本兼容配置-responseType 设置非 json 类型时是否强制转换成 json 格式</span></span><br><span class="line">      <span class="attr">forcedJSONParsing</span>: validators.<span class="title function_">transitional</span>(validators.<span class="property">boolean</span>),</span><br><span class="line">      <span class="comment">// 版本兼容配置-请求超时时是否默认返回 ETIMEDOUT 类型错</span></span><br><span class="line">      <span class="attr">clarifyTimeoutError</span>: validators.<span class="title function_">transitional</span>(validators.<span class="property">boolean</span>)</span><br><span class="line">    &#125;, <span class="literal">false</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// filter out skipped interceptors</span></span><br><span class="line">  <span class="comment">// 请求拦截器数组</span></span><br><span class="line">  <span class="keyword">var</span> requestInterceptorChain = [];</span><br><span class="line">  <span class="keyword">var</span> synchronousRequestInterceptors = <span class="literal">true</span>;</span><br><span class="line">  <span class="comment">// 循环访问拦截器的请求数组，将其放在请求真实执行之前</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">interceptors</span>.<span class="property">request</span>.<span class="title function_">forEach</span>(<span class="keyword">function</span> <span class="title function_">unshiftRequestInterceptors</span>(<span class="params">interceptor</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> interceptor.<span class="property">runWhen</span> === <span class="string">&#x27;function&#x27;</span> &amp;&amp; interceptor.<span class="title function_">runWhen</span>(config) === <span class="literal">false</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    synchronousRequestInterceptors = synchronousRequestInterceptors &amp;&amp; interceptor.<span class="property">synchronous</span>;</span><br><span class="line"></span><br><span class="line">    requestInterceptorChain.<span class="title function_">unshift</span>(interceptor.<span class="property">fulfilled</span>, interceptor.<span class="property">rejected</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 响应拦截器数组</span></span><br><span class="line">  <span class="comment">// 循环访问拦截器的响应数组，将其放在请求真实执行之后</span></span><br><span class="line">  <span class="keyword">var</span> responseInterceptorChain = [];</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">interceptors</span>.<span class="property">response</span>.<span class="title function_">forEach</span>(<span class="keyword">function</span> <span class="title function_">pushResponseInterceptors</span>(<span class="params">interceptor</span>) &#123;</span><br><span class="line">    responseInterceptorChain.<span class="title function_">push</span>(interceptor.<span class="property">fulfilled</span>, interceptor.<span class="property">rejected</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> promise;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!synchronousRequestInterceptors) &#123;</span><br><span class="line">    <span class="keyword">var</span> chain = [dispatchRequest, <span class="literal">undefined</span>];</span><br><span class="line"></span><br><span class="line">    <span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">unshift</span>.<span class="title function_">apply</span>(chain, requestInterceptorChain);</span><br><span class="line">    chain = chain.<span class="title function_">concat</span>(responseInterceptorChain);</span><br><span class="line"></span><br><span class="line">    promise = <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(config);</span><br><span class="line">    <span class="keyword">while</span> (chain.<span class="property">length</span>) &#123;</span><br><span class="line">      promise = promise.<span class="title function_">then</span>(chain.<span class="title function_">shift</span>(), chain.<span class="title function_">shift</span>());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> promise;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> newConfig = config;</span><br><span class="line">  <span class="comment">// 一步步执行请求拦截器，并将其执行结果覆盖请求配置</span></span><br><span class="line">  <span class="keyword">while</span> (requestInterceptorChain.<span class="property">length</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> onFulfilled = requestInterceptorChain.<span class="title function_">shift</span>();</span><br><span class="line">    <span class="keyword">var</span> onRejected = requestInterceptorChain.<span class="title function_">shift</span>();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      newConfig = <span class="title function_">onFulfilled</span>(newConfig);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">      <span class="title function_">onRejected</span>(error);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 执行请求</span></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    promise = <span class="title function_">dispatchRequest</span>(newConfig);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">reject</span>(error);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 一步步执行响应拦截器</span></span><br><span class="line">  <span class="keyword">while</span> (responseInterceptorChain.<span class="property">length</span>) &#123;</span><br><span class="line">    promise = promise.<span class="title function_">then</span>(responseInterceptorChain.<span class="title function_">shift</span>(), responseInterceptorChain.<span class="title function_">shift</span>());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> promise;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>这里包含的流程如下：</p>
-<ul>
-<li>合并配置，包括默认配置和传入的配置</li>
-<li>设置请求方法</li>
-<li>请求拦截器 requestInterceptorChain</li>
-<li>响应拦截器 responseInterceptorChain</li>
-<li>执行请求（dispatchRequest），且是在请求拦截器之后，响应拦截器之前</li>
-</ul>
-<p>注意点：</p>
-<ul>
-<li>这里的执行是放在一个数组里面的，最开始只有实际的请求，然后在数组开头加上请求的拦截器函数，在数组最后加上请求的响应拦截器处理函数</li>
-<li>拦截器的函数的参数是从上一个拦截器中返回的结果</li>
-<li>默认请求头是<code>get</code></li>
-</ul>
-<h2 id="派发请求"><a href="#派发请求" class="headerlink" title="派发请求"></a>派发请求</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// /lib/core/dispatchRequest.js</span></span><br><span class="line"><span class="comment">// 派发请求</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="keyword">function</span> <span class="title function_">dispatchRequest</span>(<span class="params">config</span>) &#123;</span><br><span class="line">  <span class="comment">// 取消请求相关</span></span><br><span class="line">  <span class="title function_">throwIfCancellationRequested</span>(config);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Ensure headers exist</span></span><br><span class="line">  config.<span class="property">headers</span> = config.<span class="property">headers</span> || &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Transform the data for a request or a response</span></span><br><span class="line">  config.<span class="property">data</span> = transformData.<span class="title function_">call</span>(</span><br><span class="line">    config,</span><br><span class="line">    config.<span class="property">data</span>,<span class="comment">//方法参数，如果是多个方法，那么方法2的参数是由方法1的返回值决定的</span></span><br><span class="line">    config.<span class="property">headers</span>,<span class="comment">//请求头</span></span><br><span class="line">    config.<span class="property">transformRequest</span><span class="comment">//执行的方法，具体是在axios里面自己定义了，在/lib/defaults.js文件中，主要是用于请求头的修改</span></span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 合并拉平请求头</span></span><br><span class="line">  config.<span class="property">headers</span> = utils.<span class="title function_">merge</span>(</span><br><span class="line">    config.<span class="property">headers</span>.<span class="property">common</span> || &#123;&#125;,</span><br><span class="line">    config.<span class="property">headers</span>[config.<span class="property">method</span>] || &#123;&#125;,</span><br><span class="line">    config.<span class="property">headers</span></span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 如果是这些请求，那么就删除掉对应的请求头</span></span><br><span class="line">  utils.<span class="title function_">forEach</span>(</span><br><span class="line">    [<span class="string">&#x27;delete&#x27;</span>, <span class="string">&#x27;get&#x27;</span>, <span class="string">&#x27;head&#x27;</span>, <span class="string">&#x27;post&#x27;</span>, <span class="string">&#x27;put&#x27;</span>, <span class="string">&#x27;patch&#x27;</span>, <span class="string">&#x27;common&#x27;</span>],</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">cleanHeaderConfig</span>(<span class="params">method</span>) &#123;</span><br><span class="line">      <span class="keyword">delete</span> config.<span class="property">headers</span>[method];</span><br><span class="line">    &#125;</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> adapter = config.<span class="property">adapter</span> || defaults.<span class="property">adapter</span>;</span><br><span class="line">  <span class="comment">// 执行适配器</span></span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">adapter</span>(config).<span class="title function_">then</span>(<span class="keyword">function</span> <span class="title function_">onAdapterResolution</span>(<span class="params">response</span>) &#123;</span><br><span class="line">    <span class="comment">// 取消相关请求的</span></span><br><span class="line">    <span class="title function_">throwIfCancellationRequested</span>(config);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Transform response data</span></span><br><span class="line">    response.<span class="property">data</span> = transformData.<span class="title function_">call</span>(</span><br><span class="line">      config,</span><br><span class="line">      response.<span class="property">data</span>,</span><br><span class="line">      response.<span class="property">headers</span>,</span><br><span class="line">      config.<span class="property">transformResponse</span><span class="comment">//执行的方法，具体是在axios里面自己定义了，在/lib/defaults.js文件中，主要是用于响应结果的修改</span></span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> response;</span><br><span class="line">  &#125;, <span class="keyword">function</span> <span class="title function_">onAdapterRejection</span>(<span class="params">reason</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_">isCancel</span>(reason)) &#123;</span><br><span class="line">      <span class="title function_">throwIfCancellationRequested</span>(config);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Transform response data</span></span><br><span class="line">      <span class="keyword">if</span> (reason &amp;&amp; reason.<span class="property">response</span>) &#123;</span><br><span class="line">        reason.<span class="property">response</span>.<span class="property">data</span> = transformData.<span class="title function_">call</span>(</span><br><span class="line">          config,</span><br><span class="line">          reason.<span class="property">response</span>.<span class="property">data</span>,</span><br><span class="line">          reason.<span class="property">response</span>.<span class="property">headers</span>,</span><br><span class="line">          config.<span class="property">transformResponse</span></span><br><span class="line">        );</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Promise</span>.<span class="title function_">reject</span>(reason);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>流程：</p>
-<ul>
-<li>统一处理请求头</li>
-<li>合并拉平请求头</li>
-<li>某些请求会删除请求头的<code>config.headers[method]</code></li>
-<li>执行请求</li>
-<li>获取到响应数据后，统一处理响应结果</li>
-</ul>
-<p>注意点：</p>
-<ul>
-<li><code>[&#39;delete&#39;, &#39;get&#39;, &#39;head&#39;, &#39;post&#39;, &#39;put&#39;, &#39;patch&#39;, &#39;common&#39;]</code>这些请求axios会删除请求头的<code>config.headers[method]</code></li>
-<li>关于请求头的统一额外处理，在这个阶段进行</li>
-<li>关于响应结果的解析，是在这个阶段执行的</li>
-</ul>
-<h2 id="实际请求发送"><a href="#实际请求发送" class="headerlink" title="实际请求发送"></a>实际请求发送</h2><p>适配器解释了为什么axios可以在nodejs和浏览器里面都发送请求</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// /lib/defaults/index,js</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">getDefaultAdapter</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> adapter;</span><br><span class="line">  <span class="comment">// 如果是浏览器的环境，那么就用的是xhr</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="title class_">XMLHttpRequest</span> !== <span class="string">&#x27;undefined&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// For browsers use XHR adapter</span></span><br><span class="line">    adapter = <span class="built_in">require</span>(<span class="string">&#x27;../adapters/xhr&#x27;</span>);</span><br><span class="line">  <span class="comment">// 如果是非浏览器的环境（例如nodejs），那么就用的是http的文件</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> process !== <span class="string">&#x27;undefined&#x27;</span> &amp;&amp; <span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>.<span class="title function_">call</span>(process) === <span class="string">&#x27;[object process]&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// For node use HTTP adapter</span></span><br><span class="line">    adapter = <span class="built_in">require</span>(<span class="string">&#x27;../adapters/http&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> adapter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// /lib/adapters/xhr.js</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="keyword">function</span> <span class="title function_">xhrAdapter</span>(<span class="params">config</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> <span class="title function_">dispatchXhrRequest</span>(<span class="params">resolve, reject</span>) &#123;</span><br><span class="line">    <span class="comment">// 拿到请求配置项</span></span><br><span class="line">    <span class="keyword">var</span> requestData = config.<span class="property">data</span>;</span><br><span class="line">    <span class="keyword">var</span> requestHeaders = config.<span class="property">headers</span>;</span><br><span class="line">    <span class="keyword">var</span> responseType = config.<span class="property">responseType</span>;</span><br><span class="line">    <span class="keyword">var</span> onCanceled;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">done</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="comment">// 如果有取消的，那么走取消请求</span></span><br><span class="line">      <span class="keyword">if</span> (config.<span class="property">cancelToken</span>) &#123;</span><br><span class="line">        config.<span class="property">cancelToken</span>.<span class="title function_">unsubscribe</span>(onCanceled);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (config.<span class="property">signal</span>) &#123;</span><br><span class="line">        config.<span class="property">signal</span>.<span class="title function_">removeEventListener</span>(<span class="string">&#x27;abort&#x27;</span>, onCanceled);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 设置form请求的请求头</span></span><br><span class="line">    <span class="keyword">if</span> (utils.<span class="title function_">isFormData</span>(requestData) &amp;&amp; utils.<span class="title function_">isStandardBrowserEnv</span>()) &#123;</span><br><span class="line">      <span class="keyword">delete</span> requestHeaders[<span class="string">&#x27;Content-Type&#x27;</span>]; <span class="comment">// Let the browser set it</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 创建xhr请求</span></span><br><span class="line">    <span class="keyword">var</span> request = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果有设置授权相关的，那么配置其请求头</span></span><br><span class="line">    <span class="keyword">if</span> (config.<span class="property">auth</span>) &#123;</span><br><span class="line">      <span class="keyword">var</span> username = config.<span class="property">auth</span>.<span class="property">username</span> || <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">      <span class="keyword">var</span> password = config.<span class="property">auth</span>.<span class="property">password</span> ? <span class="built_in">unescape</span>(<span class="built_in">encodeURIComponent</span>(config.<span class="property">auth</span>.<span class="property">password</span>)) : <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">      requestHeaders.<span class="property">Authorization</span> = <span class="string">&#x27;Basic &#x27;</span> + <span class="title function_">btoa</span>(username + <span class="string">&#x27;:&#x27;</span> + password);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> fullPath = <span class="title function_">buildFullPath</span>(config.<span class="property">baseURL</span>, config.<span class="property">url</span>);</span><br><span class="line"></span><br><span class="line">    request.<span class="title function_">open</span>(config.<span class="property">method</span>.<span class="title function_">toUpperCase</span>(), <span class="title function_">buildURL</span>(fullPath, config.<span class="property">params</span>, config.<span class="property">paramsSerializer</span>), <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Set the request timeout in MS</span></span><br><span class="line">    request.<span class="property">timeout</span> = config.<span class="property">timeout</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">onloadend</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (!request) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// Prepare the response</span></span><br><span class="line">      <span class="keyword">var</span> responseHeaders = <span class="string">&#x27;getAllResponseHeaders&#x27;</span> <span class="keyword">in</span> request ? <span class="title function_">parseHeaders</span>(request.<span class="title function_">getAllResponseHeaders</span>()) : <span class="literal">null</span>;</span><br><span class="line">      <span class="keyword">var</span> responseData = !responseType || responseType === <span class="string">&#x27;text&#x27;</span> ||  responseType === <span class="string">&#x27;json&#x27;</span> ?</span><br><span class="line">        request.<span class="property">responseText</span> : request.<span class="property">response</span>;</span><br><span class="line">      <span class="keyword">var</span> response = &#123;</span><br><span class="line">        <span class="attr">data</span>: responseData,</span><br><span class="line">        <span class="attr">status</span>: request.<span class="property">status</span>,</span><br><span class="line">        <span class="attr">statusText</span>: request.<span class="property">statusText</span>,</span><br><span class="line">        <span class="attr">headers</span>: responseHeaders,</span><br><span class="line">        <span class="attr">config</span>: config,</span><br><span class="line">        <span class="attr">request</span>: request</span><br><span class="line">      &#125;;</span><br><span class="line"></span><br><span class="line">      <span class="title function_">settle</span>(<span class="keyword">function</span> <span class="title function_">_resolve</span>(<span class="params">value</span>) &#123;</span><br><span class="line">        <span class="title function_">resolve</span>(value);</span><br><span class="line">        <span class="title function_">done</span>();</span><br><span class="line">      &#125;, <span class="keyword">function</span> <span class="title function_">_reject</span>(<span class="params">err</span>) &#123;</span><br><span class="line">        <span class="title function_">reject</span>(err);</span><br><span class="line">        <span class="title function_">done</span>();</span><br><span class="line">      &#125;, response);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Clean up request</span></span><br><span class="line">      request = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="string">&#x27;onloadend&#x27;</span> <span class="keyword">in</span> request) &#123;</span><br><span class="line">      <span class="comment">// Use onloadend if available</span></span><br><span class="line">      request.<span class="property">onloadend</span> = onloadend;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// Listen for ready state to emulate onloadend</span></span><br><span class="line">      request.<span class="property">onreadystatechange</span> = <span class="keyword">function</span> <span class="title function_">handleLoad</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!request || request.<span class="property">readyState</span> !== <span class="number">4</span>) &#123;</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// The request errored out and we didn&#x27;t get a response, this will be</span></span><br><span class="line">        <span class="comment">// handled by onerror instead</span></span><br><span class="line">        <span class="comment">// With one exception: request that using file: protocol, most browsers</span></span><br><span class="line">        <span class="comment">// will return status as 0 even though it&#x27;s a successful request</span></span><br><span class="line">        <span class="keyword">if</span> (request.<span class="property">status</span> === <span class="number">0</span> &amp;&amp; !(request.<span class="property">responseURL</span> &amp;&amp; request.<span class="property">responseURL</span>.<span class="title function_">indexOf</span>(<span class="string">&#x27;file:&#x27;</span>) === <span class="number">0</span>)) &#123;</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// readystate handler is calling before onerror or ontimeout handlers,</span></span><br><span class="line">        <span class="comment">// so we should call onloadend on the next &#x27;tick&#x27;</span></span><br><span class="line">        <span class="built_in">setTimeout</span>(onloadend);</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Handle browser request cancellation (as opposed to a manual cancellation)</span></span><br><span class="line">    request.<span class="property">onabort</span> = <span class="keyword">function</span> <span class="title function_">handleAbort</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (!request) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">AxiosError</span>(<span class="string">&#x27;Request aborted&#x27;</span>, <span class="title class_">AxiosError</span>.<span class="property">ECONNABORTED</span>, config, request));</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Clean up request</span></span><br><span class="line">      request = <span class="literal">null</span>;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Handle low level network errors</span></span><br><span class="line">    request.<span class="property">onerror</span> = <span class="keyword">function</span> <span class="title function_">handleError</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="comment">// Real errors are hidden from us by the browser</span></span><br><span class="line">      <span class="comment">// onerror should only fire if it&#x27;s a network error</span></span><br><span class="line">      <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">AxiosError</span>(<span class="string">&#x27;Network Error&#x27;</span>, <span class="title class_">AxiosError</span>.<span class="property">ERR_NETWORK</span>, config, request, request));</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Clean up request</span></span><br><span class="line">      request = <span class="literal">null</span>;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Handle timeout</span></span><br><span class="line">    request.<span class="property">ontimeout</span> = <span class="keyword">function</span> <span class="title function_">handleTimeout</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">var</span> timeoutErrorMessage = config.<span class="property">timeout</span> ? <span class="string">&#x27;timeout of &#x27;</span> + config.<span class="property">timeout</span> + <span class="string">&#x27;ms exceeded&#x27;</span> : <span class="string">&#x27;timeout exceeded&#x27;</span>;</span><br><span class="line">      <span class="keyword">var</span> transitional = config.<span class="property">transitional</span> || transitionalDefaults;</span><br><span class="line">      <span class="keyword">if</span> (config.<span class="property">timeoutErrorMessage</span>) &#123;</span><br><span class="line">        timeoutErrorMessage = config.<span class="property">timeoutErrorMessage</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">AxiosError</span>(</span><br><span class="line">        timeoutErrorMessage,</span><br><span class="line">        transitional.<span class="property">clarifyTimeoutError</span> ? <span class="title class_">AxiosError</span>.<span class="property">ETIMEDOUT</span> : <span class="title class_">AxiosError</span>.<span class="property">ECONNABORTED</span>,</span><br><span class="line">        config,</span><br><span class="line">        request));</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Clean up request</span></span><br><span class="line">      request = <span class="literal">null</span>;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Add xsrf header</span></span><br><span class="line">    <span class="comment">// This is only done if running in a standard browser environment.</span></span><br><span class="line">    <span class="comment">// Specifically not if we&#x27;re in a web worker, or react-native.</span></span><br><span class="line">    <span class="keyword">if</span> (utils.<span class="title function_">isStandardBrowserEnv</span>()) &#123;</span><br><span class="line">      <span class="comment">// Add xsrf header</span></span><br><span class="line">      <span class="keyword">var</span> xsrfValue = (config.<span class="property">withCredentials</span> || <span class="title function_">isURLSameOrigin</span>(fullPath)) &amp;&amp; config.<span class="property">xsrfCookieName</span> ?</span><br><span class="line">        cookies.<span class="title function_">read</span>(config.<span class="property">xsrfCookieName</span>) :</span><br><span class="line">        <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (xsrfValue) &#123;</span><br><span class="line">        requestHeaders[config.<span class="property">xsrfHeaderName</span>] = xsrfValue;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Add headers to the request</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="string">&#x27;setRequestHeader&#x27;</span> <span class="keyword">in</span> request) &#123;</span><br><span class="line">      utils.<span class="title function_">forEach</span>(requestHeaders, <span class="keyword">function</span> <span class="title function_">setRequestHeader</span>(<span class="params">val, key</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> requestData === <span class="string">&#x27;undefined&#x27;</span> &amp;&amp; key.<span class="title function_">toLowerCase</span>() === <span class="string">&#x27;content-type&#x27;</span>) &#123;</span><br><span class="line">          <span class="comment">// Remove Content-Type if data is undefined</span></span><br><span class="line">          <span class="keyword">delete</span> requestHeaders[key];</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="comment">// Otherwise add header to the request</span></span><br><span class="line">          request.<span class="title function_">setRequestHeader</span>(key, val);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Add withCredentials to request if needed</span></span><br><span class="line">    <span class="keyword">if</span> (!utils.<span class="title function_">isUndefined</span>(config.<span class="property">withCredentials</span>)) &#123;</span><br><span class="line">      request.<span class="property">withCredentials</span> = !!config.<span class="property">withCredentials</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Add responseType to request if needed</span></span><br><span class="line">    <span class="keyword">if</span> (responseType &amp;&amp; responseType !== <span class="string">&#x27;json&#x27;</span>) &#123;</span><br><span class="line">      request.<span class="property">responseType</span> = config.<span class="property">responseType</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Handle progress if needed</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> config.<span class="property">onDownloadProgress</span> === <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">      request.<span class="title function_">addEventListener</span>(<span class="string">&#x27;progress&#x27;</span>, config.<span class="property">onDownloadProgress</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Not all browsers support upload events</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> config.<span class="property">onUploadProgress</span> === <span class="string">&#x27;function&#x27;</span> &amp;&amp; request.<span class="property">upload</span>) &#123;</span><br><span class="line">      request.<span class="property">upload</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;progress&#x27;</span>, config.<span class="property">onUploadProgress</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 取消请求相关</span></span><br><span class="line">    <span class="keyword">if</span> (config.<span class="property">cancelToken</span> || config.<span class="property">signal</span>) &#123;</span><br><span class="line">      <span class="comment">// Handle cancellation</span></span><br><span class="line">      <span class="comment">// eslint-disable-next-line func-names</span></span><br><span class="line">      onCanceled = <span class="keyword">function</span>(<span class="params">cancel</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!request) &#123;</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="title function_">reject</span>(!cancel || (cancel &amp;&amp; cancel.<span class="property">type</span>) ? <span class="keyword">new</span> <span class="title class_">CanceledError</span>() : cancel);</span><br><span class="line">        request.<span class="title function_">abort</span>();</span><br><span class="line">        request = <span class="literal">null</span>;</span><br><span class="line">      &#125;;</span><br><span class="line"></span><br><span class="line">      config.<span class="property">cancelToken</span> &amp;&amp; config.<span class="property">cancelToken</span>.<span class="title function_">subscribe</span>(onCanceled);</span><br><span class="line">      <span class="keyword">if</span> (config.<span class="property">signal</span>) &#123;</span><br><span class="line">        config.<span class="property">signal</span>.<span class="property">aborted</span> ? <span class="title function_">onCanceled</span>() : config.<span class="property">signal</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;abort&#x27;</span>, onCanceled);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!requestData) &#123;</span><br><span class="line">      requestData = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> protocol = <span class="title function_">parseProtocol</span>(fullPath);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (protocol &amp;&amp; [ <span class="string">&#x27;http&#x27;</span>, <span class="string">&#x27;https&#x27;</span>, <span class="string">&#x27;file&#x27;</span> ].<span class="title function_">indexOf</span>(protocol) === -<span class="number">1</span>) &#123;</span><br><span class="line">      <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">AxiosError</span>(<span class="string">&#x27;Unsupported protocol &#x27;</span> + protocol + <span class="string">&#x27;:&#x27;</span>, <span class="title class_">AxiosError</span>.<span class="property">ERR_BAD_REQUEST</span>, config));</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Send the request</span></span><br><span class="line">    request.<span class="title function_">send</span>(requestData);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>注意点：</p>
-<ul>
-<li><code>auth</code>是表示授权相关的请求头，axios会默认加上配置</li>
-<li>如果是form表单请求，axios会删除<code>Content-Type</code>请求头</li>
-<li>在这里也做了取消请求相关的，利用的是xhr的<code>abort</code>函数进行请求取消</li>
-</ul>
-<h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><ul>
-<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzA5MjQwMzQyNw==&mid=2650744604&idx=1&sn=51d8d865c9848fd59f7763f5fb9ce789&chksm=88662490bf11ad86061ae76ff71a1177eeddab02c38d046eecd0e1ad25dc16f7591f91e9e3b2&scene=21#wechat_redirect">学习 axios 源码整体架构，打造属于自己的请求库</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="http://www.axios-js.com/zh-cn/docs/#axios-spread-callback">axios官网</a></p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91axios-%E6%B5%81%E7%A8%8B/" data-id="cmepc0uin0054t0fm853zdger" data-title="axios请求流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/axios-%E6%BA%90%E7%A0%81/" rel="tag">axios 源码</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-源码/【源码】vuex-初始化" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91vuex-%E5%88%9D%E5%A7%8B%E5%8C%96/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:33.944Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/vuex-%E6%BA%90%E7%A0%81/">vuex 源码</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91vuex-%E5%88%9D%E5%A7%8B%E5%8C%96/">vuex-流程</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>源码位置：<code>vuex/dist/vuex.esm.js</code>，该文件默认导出了<code>&#123; Store, createLogger, createNamespacedHelpers, install, mapActions, mapGetters, mapMutations, mapState &#125;</code>，在使用 vuex 时，用的<code>vue.use(Vuex)</code>实际执行的是<code>install</code>方法</p>
-<h2 id="引入-vuex"><a href="#引入-vuex" class="headerlink" title="引入 vuex"></a>引入 vuex</h2><h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><ul>
-<li>首先判断传入的 vue 是否和之前的 vue 一致，如果一致的话且非 prd 环境，则会抛出异常<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="title class_">Vue</span> &amp;&amp; _Vue === <span class="title class_">Vue</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (process.<span class="property">env</span>.<span class="property">NODE_ENV</span> !== <span class="string">&quot;production&quot;</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(</span><br><span class="line">      <span class="string">&quot;[vuex] already installed. Vue.use(Vuex) should be called only once.&quot;</span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>将传入的 vue 赋值给 vuex 的全局变量<br>  用于判断是否已经装载和减少全局作用域查找<br><code>Vue = _Vue;</code></li>
-<li>利用 vue3 以下的 mixin，将 vuex 挂载到 vm 的全局上</li>
-</ul>
-<h3 id="mixin"><a href="#mixin" class="headerlink" title="mixin"></a>mixin</h3><ul>
-<li>首先判断 vue 的版本，如果是在 v2 以上，那么直接调用<code>mixin</code>方法<br><code> Vue.mixin(&#123; beforeCreate: vuexInit &#125;);</code></li>
-<li>若非 vue2 以上，那么就调用 vue 的 init 方法。将初始化的函数加入 vue 的 init 方法列表中，并进行循环调用<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">options.<span class="property">init</span> = options.<span class="property">init</span> ? [vuexInit].<span class="title function_">concat</span>(options.<span class="property">init</span>) : vuexInit;</span><br><span class="line">_init.<span class="title function_">call</span>(<span class="variable language_">this</span>, options);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>vuexInit 方法：判断当前 vue 是否是 root（用是否有 parent 进行判断）。若是 root，那么就将 store 赋值到 rootVue 的<code>$store</code>中，若不是，那么就将父 Vue 的<code>$store</code>作为当前 vue 的<code>$store</code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (options.<span class="property">store</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">$store</span> =</span><br><span class="line">    <span class="keyword">typeof</span> options.<span class="property">store</span> === <span class="string">&quot;function&quot;</span> ? options.<span class="title function_">store</span>() : options.<span class="property">store</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (options.<span class="property">parent</span> &amp;&amp; options.<span class="property">parent</span>.<span class="property">$store</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">$store</span> = options.<span class="property">parent</span>.<span class="property">$store</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-<h2 id="创建-store"><a href="#创建-store" class="headerlink" title="创建 store"></a>创建 store</h2><p>创建 store 时，执行的是<code>Store</code>方法</p>
-<h3 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h3><ul>
-<li><p>首先进行一堆初始值赋值</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> plugins = options.<span class="property">plugins</span>;</span><br><span class="line"><span class="keyword">if</span> (plugins === <span class="keyword">void</span> <span class="number">0</span>) plugins = [];</span><br><span class="line"><span class="keyword">var</span> strict = options.<span class="property">strict</span>;</span><br><span class="line"><span class="keyword">if</span> (strict === <span class="keyword">void</span> <span class="number">0</span>) strict = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// store internal state</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">_committing</span> = <span class="literal">false</span>; <span class="comment">//是否是修改state</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">_actions</span> = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="literal">null</span>);</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">_actionSubscribers</span> = [];</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">_mutations</span> = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="literal">null</span>);</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">_wrappedGetters</span> = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="literal">null</span>);</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">_modules</span> = <span class="keyword">new</span> <span class="title class_">ModuleCollection</span>(options); <span class="comment">//初始化注册module</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">_modulesNamespaceMap</span> = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="literal">null</span>);</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">_subscribers</span> = [];</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">_watcherVM</span> = <span class="keyword">new</span> <span class="title class_">Vue</span>(); <span class="comment">//用于store的watch使用</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">_makeLocalGettersCache</span> = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="literal">null</span>);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将 dispatch 重新赋值执行</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ref = <span class="variable language_">this</span>;</span><br><span class="line"><span class="keyword">var</span> dispatch = ref.<span class="property">dispatch</span>;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">dispatch</span> = <span class="keyword">function</span> <span class="title function_">boundDispatch</span>(<span class="params">type, payload</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> dispatch.<span class="title function_">call</span>(store, type, payload);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>这里调用的还是 store 上面的 dispatch 方法</p>
-</li>
-<li><p>将 commit 重新赋值执行</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">commit</span> = <span class="keyword">function</span> <span class="title function_">boundCommit</span>(<span class="params">type, payload, options</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> commit.<span class="title function_">call</span>(store, type, payload, options);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
-<li><p>初始化 module（installModule）<br>这里的 state，是经过了<code>new ModuleCollection</code>流程的，取用的是 module 根节点的 state，实际就是项目中 store 的 module 配置列表</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> state = <span class="variable language_">this</span>.<span class="property">_modules</span>.<span class="property">root</span>.<span class="property">state</span>;</span><br><span class="line"><span class="title function_">installModule</span>(<span class="variable language_">this</span>, state, [], <span class="variable language_">this</span>.<span class="property">_modules</span>.<span class="property">root</span>);</span><br></pre></td></tr></table></figure></li>
-<li><p>对 store 的<code>_vm</code>重新赋值<br><code>resetStoreVM(this, state);</code></p>
-</li>
-<li><p>执行 plugins 列表</p>
-</li>
-</ul>
-<h3 id="module-相关"><a href="#module-相关" class="headerlink" title="module 相关"></a>module 相关</h3><h4 id="new-ModuleCollection"><a href="#new-ModuleCollection" class="headerlink" title="new ModuleCollection"></a>new ModuleCollection</h4><p>创建了一个 module 的对象，store 里面的 module 并不是直接归属 store 下的一个对象，而是 ModuleCollection 函数，这个是一个独立的对象</p>
-<p>而 ModuleCollection 又是由一个个 Module 对象集合而成的</p>
-<p>ModuleCollection 有一个根节点，根节点创建完成之后，后续的 module 都会通过根节点(Module 对象)的 addChild 函数进行添加</p>
-<p>modules 结构如下：<br><a target="_blank" rel="noopener" href="https://imgse.com/i/pAWHwB4"><img src="https://s21.ax1x.com/2024/11/21/pAWHwB4.png" alt="pAWHwB4.png"></a></p>
-<p>可以看到有一个根节点，然后其下的 state 才是保存的实际的项目中的 storeModule</p>
-<ul>
-<li><p>在 vuex 初始化时执行这个函数,进入 register 流程</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">ModuleCollection</span> = <span class="keyword">function</span> <span class="title function_">ModuleCollection</span>(<span class="params">rawRootModule</span>) &#123;</span><br><span class="line">  <span class="comment">// register root module (Vuex.Store options)</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">register</span>([], rawRootModule, <span class="literal">false</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
-<li><p>创建 module 的根节点<br>这里由于是第一次调用的话，path 默认就是个空数组，所以调用 ModuleCollection 的 register 都会先创建一个 modules 的根节点</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> newModule = <span class="keyword">new</span> <span class="title class_">Module</span>(rawModule, runtime);</span><br><span class="line"><span class="comment">// 由于调用register的时候传入的path是个空数组，所以这里会把第一个创建的module作为根节点</span></span><br><span class="line"><span class="keyword">if</span> (path.<span class="property">length</span> === <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">root</span> = newModule;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> parent = <span class="variable language_">this</span>.<span class="title function_">get</span>(path.<span class="title function_">slice</span>(<span class="number">0</span>, -<span class="number">1</span>));</span><br><span class="line">  parent.<span class="title function_">addChild</span>(path[path.<span class="property">length</span> - <span class="number">1</span>], newModule);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>循环调用 register，将项目中的 store 循环放在根节点的 children 中</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// register nested modules</span></span><br><span class="line"><span class="keyword">if</span> (rawModule.<span class="property">modules</span>) &#123;</span><br><span class="line">  <span class="title function_">forEachValue</span>(rawModule.<span class="property">modules</span>, <span class="keyword">function</span> (<span class="params">rawChildModule, key</span>) &#123;</span><br><span class="line">    <span class="comment">// 这里执行的也是ModuleCollection的register函数，不过由于path里面已经有数据了，所以这里走的是上一步的else流程</span></span><br><span class="line">    <span class="variable language_">this</span>$1.<span class="title function_">register</span>(path.<span class="title function_">concat</span>(key), rawChildModule, runtime);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="installModule"><a href="#installModule" class="headerlink" title="installModule"></a>installModule</h3><p>这个函数主要是用于将上一步得到的_modules 进行处理，然后循环注册 module 的 getter、action、mutation 等</p>
-<ul>
-<li><p>前置处理<br>判断当前是否是根节点，如果是非根节点，即项目中的每个 module，把这些放在根节点的 state 中</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 判断是否是根节点，实际只有从Store中初始化的入口，其他进入的都是非根节点</span></span><br><span class="line"><span class="keyword">var</span> isRoot = !path.<span class="property">length</span>;</span><br><span class="line"><span class="keyword">var</span> namespace = store.<span class="property">_modules</span>.<span class="title function_">getNamespace</span>(path);</span><br><span class="line"></span><br><span class="line"><span class="comment">// register in namespace map</span></span><br><span class="line"><span class="keyword">if</span> (<span class="variable language_">module</span>.<span class="property">namespaced</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (</span><br><span class="line">    store.<span class="property">_modulesNamespaceMap</span>[namespace] &amp;&amp;</span><br><span class="line">    process.<span class="property">env</span>.<span class="property">NODE_ENV</span> !== <span class="string">&quot;production&quot;</span></span><br><span class="line">  ) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(</span><br><span class="line">      <span class="string">&quot;[vuex] duplicate namespace &quot;</span> +</span><br><span class="line">        namespace +</span><br><span class="line">        <span class="string">&quot; for the namespaced module &quot;</span> +</span><br><span class="line">        path.<span class="title function_">join</span>(<span class="string">&quot;/&quot;</span>)</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">  store.<span class="property">_modulesNamespaceMap</span>[namespace] = <span class="variable language_">module</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// set state</span></span><br><span class="line"><span class="keyword">if</span> (!isRoot &amp;&amp; !hot) &#123;</span><br><span class="line">  <span class="keyword">var</span> parentState = <span class="title function_">getNestedState</span>(rootState, path.<span class="title function_">slice</span>(<span class="number">0</span>, -<span class="number">1</span>));</span><br><span class="line">  <span class="keyword">var</span> moduleName = path[path.<span class="property">length</span> - <span class="number">1</span>];</span><br><span class="line">  store.<span class="title function_">_withCommit</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (process.<span class="property">env</span>.<span class="property">NODE_ENV</span> !== <span class="string">&quot;production&quot;</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (moduleName <span class="keyword">in</span> parentState) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">warn</span>(</span><br><span class="line">          <span class="string">&#x27;[vuex] state field &quot;&#x27;</span> +</span><br><span class="line">            moduleName +</span><br><span class="line">            <span class="string">&#x27;&quot; was overridden by a module with the same name at &quot;&#x27;</span> +</span><br><span class="line">            path.<span class="title function_">join</span>(<span class="string">&quot;.&quot;</span>) +</span><br><span class="line">            <span class="string">&#x27;&quot;&#x27;</span></span><br><span class="line">        );</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 将module的state都挂到根节点的state上</span></span><br><span class="line">    <span class="title class_">Vue</span>.<span class="title function_">set</span>(parentState, moduleName, <span class="variable language_">module</span>.<span class="property">state</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>循环注册每个模块的 getter、action、mutation</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="title function_">forEachMutation</span>(<span class="keyword">function</span> (<span class="params">mutation, key</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> namespacedType = namespace + key;</span><br><span class="line">  <span class="title function_">registerMutation</span>(store, namespacedType, mutation, local);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="title function_">forEachAction</span>(<span class="keyword">function</span> (<span class="params">action, key</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> type = action.<span class="property">root</span> ? key : namespace + key;</span><br><span class="line">  <span class="keyword">var</span> handler = action.<span class="property">handler</span> || action;</span><br><span class="line">  <span class="title function_">registerAction</span>(store, type, handler, local);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="title function_">forEachGetter</span>(<span class="keyword">function</span> (<span class="params">getter, key</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> namespacedType = namespace + key;</span><br><span class="line">  <span class="title function_">registerGetter</span>(store, namespacedType, getter, local);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>循环执行每个 module<br>对项目中的每个 module 每次都走一个第一步</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="title function_">forEachChild</span>(<span class="keyword">function</span> (<span class="params">child, key</span>) &#123;</span><br><span class="line">  <span class="title function_">installModule</span>(store, rootState, path.<span class="title function_">concat</span>(key), child, hot);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="resetStoreVM-this-state"><a href="#resetStoreVM-this-state" class="headerlink" title="resetStoreVM(this, state);"></a>resetStoreVM(this, state);</h3><p>这个主要是用于初始化 store 上的<code>_vm</code>，以及将 gettter 放到 store 的<code>getters</code>上，即走了这一步，store 里面才有 getter。dispatch、commit 等是直接挂载在 Store.prototype 上的</p>
-<ul>
-<li><p>挂载 getters<br>这里是将_wrappedGetters 的数据挂载到 store 里面的 getter 上，_wrappedGetters 是执行的函数，getters 是执行的结果</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> oldVm = store.<span class="property">_vm</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(store);</span><br><span class="line"><span class="comment">// bind store public getters</span></span><br><span class="line">store.<span class="property">getters</span> = &#123;&#125;;</span><br><span class="line"><span class="comment">// reset local getters cache</span></span><br><span class="line">store.<span class="property">_makeLocalGettersCache</span> = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="literal">null</span>);</span><br><span class="line"><span class="keyword">var</span> wrappedGetters = store.<span class="property">_wrappedGetters</span>;</span><br><span class="line"><span class="keyword">var</span> computed = &#123;&#125;;</span><br><span class="line"><span class="title function_">forEachValue</span>(wrappedGetters, <span class="keyword">function</span> (<span class="params">fn, key</span>) &#123;</span><br><span class="line">  <span class="comment">// use computed to leverage its lazy-caching mechanism</span></span><br><span class="line">  <span class="comment">// direct inline function use will lead to closure preserving oldVm.</span></span><br><span class="line">  <span class="comment">// using partial to return function with only arguments preserved in closure environment.</span></span><br><span class="line">  computed[key] = <span class="title function_">partial</span>(fn, store);</span><br><span class="line">  <span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(store.<span class="property">getters</span>, key, &#123;</span><br><span class="line">    <span class="attr">get</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> store.<span class="property">_vm</span>[key];</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">enumerable</span>: <span class="literal">true</span>, <span class="comment">// for local getters</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
-<li><p>对 store 的_vm 重新赋值<br>这里的 state 是_modules 根节点的 state</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> silent = <span class="title class_">Vue</span>.<span class="property">config</span>.<span class="property">silent</span>;</span><br><span class="line"><span class="comment">// 暂时将Vue设为静默模式，避免报出用户加载的某些插件触发的警告</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="property">config</span>.<span class="property">silent</span> = <span class="literal">true</span>;</span><br><span class="line">store.<span class="property">_vm</span> = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">  <span class="attr">data</span>: &#123;</span><br><span class="line">    <span class="attr">$$state</span>: state,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">computed</span>: computed,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 恢复Vue的模式</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="property">config</span>.<span class="property">silent</span> = silent;</span><br><span class="line"><span class="comment">// 如果设置了严格模式</span></span><br><span class="line"><span class="keyword">if</span> (store.<span class="property">strict</span>) &#123;</span><br><span class="line">  <span class="title function_">enableStrictMode</span>(store);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>销毁老的 vm</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (oldVm) &#123;</span><br><span class="line">  <span class="keyword">if</span> (hot) &#123;</span><br><span class="line">    <span class="comment">// dispatch changes in all subscribed watchers</span></span><br><span class="line">    <span class="comment">// to force getter re-evaluation for hot reloading.</span></span><br><span class="line">    store.<span class="title function_">_withCommit</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">      oldVm.<span class="property">_data</span>.<span class="property">$$state</span> = <span class="literal">null</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title class_">Vue</span>.<span class="title function_">nextTick</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> oldVm.$destroy();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="模块函数注册"><a href="#模块函数注册" class="headerlink" title="模块函数注册"></a>模块函数注册</h3><p>在installModule中，会对每个模块进行mutation、action、getter的注册</p>
-<ul>
-<li><p>registerMutation<br>  调用方：<br>  module.forEachMutation是将_modules中的mutation取出来，然后循环执行回调函数</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="title function_">forEachMutation</span>(<span class="keyword">function</span> (<span class="params">mutation, key</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> namespacedType = namespace + key;</span><br><span class="line">    <span class="title function_">registerMutation</span>(store, namespacedType, mutation, local);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 等同于</span></span><br><span class="line"><span class="comment">// this._rawModule.mutations.foreach()</span></span><br></pre></td></tr></table></figure>
-<p>  获取到对应的muation，这里的创建store的_muation的地方</p>
-<p>  如果没有同名的muation，那么就创建出；然后再将项目的muation包装一下，增加到store的_mutation中</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">registerMutation</span> (<span class="params">store, type, handler, local</span>) &#123;</span><br><span class="line"><span class="comment">//    创建muation的地方 store._mutations[type] = []</span></span><br><span class="line"><span class="keyword">var</span> entry = store.<span class="property">_mutations</span>[type] || (store.<span class="property">_mutations</span>[type] = []);</span><br><span class="line">entry.<span class="title function_">push</span>(<span class="keyword">function</span> <span class="title function_">wrappedMutationHandler</span> (<span class="params">payload</span>) &#123;</span><br><span class="line">    <span class="comment">// handler就是实际项目中的的muation，将执行的this绑定到store中，</span></span><br><span class="line">    <span class="comment">// local是`module.context`，是在创建Module的时候，传入的 </span></span><br><span class="line">    <span class="comment">// installModule 中的 var local = module.context = makeLocalContext(store, namespace, path);</span></span><br><span class="line">    <span class="comment">// 即在上一步中，每个Module创建时的</span></span><br><span class="line">    <span class="comment">//  ModuleCollection根节点，其下_children里面的Module</span></span><br><span class="line">    handler.<span class="title function_">call</span>(store, local.<span class="property">state</span>, payload);</span><br><span class="line">&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pAf1YiF"><img src="https://s21.ax1x.com/2024/11/22/pAf1YiF.png" alt="pAf1YiF.png"></a></p>
-<p>  注意，vuex中的muation和dispatch都是数组，只有getter是非数组</p>
-</li>
-<li><p>平时在执行commit时的顺序</p>
-<ul>
-<li>Store初始化中的<code>this.commit</code></li>
-<li>Store原型链中的<code>Store.prototype.commit</code></li>
-<li>注册mutation中（上一步）的<code>wrappedMutationHandler</code></li>
-</ul>
-</li>
-<li><p>registerAction<br>  module.forEachAction是将_modules中的action（action.handler || action）取出来，然后循环执行回调函数</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">function</span> <span class="title function_">registerAction</span> (<span class="params">store, type, handler, local</span>) &#123;</span><br><span class="line">  <span class="comment">// 获取到对应的action函数，即项目中实际写的dispatch回调</span></span><br><span class="line">  <span class="keyword">var</span> entry = store.<span class="property">_actions</span>[type] || (store.<span class="property">_actions</span>[type] = []);</span><br><span class="line">  <span class="comment">// 因为action和mutation都是一个数组，所以用的是push方法，将对应的dispatchType放到数组中</span></span><br><span class="line">  <span class="comment">// 这里就是调用项目中dispatch回调，在调用之前包了一层，将执行作用于绑定到store中，</span></span><br><span class="line">  <span class="comment">// dispatch中的两个参数也是在这里进行传递的</span></span><br><span class="line">  entry.<span class="title function_">push</span>(<span class="keyword">function</span> <span class="title function_">wrappedActionHandler</span> (<span class="params">payload</span>) &#123;</span><br><span class="line">    <span class="comment">// dispath的root就是第二个参数，调用时传递的数据是payload</span></span><br><span class="line">    <span class="keyword">var</span> res = handler.<span class="title function_">call</span>(store, &#123;</span><br><span class="line">      <span class="attr">dispatch</span>: local.<span class="property">dispatch</span>,</span><br><span class="line">      <span class="attr">commit</span>: local.<span class="property">commit</span>,</span><br><span class="line">      <span class="attr">getters</span>: local.<span class="property">getters</span>,</span><br><span class="line">      <span class="attr">state</span>: local.<span class="property">state</span>,</span><br><span class="line">      <span class="attr">rootGetters</span>: store.<span class="property">getters</span>,</span><br><span class="line">      <span class="attr">rootState</span>: store.<span class="property">state</span></span><br><span class="line">    &#125;, payload);</span><br><span class="line">    <span class="comment">// dispatch是promise的处理</span></span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_">isPromise</span>(res)) &#123;</span><br><span class="line">      res = <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(res);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (store.<span class="property">_devtoolHook</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> res.<span class="title function_">catch</span>(<span class="keyword">function</span> (<span class="params">err</span>) &#123;</span><br><span class="line">        store.<span class="property">_devtoolHook</span>.<span class="title function_">emit</span>(<span class="string">&#x27;vuex:error&#x27;</span>, err);</span><br><span class="line">        <span class="keyword">throw</span> err</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> res</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>平时在执行dispatch时的顺序</p>
-<ul>
-<li>Store初始化中的<code>this.dispatch</code></li>
-<li>Store原型链中的<code>Store.prototype.dispatch</code></li>
-<li>注册dispatch中（上一步）的<code>registerAction</code>中entry包过的函数</li>
-</ul>
-</li>
-<li><p>registerGetter<br>  module.forEachAction是将_modules中的getters取出来，然后循环执行回调函数<br>  rawGetter和action第三个参数一样，都是getter的回调</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">function</span> <span class="title function_">registerGetter</span> (<span class="params">store, type, rawGetter, local</span>) &#123;</span><br><span class="line">    <span class="comment">// gettter不能有重复命名的，所以会报错，这个是和action、mutation不同的点</span></span><br><span class="line">  <span class="keyword">if</span> (store.<span class="property">_wrappedGetters</span>[type]) &#123;</span><br><span class="line">    <span class="keyword">if</span> ((process.<span class="property">env</span>.<span class="property">NODE_ENV</span> !== <span class="string">&#x27;production&#x27;</span>)) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>((<span class="string">&quot;[vuex] duplicate getter key: &quot;</span> + type));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// store就是Store，是初始创建的</span></span><br><span class="line">  store.<span class="property">_wrappedGetters</span>[type] = <span class="keyword">function</span> <span class="title function_">wrappedGetter</span> (<span class="params">store</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">rawGetter</span>(</span><br><span class="line">      local.<span class="property">state</span>, <span class="comment">// local state</span></span><br><span class="line">      local.<span class="property">getters</span>, <span class="comment">// local getters</span></span><br><span class="line">      store.<span class="property">state</span>, <span class="comment">// root state</span></span><br><span class="line">      store.<span class="property">getters</span> <span class="comment">// root getters</span></span><br><span class="line">    )</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>平时在执行getter时的顺序</p>
-<ul>
-<li>先遍历执行一次<code>module.forEachGetter</code></li>
-<li>调用的时候执行resetStoreVm中，将getter调用<code>store._vm[key]</code>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(store.<span class="property">getters</span>, key, &#123;</span><br><span class="line">  <span class="attr">get</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123; </span><br><span class="line">    <span class="keyword">debugger</span></span><br><span class="line">    <span class="keyword">return</span> store.<span class="property">_vm</span>[key];</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">enumerable</span>: <span class="literal">true</span> <span class="comment">// for local getters</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
-<li>执行registerGetter中封装好的getter</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91vuex-%E5%88%9D%E5%A7%8B%E5%8C%96/" data-id="cmepc0uio0058t0fmc7yp621j" data-title="vuex-流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91vuex-%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0/" data-id="cmf67fxem007zbcfm1e4i5731" data-title="vuex-执行函数" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -2003,7 +2474,7 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 12px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 14px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 14px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
     </div>
   </div>
 
@@ -2012,7 +2483,7 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">September 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
     </div>
   </div>
 
@@ -2025,6 +2496,14 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
       <ul>
         
           <li>
+            <a href="/2025/09/05/Vue/%E3%80%90vue%E3%80%91%E8%AF%A6%E8%A7%A3computed/">详解computed</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/25/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB2/">记录3</a>
+          </li>
+        
+          <li>
             <a href="/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/">记录2</a>
           </li>
         
@@ -2034,14 +2513,6 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
         
           <li>
             <a href="/2025/08/14/%E6%89%8B%E5%86%99%E9%A2%98/">手写题</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E3%80%90%E6%89%8B%E5%86%99%E3%80%91call%E3%80%81apply%E3%80%81bind/">【手写】call、apply、bind</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【wasb】环境搭建</a>
           </li>
         
       </ul>

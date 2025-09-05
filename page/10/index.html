@@ -71,6 +71,314 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-devTools/【devTools】常用面板" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/devTools/%E3%80%90devTools%E3%80%91%E5%B8%B8%E7%94%A8%E9%9D%A2%E6%9D%BF/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.214Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/devTools/%E3%80%90devTools%E3%80%91%E5%B8%B8%E7%94%A8%E9%9D%A2%E6%9D%BF/">【devTools】常用面板</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="【devTools】常用面板"><a href="#【devTools】常用面板" class="headerlink" title="【devTools】常用面板"></a>【devTools】常用面板</h1><h2 id="Elements面板"><a href="#Elements面板" class="headerlink" title="Elements面板"></a>Elements面板</h2><h3 id="将元素存入变量"><a href="#将元素存入变量" class="headerlink" title="将元素存入变量"></a>将元素存入变量</h3><ul>
+<li><p>右击</p>
+</li>
+<li><p>选择store as global variable</p>
+</li>
+<li><p>通过$0、$1…获取对应的元素</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVIrHH"><img src="https://s1.ax1x.com/2023/06/11/pCVIrHH.png" alt="pCVIrHH.png"></a></p>
+<h2 id="console面板"><a href="#console面板" class="headerlink" title="console面板"></a>console面板</h2><h3 id="自动合并相似信息"><a href="#自动合并相似信息" class="headerlink" title="自动合并相似信息"></a>自动合并相似信息</h3><p>Group similar message in console，浏览器默认开启的</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVoeqe"><img src="https://s1.ax1x.com/2023/06/11/pCVoeqe.png" alt="pCVoeqe.png"></a></p>
+<h3 id="Hide-network"><a href="#Hide-network" class="headerlink" title="Hide network"></a>Hide network</h3><p>隐藏网络的错误提示信息</p>
+<h3 id="preserve-log"><a href="#preserve-log" class="headerlink" title="preserve log"></a>preserve log</h3><p>页面跳转时保留console信息</p>
+<h3 id="show-timestamps"><a href="#show-timestamps" class="headerlink" title="show timestamps"></a>show timestamps</h3><p>打印时，会默认输入每一行信息的时间</p>
+<p>打开：devtools右上角设置按钮，perferces下show timestamps</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVoGM8"><img src="https://s1.ax1x.com/2023/06/11/pCVoGM8.png" alt="pCVoGM8.png"></a></p>
+<h3 id=""><a href="#" class="headerlink" title="$_"></a>$_</h3><p>作用：获取最近一次的执行结果</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVosMT"><img src="https://s1.ax1x.com/2023/06/11/pCVosMT.png" alt="pCVosMT.png"></a></p>
+<h3 id="和"><a href="#和" class="headerlink" title="$和$$"></a>$和$$</h3><p><code>$</code>：document.querySelector</p>
+<p><code>$$</code>: document.querySelectorAll</p>
+<h3 id="x"><a href="#x" class="headerlink" title="$x"></a>$x</h3><p>可以使用xpath选择元素。</p>
+<p>eg：$x(“&#x2F;html&#x2F;body&#x2F;div”)</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVofiR"><img src="https://s1.ax1x.com/2023/06/11/pCVofiR.png" alt="pCVofiR.png"></a></p>
+<h3 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h3><p>执行到该函数时就会触发断点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">fn</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">debug</span>(fn)</span><br><span class="line"><span class="title function_">fn</span>()</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVo4Rx"><img src="https://s1.ax1x.com/2023/06/11/pCVo4Rx.png" alt="pCVo4Rx.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVooQK"><img src="https://s1.ax1x.com/2023/06/11/pCVooQK.png" alt="pCVooQK.png"></a></p>
+<h3 id="monitor"><a href="#monitor" class="headerlink" title="monitor"></a>monitor</h3><p>函数执行时打印参数值，但无法打印箭头函数的参数</p>
+<p>执行unmonitor删除效果</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fn3</span>(<span class="params">a, b</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">monitor</span>(fn3)</span><br><span class="line"><span class="title function_">fn3</span>(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line"><span class="comment">//输出：VM3370:1 function fn3 called with arguments: 1, 2</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="monitroEvents"><a href="#monitroEvents" class="headerlink" title="monitroEvents"></a>monitroEvents</h3><p>监听并打印元素触发的事件，可以用数组一次性监听多个事件。</p>
+<p>执行unmonitorEvents取消监听</p>
+<h3 id="getEventListeners"><a href="#getEventListeners" class="headerlink" title="getEventListeners"></a>getEventListeners</h3><p>获取注册在元素上的所有事件监听器</p>
+<h3 id="queryObjects"><a href="#queryObjects" class="headerlink" title="queryObjects"></a>queryObjects</h3><p>获取所有原型链中包含该原型的对象</p>
+<h2 id="source面板"><a href="#source面板" class="headerlink" title="source面板"></a>source面板</h2><h3 id="FileSystem"><a href="#FileSystem" class="headerlink" title="FileSystem"></a>FileSystem</h3><p>可以直接与本地的文件连接，在devtools修改文件之后，会将本地的文件内容也进行修改</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVXADP"><img src="https://s1.ax1x.com/2023/06/11/pCVXADP.png" alt="pCVXADP.png"></a></p>
+<h3 id="overrides"><a href="#overrides" class="headerlink" title="overrides"></a>overrides</h3><p>可以以本地的文件取代页面中载入的资源</p>
+<h3 id="断点"><a href="#断点" class="headerlink" title="断点"></a>断点</h3><h4 id="条件断点"><a href="#条件断点" class="headerlink" title="条件断点"></a>条件断点</h4><p>在source代码块需要设置时，在对应的行号右键，选择Add Condition Break Point，写上具体的条件</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVXrb6"><img src="https://s1.ax1x.com/2023/06/11/pCVXrb6.png" alt="pCVXrb6.png"></a></p>
+<h4 id="断点打印信息，Logpoint"><a href="#断点打印信息，Logpoint" class="headerlink" title="断点打印信息，Logpoint"></a>断点打印信息，Logpoint</h4><p>在执行时经过该程序代码时打印信息</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVXR8H"><img src="https://s1.ax1x.com/2023/06/11/pCVXR8H.png" alt="pCVXR8H.png"></a></p>
+<h4 id="dom断点"><a href="#dom断点" class="headerlink" title="dom断点"></a>dom断点</h4><p>在element tab，右键元素，展开break on，有三种断点形式：</p>
+<ul>
+<li><p>subtree modifications ：元素内发生变化时暂停，如添加、删除、修改子节点</p>
+</li>
+<li><p>attribute modifications ：添加、删除、修改元素本身的属性时暂停</p>
+</li>
+<li><p>node removal：元素被删除时暂停，同时删除dom断点</p>
+</li>
+</ul>
+<h4 id="请求断点"><a href="#请求断点" class="headerlink" title="请求断点"></a>请求断点</h4><p>在debugger时，点击在XHR&#x2F;fetch Breapoints列表右上角的+按钮，输入data，回车保存。</p>
+<h4 id="事件监听器断点"><a href="#事件监听器断点" class="headerlink" title="事件监听器断点"></a>事件监听器断点</h4><p>在debugger时，在Event Listener BreakPoint列表的Control下勾选对应的事件，然后手动触发对应的事件</p>
+<h4 id="忽略进入文件"><a href="#忽略进入文件" class="headerlink" title="忽略进入文件"></a>忽略进入文件</h4><p>在对应的文件代码内容区域，右键选择Add script to ignore list，添加之后，这个文件就不会在调试时进入了</p>
+<h2 id="NetWork"><a href="#NetWork" class="headerlink" title="NetWork"></a>NetWork</h2><h3 id="设置区域"><a href="#设置区域" class="headerlink" title="设置区域"></a>设置区域</h3><p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVjISJ"><img src="https://s1.ax1x.com/2023/06/11/pCVjISJ.png" alt="pCVjISJ.png"></a></p>
+<ul>
+<li><p>Use large request rows</p>
+<p>使用宽版的流量记录列表来显示</p>
+</li>
+<li><p>Group by frame</p>
+<p>将来自相同iframe的请求聚焦在一起</p>
+</li>
+<li><p>show overview</p>
+<p>是否显示时间轴</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVj7O1"><img src="https://s1.ax1x.com/2023/06/11/pCVj7O1.png" alt="pCVj7O1.png"></a></p>
+<ul>
+<li><p>Capture screenslots</p>
+<p>是否截图</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91%E5%B8%B8%E7%94%A8%E9%9D%A2%E6%9D%BF/" data-id="cmf67fxdr003pbcfmbmq94lop" data-title="【devTools】常用面板" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-devTools/【devTools】performance" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/devTools/%E3%80%90devTools%E3%80%91performance/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.212Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/devTools/%E3%80%90devTools%E3%80%91performance/">【devTools】performance</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Performance面板"><a href="#Performance面板" class="headerlink" title="Performance面板"></a>Performance面板</h1><h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><ul>
+<li><p>保持环境整洁，例如使用隐私模式、清除缓存等</p>
+</li>
+<li><p>确定目标，在执行过程中，尽可能缩短持续时间，避免额外的操作等</p>
+</li>
+</ul>
+<h3 id="开始记录"><a href="#开始记录" class="headerlink" title="开始记录"></a>开始记录</h3><ul>
+<li><p>打开devTools，切换到Performance面板</p>
+</li>
+<li><p>点击左上角的圆形按钮开始记录</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVcIH0"><img src="https://s1.ax1x.com/2023/06/11/pCVcIH0.png" alt="pCVcIH0.png"></a></p>
+<ul>
+<li><p>记录过程种可以做一些交互</p>
+</li>
+<li><p>点击stop停止监测</p>
+</li>
+</ul>
+<h3 id="生成内容"><a href="#生成内容" class="headerlink" title="生成内容"></a>生成内容</h3><p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVvNc9"><img src="https://s1.ax1x.com/2023/06/11/pCVvNc9.png" alt="pCVvNc9.png"></a></p>
+<ul>
+<li><p>工具栏：与整体面板有关的操作选项和设置</p>
+</li>
+<li><p>overview图表：可视化呈现完整时间轴的基本信息</p>
+</li>
+<li><p>Activities：将性能信息以方块式的Activity为单位显示在不同种类的列表中</p>
+</li>
+</ul>
+<h2 id="工具栏"><a href="#工具栏" class="headerlink" title="工具栏"></a>工具栏</h2><p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVvshD"><img src="https://s1.ax1x.com/2023/06/11/pCVvshD.png" alt="pCVvshD.png"></a></p>
+<h3 id="Disabled-Javascript-Call-Stack"><a href="#Disabled-Javascript-Call-Stack" class="headerlink" title="Disabled Javascript Call Stack"></a>Disabled Javascript Call Stack</h3><p>Main列表不会显示js的Call stack信息</p>
+<h3 id="Enable-advanced-paint-instrumentation"><a href="#Enable-advanced-paint-instrumentation" class="headerlink" title="Enable advanced paint instrumentation"></a>Enable advanced paint instrumentation</h3><p>记录绘制性能的详细信息，并显示在</p>
+<ul>
+<li><p>Frames：Frame activity的Layers分页</p>
+</li>
+<li><p>Main：Paint activity的Paint Profiler分页</p>
+</li>
+</ul>
+<h2 id="Overview图表"><a href="#Overview图表" class="headerlink" title="Overview图表"></a>Overview图表</h2><p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVv79g"><img src="https://s1.ax1x.com/2023/06/11/pCVv79g.png" alt="pCVv79g.png"></a></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FPS，帧数</td>
+<td><font color=green>绿色</font>竖线越高，FPS 越高。 FPS 图表上的<font color=red>红色</font>块表示长时间帧，很可能会出现卡顿</td>
+</tr>
+<tr>
+<td>CPU，CPU 资源</td>
+<td>指示消耗 CPU 资源的事件类型</td>
+</tr>
+<tr>
+<td>NET，网络请求</td>
+<td>每条彩色横杠表示一种资源。横杠越长，检索资源所需的时间越长。 每个横杠的浅色部分表示等待时间（从请求资源到第一个字节下载完成的时间），可以在屏幕快照下面查看具体的网络请求数据</td>
+</tr>
+</tbody></table>
+<h3 id="FPS"><a href="#FPS" class="headerlink" title="FPS"></a>FPS</h3><p>绿色方块：每秒帧数的变化，红色、粉色横条为低帧数警告，即可能会让用户感受到卡顿的部分</p>
+<h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><ul>
+<li><p>灰色：浏览器内部的工作</p>
+</li>
+<li><p>蓝色：HTML请求、文件解析</p>
+</li>
+<li><p>黄色：事件、js</p>
+</li>
+<li><p>绿色：图像处理、画面绘制</p>
+</li>
+<li><p>紫色：样式计算</p>
+</li>
+</ul>
+<h3 id="NET"><a href="#NET" class="headerlink" title="NET"></a>NET</h3><ul>
+<li><p>蓝色：有请求正在执行</p>
+</li>
+<li><p>深色：优先权较高的请求</p>
+</li>
+</ul>
+<h2 id="Activities"><a href="#Activities" class="headerlink" title="Activities"></a>Activities</h2><h3 id="Main"><a href="#Main" class="headerlink" title="Main"></a>Main</h3><p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVxZE6"><img src="https://s1.ax1x.com/2023/06/11/pCVxZE6.png" alt="pCVxZE6.png"></a></p>
+<ul>
+<li><p>作用</p>
+<p>显示主线程所有的任务，持续事件超过50ms（长任务）的任务会以红色虚线和右上角的三角形标识</p>
+</li>
+</ul>
+<p>任务底下的Activities依据类型有不同颜色，黄色的js Activity底下以随机颜色显示Call Stack Activities</p>
+<h3 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h3><p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVx5rR"><img src="https://s1.ax1x.com/2023/06/11/pCVx5rR.png" alt="pCVx5rR.png"></a></p>
+<ul>
+<li><p>左侧的细线：连接至发送请求前</p>
+</li>
+<li><p>浅色区域：等待服务器响应</p>
+</li>
+<li><p>深色区域：下载资源</p>
+</li>
+<li><p>右侧的细线：解析资源</p>
+</li>
+<li><p>左上角的小方块：请求优先级，深色表示高，浅色表示浅</p>
+</li>
+</ul>
+<h3 id="Frames"><a href="#Frames" class="headerlink" title="Frames"></a>Frames</h3><p>显示每一帧画面的详细信息</p>
+<h3 id="Timeings"><a href="#Timeings" class="headerlink" title="Timeings"></a>Timeings</h3><p>显示网页使用的重要时间点</p>
+<ul>
+<li><p>DCL：HTML已经加载且解析完毕</p>
+</li>
+<li><p>FP：绘制出默认背景颜色之外的任何内容</p>
+</li>
+<li><p>FCP：绘制出任何文字、图片、有颜色的canvas时</p>
+</li>
+<li><p>LCP：绘制出页面最大的内容时</p>
+</li>
+<li><p>L：解析HTML期间请求的资源都载入完成时</p>
+</li>
+</ul>
+<h3 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h3><p>显示所有元素位移并计算分数，越低表示页面稳定性越高</p>
+<h3 id="GPU"><a href="#GPU" class="headerlink" title="GPU"></a>GPU</h3><p>显示GPU的使用事件</p>
+<h3 id="Raster"><a href="#Raster" class="headerlink" title="Raster"></a>Raster</h3><p>定义：浏览器渲染流程中Paint阶段的一环</p>
+<p>作用：显示产生Raster时各个线程的信息</p>
+<h2 id="信息面板："><a href="#信息面板：" class="headerlink" title="信息面板："></a>信息面板：</h2><ul>
+<li><p>summary：显示activity的持续时间，并将期间发生的其他activities分类显示</p>
+</li>
+<li><p>botton-up：将同一种activity的运行时间加总</p>
+</li>
+<li><p>call tree：以触发关系自上而下显示activities，最上方的称为root activity，是下面各个activities的起点</p>
+</li>
+<li><p>event log：以时间顺序显示activities</p>
+</li>
+</ul>
+<blockquote>
+<p>注：activity占用主线程超过50ms会被加上红色三角形，成为long task</p>
+</blockquote>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>显示该Activity的持续事件，并将期间发生的其他Activists分类显示</p>
+<h3 id="call-tree"><a href="#call-tree" class="headerlink" title="call tree"></a>call tree</h3><p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCV2ztK"><img src="https://s1.ax1x.com/2023/06/11/pCV2ztK.png" alt="pCV2ztK.png"></a></p>
+<p>call tree会显示任务由哪些activities组成，若activity的类型为程序代码，则层层展开可以看到函数的call stack</p>
+<ul>
+<li><p>self time</p>
+<p>函数本身的运行时间，并不包含函数执行其他函数的时间</p>
+</li>
+<li><p>total time</p>
+<p>函数本身和其下所有函数的运行时间的总和</p>
+</li>
+</ul>
+<h3 id="bottom-up"><a href="#bottom-up" class="headerlink" title="bottom-up"></a>bottom-up</h3><p>会将同一种activity的运行时间加总，因此分页中self time较长的函数通常是性能瓶颈的来源</p>
+<p>注：总运行时间长也可能是因为执行次数多</p>
+<h3 id="Event-Log"><a href="#Event-Log" class="headerlink" title="Event Log"></a>Event Log</h3><p>以触发事件顺序显示Activities</p>
+<h2 id="performance-monitor"><a href="#performance-monitor" class="headerlink" title="performance monitor"></a>performance monitor</h2><h3 id="打开"><a href="#打开" class="headerlink" title="打开"></a>打开</h3><p>1、在devtool按esc打开drawer，在左上角三个点打开</p>
+<p>2、在devtools右上角的三个点，打开more tools打开</p>
+<h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>实时监测性能信息，用于检查特定功能是否存在内存泄漏的问题，实时反应内存用量的趋势。一般会把重点放在js heap size（js内存使用占有量）和dom tools</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCVf0T1"><img src="https://s1.ax1x.com/2023/06/11/pCVf0T1.png" alt="pCVf0T1.png"></a></p>
+<h2 id="Web-Vitals"><a href="#Web-Vitals" class="headerlink" title="Web Vitals"></a>Web Vitals</h2><h3 id="LCP：前端性能指标，用于表示加载速度"><a href="#LCP：前端性能指标，用于表示加载速度" class="headerlink" title="LCP：前端性能指标，用于表示加载速度"></a>LCP：前端性能指标，用于表示加载速度</h3><p>可以在performance的timeing中可以看到</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCV4QP0"><img src="https://s1.ax1x.com/2023/06/11/pCV4QP0.png" alt="pCV4QP0.png"></a></p>
+<h3 id="FID：表示首次输入延迟"><a href="#FID：表示首次输入延迟" class="headerlink" title="FID：表示首次输入延迟"></a>FID：表示首次输入延迟</h3><p>通过rendering分页的Core Web Vitals来判断</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCV45z8"><img src="https://s1.ax1x.com/2023/06/11/pCV45z8.png" alt="pCV45z8.png"></a></p>
+<h3 id="CLS：表示累计布局偏移"><a href="#CLS：表示累计布局偏移" class="headerlink" title="CLS：表示累计布局偏移"></a>CLS：表示累计布局偏移</h3><p>通过performance的Experience的layout shift标签</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91performance/" data-id="cmf67fxds003qbcfmf198htui" data-title="【devTools】performance" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-devTools/【devTools】layers" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2025/08/14/devTools/%E3%80%90devTools%E3%80%91layers/" class="article-date">
@@ -121,7 +429,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91layers/" data-id="cmepc0uhs001qt0fm0zsd0s3j" data-title="【devTools】layers" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/devTools/%E3%80%90devTools%E3%80%91layers/" data-id="cmf67fxdq003kbcfm7ptyczgh" data-title="【devTools】layers" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -305,7 +613,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/devTools/Chrome--performance/" data-id="cmepc0uht001tt0fm2jd1b8am" data-title="Chrome的Performance" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/devTools/Chrome--performance/" data-id="cmf67fxdm002zbcfm2747g58c" data-title="Chrome的Performance" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -578,7 +886,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E5%B0%8F%E7%82%B9/" data-id="cmepc0ui50036t0fmbreygx0i" data-title="【css】小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/css/%E5%B0%8F%E7%82%B9/" data-id="cmf67fxdp003fbcfm2d3y8uf2" data-title="【css】小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -807,7 +1115,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmepc0ui40034t0fmcmh117ro" data-title="【css】记录小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" data-id="cmf67fxdm002xbcfm1p981z0v" data-title="【css】记录小点" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -943,7 +1251,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E6%BB%9A%E5%8A%A8%E8%B4%B4%E5%90%88/" data-id="cmepc0ui3002zt0fm438pg75h" data-title="【css】滚动贴合" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E6%BB%9A%E5%8A%A8%E8%B4%B4%E5%90%88/" data-id="cmf67fxdk002qbcfm6dfh3p5i" data-title="【css】滚动贴合" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1011,7 +1319,97 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91BFC/" data-id="cmepc0uhx002at0fm6eqr16al" data-title="【css】BFC" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91BFC/" data-id="cmf67fxdg002bbcfmdigshpf9" data-title="【css】BFC" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-css/【css】border-raduis" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.178Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/css/">css</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/">【css】border-raduis</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="border-raduis"><a href="#border-raduis" class="headerlink" title="border-raduis"></a>border-raduis</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><ul>
+<li>只有一个值</li>
+</ul>
+<p>表示圆角属性作用在全部四个角上</p>
+<ul>
+<li>有两个值</li>
+</ul>
+<p>第一个作用于左上角和右下角，第二个作用于右上角和左下角</p>
+<ul>
+<li>三个值</li>
+</ul>
+<p>第一个作用于左上角，第二个作用于右上角和左下角，第三个作用于右下角</p>
+<ul>
+<li>四个值</li>
+</ul>
+<p>按照顺时针的方向，左上、右上、右下、左下</p>
+<h3 id="水平半径和垂直半径"><a href="#水平半径和垂直半径" class="headerlink" title="水平半径和垂直半径"></a>水平半径和垂直半径</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-left</span>-<span class="attribute">top</span>-radius: <span class="number">10px</span> <span class="number">20px</span></span><br><span class="line">border-raduis：<span class="number">10px</span> / <span class="number">20px</span></span><br></pre></td></tr></table></figure>
+<p>表示圆角是水平半径为10px，垂直半径为20px的椭圆产生的</p>
+<h3 id="重叠曲线"><a href="#重叠曲线" class="headerlink" title="重叠曲线"></a>重叠曲线</h3><p>f&#x3D;min(Lh&#x2F;Sh, Lv&#x2F;Sv)</p>
+<p>S为半径之和，L为元素宽高，h和v表示方向，f为计算值。</p>
+<p>Lh：元素宽</p>
+<p>Sh：垂直方向的半径和</p>
+<p>Lv：元素高度</p>
+<p>Sv：水平方向的半径和</p>
+<p>如果f计算值小于1，那么所有圆角半径都乘以f</p>
+<p>eg：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-top</span>-<span class="attribute">left</span>-raduis：<span class="number">30px</span> <span class="number">100%</span>；</span><br><span class="line"><span class="attribute">border-bottom</span>-<span class="attribute">left</span>-raduis：<span class="number">30px</span> <span class="number">100%</span>；</span><br><span class="line"><span class="attribute">width</span>：<span class="number">150px</span>；</span><br><span class="line"><span class="attribute">height</span>：<span class="number">100px</span>；</span><br></pre></td></tr></table></figure>
+<p>左上角和左下角的垂直半径是100%（元素高），水平半径是30px<br>f&#x3D;min（150&#x2F;60，100&#x2F;200）&#x3D;0.5</p>
+<p>所以渲染结果为</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-top</span>-<span class="attribute">left</span>-raduis：<span class="number">15px</span> <span class="number">50%</span>；</span><br><span class="line"><span class="attribute">border-bottom</span>-<span class="attribute">left</span>-raduis：<span class="number">15px</span> <span class="number">50%</span>；</span><br></pre></td></tr></table></figure>
+
+<h2 id="渲染细节"><a href="#渲染细节" class="headerlink" title="渲染细节"></a>渲染细节</h2><p>如果元素设置了border边框，则圆角半径会被分为内半径和外半径</p>
+<ul>
+<li><p>padding边缘的圆角大小为设置的border- radius - 边框厚度</p>
+</li>
+<li><p>如果相邻两侧边框厚度不同，则圆角大小将在较厚和较薄边界之间显示平滑过度</p>
+</li>
+<li><p>圆角边框的连接线和直角边框连接线位置一致，但是角度有所不同</p>
+</li>
+<li><p>border-raduis不支持负值</p>
+</li>
+<li><p>圆角以外的区域不可点击，无法响应click事件</p>
+</li>
+<li><p>borser-radius没有继承性</p>
+</li>
+<li><p>支持transition过渡效果，支持animation动画效果</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/" data-id="cmf67fxdg002fbcfmdn5lbvmh" data-title="【css】border-raduis" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1148,322 +1546,12 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91contain/" data-id="cmepc0ui0002kt0fm3sti8qeq" data-title="【css】contain" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91contain/" data-id="cmf67fxdh002hbcfm0qg63ch5" data-title="【css】contain" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-css/【css】层叠上下文" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/css/%E3%80%90css%E3%80%91%E5%B1%82%E5%8F%A0%E4%B8%8A%E4%B8%8B%E6%96%87/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.178Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/css/">css</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/css/%E3%80%90css%E3%80%91%E5%B1%82%E5%8F%A0%E4%B8%8A%E4%B8%8B%E6%96%87/">【css】层叠上下文</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="【css】层叠上下文"><a href="#【css】层叠上下文" class="headerlink" title="【css】层叠上下文"></a>【css】层叠上下文</h1><h2 id="层叠水平"><a href="#层叠水平" class="headerlink" title="层叠水平"></a>层叠水平</h2><p>层叠水平，stacking level，其决定了同一个层叠上下文中元素在z轴上的显示顺序</p>
-<p>所有元素都有层叠水平，包括层叠上下文和普通元素。但对于普通元素的层叠水平只局限于当前的层叠上下文中。</p>
-<p>zindex在某些情况下可以影响层叠水平，但仅限于定位元素以及flex盒子的子元素，而层叠水平是所有元素都存在。</p>
-<h3 id="flex与zindex"><a href="#flex与zindex" class="headerlink" title="flex与zindex"></a>flex与zindex</h3><p>flex布局下zindex生效是父元素设置了flex，子元素设置了zindex，子元素的zindex生效，flex当前元素是不生效的</p>
-<ul>
-<li><p>非flex布局下：<br>遵循后来者居上原则，son3覆盖了son2</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">.father&#123;</span><br><span class="line">  width: 600px;</span><br><span class="line">  height: 150px;</span><br><span class="line">  z-index: 3;</span><br><span class="line">  background-color: aquamarine;</span><br><span class="line">&#125;</span><br><span class="line">.son2&#123;</span><br><span class="line">  z-index: 2;</span><br><span class="line">  width: 150px;</span><br><span class="line">  height: 150px;</span><br><span class="line">  display: inline-block;</span><br><span class="line">  background-color: white;</span><br><span class="line">&#125;</span><br><span class="line">.son3&#123;</span><br><span class="line">  z-index: 1;</span><br><span class="line">  width: 150px;</span><br><span class="line">  height: 150px;</span><br><span class="line">  display: inline-block;</span><br><span class="line">  margin-left: -20px;</span><br><span class="line">  background-color: chocolate;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;father&quot;</span>&gt;</span></span><br><span class="line">  son1</span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;son2&quot;</span>&gt;</span>son2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;son3&quot;</span>&gt;</span>son3<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pEkTk1U"><img src="https://s21.ax1x.com/2025/01/20/pEkTk1U.png" alt="pEkTk1U.png"></a></p>
-</li>
-<li><p>flex布局下</p>
-<p>遵循zindex谁大谁上的原则，son2覆盖了son3</p>
-<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">  .father&#123;</span><br><span class="line">    width: 600px;</span><br><span class="line">    height: 150px;</span><br><span class="line">    z-index: 3;</span><br><span class="line"><span class="addition">+ display: flex;</span></span><br><span class="line">    background-color: aquamarine;</span><br><span class="line">  &#125;</span><br><span class="line">  .son2&#123;</span><br><span class="line">    z-index: 2;</span><br><span class="line">    width: 150px;</span><br><span class="line">    height: 150px;</span><br><span class="line">    display: inline-block;</span><br><span class="line">    background-color: white;</span><br><span class="line">  &#125;</span><br><span class="line">  .son3&#123;</span><br><span class="line">    z-index: 1;</span><br><span class="line">    width: 150px;</span><br><span class="line">    height: 150px;</span><br><span class="line">    display: inline-block;</span><br><span class="line">    margin-left: -20px;</span><br><span class="line">    background-color: chocolate;</span><br><span class="line">  &#125;</span><br><span class="line">  &lt;div class=&quot;father&quot;&gt;</span><br><span class="line">    son1</span><br><span class="line">    &lt;div class=&quot;son2&quot;&gt;son2&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;son3&quot;&gt;son3&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pEkTZnJ"><img src="https://s21.ax1x.com/2025/01/20/pEkTZnJ.png" alt="pEkTZnJ.png"></a></p>
-</li>
-</ul>
-<h2 id="层叠顺序"><a href="#层叠顺序" class="headerlink" title="层叠顺序"></a>层叠顺序</h2><p>stacking order，其表示元素层叠时有特定的垂直显示顺序，其是规则而非概念</p>
-<h3 id="层叠顺序规则"><a href="#层叠顺序规则" class="headerlink" title="层叠顺序规则"></a>层叠顺序规则</h3><p>从下到上的顺序为：</p>
-<p>层叠上下文 background&#x2F;border -&gt; 负zindex -&gt; block块状水平盒子 -&gt; float浮动盒子 -&gt; inline水平盒子 -&gt; zindex&#x3D;auto&#x2F;0 -&gt; 正zindex</p>
-<p>注：</p>
-<ul>
-<li><p>位于最下面的background&#x2F;border指层叠上下文元素的边框和背景色，每个层叠顺序规则仅适用于当前层叠上下文元素的小世界</p>
-</li>
-<li><p>inline水平盒子指的是 inline&#x2F;inline-block&#x2F;inline- table</p>
-</li>
-<li><p>background&#x2F;border作为装饰属性，float&#x2F;block一般用于布局，inline都是内容，而内容的重要性是相对优先的</p>
-</li>
-</ul>
-<h2 id="层叠准则"><a href="#层叠准则" class="headerlink" title="层叠准则"></a>层叠准则</h2><p>当元素发生层叠的时候，其覆盖关系遵循下面两天准则</p>
-<ul>
-<li><p>谁大谁上：当有明显的层叠水平标识时，如生效的zindex，在同一个层叠上下文领域，层叠水平值大的一个覆盖小的一个</p>
-</li>
-<li><p>后来居上：当元素的层叠水平一致、层叠顺序相同时，在dom流中处于后面的元素覆盖前面的元素</p>
-</li>
-</ul>
-<h2 id="层叠上下文"><a href="#层叠上下文" class="headerlink" title="层叠上下文"></a>层叠上下文</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>层叠上下文（Stacking Context）是一个HTML元素的三维概念。在CSS2.1规范中，每个盒模型的位置是三维的，分别是平面画布上的x轴、y轴和表示层叠的z轴。</p>
-<p>它是页面中的一部分，决定了元素在<strong>Z轴</strong>上的堆叠顺序。在层叠上下文中，元素可以在三维空间中相对于其他元素前后排列，类似于一叠卡片。</p>
-<p>层叠上下文的创建是可以嵌套的，也就是说一个层叠上下文内部可以包含另一个层叠上下文.在这种情况下，内部的层叠上下文会被整体地放在外部层叠上下文的某个层叠等级上，而内部层叠上下文的z-index值不会影响到外部层叠上下文的堆叠顺序。</p>
-<blockquote>
-<p>作用</p>
-</blockquote>
-<p>这个概念主要用于解决覆盖和重叠元素的问题，例如当元素的部分透明或定位不同导致元素重叠时，层叠上下文就会决定哪个元素在上面，哪个在下面。</p>
-<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul>
-<li><p>层叠上下文的层叠水平高于普通元素</p>
-</li>
-<li><p>层叠上下文可以阻断元素的混合模式</p>
-</li>
-<li><p>层叠上下文可以嵌套，内部层叠上下文及其所有子元素均受制于外部的层叠上下文</p>
-</li>
-<li><p>每个层叠上下文和兄弟元素独立，即当进行层叠变化或者渲染时，只需要考虑后代元素</p>
-</li>
-<li><p>每个层叠上下文是自成体系的，当元素发生层叠时，整个元素被认为是在父层叠上下文的层叠顺序中</p>
-</li>
-</ul>
-<h3 id="层叠等级"><a href="#层叠等级" class="headerlink" title="层叠等级"></a>层叠等级</h3><h1></h1>
-
-<p>层叠等级（stacking level），又称层叠级别、层叠水平。在<strong>同一个</strong>层叠上下文中有作用。</p>
-<blockquote>
-<p>作用</p>
-</blockquote>
-<ul>
-<li><p>决定该层叠上下文中的层叠上下文元素在z轴上的上下顺序</p>
-</li>
-<li><p>在普通元素中，它决定这些普通元素在z轴上的上下顺序</p>
-</li>
-</ul>
-<h3 id="层叠顺序-1"><a href="#层叠顺序-1" class="headerlink" title="层叠顺序"></a>层叠顺序</h3><h1></h1>
-
-<p>层叠顺序（stacking order）表示元素发生层叠时有着特定的垂直显示顺序。</p>
-<p>注: 层叠上下文和层叠水平是概念，层叠顺序是规则</p>
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCzHpgf"><img src="https://s1.ax1x.com/2023/07/28/pCzHpgf.png" alt="堆叠顺序规则"></a></p>
-<h3 id="层叠上下文与层叠顺序"><a href="#层叠上下文与层叠顺序" class="headerlink" title="层叠上下文与层叠顺序"></a>层叠上下文与层叠顺序</h3><ul>
-<li><p>如果层叠上下文元素不依赖于zindex，其层叠顺序是zindex：auto，可看成zindex&#x3D;0</p>
-</li>
-<li><p>如果层叠上下文依赖于zindex数值，则层叠顺序由zindex决定</p>
-</li>
-</ul>
-<p>从下到上的顺序为：</p>
-<p>层叠上下文 background&#x2F;border -&gt; 负zindex -&gt; block块状水平盒子 -&gt; float浮动盒子 -&gt; inline水平盒子 -&gt; zindex&#x3D;auto&#x2F;0 ，不依赖zindex的层叠上下文-&gt; 正zindex</p>
-<p>因此，元素一旦成为定位元素，其zindex会自动生效，此时其zindex就是默认的auto，即0级别，根据上面的层叠顺序表，其会覆盖float&#x2F;block&#x2F;inline元素</p>
-<h2 id="触发条件"><a href="#触发条件" class="headerlink" title="触发条件"></a>触发条件</h2><h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><h4 id="根层叠上下文"><a href="#根层叠上下文" class="headerlink" title="根层叠上下文"></a>根层叠上下文</h4><p>指页面根元素，可以看成是html元素.  HTML中的根元素<html></html>本身就具有层叠上下文，称为“根层叠上下文”。这也时绝对定位元素在没有其他定位元素限制时，会相对于浏览器窗口定位的原因。</p>
-<p>页面中所有元素一定处于至少一个层叠结界中</p>
-<h4 id="定位元素与传统层叠上下文"><a href="#定位元素与传统层叠上下文" class="headerlink" title="定位元素与传统层叠上下文"></a>定位元素与传统层叠上下文</h4><ul>
-<li><p>position&#x3D;relative&#x2F;absolute</p>
-</li>
-<li><p>position&#x3D;fixed（Firefox&#x2F;ie，不包括chrome</p>
-</li>
-</ul>
-<p>chrome在此情景下，会将此元素作为天然层叠上下文元素</p>
-<p>当满足上面其一条件时，zindex！&#x3D;auto时，会创建层叠上下文</p>
-<h4 id="css3"><a href="#css3" class="headerlink" title="css3"></a>css3</h4><ul>
-<li><p>flex元素，同时zindex！&#x3D; auto</p>
-</li>
-<li><p>opacity ！&#x3D; 1</p>
-</li>
-<li><p>mix-blend-mode ！&#x3D; normal</p>
-</li>
-<li><p>filter ！&#x3D; none</p>
-</li>
-<li><p>isolation &#x3D; isolate</p>
-</li>
-<li><p>will-change为上面2～6的任意一个</p>
-</li>
-<li><p>-webkit- overflow-scrolling &#x3D; touch</p>
-</li>
-</ul>
-<h2 id="比较规则"><a href="#比较规则" class="headerlink" title="比较规则"></a>比较规则</h2><ul>
-<li><p>同一个层叠上下文中，</p>
-<ul>
-<li><p>元素层级不同</p>
-<p>比较“内部元素层叠级别”，层叠等级大的元素显示在上，层叠等级小的显示在下</p>
-</li>
-<li><p>两个元素的层叠等级相同</p>
-<p>后面元素堆叠到前面元素的上面，即“后来者居上”</p>
-</li>
-</ul>
-</li>
-<li><p>在不同层叠上下文中</p>
-<p>比较“父级元素层叠等级”，元素显示顺序以“父级”的层叠级别来决定元素的先后顺序，与自身的层叠顺序无关</p>
-</li>
-<li><p>当页面中两个元素发生堆叠时，其或其祖先元素必处于同一层叠上下文（最差情况下同处根层叠上下文）</p>
-</li>
-</ul>
-<h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_56229413/article/details/115458436">层叠上下文、层叠等级、层叠顺序</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E5%B1%82%E5%8F%A0%E4%B8%8A%E4%B8%8B%E6%96%87/" data-id="cmepc0ui2002tt0fm6hvxei7d" data-title="【css】层叠上下文" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-css/【css】border-raduis" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.178Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/css/">css</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/">【css】border-raduis</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="border-raduis"><a href="#border-raduis" class="headerlink" title="border-raduis"></a>border-raduis</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><ul>
-<li>只有一个值</li>
-</ul>
-<p>表示圆角属性作用在全部四个角上</p>
-<ul>
-<li>有两个值</li>
-</ul>
-<p>第一个作用于左上角和右下角，第二个作用于右上角和左下角</p>
-<ul>
-<li>三个值</li>
-</ul>
-<p>第一个作用于左上角，第二个作用于右上角和左下角，第三个作用于右下角</p>
-<ul>
-<li>四个值</li>
-</ul>
-<p>按照顺时针的方向，左上、右上、右下、左下</p>
-<h3 id="水平半径和垂直半径"><a href="#水平半径和垂直半径" class="headerlink" title="水平半径和垂直半径"></a>水平半径和垂直半径</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-left</span>-<span class="attribute">top</span>-radius: <span class="number">10px</span> <span class="number">20px</span></span><br><span class="line">border-raduis：<span class="number">10px</span> / <span class="number">20px</span></span><br></pre></td></tr></table></figure>
-<p>表示圆角是水平半径为10px，垂直半径为20px的椭圆产生的</p>
-<h3 id="重叠曲线"><a href="#重叠曲线" class="headerlink" title="重叠曲线"></a>重叠曲线</h3><p>f&#x3D;min(Lh&#x2F;Sh, Lv&#x2F;Sv)</p>
-<p>S为半径之和，L为元素宽高，h和v表示方向，f为计算值。</p>
-<p>Lh：元素宽</p>
-<p>Sh：垂直方向的半径和</p>
-<p>Lv：元素高度</p>
-<p>Sv：水平方向的半径和</p>
-<p>如果f计算值小于1，那么所有圆角半径都乘以f</p>
-<p>eg：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-top</span>-<span class="attribute">left</span>-raduis：<span class="number">30px</span> <span class="number">100%</span>；</span><br><span class="line"><span class="attribute">border-bottom</span>-<span class="attribute">left</span>-raduis：<span class="number">30px</span> <span class="number">100%</span>；</span><br><span class="line"><span class="attribute">width</span>：<span class="number">150px</span>；</span><br><span class="line"><span class="attribute">height</span>：<span class="number">100px</span>；</span><br></pre></td></tr></table></figure>
-<p>左上角和左下角的垂直半径是100%（元素高），水平半径是30px<br>f&#x3D;min（150&#x2F;60，100&#x2F;200）&#x3D;0.5</p>
-<p>所以渲染结果为</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-top</span>-<span class="attribute">left</span>-raduis：<span class="number">15px</span> <span class="number">50%</span>；</span><br><span class="line"><span class="attribute">border-bottom</span>-<span class="attribute">left</span>-raduis：<span class="number">15px</span> <span class="number">50%</span>；</span><br></pre></td></tr></table></figure>
-
-<h2 id="渲染细节"><a href="#渲染细节" class="headerlink" title="渲染细节"></a>渲染细节</h2><p>如果元素设置了border边框，则圆角半径会被分为内半径和外半径</p>
-<ul>
-<li><p>padding边缘的圆角大小为设置的border- radius - 边框厚度</p>
-</li>
-<li><p>如果相邻两侧边框厚度不同，则圆角大小将在较厚和较薄边界之间显示平滑过度</p>
-</li>
-<li><p>圆角边框的连接线和直角边框连接线位置一致，但是角度有所不同</p>
-</li>
-<li><p>border-raduis不支持负值</p>
-</li>
-<li><p>圆角以外的区域不可点击，无法响应click事件</p>
-</li>
-<li><p>borser-radius没有继承性</p>
-</li>
-<li><p>支持transition过渡效果，支持animation动画效果</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/" data-id="cmepc0ui2002vt0fmcdi316ck" data-title="【css】border-raduis" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T02:32:21.332Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/hello-world/" data-id="cmepc0ugx0001t0fm9inwhqt9" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
     </footer>
   </div>
   
@@ -1507,7 +1595,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 12px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 12px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 14px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 14px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
     </div>
   </div>
 
@@ -1516,7 +1604,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">September 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
     </div>
   </div>
 
@@ -1529,6 +1617,14 @@
       <ul>
         
           <li>
+            <a href="/2025/09/05/Vue/%E3%80%90vue%E3%80%91%E8%AF%A6%E8%A7%A3computed/">详解computed</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/25/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB2/">记录3</a>
+          </li>
+        
+          <li>
             <a href="/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/">记录2</a>
           </li>
         
@@ -1538,14 +1634,6 @@
         
           <li>
             <a href="/2025/08/14/%E6%89%8B%E5%86%99%E9%A2%98/">手写题</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E3%80%90%E6%89%8B%E5%86%99%E3%80%91call%E3%80%81apply%E3%80%81bind/">【手写】call、apply、bind</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E3%80%90wasb%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">【wasb】环境搭建</a>
           </li>
         
       </ul>

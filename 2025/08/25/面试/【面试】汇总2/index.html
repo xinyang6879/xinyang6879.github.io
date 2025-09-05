@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>记录3 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="vue-router不同传参模式了解 Vue Router 的不同传参方式很重要，它们各有特点，适用于不同的场景。下面我用一个表格汇总它们的核心区别，然后详细解释：    特性维度 动态路由传参 (Dynamic Routes) Params 传参 (不显示在 URL) Query 传参 (Query Parameters)    URL 中的表现 路径的一部分 (e.g., &#x2F;user&#x2F;123)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录3">
+<meta property="og:url" content="http://example.com/2025/08/25/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="vue-router不同传参模式了解 Vue Router 的不同传参方式很重要，它们各有特点，适用于不同的场景。下面我用一个表格汇总它们的核心区别，然后详细解释：    特性维度 动态路由传参 (Dynamic Routes) Params 传参 (不显示在 URL) Query 传参 (Query Parameters)    URL 中的表现 路径的一部分 (e.g., &#x2F;user&#x2F;123)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-25T02:42:18.061Z">
+<meta property="article:modified_time" content="2025-08-29T04:50:54.919Z">
+<meta property="article:author" content="yangxin">
+<meta property="article:tag" content="面试">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-面试/【面试】汇总2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/25/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB2/" class="article-date">
+  <time class="dt-published" datetime="2025-08-25T02:42:18.061Z" itemprop="datePublished">2025-08-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      记录3
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="vue-router不同传参模式"><a href="#vue-router不同传参模式" class="headerlink" title="vue-router不同传参模式"></a>vue-router不同传参模式</h3><p>了解 Vue Router 的不同传参方式很重要，它们各有特点，适用于不同的场景。下面我用一个表格汇总它们的核心区别，然后详细解释：</p>
+<table>
+<thead>
+<tr>
+<th>特性维度</th>
+<th>动态路由传参 (Dynamic Routes)</th>
+<th>Params 传参 (不显示在 URL)</th>
+<th>Query 传参 (Query Parameters)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>URL 中的表现</strong></td>
+<td>路径的一部分 (e.g., <code>/user/123</code>)</td>
+<td><strong>不在 URL 中显示</strong></td>
+<td>查询字符串 (e.g., <code>?id=123&amp;name=zhangsan</code>)</td>
+</tr>
+<tr>
+<td><strong>路由配置</strong></td>
+<td>需在 path 中定义参数 (<code>:id</code>)</td>
+<td>无需在 path 中定义参数</td>
+<td>无需在 path 中定义参数</td>
+</tr>
+<tr>
+<td><strong>跳转方式</strong></td>
+<td><code>path</code> 或 <code>name</code></td>
+<td>必须使用 <code>name</code></td>
+<td><code>path</code> 或 <code>name</code></td>
+</tr>
+<tr>
+<td><strong>参数传递语法</strong></td>
+<td><code>path: &#39;/user/&#39; + userId</code> 或 <code>params</code></td>
+<td><code>params: &#123; id: 123 &#125;</code></td>
+<td><code>query: &#123; id: 123 &#125;</code></td>
+</tr>
+<tr>
+<td><strong>参数获取语法</strong></td>
+<td><code>$route.params.id</code></td>
+<td><code>$route.params.id</code></td>
+<td><code>$route.query.id</code></td>
+</tr>
+<tr>
+<td><strong>页面刷新后</strong></td>
+<td><strong>参数保留</strong></td>
+<td><strong>参数丢失</strong></td>
+<td><strong>参数保留</strong></td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>资源ID、必要参数</td>
+<td>敏感数据、临时参数</td>
+<td>筛选条件、可选参数、分享链接</td>
+</tr>
+</tbody></table>
+<p> <strong>其他传参方式</strong><br>除了上述三种主要方式，还有：</p>
+<ul>
+<li><strong>通过 <code>props</code> 解耦</strong>：在路由配置中设置 <code>props: true</code>，可以将 <code>$route.params</code> 作为组件的 <strong>props</strong> 接收，让组件更独立，不直接依赖 <code>$route</code> 对象。</li>
+<li>**通过路由元信息 <code>meta</code>**：可以在路由配置的 <code>meta</code> 字段中添加一些静态信息（如页面标题、权限要求），常用于全局导航守卫中进行逻辑判断。</li>
+</ul>
+<p><strong>如何选择传参方式</strong></p>
+<p>选择哪种方式，可以根据你的具体需求来定：</p>
+<ul>
+<li>需要参数在<strong>页面刷新后仍然保留</strong>，或者希望参数<strong>体现在 URL 中以便分享或收藏</strong>？优先考虑 <strong>动态路由传参</strong> 或 <strong>Query 传参</strong>。</li>
+<li>传递的是<strong>敏感信息</strong>（如临时令牌）或<strong>不希望参数暴露在 URL 中</strong>？可以考虑 <strong>Params 传参（不显示）</strong>，但需注意刷新会丢失。</li>
+<li>参数是<strong>可选的、非必需的</strong>，比如列表的<strong>筛选、排序条件</strong>？<strong>Query 传参</strong> 很合适。</li>
+<li>参数是<strong>资源的唯一标识</strong>（如用户ID、文章ID）？<strong>动态路由传参</strong> 更语义化。</li>
+<li>希望组件能<strong>更独立于路由</strong>，减少对 <code>$route</code> 的依赖？试试 <strong><code>props</code> 传参</strong>。</li>
+</ul>
+<p> <strong>简单的使用建议</strong></p>
+<ul>
+<li><strong>重要且必要的参数</strong>，尤其像对象ID这类，常用<strong>动态路由传参</strong>。</li>
+<li><strong>可选参数</strong>或<strong>多个参数</strong>，常用 <strong>Query 传参</strong>。</li>
+<li><strong>Params传参（不显示）</strong> 需谨慎使用，注意其刷新页面参数会丢失的特性。</li>
+</ul>
+<p>希望这些信息能帮助你更好地选择和使用 Vue Router 的传参方式。</p>
+<h3 id="路由模式区别"><a href="#路由模式区别" class="headerlink" title="路由模式区别"></a>路由模式区别</h3><p>这两个模式的核心区别在于<strong>如何模拟和操作浏览器的历史记录</strong>，从而带来了一系列不同的特性。下面这个表格汇总了它们的主要区别。</p>
+<table>
+<thead>
+<tr>
+<th align="left">特性维度</th>
+<th align="left">Hash 模式</th>
+<th align="left">History 模式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>URL 美观度</strong></td>
+<td align="left">不美观 (含 <code>#</code>)</td>
+<td align="left">美观 (与普通URL无异)</td>
+</tr>
+<tr>
+<td align="left"><strong>SEO 友好性</strong></td>
+<td align="left">不友好</td>
+<td align="left">友好 (需服务器配合)</td>
+</tr>
+<tr>
+<td align="left"><strong>服务器配置需求</strong></td>
+<td align="left">无需特殊配置</td>
+<td align="left">需要配置支持 (避免刷新404)</td>
+</tr>
+<tr>
+<td align="left"><strong>浏览器兼容性</strong></td>
+<td align="left">所有浏览器</td>
+<td align="left">需要 HTML5 History API 支持 (现代浏览器均支持)</td>
+</tr>
+<tr>
+<td align="left"><strong>实现方式</strong></td>
+<td align="left">监听 <code>hashchange</code> 事件</td>
+<td align="left">使用 History API (<code>pushState</code>, <code>replaceState</code>) 和监听 <code>popstate</code> 事件</td>
+</tr>
+<tr>
+<td align="left"><strong>适用场景</strong></td>
+<td align="left">内部工具、管理后台、兼容性要求高的场景</td>
+<td align="left">面向公众的网站、对SEO和URL美观度有要求的场景</td>
+</tr>
+</tbody></table>
+<h4 id="工作原理与特点"><a href="#工作原理与特点" class="headerlink" title="工作原理与特点"></a>工作原理与特点</h4><ol>
+<li>Hash 模式</li>
+</ol>
+<ul>
+<li>原理：</li>
+</ul>
+<p>通过 URL 中的 #（哈希值）管理路由。例如：<a href="http://example.com/#/user%E3%80%82%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8D%E4%BC%9A%E5%B0%86">http://example.com/#/user。浏览器不会将</a> # 后的内容发送到服务器（仅客户端处理）。</p>
+<p>依赖 hashchange 事件监听变化，更新组件无页面重载。</p>
+<ul>
+<li>优点：</li>
+</ul>
+<p>零服务器配置：适用于 GitHub Pages、Netlify 等静态托管。</p>
+<p>兼容性强：支持旧版浏览器（如 IE9）。</p>
+<ul>
+<li>缺点：<br>URL 不美观：# 影响可读性。</li>
+</ul>
+<p>SEO 受限：搜索引擎忽略 # 后内容，无法直接索引路由页面。<br>2. History 模式</p>
+<ul>
+<li>原理：</li>
+</ul>
+<p>使用 HTML5 History API（pushState() 和 replaceState()）模拟完整路径。例如：<a href="http://example.com/user%E3%80%82">http://example.com/user。</a><br>URL 无 #，路径由 Vue Router 在客户端管理。</p>
+<ul>
+<li><p>优点：<br>URL 简洁美观：更符合用户习惯，利于品牌形象。<br>SEO 优化：完整路径可被爬虫抓取（需配合 SSR 或预渲染）。</p>
+</li>
+<li><p>缺点：</p>
+</li>
+</ul>
+<p>需服务器配置：必须将所有路径重定向到 index.html，否则刷新页面会触发 404 错误。</p>
+<p>兼容性要求：不支持 IE9 及以下（需 Polyfill）。</p>
+<h4 id="如何编写两种模式"><a href="#如何编写两种模式" class="headerlink" title="如何编写两种模式"></a>如何编写两种模式</h4><p>在 <strong>Vue Router</strong> 中，设置模式非常简单，主要在创建路由实例时进行配置。</p>
+<ol>
+<li><p><strong>Hash 模式</strong><br>使用 <code>createWebHashHistory</code> 函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createRouter, createWebHashHistory &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">  <span class="attr">history</span>: <span class="title function_">createWebHashHistory</span>(), <span class="comment">// 使用 hash 模式</span></span><br><span class="line">  <span class="attr">routes</span>: [...], <span class="comment">// 你的路由配置</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>此后，你的 URL 会形如 <code>http://example.com/#/user/id</code>。</p>
+</li>
+<li><p><strong>History 模式</strong><br>使用 <code>createWebHistory</code> 函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createRouter, createWebHistory &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">  <span class="attr">history</span>: <span class="title function_">createWebHistory</span>(), <span class="comment">// 使用 history 模式</span></span><br><span class="line">  <span class="attr">routes</span>: [...], <span class="comment">// 你的路由配置</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>此后，你的 URL 会形如 <code>http://example.com/user/id</code>。</p>
+</li>
+</ol>
+<h4 id="服务器配置（History-模式关键）"><a href="#服务器配置（History-模式关键）" class="headerlink" title="服务器配置（History 模式关键）"></a>服务器配置（History 模式关键）</h4><p>选择 <strong>History 模式</strong>，必须在服务器端进行相应配置，以确保用户在浏览器中直接输入 URL 或刷新页面时不会收到 404 错误。这是因为这些 URL 在实际的文件系统中并不存在，需要由 SPA 的入口文件（通常是 <code>index.html</code>）来处理。</p>
+<p>以下是常见服务器的配置示例：</p>
+<ul>
+<li><p><strong>Nginx</strong></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">  <span class="attribute">try_files</span> <span class="variable">$uri</span> <span class="variable">$uri</span>/ /index.html; <span class="comment"># 尝试按顺序寻找资源，最终均返回 index.html</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Apache</strong> (在 <code>.htaccess</code> 文件中)</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">&lt;IfModule mod_rewrite.c&gt;</span></span><br><span class="line">  <span class="attribute">RewriteEngine</span> <span class="literal">On</span></span><br><span class="line">  <span class="attribute">RewriteBase</span> /</span><br><span class="line">  <span class="attribute">RewriteRule</span> ^index\.html$ -<span class="meta"> [L]</span></span><br><span class="line">  <span class="attribute">RewriteCond</span> <span class="variable">%&#123;REQUEST_FILENAME&#125;</span> !-f</span><br><span class="line">  <span class="attribute">RewriteCond</span> <span class="variable">%&#123;REQUEST_FILENAME&#125;</span> !-d</span><br><span class="line">  <span class="attribute">RewriteRule</span> . /index.html<span class="meta"> [L]</span></span><br><span class="line"><span class="section">&lt;/IfModule&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Node.js (Express)</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 静态资源服务</span></span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">static</span>(path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;dist&#x27;</span>)));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 所有 GET 请求均返回 index.html</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;*&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.<span class="title function_">sendFile</span>(path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;dist/index.html&#x27;</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="选择模式的建议"><a href="#选择模式的建议" class="headerlink" title="选择模式的建议"></a>选择模式的建议</h4><p>选择哪种模式取决于你的项目需求：</p>
+<ul>
+<li><p><strong>选择 Hash 模式，如果</strong>：</p>
+<ul>
+<li>你的应用是<strong>内部后台管理系统</strong>、工具类应用或原型demo。</li>
+<li>你<strong>没有权限或不想配置</strong>服务器。</li>
+<li>需要支持<strong>非常古老的浏览器</strong>。</li>
+<li><strong>SEO 无关紧要</strong>。</li>
+</ul>
+</li>
+<li><p><strong>选择 History 模式，如果</strong>：</p>
+<ul>
+<li>你的应用是<strong>面向公众的网站</strong>，如博客、电商平台、企业官网等。</li>
+<li>你<strong>非常看重 URL 的美观性和专业性</strong>。</li>
+<li><strong>SEO（搜索引擎优化）</strong> 对你的应用至关重要。</li>
+<li>你可以<strong>控制并配置服务器</strong>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><ol>
+<li><strong>History 模式的 404 问题</strong>：这是最常见的问题。再次强调，<strong>务必确保你的服务器已正确配置</strong>，否则用户直接访问或刷新深度链接时会得到 404。</li>
+<li><strong>Hash 模式与锚点</strong>：URL 中的 <code>#</code> 原本用于页面内锚点导航。在 Hash 模式下，<strong>避免使用与路由路径同名的 HTML 元素 ID</strong>，以免造成冲突和意外滚动。</li>
+<li><strong>Abstract 模式</strong>：Vue Router 还支持第三种 <code>abstract</code> 模式（在 Vue Router 4 中通过 <code>createMemoryHistory</code> 实现）。它主要用于 <strong>非浏览器环境</strong>，如 <strong>Node.js（SSR）、Weex 或移动端原生应用</strong>测试，不会改变地址栏的 URL。</li>
+</ol>
+<ul>
+<li>hash+mpa</li>
+</ul>
+<p>监听hashchange事件，然后加载对应的页面</p>
+<p>通常情况下，hash模式用于单页应用，history模式用于多页面应用。</p>
+<h3 id="导航栏"><a href="#导航栏" class="headerlink" title="导航栏"></a>导航栏</h3><ul>
+<li><p>自定义导航栏 uni-nav-bar</p>
+</li>
+<li><p>navigation-bar： 指定导航栏的一些属性</p>
+</li>
+</ul>
+<h3 id="uniapp自定义tabbar"><a href="#uniapp自定义tabbar" class="headerlink" title="uniapp自定义tabbar"></a>uniapp自定义tabbar</h3><ul>
+<li><p>custom-tab-bar</p>
+<p>  只能用于h5端，可以自定义排列顺序、icon等</p>
+</li>
+<li><p>自己写tabbar组件</p>
+<p>  在pages.json中配置原生TabBar并设置custom: true</p>
+<p>  创建自定义TabBar组件</p>
+<p>  在每个页面中使用自定义TabBar组件</p>
+<p>  使用Pinia管理TabBar状态</p>
+<p>  处理页面跳转和选中状态</p>
+</li>
+</ul>
+<h3 id="vue3虚拟dom和vue2虚拟dom算法区别"><a href="#vue3虚拟dom和vue2虚拟dom算法区别" class="headerlink" title="vue3虚拟dom和vue2虚拟dom算法区别"></a>vue3虚拟dom和vue2虚拟dom算法区别</h3><ul>
+<li><p>Vue2虚拟DOM原理</p>
+<ul>
+<li>全树比较算法：每次更新时递归比较整个虚拟DOM树</li>
+<li>简单VNode结构：使用基本的虚拟节点数据结构</li>
+<li>组件级别渲染：以组件为单位进行重新渲染</li>
+<li>静态节点处理：每次重新渲染都会重新创建所有节点</li>
+<li>事件处理：每次更新都会重新创建事件处理函数</li>
+</ul>
+</li>
+<li><p>Vue3虚拟DOM优化</p>
+<ul>
+<li><p>Block Tree机制：将动态节点组织为Block，只追踪动态节点</p>
+</li>
+<li><p>Patch Flags：为动态节点添加标志，指示需要更新的类型</p>
+<p>  标记动态节点需要更新的类型，当元素有多个需要改变的部分时，可以通过位运算组合多个标志。</p>
+<p>  每种Patch Flag对应一个二进制位，diff时使用按位与(&amp;)操作符检查需要更新的类型</p>
+</li>
+<li><p>静态提升：静态节点提升到渲染函数外部，避免重复创建</p>
+</li>
+<li><p>树结构扁平化：减少嵌套层级，提高diff效率</p>
+<p>  Vue3在编译阶段会将模板中的嵌套结构转换为扁平化的Block树结构，从而提高diff效率。</p>
+<p>  减少递归深度，提高diff效率； 更少的内存占用； 更快的初始渲染和更新</p>
+</li>
+<li><p>事件监听器缓存：缓存事件处理函数，避免不必要的更新</p>
+</li>
+</ul>
+</li>
+<li><p>核心区别详解</p>
+</li>
+</ul>
+<ol>
+<li><p>静态提升 (Static Hoisting)<br>Vue3能够检测和提升静态节点，在重新渲染时直接复用，避免不必要的创建和比较。</p>
+</li>
+<li><p>补丁标志 (Patch Flags)<br>Vue3为动态节点添加补丁标志，指示需要更新的类型，减少比较次数。</p>
+</li>
+<li><p>Block Tree机制<br>Vue3引入Block Tree概念，将动态节点组织在一起，只追踪动态节点。</p>
+</li>
+<li><p>树结构扁平化<br>Vue3将嵌套的区块结构扁平化，减少了递归深度，提高了diff效率。</p>
+</li>
+<li><p>事件监听器缓存<br>Vue3会缓存事件处理函数，避免不必要的更新。</p>
+</li>
+</ol>
+<h3 id="如何防止小程序支付的攻击"><a href="#如何防止小程序支付的攻击" class="headerlink" title="如何防止小程序支付的攻击"></a>如何防止小程序支付的攻击</h3><ul>
+<li><p>支付参数由后端返回</p>
+</li>
+<li><p>API 密钥与证书安全密钥管理：</p>
+<p>  将微信支付的 API Key、商户证书存储在服务端环境变量或密钥管理系统（如 AWS KMS）。<br>  禁止硬编码在客户端或代码仓库。</p>
+</li>
+<li><p>启用微信支付安全模式</p>
+<p>  登录微信商户平台 → 开启：<br>  API 证书：用于更高安全级别的接口（如退款）。<br>  IP 白名单：限制调用支付 API 的服务器 IP。<br>  转账收款姓名校验：防止资金被转移到陌生账户。</p>
+</li>
+<li><p>监控用户支付次数、频率</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>攻击类型</th>
+<th>防护措施</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>参数篡改</td>
+<td>服务端签名 + 客户端禁用构造参数</td>
+</tr>
+<tr>
+<td>重放攻击</td>
+<td>Nonce 随机数 + 请求时效控制</td>
+</tr>
+<tr>
+<td>中间人攻击</td>
+<td>HTTPS + HSTS 强制加密</td>
+</tr>
+<tr>
+<td>恶意刷单</td>
+<td>订单状态机 + 支付频次限额</td>
+</tr>
+<tr>
+<td>未授权支付</td>
+<td>敏感操作二次验证</td>
+</tr>
+<tr>
+<td>回调伪造</td>
+<td>严格校验微信签名 + 金额匹配</td>
+</tr>
+</tbody></table>
+<h3 id="虚拟dom为什么可以优化性能"><a href="#虚拟dom为什么可以优化性能" class="headerlink" title="虚拟dom为什么可以优化性能"></a>虚拟dom为什么可以优化性能</h3><p>createElement 是 虚拟 DOM 体系中的核心 API，用于创建描述 DOM 结构的 JavaScript 对象（虚拟节点&#x2F;VNode）。它与直接操作真实 DOM 的 document.createElement() 有本质区别</p>
+<p>纯 JS 对象：不涉及任何浏览器 DOM 操作</p>
+<p>轻量级：比真实 DOM 节点内存占用小 10-100 倍</p>
+<p>平台无关：同一套逻辑可渲染到 Web、小程序、原生应用</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>createElement (虚拟 DOM)</th>
+<th>document.createElement() (真实 DOM)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>所属体系</td>
+<td>框架级虚拟 DOM 库（Vue&#x2F;React）</td>
+<td>浏览器原生 DOM API</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>描述 DOM 的 JS 对象（VNode）</td>
+<td>浏览器内存中的真实 DOM 元素</td>
+</tr>
+<tr>
+<td>执行成本</td>
+<td>极低（仅 JS 对象操作）</td>
+<td>高（触发浏览器底层 C++ 对象创建）</td>
+</tr>
+<tr>
+<td>是否触发重排&#x2F;重绘</td>
+<td>❌ 否（内存操作）</td>
+<td>✅ 是（立即影响渲染管线）</td>
+</tr>
+<tr>
+<td>使用场景</td>
+<td>构建虚拟 DOM 树（框架内部）</td>
+<td>手动操作 DOM 时调用</td>
+</tr>
+<tr>
+<td>跨平台能力</td>
+<td>✅ 一套代码多端渲染</td>
+<td>❌ 仅限浏览器环境</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>减少直接DOM操作<br>  直接操作DOM非常昂贵，因为每次DOM修改都可能触发浏览器的重排（reflow）和重绘（repaint）。虚拟DOM通过在内存中操作轻量级的JavaScript对象，减少了对真实DOM的直接操作次数。</p>
+<p>  用js去处理此次需要的更新</p>
+</li>
+<li><p>批量更新<br> 虚拟DOM可以收集多次状态变化，然后一次性更新真实DOM,核心机制是通过「异步更新队列 + DocumentFragment 批处理 + 浏览器渲染优化」。这避免了频繁的布局计算和渲染，大幅提升性能。</p>
+<p> Vue的虚拟DOM更新并不总是使用DocumentFragment，在初始渲染和移动节点时使用，而更新则通过patch进行最小化操作</p>
+<p> 节点移动优化：先移除需要移动的节点到 Fragment-》再一次性插入新位置</p>
+<blockquote>
+<p>核心机制：异步更新队列（nextTick）将多个数据变更合并为一个更新任务。<br>在更新任务执行时，虚拟DOM的Diff算法会计算出所有需要更新的节点，形成一个更新列表。<br>对于需要新增的多个节点，Vue会使用DocumentFragment来批量插入。<br>对于已存在的节点的更新（如文本变化），Vue会直接修改这些节点，但由于是在同一个任务中，浏览器会将这些DOM操作收集起来，在微任务结束后统一进行重排重绘。</p>
+</blockquote>
+</li>
+<li><p>高效的Diff算法<br>  虚拟DOM使用高效的算法比较新旧虚拟DOM树的差异，找出最小变更集，只更新需要变化的部分，而不是重新渲染整个界面。</p>
+</li>
+<li><p>跨平台能力<br>  虚拟DOM是抽象的UI描述，可以映射到不同平台（Web、Native、Server），使得代码复用和跨平台开发变得更加容易。</p>
+</li>
+<li><p>开发者体验提升<br>  虚拟DOM让开发者专注于状态管理，而不是繁琐的DOM操作，提高了开发效率和代码可维护性。</p>
+</li>
+</ul>
+<h3 id="git中间有一笔commit不需要了如何只回退这一笔"><a href="#git中间有一笔commit不需要了如何只回退这一笔" class="headerlink" title="git中间有一笔commit不需要了如何只回退这一笔"></a>git中间有一笔commit不需要了如何只回退这一笔</h3><p>要回退 Git 中的某笔特定提交（且不保留历史记录），可通过<strong>交互式变基（Interactive Rebase）</strong> 实现。以下是步骤：</p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --oneline</span><br></pre></td></tr></table></figure>
+<p>记录需要删除的提交的哈希值（例如 <code>abc123d</code>），并确定它<strong>之前一个提交</strong>的哈希值（假设为 <code>def456e</code>）。</p>
+<hr>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i def456e</span><br></pre></td></tr></table></figure>
+<p>（这里用 <code>def456e</code> 表示目标提交的前一个提交）</p>
+<hr>
+<p>文本编辑器会打开一个提交列表，找到需要删除的提交行（如 <code>pick abc123d 提交消息</code>），将其前的 <code>pick</code> 改为 **<code>drop</code>**（或直接删除该行）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">drop abc123d 不需要的提交</span><br><span class="line">pick 28fcdd2 其他提交</span><br><span class="line">pick a1b2c3d 另一笔提交</span><br></pre></td></tr></table></figure>
+<p>保存并关闭编辑器。</p>
+<hr>
+<p>若变基过程中发生冲突：</p>
+<ul>
+<li>手动解决冲突文件；</li>
+<li>执行 <code>git add &lt;文件&gt;</code> 标记已解决；</li>
+<li>继续变基：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase --<span class="built_in">continue</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<p>如果分支已推送到远程仓库，需强制推送：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git push origin &lt;分支名&gt; --force</span><br><span class="line"><span class="comment"># 或使用更安全的 --force-with-lease</span></span><br><span class="line">git push origin &lt;分支名&gt; --force-with-lease</span><br></pre></td></tr></table></figure>
+
+<hr>
+<ul>
+<li><strong>风险提示</strong>：修改历史记录会影响协作分支，确保其他开发者知晓此次变更。</li>
+<li><strong>备份分支</strong>：操作前建议备份当前分支（<code>git branch backup-branch</code>）。</li>
+<li>若只想撤销更改但保留历史，可用 <code>git revert</code>（生成反向提交）。</li>
+</ul>
+<hr>
+<p>如果希望保留历史记录仅撤销更改，使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git revert abc123d</span><br></pre></td></tr></table></figure>
+<p>这会生成一个新的提交来抵消目标提交的更改，无需变基或强制推送。</p>
+<h3 id="git-merge和cherry-pick"><a href="#git-merge和cherry-pick" class="headerlink" title="git merge和cherry pick"></a>git merge和cherry pick</h3><p>好的，<code>git merge</code>、<code>git rebase</code> 和 <code>git cherry-pick</code> 是 Git 中三个用于整合更改的核心命令，但它们的工作方式和目的截然不同。</p>
+<p>理解它们的区别是掌握 Git 工作流的关键。下面我将对它们进行全面的对比和解释。</p>
+<hr>
+<h4 id="核心概念一句话总结"><a href="#核心概念一句话总结" class="headerlink" title="核心概念一句话总结"></a>核心概念一句话总结</h4><ol>
+<li><strong><code>git merge</code><strong>：</strong>整合分支</strong>。将两个分支的历史记录合并在一起，创建一个新的提交（合并提交）来记录这个汇合点。</li>
+<li><strong><code>git rebase</code><strong>：</strong>重整历史</strong>。将一个分支上的所有提交“移动”到另一个分支的最新提交之后，从而创造出更线性的项目历史。</li>
+<li><strong><code>git cherry-pick</code><strong>：</strong>复制提交</strong>。选择某个分支上的一个或多个特定提交，将其更改“重新应用”到当前分支，就像它们是在当前分支上编写的一样。</li>
+</ol>
+<hr>
+<h4 id="对比表格"><a href="#对比表格" class="headerlink" title="对比表格"></a>对比表格</h4><table>
+<thead>
+<tr>
+<th align="left">特性</th>
+<th align="left"><code>git merge</code></th>
+<th align="left"><code>git rebase</code></th>
+<th align="left"><code>git cherry-pick</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>操作对象</strong></td>
+<td align="left">一个<strong>分支</strong>（的所有更改）</td>
+<td align="left">一个<strong>分支</strong>（的所有提交）</td>
+<td align="left">一个或多个<strong>特定提交</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>结果</strong></td>
+<td align="left">创建一个新的<strong>合并提交</strong></td>
+<td align="left"><strong>重新书写</strong>提交历史，将提交序列置于新基址</td>
+<td align="left">将指定提交的更改作为<strong>新提交</strong>应用到当前分支</td>
+</tr>
+<tr>
+<td align="left"><strong>历史记录</strong></td>
+<td align="left"><strong>非线性</strong>，保留完整分支结构</td>
+<td align="left"><strong>线性、整洁</strong>，仿佛所有开发都是顺序进行的</td>
+<td align="left"><strong>线性</strong>，但可能导致<strong>重复的提交</strong>（相同更改有不同哈希值）</td>
+</tr>
+<tr>
+<td align="left"><strong>主要目的</strong></td>
+<td align="left"><strong>集成</strong>完整的功能或分支</td>
+<td align="left"><strong>清理</strong>本地分支历史 before merging</td>
+<td align="left"><strong>移植</strong>特定的修复或功能</td>
+</tr>
+<tr>
+<td align="left"><strong>风险</strong></td>
+<td align="left">低风险，安全操作</td>
+<td align="left"><strong>高风险</strong>，会重写历史（<strong>不要对公共分支使用</strong>）</td>
+<td align="left">中等风险，可能产生冲突，造成历史重复</td>
+</tr>
+<tr>
+<td align="left"><strong>比喻</strong></td>
+<td align="left"><strong>合影</strong>：把两拨人叫到一起拍张新照片</td>
+<td align="left"><strong>重新排队</strong>：让你和你的朋友排到另一队的最前面</td>
+<td align="left"><strong>复制粘贴</strong>：把别人文章里写得好的一段话，抄到你的文章里</td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="可视化示例与场景分析"><a href="#可视化示例与场景分析" class="headerlink" title="可视化示例与场景分析"></a>可视化示例与场景分析</h4><p>假设我们从一个共同的基础提交 <code>C2</code> 开始，之后有了不同的开发线：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">          C3---C4 (feature)</span><br><span class="line">         /</span><br><span class="line">C0---C1---C2 (main)</span><br><span class="line">               \</span><br><span class="line">                C5 (hotfix)</span><br></pre></td></tr></table></figure>
+
+<h5 id="场景-1-使用-git-merge"><a href="#场景-1-使用-git-merge" class="headerlink" title="场景 1: 使用 git merge"></a>场景 1: 使用 <code>git merge</code></h5><p><strong>目标：将 <code>hotfix</code> 分支的更改合并到 <code>main</code> 分支。</strong></p>
+<ol>
+<li><code>git checkout main</code></li>
+<li><code>git merge hotfix</code></li>
+</ol>
+<p><strong>结果：</strong> 创建一个新的合并提交 <code>M1</code>，它有两个父提交 (<code>C2</code> 和 <code>C5</code>)。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">          C3---C4 (feature)</span><br><span class="line">         /</span><br><span class="line">C0---C1---C2---M1 (main)</span><br><span class="line">               \ /</span><br><span class="line">                C5 (hotfix)</span><br></pre></td></tr></table></figure>
+<p><strong>何时使用：</strong> 这是标准操作，用于将任何完整的分支（如功能、修复、发布分支）合并回主分支。</p>
+<hr>
+<h5 id="场景-2-使用-git-rebase"><a href="#场景-2-使用-git-rebase" class="headerlink" title="场景 2: 使用 git rebase"></a>场景 2: 使用 <code>git rebase</code></h5><p><strong>目标：在将 <code>feature</code> 分支合并到 <code>main</code> 之前，先整理其历史，使其包含 <code>main</code> 的最新更新。</strong></p>
+<ol>
+<li><code>git checkout feature</code></li>
+<li><code>git rebase main</code> （这会将 <code>C3</code> 和 <code>C4</code> 的更改“重新播放”在 <code>main</code> 的 <code>C2</code> 之后）</li>
+</ol>
+<p><strong>结果：</strong> 创建了两个新的提交 <code>C3&#39;</code> 和 <code>C4&#39;</code>，它们有新的哈希值。<code>feature</code> 分支的历史变基到了 <code>main</code> 分支的顶端。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">                      C3&#x27;---C4&#x27; (feature)</span><br><span class="line">                     /</span><br><span class="line">C0---C1---C2 (main)</span><br><span class="line">               \</span><br><span class="line">                C5 (hotfix)</span><br></pre></td></tr></table></figure>
+<p>现在，再合并 <code>feature</code> 到 <code>main</code> 会是一次快进合并，历史是线性的。<br><strong>何时使用：</strong> 在本地整理个人特性分支的历史，使其更清晰后再合并。</p>
+<hr>
+<h5 id="场景-3-使用-git-cherry-pick"><a href="#场景-3-使用-git-cherry-pick" class="headerlink" title="场景 3: 使用 git cherry-pick"></a>场景 3: 使用 <code>git cherry-pick</code></h5><p><strong>目标：只需要将 <code>hotfix</code> 分支上的修复 <code>C5</code> 应用到 <code>feature</code> 分支上，而不需要合并整个 <code>hotfix</code> 分支。</strong></p>
+<ol>
+<li><code>git checkout feature</code></li>
+<li><code>git cherry-pick &lt;C5的哈希值&gt;</code></li>
+</ol>
+<p><strong>结果：</strong> 将 <code>C5</code> 的更改应用到 <code>feature</code> 分支，生成一个内容相同但哈希值不同的新提交 <code>C5&#39;</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">          C3---C4---C5&#x27; (feature) // C5&#x27; 包含了 C5 的更改</span><br><span class="line">         /</span><br><span class="line">C0---C1---C2 (main)</span><br><span class="line">               \</span><br><span class="line">                C5 (hotfix)</span><br></pre></td></tr></table></figure>
+<p><strong>何时使用：</strong> 将一个紧急修复从一个分支（如 <code>production</code>）移植到另一个分支（如 <code>development</code>），而不需要执行全部分支合并。</p>
+<hr>
+<h4 id="如何选择？决策流程图"><a href="#如何选择？决策流程图" class="headerlink" title="如何选择？决策流程图"></a>如何选择？决策流程图</h4><p>面对整合代码的需求时，你可以遵循以下决策流程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    A[开始：需要整合更改] --&gt; B&#123;操作对象是什么？&#125;</span><br><span class="line">    B -- 整个分支 --&gt; C&#123;目标是公共分支吗？&#125;</span><br><span class="line">    B -- 特定提交 --&gt; D[使用 git cherry-pick&lt;br&gt;移植单个修复或功能]</span><br><span class="line"></span><br><span class="line">    C -- 是 --&gt; E[使用 git merge&lt;br&gt;安全地集成，保留历史]</span><br><span class="line">    C -- 否（个人特性分支） --&gt; F&#123;想要线性历史吗？&#125;</span><br><span class="line"></span><br><span class="line">    F -- 是 --&gt; G[使用 git rebase&lt;br&gt;整理历史后再合并]</span><br><span class="line">    F -- 否 --&gt; E</span><br></pre></td></tr></table></figure>
+
+<h4 id="黄金法则与最佳实践"><a href="#黄金法则与最佳实践" class="headerlink" title="黄金法则与最佳实践"></a>黄金法则与最佳实践</h4><ol>
+<li><p>**<code>git merge</code>**：</p>
+<ul>
+<li><strong>用于</strong>：集成公共分支、发布版本、合并长期运行的功能分支。</li>
+<li><strong>优点</strong>：安全，保留历史真相。</li>
+</ul>
+</li>
+<li><p>**<code>git rebase</code>**：</p>
+<ul>
+<li><strong>黄金法则</strong>：<strong>只对你尚未推送到远程仓库的本地分支进行变基。永远不要对公共分支变基。</strong></li>
+<li><strong>用于</strong>：清理本地提交历史（如压缩、修改提交信息），在合并前使历史更清晰。</li>
+<li><strong>优点</strong>：创造更干净的历史。</li>
+</ul>
+</li>
+<li><p>**<code>git cherry-pick</code>**：</p>
+<ul>
+<li><strong>用于</strong>：将特定的提交（如热修复）从一个分支应用到另一个分支，而不需要合并无关的更改。</li>
+<li><strong>谨慎使用</strong>：过度使用会导致历史中出现重复的提交，使跟踪代码变更来源变得困难。</li>
+</ul>
+</li>
+</ol>
+<p><strong>总结：</strong> 没有哪个命令是绝对最好的，每个命令都有其特定的用途。根据你的目标（是整合、整理还是移植）和分支的公共性来做出正确选择，是高效使用 Git 的关键。</p>
+<h3 id="企微sdk登录授权流程"><a href="#企微sdk登录授权流程" class="headerlink" title="企微sdk登录授权流程"></a>企微sdk登录授权流程</h3><h3 id="websocket和wxx协议"><a href="#websocket和wxx协议" class="headerlink" title="websocket和wxx协议"></a>websocket和wxx协议</h3><h3 id="微前端怎么用，有什么好处"><a href="#微前端怎么用，有什么好处" class="headerlink" title="微前端怎么用，有什么好处"></a>微前端怎么用，有什么好处</h3><h3 id="小程序中，购物车页面会有很多列表以及付钱的一个倒计时，那么应该如何按照小程序双线程的原理去进行优化倒计时"><a href="#小程序中，购物车页面会有很多列表以及付钱的一个倒计时，那么应该如何按照小程序双线程的原理去进行优化倒计时" class="headerlink" title="小程序中，购物车页面会有很多列表以及付钱的一个倒计时，那么应该如何按照小程序双线程的原理去进行优化倒计时"></a>小程序中，购物车页面会有很多列表以及付钱的一个倒计时，那么应该如何按照小程序双线程的原理去进行优化倒计时</h3><ul>
+<li><p>长列表</p>
+<p>  使用虚拟列表：recycle-view </p>
+</li>
+<li><p>定时器：</p>
+<p>  使用一个定时器+一个map去进行页面的显示</p>
+</li>
+<li><p>使用Worker处理复杂计算</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建Worker处理倒计时逻辑</span></span><br><span class="line"><span class="keyword">const</span> timerWorker = wx.<span class="title function_">createWorker</span>(<span class="string">&#x27;workers/timer.js&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 主线程与Worker通信</span></span><br><span class="line">timerWorker.<span class="title function_">postMessage</span>(&#123;</span><br><span class="line"><span class="attr">action</span>: <span class="string">&#x27;init&#x27;</span>,</span><br><span class="line"><span class="attr">data</span>: countdownData</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">timerWorker.<span class="title function_">onMessage</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line"><span class="comment">// 接收Worker传来的倒计时数据</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="title function_">setData</span>(&#123; <span class="attr">countdowns</span>: res.<span class="property">countdowns</span> &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/25/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB2/" data-id="cmf67fxei0079bcfm4nz534dw" data-title="记录3" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2025/09/05/Vue/%E3%80%90vue%E3%80%91%E8%AF%A6%E8%A7%A3computed/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          详解computed
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">记录2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PWA/">PWA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Typescript/">Typescript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VueTest/">VueTest</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web3/">Web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/axios-%E6%BA%90%E7%A0%81/">axios 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vuex-%E6%BA%90%E7%A0%81/">vuex 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web3/">web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webAssembly/">webAssembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webwork/">webwork</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/">业务场景</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/">扩展阅读</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/">额外内容</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typescript/" rel="tag">Typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VueTest/" rel="tag">VueTest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios-%E6%BA%90%E7%A0%81/" rel="tag">axios 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/" rel="tag">chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/console/" rel="tag">console</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuex-%E6%BA%90%E7%A0%81/" rel="tag">vuex 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web3/" rel="tag">web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webAssembly/" rel="tag">webAssembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webRTC/" rel="tag">webRTC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webwork/" rel="tag">webwork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" rel="tag">业务场景</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" rel="tag">扩展阅读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" rel="tag">浏览器 Performance Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" rel="tag">额外内容</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 14px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 14px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">September 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/09/05/Vue/%E3%80%90vue%E3%80%91%E8%AF%A6%E8%A7%A3computed/">详解computed</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/25/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB2/">记录3</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/">记录2</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">记录1</a>
+          </li>
+        
+          <li>
+            <a href="/2025/08/14/%E6%89%8B%E5%86%99%E9%A2%98/">手写题</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 yangxin<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
