@@ -14,7 +14,7 @@
 <meta property="og:description" content="vue-router不同传参模式了解 Vue Router 的不同传参方式很重要，它们各有特点，适用于不同的场景。下面我用一个表格汇总它们的核心区别，然后详细解释：    特性维度 动态路由传参 (Dynamic Routes) Params 传参 (不显示在 URL) Query 传参 (Query Parameters)    URL 中的表现 路径的一部分 (e.g., &#x2F;user&#x2F;123)">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-08-25T02:42:18.061Z">
-<meta property="article:modified_time" content="2025-08-29T04:50:54.919Z">
+<meta property="article:modified_time" content="2025-09-08T04:18:18.907Z">
 <meta property="article:author" content="yangxin">
 <meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
@@ -429,8 +429,8 @@
 </tr>
 <tr>
 <td>是否触发重排&#x2F;重绘</td>
-<td>❌ 否（内存操作）</td>
-<td>✅ 是（立即影响渲染管线）</td>
+<td>否（内存操作）</td>
+<td>是（立即影响渲染管线）</td>
 </tr>
 <tr>
 <td>使用场景</td>
@@ -439,8 +439,8 @@
 </tr>
 <tr>
 <td>跨平台能力</td>
-<td>✅ 一套代码多端渲染</td>
-<td>❌ 仅限浏览器环境</td>
+<td>一套代码多端渲染</td>
+<td>仅限浏览器环境</td>
 </tr>
 </tbody></table>
 <ul>
@@ -604,7 +604,313 @@
 </li>
 </ol>
 <p><strong>总结：</strong> 没有哪个命令是绝对最好的，每个命令都有其特定的用途。根据你的目标（是整合、整理还是移植）和分支的公共性来做出正确选择，是高效使用 Git 的关键。</p>
-<h3 id="企微sdk登录授权流程"><a href="#企微sdk登录授权流程" class="headerlink" title="企微sdk登录授权流程"></a>企微sdk登录授权流程</h3><h3 id="websocket和wxx协议"><a href="#websocket和wxx协议" class="headerlink" title="websocket和wxx协议"></a>websocket和wxx协议</h3><h3 id="微前端怎么用，有什么好处"><a href="#微前端怎么用，有什么好处" class="headerlink" title="微前端怎么用，有什么好处"></a>微前端怎么用，有什么好处</h3><h3 id="小程序中，购物车页面会有很多列表以及付钱的一个倒计时，那么应该如何按照小程序双线程的原理去进行优化倒计时"><a href="#小程序中，购物车页面会有很多列表以及付钱的一个倒计时，那么应该如何按照小程序双线程的原理去进行优化倒计时" class="headerlink" title="小程序中，购物车页面会有很多列表以及付钱的一个倒计时，那么应该如何按照小程序双线程的原理去进行优化倒计时"></a>小程序中，购物车页面会有很多列表以及付钱的一个倒计时，那么应该如何按照小程序双线程的原理去进行优化倒计时</h3><ul>
+<h3 id="企微sdk登录授权流程"><a href="#企微sdk登录授权流程" class="headerlink" title="企微sdk登录授权流程"></a>企微sdk登录授权流程</h3><h3 id="websocket和wss协议"><a href="#websocket和wss协议" class="headerlink" title="websocket和wss协议"></a>websocket和wss协议</h3><p>简单来说：<strong>WSS 就是 WS 的安全版本</strong>。</p>
+<p>下面我们来详细解析它们的异同。</p>
+<hr>
+<ul>
+<li>核心关系</li>
+</ul>
+<ul>
+<li><strong>WS</strong>： <code>ws://</code> 是 WebSocket 协议的标准、<strong>非加密</strong>模式。</li>
+<li><strong>WSS</strong>： <code>wss://</code> 是 WebSocket 协议的<strong>加密</strong>模式，即在 WebSocket 之上添加了一层 TLS (Transport Layer Security) 加密，也就是 SSL。</li>
+</ul>
+<p>它们的协议栈对比如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">WS:  [WebSocket] ← 应用层</span><br><span class="line">     [   TCP    ] ← 传输层</span><br><span class="line"></span><br><span class="line">WSS: [WebSocket] ← 应用层</span><br><span class="line">     [   TLS    ] ← 安全层</span><br><span class="line">     [   TCP    ] ← 传输层</span><br></pre></td></tr></table></figure>
+
+<hr>
+<ul>
+<li>相同点</li>
+</ul>
+<ol>
+<li><strong>核心协议相同</strong>： WS 和 WSS 都使用<strong>完全相同的 WebSocket 协议</strong>。一旦连接建立，数据传输的格式、数据帧结构、心跳机制（ping&#x2F;pong）、关闭握手等行为没有任何区别。</li>
+<li><strong>功能特性一致</strong>： 两者都提供全双工、低延迟、持久性的通信能力。无论是 WS 还是 WSS，对开发者提供的 API（如 JavaScript 中的 <code>WebSocket</code> API）和使用方式是完全一样的。</li>
+<li><strong>握手过程类似</strong>： 连接建立初期都需要一个 HTTP Upgrade 握手过程来将协议从 HTTP 升级到 WebSocket。</li>
+</ol>
+<hr>
+<ul>
+<li>不同点</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">特性</th>
+<th align="left">WebSocket (WS)</th>
+<th align="left">WebSocket Secure (WSS)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>协议方案</strong></td>
+<td align="left"><code>ws://</code></td>
+<td align="left"><code>wss://</code></td>
+</tr>
+<tr>
+<td align="left"><strong>默认端口</strong></td>
+<td align="left">80</td>
+<td align="left"><strong>443</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>安全性</strong></td>
+<td align="left"><strong>不加密</strong>。所有数据（包括握手请求和所有数据帧）以<strong>明文</strong>形式在网络上传输。</td>
+<td align="left"><strong>加密</strong>。在 WebSocket 协议之下增加了 <strong>TLS&#x2F;SSL</strong> 加密层。所有数据都被加密传输，防止窃听和篡改。</td>
+</tr>
+<tr>
+<td align="left"><strong>握手过程</strong></td>
+<td align="left">发送一个普通的 HTTP Upgrade 请求。</td>
+<td align="left">发送一个 <strong>HTTPS</strong> Upgrade 请求。首先完成 <strong>TLS 握手</strong>，建立安全通道，然后在此安全通道内进行 WebSocket 的握手。</td>
+</tr>
+<tr>
+<td align="left"><strong>使用场景</strong></td>
+<td align="left"><strong>本地开发</strong>、内部网络（Intranet）或对安全性要求不高的临时环境。</td>
+<td align="left"><strong>所有生产环境（Production）</strong> 和任何涉及用户隐私数据的场景（如登录态、个人消息、金融数据等）。</td>
+</tr>
+<tr>
+<td align="left"><strong>浏览器限制</strong></td>
+<td align="left">现代浏览器对混合内容（HTTPS 页面中请求 WS 资源）有<strong>严格限制</strong>，通常会<strong>阻止连接</strong>。</td>
+<td align="left">是 HTTPS 页面中建立 WebSocket 连接的<strong>唯一可行方式</strong>，不会被浏览器阻止。</td>
+</tr>
+</tbody></table>
+<hr>
+<ul>
+<li>为什么必须使用 WSS？</li>
+</ul>
+<ol>
+<li><strong>数据安全</strong>：这是最主要的原因。明文传输意味着黑客可以轻易地窃听到你聊天应用里的每一条消息、你游戏中的每一个操作、你股票应用的实时交易数据。</li>
+<li><strong>避免中间人攻击</strong>：没有加密，攻击者不仅可以窃听，还可以在中间篡改你发送或接收的数据。</li>
+<li><strong>符合浏览器安全策略</strong>：这是<strong>至关重要</strong>的一点。如果一个页面是通过 <strong>HTTPS</strong> 协议加载的，那么浏览器会认为它是一个安全页面。此时，如果该页面中的 JavaScript 尝试去连接一个 <code>ws://</code> 的地址，浏览器会将其视为 <strong>“混合内容”</strong> 并<strong>通常直接阻止此连接</strong>，因为非加密的连接会降低整个页面的安全性。要解决这个问题，**必须使用 <code>wss://</code>**。</li>
+</ol>
+<p>在前端代码中，除了连接的 URL 字符串不同，API 的使用完全一致。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> insecureSocket = <span class="keyword">new</span> <span class="title class_">WebSocket</span>(<span class="string">&#x27;ws://example.com/ws&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> secureSocket = <span class="keyword">new</span> <span class="title class_">WebSocket</span>(<span class="string">&#x27;wss://example.com/ws&#x27;</span>);</span><br><span class="line"></span><br><span class="line">secureSocket.<span class="property">onopen</span> = <span class="keyword">function</span> (<span class="params">event</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;安全连接已建立&#x27;</span>);</span><br><span class="line">  secureSocket.<span class="title function_">send</span>(<span class="string">&#x27;Hello Server over WSS!&#x27;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">secureSocket.<span class="property">onmessage</span> = <span class="keyword">function</span> (<span class="params">event</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;收到服务器消息: &#x27;</span>, event.<span class="property">data</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="SSE、websocket"><a href="#SSE、websocket" class="headerlink" title="SSE、websocket"></a>SSE、websocket</h3><ul>
+<li><p>Socket： 是通信的基础工具（底层 API）。</p>
+<ul>
+<li>提供了一个“端点”，应用程序通过创建 Socket、绑定地址和端口、监听、连接、发送&#x2F;接收数据等步骤来建立网络连接。</li>
+</ul>
+<p>  特点：</p>
+<ul>
+<li><p>非常灵活和强大： 你可以基于 Socket 实现任何自定义的应用层协议（如 FTP、SMTP，也包括 WebSocket 和 HTTP）。</p>
+</li>
+<li><p>底层和复杂： 开发者需要自己处理诸如数据包重组、心跳保持、协议格式等细节。</p>
+</li>
+<li><p>与协议无关： Socket 既可以用于 TCP（可靠连接），也可以用于 UDP（无连接）。</p>
+</li>
+</ul>
+</li>
+<li><p>WebSocket： 是一个建立在 Socket 之上的高级协议，用于 Web 上的双向通信。</p>
+<ul>
+<li><p>握手： 客户端首先发送一个特殊的 HTTP 请求（带有 Upgrade: websocket 头），请求“升级”协议。</p>
+</li>
+<li><p>切换协议： 服务器同意后（HTTP 101响应），双方就不再使用 HTTP，而是转而使用 WebSocket 协议规定的二进制数据帧进行通信。</p>
+</li>
+<li><p>全双工通信： 连接持久化，服务器和客户端可以随时、独立地向对方发送数据。</p>
+</li>
+</ul>
+</li>
+<li><p>SSE： 也是一个建立在 Socket 之上的协议&#x2F;标准，用于 Web 上高效的服务器到客户端单向通信。</p>
+<ul>
+<li><p>客户端使用标准的 EventSource API 向服务器发起一个普通的 HTTP 请求。</p>
+</li>
+<li><p>服务器保持这个连接打开，并按照简单的文本格式（data: …\n\n）持续地发送数据块。</p>
+</li>
+<li><p>连接如果中断，EventSource API 会自动尝试重连。</p>
+</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">特性</th>
+<th align="left">SSE (Server-Sent Events)</th>
+<th align="left">WebSocket</th>
+<th align="left">Socket (Raw TCP)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>通信方向</strong></td>
+<td align="left"><strong>单向</strong> (Server → Client)</td>
+<td align="left"><strong>全双工</strong> (Server ↔ Client)</td>
+<td align="left">双向 (可自定义)</td>
+</tr>
+<tr>
+<td align="left"><strong>协议基础</strong></td>
+<td align="left"><strong>HTTP</strong> (长连接)</td>
+<td align="left"><strong>独立的 WebSocket 协议</strong> (基于 TCP)</td>
+<td align="left"><strong>TCP 或 UDP</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>复杂度</strong></td>
+<td align="left">非常简单 (使用方便)</td>
+<td align="left">中等 (有协议概念)</td>
+<td align="left"><strong>非常复杂</strong> (需自定义所有细节)</td>
+</tr>
+<tr>
+<td align="left"><strong>数据格式</strong></td>
+<td align="left"><strong>文本</strong> (通常 UTF-8)</td>
+<td align="left"><strong>文本和二进制</strong></td>
+<td align="left">任意格式 (自定义)</td>
+</tr>
+<tr>
+<td align="left"><strong>浏览器支持</strong></td>
+<td align="left"><code>EventSource</code> API</td>
+<td align="left"><code>WebSocket</code> API</td>
+<td align="left">原生不支持，需通过其他方式（如 Node.js <code>net</code> 模块）</td>
+</tr>
+<tr>
+<td align="left"><strong>典型用途</strong></td>
+<td align="left">实时新闻推送、股票行情、状态更新、日志流</td>
+<td align="left">聊天应用、在线游戏、实时协作编辑、高频数据交易</td>
+<td align="left">自定义客户端&#x2F;服务器应用、数据库、邮件服务器等底层服务</td>
+</tr>
+</tbody></table>
+<h3 id="微前端怎么用，有什么好处"><a href="#微前端怎么用，有什么好处" class="headerlink" title="微前端怎么用，有什么好处"></a>微前端怎么用，有什么好处</h3><h2 id="详细分析"><a href="#详细分析" class="headerlink" title="详细分析"></a>详细分析</h2><ul>
+<li>iFrame 的优势</li>
+</ul>
+<ol>
+<li><strong>天然隔离性</strong>：iFrame 提供完全的沙箱环境，样式和JavaScript不会与主应用冲突</li>
+<li><strong>简单易用</strong>：只需一个HTML标签即可嵌入完整应用，无需复杂配置</li>
+<li><strong>安全性高</strong>：提供内容安全策略(CSP)支持，隔离潜在恶意代码</li>
+<li><strong>零技术栈要求</strong>：可以嵌入任何类型的网页，无论其使用什么技术开发</li>
+</ol>
+<ul>
+<li>iFrame 的劣势</li>
+</ul>
+<ol>
+<li><p><strong>用户体验差</strong>：</p>
+<ul>
+<li>双重滚动条问题</li>
+<li>加载状态明显，白屏时间长</li>
+<li>弹窗只能限制在iFrame范围内</li>
+</ul>
+</li>
+<li><p><strong>通信困难</strong>：</p>
+<ul>
+<li>只能通过<code>postMessage</code>进行通信，API简陋</li>
+<li>需要自行设计复杂的通信协议</li>
+</ul>
+</li>
+<li><p><strong>性能问题</strong>：</p>
+<ul>
+<li>每个iFrame需要加载完整的运行时环境(如React&#x2F;Vue)</li>
+<li>资源无法在不同iFrame间共享</li>
+<li>内存占用高，每个iFrame都是独立的浏览器上下文</li>
+</ul>
+</li>
+<li><p><strong>SEO不友好</strong>：搜索引擎难以抓取iFrame中的内容</p>
+</li>
+<li><p><strong>路由管理复杂</strong>：iFrame内部路由变化不会反映到浏览器URL中，刷新页面可能导致状态丢失</p>
+</li>
+</ol>
+<ul>
+<li>微前端的优势</li>
+</ul>
+<ol>
+<li><p><strong>无缝用户体验</strong>：</p>
+<ul>
+<li>应用切换流畅，无刷新感</li>
+<li>统一的加载状态和错误处理</li>
+<li>全局弹窗和通知</li>
+</ul>
+</li>
+<li><p><strong>高效的资源利用</strong>：</p>
+<ul>
+<li>共享公共依赖(如React, Vue, 工具库)</li>
+<li>按需加载子应用，减少初始加载时间</li>
+</ul>
+</li>
+<li><p><strong>灵活的通信机制</strong>：</p>
+<ul>
+<li>可以使用任何前端状态管理方案</li>
+<li>自定义事件系统，通信更直观</li>
+</ul>
+</li>
+<li><p><strong>更好的SEO</strong>：所有内容都在同一DOM树上，易于搜索引擎索引</p>
+</li>
+<li><p><strong>统一的路由管理</strong>：主应用可以管理全局路由，保持URL与状态同步</p>
+</li>
+</ol>
+<ul>
+<li>微前端的劣势</li>
+</ul>
+<ol>
+<li><strong>复杂度高</strong>：需要引入额外框架(如qiankun)，配置和维护成本高</li>
+<li><strong>隔离性需要手动处理</strong>：需要解决CSS冲突和JS全局变量污染问题</li>
+<li><strong>安全性依赖实现</strong>：不如iFrame的天然沙箱安全</li>
+<li><strong>兼容性问题</strong>：不同技术栈间的兼容性需要额外处理</li>
+</ol>
+<p>使用 iFrame 更适合：</p>
+<ol>
+<li>嵌入完全独立的第三方应用(如地图、视频播放器)</li>
+<li>需要完全隔离样式和脚本的简单嵌入需求</li>
+<li>快速原型开发或对用户体验要求不高的内部工具</li>
+<li>嵌入安全性未知或不可信的内容</li>
+</ol>
+<p> 使用微前端更适合：</p>
+<ol>
+<li>大型企业级应用，需要拆分多个团队独立开发</li>
+<li>对用户体验和性能有较高要求的生产环境</li>
+<li>需要深度融合和通信的多应用场景</li>
+<li>渐进式重构遗留系统，逐步替换老模块</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>微前端 (如 qiankun&#x2F;Single-SPA)</th>
+<th>iFrame</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>用户体验</strong></td>
+<td><strong>无缝集成</strong>，保持统一的用户体验</td>
+<td><strong>有明显的边界感</strong>，滚动条、加载状态独立</td>
+</tr>
+<tr>
+<td><strong>SEO 支持</strong></td>
+<td><strong>友好</strong>，内容在同一个DOM中</td>
+<td><strong>不友好</strong>，搜索引擎难以索引iFrame内容</td>
+</tr>
+<tr>
+<td><strong>通信机制</strong></td>
+<td><strong>灵活多样</strong> (CustomEvent, 状态管理库等)</td>
+<td><strong>受限</strong> (主要依赖 postMessage)</td>
+</tr>
+<tr>
+<td><strong>样式控制</strong></td>
+<td><strong>可统一管理</strong> (虽有隔离需求但可协调)</td>
+<td><strong>天然隔离</strong>，完全独立不干扰</td>
+</tr>
+<tr>
+<td><strong>性能表现</strong></td>
+<td><strong>更优</strong>，资源可共享，切换更流畅</td>
+<td><strong>较差</strong>，每个iFrame独立加载全部资源</td>
+</tr>
+<tr>
+<td><strong>开发体验</strong></td>
+<td><strong>一体化</strong>，调试、热更新更便捷</td>
+<td><strong>割裂</strong>，需要单独调试每个iFrame</td>
+</tr>
+<tr>
+<td><strong>路由管理</strong></td>
+<td><strong>统一路由</strong>，保持浏览器历史记录一致</td>
+<td><strong>独立路由</strong>，浏览器历史记录管理复杂</td>
+</tr>
+<tr>
+<td><strong>安全性</strong></td>
+<td><strong>需要额外处理</strong> JS沙箱、CSS隔离</td>
+<td><strong>天然安全沙箱</strong>，完全隔离</td>
+</tr>
+<tr>
+<td><strong>技术栈限制</strong></td>
+<td><strong>无限制</strong>，可集成任何前端框架</td>
+<td><strong>无限制</strong>，可嵌入任何网页</td>
+</tr>
+<tr>
+<td><strong>实现复杂度</strong></td>
+<td><strong>较高</strong>，需要框架支持和配置</td>
+<td><strong>极低</strong>，简单易用</td>
+</tr>
+</tbody></table>
+<h3 id="小程序中，购物车页面会有很多列表以及付钱的一个倒计时，那么应该如何按照小程序双线程的原理去进行优化倒计时"><a href="#小程序中，购物车页面会有很多列表以及付钱的一个倒计时，那么应该如何按照小程序双线程的原理去进行优化倒计时" class="headerlink" title="小程序中，购物车页面会有很多列表以及付钱的一个倒计时，那么应该如何按照小程序双线程的原理去进行优化倒计时"></a>小程序中，购物车页面会有很多列表以及付钱的一个倒计时，那么应该如何按照小程序双线程的原理去进行优化倒计时</h3><ul>
 <li><p>长列表</p>
 <p>  使用虚拟列表：recycle-view </p>
 </li>
@@ -618,7 +924,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/25/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB2/" data-id="cmf67fxei0079bcfm4nz534dw" data-title="记录3" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/25/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB2/" data-id="cmfam3dcu006gt8fm81wu0gmb" data-title="记录3" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       

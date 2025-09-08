@@ -246,7 +246,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WebRTC/%E3%80%90WebRTC%E3%80%91%E4%BB%8B%E7%BB%8D/" data-id="cmf67fxeo0086bcfm4mkre5cv" data-title="webRTC介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WebRTC/%E3%80%90WebRTC%E3%80%91%E4%BB%8B%E7%BB%8D/" data-id="cmfam3dd7007nt8fmbaogauu8" data-title="webRTC介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -427,7 +427,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/" data-id="cmf67fxet0092bcfm0x5v5xxk" data-title="【Web3】基本介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/" data-id="cmfam3dd5007dt8fm1bfneb5y" data-title="【Web3】基本介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -613,11 +613,101 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-id="cmf67fxeu0096bcfmbxed3uu2" data-title="【webpack】工作流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" data-id="cmfam3dd8007st8fmecdv4hp2" data-title="【webpack】工作流程" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-读书笔记/webpack/【webwork】介绍" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webwork%E3%80%91%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.702Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/webwork/">webwork</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webwork%E3%80%91%E4%BB%8B%E7%BB%8D/">【webwork】介绍</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><ul>
+<li>能长时间运行</li>
+<li>启动性能理想</li>
+<li>内存消耗理想</li>
+</ul>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><p>webwork依赖于浏览器（宿主环境）来实现的，从而实现了浏览器对多线程的支持</p>
+<blockquote>
+<p>种类</p>
+</blockquote>
+<ul>
+<li>dedicated worker（专用线程）：只能被首次生成它的脚本使用</li>
+<li>shared worker（共享线程）：可以同时被多个脚本使用</li>
+</ul>
+<h2 id="模式和执行流"><a href="#模式和执行流" class="headerlink" title="模式和执行流"></a>模式和执行流</h2><h3 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h3><ul>
+<li><p>主线程提交任务</p>
+</li>
+<li><p>WorkerGlobal做子任务分配，分配到某个worker</p>
+</li>
+<li><p>worker子线程分配后，将处理结果返回给WorkerGlobal，WorkerGlobal再将结果返回给主线程</p>
+</li>
+</ul>
+<h3 id="执行流"><a href="#执行流" class="headerlink" title="执行流"></a>执行流</h3><ul>
+<li><p>主线程调用new Worker，内核异步创建worker</p>
+</li>
+<li><p>浏览器内核创建WebCore：Worker</p>
+</li>
+<li><p>主线程调用postMessage通知。</p>
+</li>
+</ul>
+<p>如果当时worker没有创建完成，那么会在浏览器内核中的message队列存放信息，当worker创建完成后，由浏览器内核将消息从队列中放入到worker线程中的执行循环</p>
+<p>如果worker创建已经完成了，那么主线程直接通知到worker线程中的onmessage，不会经历浏览器内核</p>
+<ul>
+<li>worker执行完成后，调用postMessage将信息传递给主线程的onmessage回调中。不经历浏览器内核</li>
+</ul>
+<h2 id="api"><a href="#api" class="headerlink" title="api"></a>api</h2><h3 id="主线程"><a href="#主线程" class="headerlink" title="主线程"></a>主线程</h3><ul>
+<li><p>构造</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> worker = <span class="keyword">new</span> <span class="title class_">Worker</span>(url, options)</span><br></pre></td></tr></table></figure>
+<p>注：</p>
+</li>
+<li><p>页面不允许启动worker，会引发security error</p>
+</li>
+<li><p>脚本类型只接收mime类型为text&#x2F;javascript</p>
+</li>
+<li><p>url无法解析会导致syntaxerror</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webwork%E3%80%91%E4%BB%8B%E7%BB%8D/" data-id="cmfam3ddc0088t8fm31od05ju" data-title="【webwork】介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webwork/" rel="tag">webwork</a></li></ul>
 
     </footer>
   </div>
@@ -860,100 +950,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E9%85%8D%E7%BD%AE%E9%A1%B9/" data-id="cmf67fxex009cbcfmdk668ene" data-title="【webpack】配置项" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webpack%E3%80%91%E9%85%8D%E7%BD%AE%E9%A1%B9/" data-id="cmfam3ddd008bt8fm0oxq4ka6" data-title="【webpack】配置项" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-读书笔记/webpack/【webwork】介绍" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webwork%E3%80%91%E4%BB%8B%E7%BB%8D/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.702Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/webwork/">webwork</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webwork%E3%80%91%E4%BB%8B%E7%BB%8D/">【webwork】介绍</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><ul>
-<li>能长时间运行</li>
-<li>启动性能理想</li>
-<li>内存消耗理想</li>
-</ul>
-<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><p>webwork依赖于浏览器（宿主环境）来实现的，从而实现了浏览器对多线程的支持</p>
-<blockquote>
-<p>种类</p>
-</blockquote>
-<ul>
-<li>dedicated worker（专用线程）：只能被首次生成它的脚本使用</li>
-<li>shared worker（共享线程）：可以同时被多个脚本使用</li>
-</ul>
-<h2 id="模式和执行流"><a href="#模式和执行流" class="headerlink" title="模式和执行流"></a>模式和执行流</h2><h3 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h3><ul>
-<li><p>主线程提交任务</p>
-</li>
-<li><p>WorkerGlobal做子任务分配，分配到某个worker</p>
-</li>
-<li><p>worker子线程分配后，将处理结果返回给WorkerGlobal，WorkerGlobal再将结果返回给主线程</p>
-</li>
-</ul>
-<h3 id="执行流"><a href="#执行流" class="headerlink" title="执行流"></a>执行流</h3><ul>
-<li><p>主线程调用new Worker，内核异步创建worker</p>
-</li>
-<li><p>浏览器内核创建WebCore：Worker</p>
-</li>
-<li><p>主线程调用postMessage通知。</p>
-</li>
-</ul>
-<p>如果当时worker没有创建完成，那么会在浏览器内核中的message队列存放信息，当worker创建完成后，由浏览器内核将消息从队列中放入到worker线程中的执行循环</p>
-<p>如果worker创建已经完成了，那么主线程直接通知到worker线程中的onmessage，不会经历浏览器内核</p>
-<ul>
-<li>worker执行完成后，调用postMessage将信息传递给主线程的onmessage回调中。不经历浏览器内核</li>
-</ul>
-<h2 id="api"><a href="#api" class="headerlink" title="api"></a>api</h2><h3 id="主线程"><a href="#主线程" class="headerlink" title="主线程"></a>主线程</h3><ul>
-<li><p>构造</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> worker = <span class="keyword">new</span> <span class="title class_">Worker</span>(url, options)</span><br></pre></td></tr></table></figure>
-<p>注：</p>
-</li>
-<li><p>页面不允许启动worker，会引发security error</p>
-</li>
-<li><p>脚本类型只接收mime类型为text&#x2F;javascript</p>
-</li>
-<li><p>url无法解析会导致syntaxerror</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/webpack/%E3%80%90webwork%E3%80%91%E4%BB%8B%E7%BB%8D/" data-id="cmf67fxez009qbcfm14sjf6c4" data-title="【webwork】介绍" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webwork/" rel="tag">webwork</a></li></ul>
-
     </footer>
   </div>
   
@@ -1082,7 +1082,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96%E5%AD%98%E5%82%A8%E5%8D%8F%E8%AE%AE/" data-id="cmf67fxes0090bcfm3k339oge" data-title="【Web3】去中心化存储协议" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96%E5%AD%98%E5%82%A8%E5%8D%8F%E8%AE%AE/" data-id="cmfam3dd30076t8fm0kwg76x6" data-title="【Web3】去中心化存储协议" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1268,7 +1268,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%85%AC%E9%93%BE/" data-id="cmf67fxer008ubcfm4h7o24px" data-title="【Web3】公链" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91%E5%85%AC%E9%93%BE/" data-id="cmfam3dd10070t8fmf95fbmmp" data-title="【Web3】公链" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -1371,101 +1371,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91DAO/" data-id="cmf67fxep008dbcfm2o4s8hdd" data-title="【Web3】DAO" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91DAO/" data-id="cmfam3dcs0065t8fm8i1p8nk3" data-title="【Web3】DAO" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web3/" rel="tag">web3</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-读书笔记/WEB3/【Web3】NFT" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91NFT/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.693Z" itemprop="datePublished">2025-08-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Web3/">Web3</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91NFT/">【Web3】NFT</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>nft是以数字形式表示的加密货币资产，每个nft都是独一无二的，这样有形资产和无形资产都能够被标记。即nft指可以投资于有价值的东西，而无须实际拥有或者存储它们，因此，在公开市场上买卖nft变得非常容易。</p>
-<p>每个nft都可以通过唯一的交易hash值识别，即没有两个nft是完全一致的。</p>
-<h2 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h2><p>冷现金是属于同质化资产（可替换，实际价值不变），而nft是一种非同质化资产，即无法相互转换，转换之后价值也不能完全一致，因为每个代币都是唯一的。</p>
-<ul>
-<li>区块链协议</li>
-</ul>
-<p>所有最好的nft都托管在区块链协议上，许多nft的创建者更喜欢以太坊区块链，尤其是因为它支持erc-721代币。即以太坊区块链这个特定子集非常适合nft，因为每个erc-721代币都是独一无二的。</p>
-<ul>
-<li>以太坊铸币</li>
-</ul>
-<p>铸币指的是创建尚未存在的新nft的过程。即当购买nft时，购买的是已经由其他人创建的数字资产。如果希望获取的是第一次被创建的nft，那么可以通过以太坊或者币安链等区块链网络铸造nft，这样nft可以验证你是否是真正的所属者。</p>
-<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><h3 id="分割式nft"><a href="#分割式nft" class="headerlink" title="分割式nft"></a>分割式nft</h3><p>以类似于股权的形式去分配一个nft，每个拥有的人都有可以获取一定比例的财产。</p>
-<p>但是这个功能目前还未完全定型，处于探索状态。</p>
-<h3 id="实物不动产"><a href="#实物不动产" class="headerlink" title="实物不动产"></a>实物不动产</h3><p>实物房地产是用nft表示的资产的完美示例，房产和nft都是独一无二的。</p>
-<p>常见用例是部份所有权，例如房地产开发商想向零售客户开放投资机会，那么开发商可以让nft与一定比例的所有权相关联，然后在公开市场上发行nft</p>
-<h3 id="元宇宙中的虚拟房地产"><a href="#元宇宙中的虚拟房地产" class="headerlink" title="元宇宙中的虚拟房地产"></a>元宇宙中的虚拟房地产</h3><h3 id="CryptoPunks和其他数字收藏品"><a href="#CryptoPunks和其他数字收藏品" class="headerlink" title="CryptoPunks和其他数字收藏品"></a>CryptoPunks和其他数字收藏品</h3><p>CryptoPunks是2007年创建的1k个数字图像的集合，每个CryptoPunks都是独一无二的，并由nft支持。</p>
-<h3 id="体育nft"><a href="#体育nft" class="headerlink" title="体育nft"></a>体育nft</h3><p>有些体育品牌正在出售来自关键游戏赛事的视频剪辑的所有权或者比赛时的个别物品</p>
-<h3 id="游戏nft"><a href="#游戏nft" class="headerlink" title="游戏nft"></a>游戏nft</h3><h2 id="好处"><a href="#好处" class="headerlink" title="好处"></a>好处</h2><ul>
-<li>适合内容创作者</li>
-</ul>
-<p>保护知识产权</p>
-<ul>
-<li>价值存储</li>
-</ul>
-<p>现在所被创造出来的nft都是有价值的，因为铸币nft是需要有价值的东西才能被铸造。</p>
-<ul>
-<li>市场较大</li>
-<li>nft可用抵押品</li>
-</ul>
-<h2 id="nft与加密货币"><a href="#nft与加密货币" class="headerlink" title="nft与加密货币"></a>nft与加密货币</h2><ul>
-<li><p>相同点</p>
-</li>
-<li><p>以数字形式表示</p>
-</li>
-<li><p>构建和存储在区块链中</p>
-</li>
-<li><p>不同点</p>
-</li>
-<li><p>nft是非同质化货币，而加密货币是同质化产品。</p>
-</li>
-<li><p>每个nft都是独一无二的，价值也是独一无二的</p>
-</li>
-</ul>
-<h2 id="CryptoPunks"><a href="#CryptoPunks" class="headerlink" title="CryptoPunks"></a>CryptoPunks</h2><h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>CryptoPunks是larva labs创建，是一个拥有1w个数字图像的系列，在以太坊区块链上被标记为nft。</p>
-<p>nft实际上是对数字项目的所有权契约，持有CryptoPunks nft表示是该独一无二像素头像的唯一所有者。</p>
-<h2 id="BAYC"><a href="#BAYC" class="headerlink" title="BAYC"></a>BAYC</h2><h3 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h3><p>BAYC是在以太坊区块链上铸造的一系列的nft头像，由1k枚nft组成，样式设计为以太坊区块链的猿猴。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91NFT/" data-id="cmf67fxep008hbcfmeffz82ru" data-title="【Web3】NFT" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li></ul>
 
     </footer>
   </div>
@@ -1535,7 +1445,125 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91GameFi/" data-id="cmf67fxeq008kbcfm9ixe84za" data-title="【Web3】GameFi" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91GameFi/" data-id="cmfam3dcw006jt8fm2w4f5vyp" data-title="【Web3】GameFi" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-读书笔记/WEB3/【Web3】Defi" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91Defi/" class="article-date">
+  <time class="dt-published" datetime="2025-08-14T03:18:06.693Z" itemprop="datePublished">2025-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Web3/">Web3</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91Defi/">【Web3】DAO</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>defi是“去中心化金融”的缩写，是加密货币或者区块链中各种金融app的总称。</p>
+<p>defi从区块链中获取灵感。区块链是数字货币背后的技术，它允许多个实体持有交易历史的副本，这意味着它不受单一的中央来源控制。</p>
+<h2 id="主流的defi应用"><a href="#主流的defi应用" class="headerlink" title="主流的defi应用"></a>主流的defi应用</h2><ul>
+<li><p>去中心化交易所（dex）。它帮助用户将货币兑换为其他货币，它直接连接用户，因此他们可以直接交易加密货币，而无须信任中介机构的资金</p>
+</li>
+<li><p>稳定币：一种与加密货币以外的资产挂钩并具有稳定价格的加密货币</p>
+</li>
+<li><p>借贷平台：这些平台使用智能合约来代替中间管理借贷的银行等中介机构</p>
+</li>
+<li><p>跨链比特币（wbtc）。将比特币发送到以太坊网络的方式，因此比特币可以直接在以太坊的defi系统中使用。wbtc允许用户通过在上述去中心化借出的btc赚取利息。</p>
+</li>
+<li><p>预测市场。投注未来事件结果的市场。defi版本的预测市场目标是提供相同的功能但没有中介机构。</p>
+</li>
+</ul>
+<h2 id="dex：去中心化交易所"><a href="#dex：去中心化交易所" class="headerlink" title="dex：去中心化交易所"></a>dex：去中心化交易所</h2><p>dex是一个点对点市场，交易直接发生在加密交易者之间。处理加密货币之间的交易</p>
+<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><p>通过cex（中心化交易所），可以将加密货币与法定货币之间互换。这些所有交易都是由交易所自己通过“订单薄”处理的，该订单薄根据当前的买卖订单确定特定加密货币的价格。而dex是不允许法定与加密货币之间的交易。</p>
+<p>dex只是一种智能合约，它通过算法确定各种加密货币的价格，并促进流动性池（投资者锁定资金以换取类似的利息奖励来促进交易。</p>
+<p>cex的交易记录在该交易所的内部数据库中，而dex的交易直接在区块链上结算</p>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><blockquote>
+<p>优点</p>
+</blockquote>
+<ul>
+<li><p>种类繁多。dex几乎提供了无限的代币种类</p>
+</li>
+<li><p>降低黑客风险。由于dex交易中的所有资金都存储在交易者自己的钱包中，因此理论上它们不太容易受到黑客攻击。dex还降低了“交易对手风险”（违约的可能性）</p>
+</li>
+<li><p>匿名性。使用主流的dex不需要个人信息</p>
+</li>
+</ul>
+<blockquote>
+<p>缺点</p>
+</blockquote>
+<ul>
+<li><p>需要用户做大量的前期研究准备，不能指望dex本身提供很多帮助。在dex中进行复杂交易需要一些专业知识</p>
+</li>
+<li><p>智能合约漏洞。任何defi协议的安全性都取决于为其提供支持的智能合约，而合约代码可能存在可利用的漏洞。</p>
+</li>
+<li><p>风险更高的代币。dex上面存在未经审查的代币</p>
+</li>
+</ul>
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><p>uniswap</p>
+<h2 id="稳定币"><a href="#稳定币" class="headerlink" title="稳定币"></a>稳定币</h2><p>稳定币是一种储备资产挂钩的数字货币，旨在降低相对于比特币等非挂钩加密货币的波动性。</p>
+<p>常用的稳定币包括USDT、USDC、DAI等</p>
+<h3 id="DAI"><a href="#DAI" class="headerlink" title="DAI"></a>DAI</h3><p>dai是一种加密资产，试图通过将其他加密资产锁定在合约中与美元保持1:1的价值关系。dai是一种名为maker协议的开源软件的产品，运行在以太坊区块链之上的dapp。dai保持其价值的方式是使用以ETH计价的抵押债务。抵押债务为贷方提供了一种使用他们拥有的资产获得贷款的方式。</p>
+<p>maker协议通过以太坊运行的智能合约，使借款人能锁定ETH和其他加密资产，从而对其进行抵押，以便贷款的形式生成新的dai。如果借款人想收回抵押的eth，必须将dai返回给协议并且支付费用，如果发生清算，maker协议将使用基于市场的内部拍卖机制获取抵押品并出售。</p>
+<h3 id="工作流程-1"><a href="#工作流程-1" class="headerlink" title="工作流程"></a>工作流程</h3><p>dai是一种由其他加密货币抵押的加密资产。如果用户想获取dai，那么可以在交易所花费eth购买等值的dai，也可以使用maker协议抵押eth和其他资产。</p>
+<p>抵押债务头寸（cdp）是maker上的智能合约，用户可以利用它来锁定其抵押资产（eth或bat）并生成dai。cdp可以视为存储抵押品的安全保险库。dai一般会被超额抵押，即所需的存款金额通常要高于dai的价值。</p>
+<h2 id="借贷平台"><a href="#借贷平台" class="headerlink" title="借贷平台"></a>借贷平台</h2><p>借贷市场将借款人与加密货币的贷方联系起来。主流平台Compound允许用户借用加密货币或者提供自己的钱款，用户可以通过借款获取利息。Compound通过算法设置利率，因此如果借入加密货币的需求更高，利率将被推高。</p>
+<p>defi借贷是基于抵押品的。</p>
+<h4 id="Compound"><a href="#Compound" class="headerlink" title="Compound"></a>Compound</h4><p>它是建立在以太坊上的可公开访问的智能合约系统，允许借款人通过将其加密资产锁定到协议中来获取贷款和为贷方提供钱款。借款人和贷款人支付和收取的利率由每种加密货币的供求关系决定。每个区块的开采都会产生利率，贷款可随时还款，锁定资产可以随时提现。</p>
+<p>原生代币是cToken，它允许用户从他们的钱中赚取利息，也能在其他应用程序转移、交易和使用</p>
+<h2 id="流动性质押"><a href="#流动性质押" class="headerlink" title="流动性质押"></a>流动性质押</h2><p>质押是赚取资产被动收入的一种方式，同时可以支持区块链网络的安全和运营。流动性质押协议提供与常规pos质押相同的好处，减少了潜在的缺点。</p>
+<p>流动性质押协议处于加密货币质押经济的最前沿，改变了defi行业的流动性准入。流动质押的优势之一就是能够在互动和使用资产的同时获取奖励，流动性质押协议为借贷协议和单产农业等活动提供可基础。</p>
+<h3 id="质押"><a href="#质押" class="headerlink" title="质押"></a>质押</h3><p>将加密资产锁定在协议中以获取回报的过程。通过将闲置资产投入使用，抵押加密货币是赚取被动收入的一种方式。质押协议可以协助pos共识机制，该机制促进关于区块链交易有效性的网络协议。因此，与比特币等pow区块链相比，降低可能源需求。</p>
+<p>质押在一定时期内无法使用资金。</p>
+<h3 id="流动性质押-1"><a href="#流动性质押-1" class="headerlink" title="流动性质押"></a>流动性质押</h3><p>锁定资金以赚取奖励的同时仍然可以使用资金的方式。</p>
+<h3 id="流动性质押运作"><a href="#流动性质押运作" class="headerlink" title="流动性质押运作"></a>流动性质押运作</h3><p>用户有一个ETH，将eth放入流动质押协议中，然后会收到一个价值等值的stETH（质押的eth）作为回报。</p>
+<p>该用户将从协议中保留的原始eth存款中获取奖励。为了获取被抵押的eth，需要一个stETH才能将其兑换回来。</p>
+<h3 id="流动质押优点"><a href="#流动质押优点" class="headerlink" title="流动质押优点"></a>流动质押优点</h3><ul>
+<li>高产农业</li>
+</ul>
+<p>流动性质押是收益农业活动的基本基石。收益农业是指交易者将资金锁定在一个协议中并收到这些资金的打包或者代币化版本。</p>
+<ul>
+<li><p>加密贷款</p>
+</li>
+<li><p>快速存取资金</p>
+</li>
+</ul>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>有风险</li>
+</ul>
+<h2 id="预测市场"><a href="#预测市场" class="headerlink" title="预测市场"></a>预测市场</h2><p>预测市场就是可以买卖预测的市场，即分享事件的结果。</p>
+<p>预测市场是利用群体智慧来进行的，那么由于defi是一个去中心化的市场，普通民众也能参与，更加自由。</p>
+<p>实例：Augur、Gnosis</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2025/08/14/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/WEB3/%E3%80%90Web3%E3%80%91Defi/" data-id="cmfam3dcx006nt8fmcb5waxa6" data-title="【Web3】DAO" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
