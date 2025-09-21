@@ -1,12 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>【小程序】上传和下载文件 | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="小程序上传文件选择文件拍摄或从手机相册中选择图片或视频。wx.chooseMedia 1234567891011121314151617181920212223&#x2F;** * @description: 拍摄或从手机相册中选择图片或视频。 * @param &#123;*&#125; mediaType 文件类型 mix&#x2F;video&#x2F;image * @param &#123;*&#125; count">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="小程序上传文件选择文件拍摄或从手机相册中选择图片或视频。wx.chooseMedia 1234567891011121314151617181920212223&#x2F;** * @description: 拍摄或从手机相册中选择图片或视频。 * @param &#123;*&#125; mediaType 文件类型 mix&#x2F;video&#x2F;image * @param &#123;*&#125; count">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【小程序】上传和下载文件">
 <meta property="og:url" content="http://example.com/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6/index.html">
@@ -17,89 +30,203 @@
 <meta property="article:modified_time" content="2025-03-06T09:08:26.523Z">
 <meta property="article:author" content="yangxin">
 <meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6/","path":"2025/08/14/小程序/【小程序】上传和下载文件/","title":"【小程序】上传和下载文件"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【小程序】上传和下载文件 | Hexo</title>
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+
+
 
   
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
 
   
+
+
+
+
+
+
   
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
 
-<meta name="generator" content="Hexo 7.3.0"></head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
         
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        
-          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">小程序上传文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">选择文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%8D%E6%91%84%E6%88%96%E4%BB%8E%E6%89%8B%E6%9C%BA%E7%9B%B8%E5%86%8C%E4%B8%AD%E9%80%89%E6%8B%A9%E5%9B%BE%E7%89%87%E6%88%96%E8%A7%86%E9%A2%91%E3%80%82"><span class="nav-number">1.1.1.</span> <span class="nav-text">拍摄或从手机相册中选择图片或视频。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E8%81%8A%E5%A4%A9%E4%BC%9A%E8%AF%9D%E9%80%89%E6%8B%A9%E6%96%87%E4%BB%B6%E3%80%82"><span class="nav-number">1.1.2.</span> <span class="nav-text">从聊天会话选择文件。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E5%88%B0%E5%90%8E%E7%AB%AF"><span class="nav-number">1.2.</span> <span class="nav-text">上传到后端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91"><span class="nav-number">1.3.</span> <span class="nav-text">上传到腾讯云</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD-sdk"><span class="nav-number">1.3.1.</span> <span class="nav-text">下载 sdk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E5%85%A5%E5%8F%8A%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.2.</span> <span class="nav-text">引入及配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">1.3.3.</span> <span class="nav-text">使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">小程序下载文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pdf%E4%B8%8B%E8%BD%BD"><span class="nav-number">2.1.</span> <span class="nav-text">pdf下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E7%89%87-%E8%A7%86%E9%A2%91%E4%B8%8B%E8%BD%BD%EF%BC%88%E4%BF%9D%E5%AD%98%E5%88%B0%E7%9B%B8%E5%86%8C"><span class="nav-number">2.2.</span> <span class="nav-text">图片&#x2F;视频下载（保存到相册</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%9D%E5%AD%98%E5%88%B0%E7%9B%B8%E5%86%8C%E7%9A%84%E6%9D%83%E9%99%90"><span class="nav-number">2.2.1.</span> <span class="nav-text">保存到相册的权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87-%E8%A7%86%E9%A2%91%E5%88%B0%E7%9B%B8%E5%86%8C"><span class="nav-number">2.2.2.</span> <span class="nav-text">下载图片&#x2F;视频到相册</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
       </div>
     </div>
-  </div>
-</header>
 
-      <div class="outer">
-        <section id="main"><article id="post-小程序/【小程序】上传和下载文件" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6/" class="article-date">
-  <time class="dt-published" datetime="2025-08-14T03:18:06.947Z" itemprop="datePublished">2025-08-14</time>
-</a>
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a>
-  </div>
+  </aside>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      【小程序】上传和下载文件
-    </h1>
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
   
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【小程序】上传和下载文件 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【小程序】上传和下载文件
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" itemprop="url" rel="index"><span itemprop="name">小程序</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
       </header>
+
     
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="小程序上传文件"><a href="#小程序上传文件" class="headerlink" title="小程序上传文件"></a>小程序上传文件</h1><h2 id="选择文件"><a href="#选择文件" class="headerlink" title="选择文件"></a>选择文件</h2><h3 id="拍摄或从手机相册中选择图片或视频。"><a href="#拍摄或从手机相册中选择图片或视频。" class="headerlink" title="拍摄或从手机相册中选择图片或视频。"></a>拍摄或从手机相册中选择图片或视频。</h3><p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/api/media/video/wx.chooseMedia.html">wx.chooseMedia</a></p>
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="小程序上传文件"><a href="#小程序上传文件" class="headerlink" title="小程序上传文件"></a>小程序上传文件</h1><h2 id="选择文件"><a href="#选择文件" class="headerlink" title="选择文件"></a>选择文件</h2><h3 id="拍摄或从手机相册中选择图片或视频。"><a href="#拍摄或从手机相册中选择图片或视频。" class="headerlink" title="拍摄或从手机相册中选择图片或视频。"></a>拍摄或从手机相册中选择图片或视频。</h3><p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/api/media/video/wx.chooseMedia.html">wx.chooseMedia</a></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 拍摄或从手机相册中选择图片或视频。</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">*</span>&#125; mediaType 文件类型 mix/video/image</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">*</span>&#125; count 最多可以选择的文件个数，基础库2.25.0前，最多可支持9个文件，2.25.0及以后最多可支持20个文件</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">*</span>&#125; sourceType 图片和视频选择的来源 [&quot;album&quot;, &quot;camera&quot;]</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">*</span>&#125; maxDuration 拍摄视频最长拍摄时间，单位秒。时间范围为 3s 至 60s 之间。不限制相册。</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">*</span>&#125; camera 仅在 sourceType 为 camera 时生效，使用前置或后置摄像头</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">*</span>&#125; 文件内容</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">wx.<span class="title function_">chooseMedia</span>(&#123;</span><br><span class="line">  count,</span><br><span class="line">  <span class="attr">mediaType</span>: [mediaType],</span><br><span class="line">  sourceType,</span><br><span class="line">  maxDuration,</span><br><span class="line">  camera,</span><br><span class="line">  <span class="title function_">success</span>(<span class="params">res</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="title function_">fail</span>(<span class="params">err</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;文件chooseMedia失败-----&quot;</span>, err);</span><br><span class="line">    <span class="title function_">reject</span>(err);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
 <h3 id="从聊天会话选择文件。"><a href="#从聊天会话选择文件。" class="headerlink" title="从聊天会话选择文件。"></a>从聊天会话选择文件。</h3><p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/api/media/image/wx.chooseMessageFile.html">wx.chooseMessageFile</a></p>
@@ -132,155 +259,72 @@
 </ul>
 <h3 id="保存到相册的权限"><a href="#保存到相册的权限" class="headerlink" title="保存到相册的权限"></a>保存到相册的权限</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取保存到相册的权限</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">writePhotosAlbumStatus</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    wx.<span class="title function_">getSetting</span>(&#123;</span><br><span class="line">      <span class="title function_">success</span>(<span class="params">res</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!res.<span class="property">authSetting</span>[<span class="string">&#x27;scope.writePhotosAlbum&#x27;</span>]) &#123;</span><br><span class="line">          wx.<span class="title function_">authorize</span>(&#123;</span><br><span class="line">            <span class="attr">scope</span>: <span class="string">&#x27;scope.writePhotosAlbum&#x27;</span>,</span><br><span class="line">            <span class="title function_">success</span>(<span class="params"></span>) &#123;</span><br><span class="line">              <span class="title function_">resolve</span>(<span class="literal">true</span>)</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="title function_">fail</span>(<span class="params"></span>) &#123;</span><br><span class="line">              wx.<span class="title function_">showModal</span>(&#123;</span><br><span class="line">                <span class="attr">title</span>: <span class="string">&#x27;提示&#x27;</span>,</span><br><span class="line">                <span class="attr">content</span>: <span class="string">&#x27;请授权保存到相册&#x27;</span>,</span><br><span class="line">                <span class="attr">showCancel</span>: <span class="literal">false</span>,</span><br><span class="line">                <span class="title function_">success</span>(<span class="params">res1</span>) &#123;</span><br><span class="line">                  <span class="keyword">if</span> (res1.<span class="property">confirm</span>) &#123;</span><br><span class="line">                    wx.<span class="title function_">openSetting</span>(&#123;</span><br><span class="line">                      <span class="title function_">success</span>(<span class="params"></span>) &#123;&#125;,</span><br><span class="line">                    &#125;)</span><br><span class="line">                  &#125;</span><br><span class="line">                &#125;,</span><br><span class="line">              &#125;)</span><br><span class="line">            &#125;,</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="title function_">resolve</span>(<span class="literal">true</span>)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="下载图片-视频到相册"><a href="#下载图片-视频到相册" class="headerlink" title="下载图片&#x2F;视频到相册"></a>下载图片&#x2F;视频到相册</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">useDownPic</span> = (<span class="params">url</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">writePhotosAlbumStatus</span>().<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (res) &#123;</span><br><span class="line">        uni.<span class="title function_">showLoading</span>(&#123;</span><br><span class="line">          <span class="attr">title</span>: <span class="string">&#x27;下载中....&#x27;</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">        uni.<span class="title function_">downloadFile</span>(&#123;</span><br><span class="line">          <span class="attr">url</span>: url.<span class="title function_">indexOf</span>(<span class="string">&#x27;https://&#x27;</span>) &gt; -<span class="number">1</span> ? url : url.<span class="title function_">replace</span>(<span class="string">&#x27;http://&#x27;</span>, <span class="string">&#x27;https://&#x27;</span>),</span><br><span class="line">          <span class="title function_">success</span>(<span class="params">res</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;downloadFile success&#x27;</span>, res)</span><br><span class="line">            <span class="keyword">if</span> (res.<span class="property">statusCode</span> === <span class="number">200</span>) &#123;</span><br><span class="line">              <span class="comment">// 图片类型文件</span></span><br><span class="line">              <span class="keyword">if</span> (<span class="title function_">judgeFileType</span>(res?.<span class="property">tempFilePath</span>) === <span class="string">&quot;pic&quot;</span>) &#123;</span><br><span class="line">                wx.<span class="title function_">saveImageToPhotosAlbum</span>(&#123;</span><br><span class="line">                  <span class="attr">filePath</span>: res?.<span class="property">tempFilePath</span>,</span><br><span class="line">                  <span class="title function_">complete</span>(<span class="params"></span>) &#123;</span><br><span class="line">                    uni.<span class="title function_">hideLoading</span>()</span><br><span class="line">                  &#125;,</span><br><span class="line">                &#125;)</span><br><span class="line">              &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">              <span class="comment">// 视频类型文件</span></span><br><span class="line">                wx.<span class="title function_">saveVideoToPhotosAlbum</span>(&#123;</span><br><span class="line">                  <span class="attr">filePath</span>: res?.<span class="property">tempFilePath</span>,</span><br><span class="line">                  <span class="title function_">complete</span>(<span class="params"></span>) &#123;</span><br><span class="line">                    uni.<span class="title function_">hideLoading</span>()</span><br><span class="line">                  &#125;,</span><br><span class="line">                &#125;)</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="title function_">resolve</span>(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="title function_">fail</span>(<span class="params">err</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;downloadFile&#x27;</span>, err)</span><br><span class="line">            uni.<span class="title function_">hideLoading</span>()</span><br><span class="line">            <span class="title function_">reject</span>(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">          &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6/" data-id="cmfam3dc60045t8fm8k87cjgq" data-title="【小程序】上传和下载文件" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91socket%E8%A7%A3%E5%86%B3h5%E5%92%8C%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%80%9A%E4%BF%A1%E9%97%AE%E9%A2%98/" rel="prev" title="【云托管】socket解决h5和小程序通信问题">
+                  <i class="fa fa-angle-left"></i> 【云托管】socket解决h5和小程序通信问题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86/" rel="next" title="小程序设计原理">
+                  小程序设计原理 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
     </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          小程序设计原理
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91socket%E8%A7%A3%E5%86%B3h5%E5%92%8C%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%80%9A%E4%BF%A1%E9%97%AE%E9%A2%98/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">【云托管】socket解决h5和小程序通信问题</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HTML/">HTML</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PWA/">PWA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Typescript/">Typescript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/VueTest/">VueTest</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web3/">Web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/axios-%E6%BA%90%E7%A0%81/">axios 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vuex-%E6%BA%90%E7%A0%81/">vuex 源码</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/web3/">web3</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webAssembly/">webAssembly</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webwork/">webwork</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/">业务场景</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/">扩展阅读</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/">额外内容</a></li></ul>
-    </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typescript/" rel="tag">Typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VueTest/" rel="tag">VueTest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web3/" rel="tag">Web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/axios-%E6%BA%90%E7%A0%81/" rel="tag">axios 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chrome/" rel="tag">chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/console/" rel="tag">console</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vuex-%E6%BA%90%E7%A0%81/" rel="tag">vuex 源码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web3/" rel="tag">web3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webAssembly/" rel="tag">webAssembly</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webRTC/" rel="tag">webRTC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webwork/" rel="tag">webwork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" rel="tag">业务场景</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" rel="tag">扩展阅读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" rel="tag">浏览器 Performance Chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" rel="tag">额外内容</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/Typescript/" style="font-size: 12px;">Typescript</a> <a href="/tags/VueTest/" style="font-size: 10px;">VueTest</a> <a href="/tags/Web3/" style="font-size: 20px;">Web3</a> <a href="/tags/axios-%E6%BA%90%E7%A0%81/" style="font-size: 14px;">axios 源码</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/console/" style="font-size: 10px;">console</a> <a href="/tags/css/" style="font-size: 18px;">css</a> <a href="/tags/http/" style="font-size: 12px;">http</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/react/" style="font-size: 12px;">react</a> <a href="/tags/vue/" style="font-size: 14px;">vue</a> <a href="/tags/vuex-%E6%BA%90%E7%A0%81/" style="font-size: 12px;">vuex 源码</a> <a href="/tags/web3/" style="font-size: 12px;">web3</a> <a href="/tags/webAssembly/" style="font-size: 10px;">webAssembly</a> <a href="/tags/webRTC/" style="font-size: 12px;">webRTC</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/webwork/" style="font-size: 10px;">webwork</a> <a href="/tags/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" style="font-size: 10px;">业务场景</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 20px;">前端</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 12px;">小程序</a> <a href="/tags/%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB/" style="font-size: 12px;">扩展阅读</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 16px;">浏览器</a> <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8-Performance-Chrome/" style="font-size: 10px;">浏览器 Performance Chrome</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 14px;">面试</a> <a href="/tags/%E9%A2%9D%E5%A4%96%E5%86%85%E5%AE%B9/" style="font-size: 10px;">额外内容</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">September 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2025/09/05/Vue/%E3%80%90vue%E3%80%91%E8%AF%A6%E8%A7%A3computed/">详解computed</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/25/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB2/">记录3</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/22/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E6%B1%87%E6%80%BB1/">记录2</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/20/%E9%9D%A2%E8%AF%95/%E3%80%90%E9%9D%A2%E8%AF%95%E3%80%91%E5%A4%96%E5%8C%85/">记录1</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/14/%E6%89%8B%E5%86%99%E9%A2%98/">手写题</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2025 yangxin<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
 
     </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.6.4.min.js"></script>
-
-
+  </footer>
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
   </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
 </body>
 </html>
