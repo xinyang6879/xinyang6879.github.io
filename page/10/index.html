@@ -128,16 +128,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -154,6 +154,201 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/HTML/%E3%80%90HTML%E3%80%91Shadow%20DOM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/HTML/%E3%80%90HTML%E3%80%91Shadow%20DOM/" class="post-title-link" itemprop="url">【HTML】Shadow DOM</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/HTML/" itemprop="url" rel="index"><span itemprop="name">HTML</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="【HTML】Shadow-DOM"><a href="#【HTML】Shadow-DOM" class="headerlink" title="【HTML】Shadow DOM"></a>【HTML】Shadow DOM</h1><h2 id="概况"><a href="#概况" class="headerlink" title="概况"></a><h1>概况</h1></h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>能够为 Web 组件中的 DOM 和 CSS 提供了封装，实际上是在浏览器渲染文档的时候会给指定的 DOM 结构插入编写好的 DOM 元素，但是插入的 Shadow DOM 会与主文档的 DOM 保持<strong>分离</strong>，也就是说 Shadow DOM<strong>不存在</strong>于主 DOM 树上。shadow root 节点为起始根节点，在这个根节点的下方，可以是任意元素，和普通的 DOM 元素一样。</p>
+<p>并且 Shadow DOM 封装出来的 DOM 元素是<strong>独立</strong>的，外部的配置不会影响到内部，内部的配置也不会影响外部。</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCfsSyD"><img src="https://s1.ax1x.com/2023/07/12/pCfsSyD.png" alt="pCfsSyD.png"></a></p>
+<h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h3><p>控制台-》设置按钮-》Preference -》 Elements -》点击 show user anent shadow dom 的 checkbox</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCfrOF1"><img src="https://s1.ax1x.com/2023/07/12/pCfrOF1.png" alt="pCfrOF1.png"></a></p>
+<p>打开之后可以看到一些元素的真实布局及内容组成。</p>
+<h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><p><img src="https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM/shadowdom.svg" alt="image.png"></p>
+<ul>
+<li><p><code>Shadow host</code>：一个常规 DOM 节点，Shadow DOM 会被附加到这个节点上。</p>
+</li>
+<li><p><code>Shadow tree</code>：Shadow DOM 内部的 DOM 树。</p>
+</li>
+<li><p><code>Shadow boundary</code>：Shadow DOM 结束的地方，也是常规 DOM 开始的地方。</p>
+</li>
+<li><p><code>Shadow root</code>: Shadow tree 的根节点。</p>
+</li>
+</ul>
+<h2 id="custom-element-自定义标签"><a href="#custom-element-自定义标签" class="headerlink" title="custom element(自定义标签)"></a><h1>custom element(自定义标签)</h1></h2><h3 id="概况-1"><a href="#概况-1" class="headerlink" title="概况"></a>概况</h3><p>可以注册一个自定义标签，<code>CustomElementRegistry</code>提供注册自定义元素和查询已注册元素的方法，使用<code>customElements</code>可以直接获取其实例。</p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>作用</th>
+<th>参数</th>
+<th>返回值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>customElements.define</code></td>
+<td>定义了一个自定义元素</td>
+<td><code>name</code>: 自定义元素名; <code>constructor</code>: 自定义元素构造器; <code>options</code>: 控制元素如何定义(目前只支持extends)</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>customElements.get</code></td>
+<td>返回以前定义自定义元素的构造函数</td>
+<td><code>name</code>: 返回引用的构造函数的自定义元素的名字</td>
+<td>指定名字的自定义元素的构造函数，如果没有使用该名称的自定义元素定义，则为undefined。</td>
+</tr>
+<tr>
+<td><code>customElements.upgrade</code></td>
+<td>将更新节点子树中所有包含阴影的自定义元素，甚至在它们连接到主文档之前也是如此</td>
+<td><code>root</code>: 待升级的包含阴影的派生元素节点</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>customElements.whenDefined</code></td>
+<td>当一个自定义节点被定义时走入then，如果这个元素名没有被定义，那么返回的是一直pending状态</td>
+<td><code>name</code>: 自定义元素名</td>
+<td>Promise</td>
+</tr>
+</tbody></table>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">customElements.<span class="title function_">define</span>(<span class="string">&quot;test-shadow-dom&quot;</span>, <span class="title class_">TestShadowCls</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a><h1>使用</h1></h2><h3 id="挂载-shadow-dom"><a href="#挂载-shadow-dom" class="headerlink" title="挂载 shadow dom"></a>挂载 shadow dom</h3><p>可以调用<code>Element.attachShadow</code>将 Shadow Dom 选择挂载或者卸载。此方法返回的是一个类 dom，可以像操作普通 dom 一样对其进行操作</p>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>作用</th>
+<th>可选值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>mode</code></td>
+<td><code>指定 Shadow DOM 树封装模式的字符串</code></td>
+<td><code>open</code>&#x2F;<code>closed</code></td>
+</tr>
+<tr>
+<td><code>delegatesFocus </code></td>
+<td><code>焦点委托</code></td>
+<td><code>boolean</code></td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>挂载</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> shadow = el.<span class="title function_">attachShadow</span>(&#123;</span><br><span class="line">  <span class="attr">mode</span>: <span class="string">&quot;open&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">dir</span>(shadow);</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCfgDbD"><img src="https://s1.ax1x.com/2023/07/12/pCfgDbD.png" alt="pCfgDbD.png"></a></p>
+</li>
+<li><p>操作 shadow dom</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> html = <span class="string">`&lt;p&gt;测试1&lt;/p&gt;`</span>;</span><br><span class="line">shadow.<span class="property">innerHTML</span> = html;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCfRCm8"><img src="https://s1.ax1x.com/2023/07/12/pCfRCm8.png" alt="pCfRCm8.png"></a></p>
+</li>
+</ul>
+<h3 id="自定义元素"><a href="#自定义元素" class="headerlink" title="自定义元素"></a>自定义元素</h3><p>Shadow DOM 可以渲染自定义的元素，类似于 vue3 中的组件，但里面的样式并不互相干扰。</p>
+<ul>
+<li><p>新建类</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">TestShadowCls</span> <span class="keyword">extends</span> <span class="title class_ inherited__">HTMLElement</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(); <span class="comment">//必要的，因为属于子类</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建一个 Shadow DOM 并为其加上需要的数据</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">addShadow</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">shadow</span> = <span class="variable language_">this</span>.<span class="title function_">attachShadow</span>(&#123;</span><br><span class="line">      <span class="attr">mode</span>: <span class="string">&quot;open&quot;</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">createChild</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="keyword">const</span> el = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;div&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> pel = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;p&quot;</span>);</span><br><span class="line">  pel.<span class="property">textContent</span> = <span class="string">&quot;测试文案&quot;</span>;</span><br><span class="line">  pel.<span class="title function_">setAttribute</span>(<span class="string">&quot;class&quot;</span>, <span class="string">&quot;test&quot;</span>)</span><br><span class="line">  <span class="keyword">const</span> imgae = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;img&quot;</span>);</span><br><span class="line">  imgae.<span class="title function_">setAttribute</span>(<span class="string">&quot;src&quot;</span>, <span class="string">&quot;https://psstatic.cdn.bcebos.com/video/wiseindex/aa6eef91f8b5b1a33b454c401_1660835115000.png&quot;</span>)</span><br><span class="line">  imgae.<span class="property">src</span>=<span class="string">&quot;https://psstatic.cdn.bcebos.com/video/wiseindex/aa6eef91f8b5b1a33b454c401_1660835115000.png&quot;</span>;</span><br><span class="line">  el.<span class="title function_">appendChild</span>(pel);</span><br><span class="line">  el.<span class="title function_">appendChild</span>(imgae)</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">shadow</span>.<span class="title function_">appendChild</span>(el)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>定义自定义的元素名</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">customElements.<span class="title function_">define</span>(<span class="string">&quot;test-shadow-dom&quot;</span>, <span class="title class_">TestShadowCls</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">  <span class="selector-tag">p</span>&#123;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">color</span>: red;</span></span><br><span class="line"><span class="language-css">  &#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">test-shadow-dom</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>渲染效果如下，里面的文案并没有因为<code>style</code>加上的元素样式而生效</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCfqRu4"><img src="https://s1.ax1x.com/2023/07/12/pCfqRu4.png" alt="pCfqRu4.png"></a></p>
+</li>
+<li><p>添加样式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">createClass</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="keyword">const</span> style = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;style&quot;</span>);</span><br><span class="line">  style.<span class="property">textContent</span> = <span class="string">`</span></span><br><span class="line"><span class="string">      .test&#123;</span></span><br><span class="line"><span class="string">          color: blue;</span></span><br><span class="line"><span class="string">          font-weight: 600</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">  `</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">shadow</span>.<span class="title function_">appendChild</span>(style)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>加上了之后，样式生效</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCfL98f"><img src="https://s1.ax1x.com/2023/07/12/pCfL98f.png" alt="pCfL98f.png"></a></p>
+</li>
+</ul>
+<h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_components/Using_shadow_DOM">使用 shadow DOM</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/559759502">究竟什么是 Shadow DOM？</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1863,185 +2058,6 @@
 <li><p>支持transition过渡效果，支持animation动画效果</p>
 </li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91contain/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/css/%E3%80%90css%E3%80%91contain/" class="post-title-link" itemprop="url">【css】contain</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="【css】contain"><a href="#【css】contain" class="headerlink" title="【css】contain"></a>【css】contain</h1><p>标示了元素及其内容尽可能独立于文档树的其余部分。可以防止元素内部在其包围盒外产生副作用。局限使 DOM 的一部分得以被隔离，且通过将布局、样式、绘制、尺寸或其任意组合的计算限制于 DOM 子树而非整个页面使性能受益。局限也可用于限制 CSS 计数器和引号的作用域。</p>
-<p>局限的主要<strong>益处</strong>在于浏览器无需经常重渲 DOM 或页面布局，由此在静态页面的渲染中带来小幅性能收益，在更动态的应用中带来更多的性能收益。</p>
-<p>允许我们指定特定的 DOM 元素和它的子元素，让它们能够独立于整个 DOM 树结构之外。目的是能够让浏览器有能力只对部分元素进行重绘、重排，而不必每次针对整个页面。著作权归作者所有。</p>
-<h2 id="属性值"><a href="#属性值" class="headerlink" title="属性值"></a>属性值</h2><p>此属性为五个标准值的子集或两个简写值之一构成的以空格分隔的列表</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 关键词值 */</span></span><br><span class="line"><span class="attribute">contain</span>: none;</span><br><span class="line"><span class="attribute">contain</span>: strict;</span><br><span class="line"><span class="attribute">contain</span>: content;</span><br><span class="line"><span class="attribute">contain</span>: size;</span><br><span class="line"><span class="attribute">contain</span>: inline-size;</span><br><span class="line"><span class="attribute">contain</span>: layout;</span><br><span class="line"><span class="attribute">contain</span>: style;</span><br><span class="line"><span class="attribute">contain</span>: paint;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 多个关键词 */</span></span><br><span class="line"><span class="attribute">contain</span>: size paint;</span><br><span class="line"><span class="attribute">contain</span>: size layout paint;</span><br><span class="line"><span class="attribute">contain</span>: inline-size layout;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 全局值 */</span></span><br><span class="line"><span class="attribute">contain</span>: inherit;</span><br><span class="line"><span class="attribute">contain</span>: initial;</span><br><span class="line"><span class="attribute">contain</span>: revert;</span><br><span class="line"><span class="attribute">contain</span>: revert-layer;</span><br><span class="line"><span class="attribute">contain</span>: unset;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注：<code>layout</code>、<code>paint</code>、<code>strict</code> 或 <code>content</code>将创建：</p>
-<blockquote>
-<p>新的包含区块（针对其 position 属性为 absolute 或 fixed 的后代元素）。</p>
-<p>新的层叠上下文。</p>
-<p>新的区块格式化上下文。</p>
-</blockquote>
-</blockquote>
-<h2 id="none"><a href="#none" class="headerlink" title="none"></a><code>none</code></h2><p>元素照常渲染，不应用局限。</p>
-<h2 id="size"><a href="#size" class="headerlink" title="size"></a><code>size</code></h2><p>在行向和块向上将尺寸局限应用于元素。元素尺寸可无视子元素单独计算。</p>
-<p>此值不可与 <code>inline-size</code> 结合使用。</p>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><ul>
-<li>原始代码</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;wrap&quot;</span> <span class="attr">id</span>=<span class="string">&quot;wrap&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;parent&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrap</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">5px</span> solid black;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">min-height</span>: <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">5px</span> solid yellowgreen;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">p</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">90px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: royalblue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;wrap&quot;</span>).<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> child = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;p&quot;</span>);</span><br><span class="line">    child.<span class="property">textContent</span> =</span><br><span class="line">      <span class="string">&quot;这是内容这是内容这是内容这是内容这是内容这是内容这是内容&quot;</span>;</span><br><span class="line">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;wrap&quot;</span>).<span class="title function_">appendChild</span>(child);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">fn</span>();</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pFpDM24"><img src="https://s11.ax1x.com/2024/01/09/pFpDM24.png" alt="pFpDM24.png"></a></p>
-<ul>
-<li>修改后的</li>
-</ul>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrap</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">+ <span class="attribute">contain</span>: size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pFpDJVx"><img src="https://s11.ax1x.com/2024/01/09/pFpDJVx.png" alt="pFpDJVx.png"></a></p>
-<h2 id="inline-size"><a href="#inline-size" class="headerlink" title="inline-size"></a><code>inline-size</code></h2><p>将行向尺寸局限应用于元素。元素的行向尺寸可无视子元素单独计算</p>
-<p>此值不可与 <code>size</code> 结合使用。</p>
-<h2 id="layout"><a href="#layout" class="headerlink" title="layout"></a><code>layout</code></h2><p>从页面的其余部分中隔离出元素的内部布局。此值意味着元素外的任意内容和元素内部布局<strong>互不影响</strong>。</p>
-<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><ul>
-<li>原始样式</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;wrap&quot;</span> <span class="attr">id</span>=<span class="string">&quot;wrap&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是内容这是内容这是内容这是内容这是内容这是内容这是内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">&quot;top: 140px;&quot;</span>&gt;</span></span><br><span class="line">      这是内容这是内容这是内容这是内容这是内容这是内容这是内容</span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">&quot;top: 460px;&quot;</span>&gt;</span></span><br><span class="line">      这是内容这是内容这是内容这是内容这是内容这是内容这是内容</span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;float&quot;</span>&gt;</span>这是浮动元素这是浮动元素这是浮动元素<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;parent&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">      兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrap</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">5px</span> solid black;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">5px</span> solid yellowgreen;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">p</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">90px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: royalblue;</span><br><span class="line">  <span class="attribute">position</span>: fixed;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">color</span>: white;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.float</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">150px</span>;</span><br><span class="line">  <span class="attribute">position</span>: inherit;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pFp6U0A"><img src="https://s11.ax1x.com/2024/01/09/pFp6U0A.png" alt="pFp6U0A.png"></a></p>
-<ul>
-<li>修改样式</li>
-</ul>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrap</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">5px</span> solid black;</span><br><span class="line">+  <span class="attribute">contain</span>: layout;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pFp6wkt"><img src="https://s11.ax1x.com/2024/01/09/pFp6wkt.png" alt="pFp6wkt.png"></a></p>
-<p>这里有<strong>两个</strong>变化：</p>
-<p>1、子元素的定位从相对于窗口定位变为了<strong>相对于父元素定位</strong></p>
-<p>2、子元素层级<strong>高于</strong>父元素的兄弟元素</p>
-<p>3、浮动元素<strong>不会影响</strong>其他节点</p>
-<h2 id="paint"><a href="#paint" class="headerlink" title="paint"></a><code>paint</code></h2><p>元素后代不在元素边界外显示。若包含盒在屏外，则浏览器无需绘制其被局限的元素——这些元素因为完全局限于此盒故必定也在屏外。若后代元素溢出包含元素的边界，则此后代元素将被裁剪至包含元素的边框盒。</p>
-<p>类似于<code>overflow:hidden</code>，但<code>contain:paint</code>超出的范围不会再被绘制，所以其对于性能更加友好，但是<code>overflow</code>的兼容性更高</p>
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pFpqEUf"><img src="https://s11.ax1x.com/2024/01/10/pFpqEUf.png" alt="pFpqEUf.png"></a></p>
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pFpqn2Q"><img src="https://s11.ax1x.com/2024/01/10/pFpqn2Q.png" alt="pFpqn2Q.png"></a></p>
-<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><ul>
-<li>原始代码</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;wrap&quot;</span> <span class="attr">id</span>=<span class="string">&quot;wrap&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是内容这是内容这是内容这是内容这是内容这是内容这是内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;parent&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">      兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点兄弟结点</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrap</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">5px</span> solid black;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">5px</span> solid yellowgreen;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">p</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">400px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">60px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: royalblue;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">color</span>: white;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pFpq8aV"><img src="https://s11.ax1x.com/2024/01/10/pFpq8aV.png" alt="pFpq8aV.png"></a></p>
-<ul>
-<li>修改样式</li>
-</ul>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrap</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">5px</span> solid black;</span><br><span class="line">+  <span class="attribute">contain</span>: paint;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pFpqQrn"><img src="https://s11.ax1x.com/2024/01/10/pFpqQrn.png" alt="pFpqQrn.png"></a></p>
-<p>超出父元素的内容都被隐藏掉了</p>
-<h2 id="style"><a href="#style" class="headerlink" title="style"></a><code>style</code></h2><p>对于可在元素及其后代外产生影响的属性，其影响将不会逃离包含元素。计数器和引号的作用域被限制为元素及其内容。</p>
-<h3 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h3><ul>
-<li>原始数据</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>元素甲<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>元素乙<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>元素丙<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>元素丁<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>元素戊<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;open-quote&quot;</span>&gt;</span></span><br><span class="line">  外</span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;open-quote&quot;</span>&gt;</span>内<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;close-quote&quot;</span>&gt;</span>闭 <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ul</span> &#123;</span><br><span class="line">  <span class="attribute">counter-reset</span>: list-items;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">li</span><span class="selector-pseudo">::before</span> &#123;</span><br><span class="line">  <span class="attribute">counter-increment</span>: list-items;</span><br><span class="line">  <span class="attribute">content</span>: <span class="built_in">counter</span>(list-items) <span class="string">&quot;：&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">quotes</span>: <span class="string">&quot;【&quot;</span> <span class="string">&quot;】&quot;</span> <span class="string">&quot;〈&quot;</span> <span class="string">&quot;〉&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.open-quote</span><span class="selector-pseudo">:before</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: open-quote;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.close-quote</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>: close-quote;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pFpjPW8"><img src="https://s11.ax1x.com/2024/01/10/pFpjPW8.png" alt="pFpjPW8.png"></a></p>
-<p>li 元素按 1、2、3 排序，引号也是按顺序排列</p>
-<ul>
-<li>修改后</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;open-quote&quot;</span>&gt;</span></span><br><span class="line">  外</span><br><span class="line">+  <span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;contain: style&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;open-quote&quot;</span>&gt;</span>内<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;close-quote&quot;</span>&gt;</span>闭 <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="addition">+ li:nth-last-child(2n + 2) &#123;</span></span><br><span class="line"><span class="addition">+  contain: style;</span></span><br><span class="line"><span class="addition">+ &#125;</span></span><br></pre></td></tr></table></figure>
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pFpjFSS"><img src="https://s11.ax1x.com/2024/01/10/pFpjFSS.png" alt="pFpjFSS.png"></a></p>
-<p>变化点：<br>1、元素计数器会重新开始，且不影响之前的数据</p>
-<p>2、括号没有计算到第二个，直接以【为关闭</p>
-<h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/contain">MDN-contain</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiaonian8/p/14932371.html">CSS新特性contain的语法、作用及使用场景</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.w3cplus.com/css/deep-dive-into-css-contain.html">初探CSS的容器模块</a></p>
 
       
     </div>

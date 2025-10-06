@@ -128,16 +128,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -154,6 +154,204 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/09/30/Vue/%E3%80%90vue%E3%80%91%E4%B8%BA%E4%BB%80%E4%B9%88vuex%E5%92%8Credux%E4%B8%8D%E6%94%AF%E6%8C%81%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%94%B9%E6%95%B0%E6%8D%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/09/30/Vue/%E3%80%90vue%E3%80%91%E4%B8%BA%E4%BB%80%E4%B9%88vuex%E5%92%8Credux%E4%B8%8D%E6%94%AF%E6%8C%81%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%94%B9%E6%95%B0%E6%8D%AE/" class="post-title-link" itemprop="url">【vue】为什么vuex和redux不支持异步更改数据</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-09-30 11:54:40" itemprop="dateCreated datePublished" datetime="2025-09-30T11:54:40+08:00">2025-09-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-10-06 19:41:14" itemprop="dateModified" datetime="2025-10-06T19:41:14+08:00">2025-10-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vue-react/" itemprop="url" rel="index"><span itemprop="name">vue react</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>vuex和redux不是不支持异步修改数据，而是其设计理念为了保证数据的追踪性，所以不希望异步修改数据</p>
+<hr>
+<h3 id="Vuex-和-Redux：同步数据流"><a href="#Vuex-和-Redux：同步数据流" class="headerlink" title="Vuex 和 Redux：同步数据流"></a>Vuex 和 Redux：同步数据流</h3><p>Vuex 和 Redux 都是 <strong>基于“可预测状态管理”思想</strong> 设计的。严格控制：只有 mutation&#x2F;reducer 能改数据，且必须是同步的</p>
+<ul>
+<li><p>理念：Vuex 和 Redux 都遵循 Flux 架构，其核心是一个单向数据流。</p>
+<ul>
+<li><p>理想中的同步数据流：</p>
+</li>
+<li><p>View 触发一个 Action（在 Vuex 中）或 Action Creator（在 Redux 中）。</p>
+</li>
+<li><p>Action 提交一个 Mutation（Vuex）或 Dispatch 一个 Action（Redux）。</p>
+</li>
+<li><p>Mutation&#x2F;Reducer 同步地、原子性地修改 State。</p>
+</li>
+<li><p>State 变化后，自动通知 View 进行更新。</p>
+</li>
+</ul>
+<p>  这个流程的关键在于 Mutation&#x2F;Reducer 必须是纯函数(相同的输入，永远得到相同的输出，且无任何副作用（如 API 调用、定时器等）。)。</p>
+</li>
+</ul>
+<p>好处：这使得状态的变化变得可预测、可追踪、易于测试和调试。你可以在 DevTools 中清晰地看到每一个导致状态变化的 Action 和 Mutation，并且能够进行时间旅行调试。</p>
+<ul>
+<li><p>好处：</p>
+<ol>
+<li><p><strong>方便调试</strong>：同步修改可以很容易追踪 state 变化，方便做时间旅行（比如 Redux DevTools 可以时间旅行调试，因为每一步的修改都是可重现的）。</p>
+<p>   每个 state 的变化都有日志（devtools 能记录每次 mutation）</p>
+</li>
+<li><p><strong>保证状态快照一致性</strong>：如果允许在 mutation&#x2F;reducer 里直接写异步逻辑，调试和回放时就会变得不可预测（同样的输入不一定产生同样的输出）。</p>
+</li>
+<li><p><strong>可序列化</strong>：Redux 的 action 要求是纯对象，方便存储、回放、跨线程传输。</p>
+</li>
+<li><p>状态变更是 <strong>可预测、可重现</strong> 的</p>
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li>在 <strong>Vuex</strong> 中，异步逻辑放在 <code>actions</code> 里，最终还是通过 <strong>同步的 mutation</strong> 修改 state。</li>
+<li>在 <strong>Redux</strong> 中，异步逻辑通过中间件（比如 <code>redux-thunk</code>、<code>redux-saga</code>）来处理，最后也一定是 dispatch 一个 <strong>同步的 reducer</strong> 来改 state。</li>
+</ul>
+<p>它们通过严格的职责分离，将副作用（异步） 和状态更新（同步） 分开。Action 处理“发生了什么”，Mutation&#x2F;Reducer 处理“状态如何响应而变化”。</p>
+<hr>
+<h3 id="Pinia"><a href="#Pinia" class="headerlink" title="Pinia"></a>Pinia</h3><p>Pinia 的设计目标和 Vuex&#x2F;Redux 不同, 吸取了 Vuex 在实践中的经验和教训。它的设计更加现代化和灵活，它更贴近 <strong>组合式 API</strong> 的风格.</p>
+<p>在 Pinia 里，<code>state</code> 就是一个普通的 <code>ref</code>&#x2F;<code>reactive</code> 对象，你可以在 <code>actions</code> 里直接写 <code>await</code>，然后直接改 <code>this.xxx</code>。</p>
+<ul>
+<li><p>它并没有强制要求“只能同步修改”，因为 Pinia 的定位是：</p>
+<ul>
+<li><strong>轻量</strong>，更贴近 Vue3 的组合式 API。</li>
+<li>Vue 自身的响应式系统已经帮你保证数据一致性，不需要像 Redux 那样对“纯函数”和“同步性”要求那么严格。</li>
+</ul>
+</li>
+<li><p>所以 Pinia 更灵活，代价是：</p>
+</li>
+</ul>
+<ul>
+<li><p>好处</p>
+<ul>
+<li><p>设计理念的演进：Pinia 认为，强制开发者将同步和异步逻辑分开，虽然在大型项目中很有好处，但对于大多数中小型项目来说，增加了不必要的概念复杂性和模板代码。Pinia 选择相信开发者，给予他们更大的灵活性。</p>
+</li>
+<li><p>更简单的 API：移除 Mutation 这个概念，让学习曲线变得更平缓。你只需要知道，修改 state 可以在任何地方进行（包括 Action 内部），而 Action 本身可以包含任何逻辑。</p>
+</li>
+<li><p>与 Composition API 的良好集成：Pinia 的设计与 Vue 3 的 Composition API 思想一脉相承，鼓励组合和灵活性。在组合式函数中，你自然会写同步和异步的逻辑，Pinia 的 Action 与此保持一致。</p>
+</li>
+</ul>
+</li>
+<li><p>缺点</p>
+<ul>
+<li><strong>调试&#x2F;时间旅行能力弱于 Vuex&#x2F;Redux</strong>（由于改变来源不一定是可预测的（因为 action 里允许混合异步逻辑）。如果你在 action 里乱写异步，DevTools 只能看到最终修改，而无法逐步还原过程。）。</li>
+<li>更依赖 Vue 的响应式机制，而不是像 Redux 那样完全框架无关。</li>
+</ul>
+</li>
+<li><p>时间旅行</p>
+<ul>
+<li><p>原因：因为数据来源并非可预测的</p>
+</li>
+<li><p>解决：手动订阅 store，<code>store.$subscribe</code></p>
+</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> store = <span class="title function_">useCounterStore</span>()</span><br><span class="line">store.$subscribe(<span class="function">(<span class="params">mutation, state</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(mutation) <span class="comment">// &#123; type: &#x27;direct&#x27; | &#x27;patch object&#x27; | &#x27;patch function&#x27;, storeId: &#x27;counter&#x27;, events: [...] &#125;</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(state)    <span class="comment">// 当前 store 的最新状态</span></span><br><span class="line">&#125;)</span><br><span class="line">store.$onAction(<span class="function">(<span class="params">&#123; name, store, args, after, onError &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`action &quot;<span class="subst">$&#123;name&#125;</span>&quot; called with`</span>, args)</span><br><span class="line">    <span class="title function_">after</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`action &quot;<span class="subst">$&#123;name&#125;</span>&quot; finished with`</span>, result)</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="title function_">onError</span>(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`action &quot;<span class="subst">$&#123;name&#125;</span>&quot; failed`</span>, error)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">特性</th>
+<th align="left">Vuex &#x2F; Redux</th>
+<th align="left">Pinia</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>核心原则</strong></td>
+<td align="left"><strong>严格分离</strong>副作用和状态更新</td>
+<td align="left"><strong>灵活统一</strong>，Action 可处理一切</td>
+</tr>
+<tr>
+<td align="left"><strong>异步处理</strong></td>
+<td align="left">在 Action 中处理异步，通过提交 Mutation&#x2F;dispatch Action 来同步更新状态</td>
+<td align="left">在 Action 中直接处理异步并<strong>直接修改状态</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>可预测性</strong></td>
+<td align="left">极高，纯函数的 Reducer&#x2F;Mutation 使状态变化完全可追踪</td>
+<td align="left">较高，但需要开发者自觉维护清晰的逻辑</td>
+</tr>
+<tr>
+<td align="left"><strong>学习成本</strong></td>
+<td align="left">较高，需要理解 Action、Mutation、Reducer 等概念</td>
+<td align="left">较低，概念更少，API 更直观</td>
+</tr>
+<tr>
+<td align="left"><strong>代码风格</strong></td>
+<td align="left">更模板化，结构严谨</td>
+<td align="left">更简洁灵活，更贴近现代 JS 开发习惯</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -3059,156 +3257,6 @@ Vite 使用原生的 import 语法引入静态资源，并通过 Rollup 插件�
 </li>
 </ul>
 <h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">getKeyValue</span>(<span class="params">strs</span>) &#123;</span><br><span class="line">  <span class="comment">// 存放key-value/attr字符的数组</span></span><br><span class="line">  <span class="keyword">let</span> res = [];</span><br><span class="line">  <span class="comment">// 是否是有双引号的标志位</span></span><br><span class="line">  <span class="keyword">let</span> is_start = <span class="literal">false</span>;</span><br><span class="line">  <span class="comment">// 是否是有等号的标志位</span></span><br><span class="line">  <span class="keyword">let</span> is_equal = <span class="literal">false</span>;</span><br><span class="line">  <span class="comment">// 存放每个key-value的字符</span></span><br><span class="line">  <span class="keyword">let</span> str = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  <span class="comment">// 遍历整个attrs字符串</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; strs.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    str += strs[i];</span><br><span class="line">    <span class="comment">// 如果当前的字符是引号，那么表示一个attr值的开始或者结束，class=&quot;(开始)a&quot;(结束)</span></span><br><span class="line">    <span class="keyword">if</span> (strs[i] === <span class="string">`&quot;`</span>) &#123;</span><br><span class="line">      <span class="comment">// 如果之前已经出现了引号，那么表示这个引号是attr的结束位，class=&quot;a&quot;(结束)</span></span><br><span class="line">      <span class="keyword">if</span> (is_start) &#123;</span><br><span class="line">        <span class="comment">// 那么就需要将当前收集的字符存到attr的数组中</span></span><br><span class="line">        str = str.<span class="title function_">replaceAll</span>(<span class="string">&#x27;&quot;&#x27;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        res.<span class="title function_">push</span>(str);</span><br><span class="line">        <span class="comment">// 需要重新收集，那么一切回到初始</span></span><br><span class="line">        is_start = <span class="literal">false</span>;</span><br><span class="line">        is_equal = <span class="literal">false</span>;</span><br><span class="line">        str = <span class="string">&quot;&quot;</span>;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 如果之前没有引号，那么表示这个引号是attr值的开始位，class=&quot;(开始)a&quot;</span></span><br><span class="line">        is_start = <span class="literal">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 如果有=，但是没有&quot;表示开始，那么就表示是x=1的形式</span></span><br><span class="line">    <span class="keyword">if</span> (strs[i] === <span class="string">&quot;=&quot;</span> &amp;&amp; !is_start) &#123;</span><br><span class="line">      is_equal = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 如果当时是空格，并且是出现过等号且没有出现过引号，那么表示是data=1的情况</span></span><br><span class="line">    <span class="keyword">if</span> (strs[i] === <span class="string">&quot; &quot;</span> &amp;&amp; is_equal &amp;&amp; !is_start) &#123;</span><br><span class="line">      <span class="comment">// 那么就需要将当前收集的字符存到attr的数组中</span></span><br><span class="line">      res.<span class="title function_">push</span>(str);</span><br><span class="line">      <span class="comment">// 需要重新收集，那么一切回到初始</span></span><br><span class="line">      is_start = <span class="literal">false</span>;</span><br><span class="line">      is_equal = <span class="literal">false</span>;</span><br><span class="line">      str = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 数据已经遍历完成，但是str还没有结束</span></span><br><span class="line">  <span class="keyword">if</span> (str) &#123;</span><br><span class="line">    res.<span class="title function_">push</span>(str);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> data = res.<span class="title function_">reduce</span>(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 通过等号将attr的str分隔开</span></span><br><span class="line">    <span class="keyword">let</span> [key, val = <span class="string">&quot;&quot;</span>] = cur.<span class="title function_">split</span>(<span class="string">&quot;=&quot;</span>);</span><br><span class="line">    <span class="comment">// 去掉key的左右空格</span></span><br><span class="line">    key = key.<span class="title function_">trim</span>();</span><br><span class="line">    <span class="comment">// 如果key还存在空格，那么就表示是data-b data=1的情况</span></span><br><span class="line">    <span class="keyword">if</span> (key.<span class="title function_">includes</span>(<span class="string">&quot; &quot;</span>)) &#123;</span><br><span class="line">      <span class="comment">// 需要将key以空格分割开</span></span><br><span class="line">      <span class="keyword">const</span> keys = key.<span class="title function_">split</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">      <span class="comment">// 将在最后一个key之前的key都放入attrs数组里面</span></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; keys.<span class="property">length</span> - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        pre.<span class="title function_">push</span>(&#123; <span class="attr">key</span>: keys[i].<span class="title function_">trim</span>(), <span class="attr">val</span>: <span class="string">&quot;&quot;</span> &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 最后一个key作为对于的value值</span></span><br><span class="line">      key = keys[keys.<span class="property">length</span> - <span class="number">1</span>].<span class="title function_">trim</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 在attrs里面添加attr的key及value</span></span><br><span class="line">    pre.<span class="title function_">push</span>(&#123; <span class="attr">key</span>: key.<span class="title function_">trim</span>(), <span class="attr">val</span>: val.<span class="title function_">trim</span>() &#125;);</span><br><span class="line">    <span class="keyword">return</span> pre;</span><br><span class="line">  &#125;, []);</span><br><span class="line">  <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getKeyValue</span>( <span class="string">` class=&quot;a b  c &quot;   id=&quot;d &quot; data-b data-c data=1   data-a=&quot;111&quot; data-d`</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出</span></span><br><span class="line"><span class="comment">// res(keyvalue)数组：</span></span><br><span class="line"> [<span class="string">&#x27; class=a b  c &#x27;</span>, <span class="string">&#x27;   id=d &#x27;</span>, <span class="string">&#x27; data-b data-c data=1 &#x27;</span>, <span class="string">&#x27;  data-a=111&#x27;</span>, <span class="string">&#x27; data-d&#x27;</span>]</span><br><span class="line"><span class="comment">// data结果：</span></span><br><span class="line">[</span><br><span class="line">    &#123;<span class="attr">key</span>: <span class="string">&#x27;class&#x27;</span>, <span class="attr">val</span>: <span class="string">&#x27;a b  c&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">key</span>: <span class="string">&#x27;id&#x27;</span>, <span class="attr">val</span>: <span class="string">&#x27;d&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">key</span>: <span class="string">&#x27;data-b&#x27;</span>, <span class="attr">val</span>: <span class="string">&#x27;&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">key</span>: <span class="string">&#x27;data-c&#x27;</span>, <span class="attr">val</span>: <span class="string">&#x27;&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">key</span>: <span class="string">&#x27;data&#x27;</span>, <span class="attr">val</span>: <span class="string">&#x27;1&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">key</span>: <span class="string">&#x27;data-a&#x27;</span>, <span class="attr">val</span>: <span class="string">&#x27;111&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">key</span>: <span class="string">&#x27;data-d&#x27;</span>, <span class="attr">val</span>: <span class="string">&#x27;&#x27;</span>&#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91vuex-%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/%E6%BA%90%E7%A0%81/%E3%80%90%E6%BA%90%E7%A0%81%E3%80%91vuex-%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">vuex-执行函数</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:33" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:33+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/vuex-%E6%BA%90%E7%A0%81/" itemprop="url" rel="index"><span itemprop="name">vuex 源码</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="dispatch"><a href="#dispatch" class="headerlink" title="dispatch"></a>dispatch</h2><p>vuex 中有三个关于 dispatch 回调的方法：</p>
-<ul>
-<li><p>进行初始化时 Store 中对 dispatch 的重新赋值</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">dispatch</span> = <span class="keyword">function</span> <span class="title function_">boundDispatch</span>(<span class="params">type, payload</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>, ref, <span class="variable language_">this</span> == ref);</span><br><span class="line">  <span class="keyword">return</span> dispatch.<span class="title function_">call</span>(store, type, payload);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Store 的 prototype；</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Store</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">dispatch</span> = <span class="keyword">function</span> <span class="title function_">dispatch</span>(<span class="params">_type, _payload</span>) &#123;&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在走初始化时，注册每个 action</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">registerAction</span>(<span class="params">store, type, handler, local</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> entry = store.<span class="property">_actions</span>[type] || (store.<span class="property">_actions</span>[type] = []);</span><br><span class="line">  entry.<span class="title function_">push</span>(<span class="keyword">function</span> <span class="title function_">wrappedActionHandler</span>(<span class="params">payload</span>) &#123;&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>那么当在项目中调用 dispatch 时，调用顺序是依次调用的，实际调用项目的 action 函数，也是在 registerAction 中进行调用的。平时写 action 函数时的 root，就是在 registerAction 的函数中进行赋值的</p>
-</li>
-</ul>
-<h3 id="Store-重新赋值"><a href="#Store-重新赋值" class="headerlink" title="Store 重新赋值"></a>Store 重新赋值</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> store = <span class="variable language_">this</span>;</span><br><span class="line"><span class="keyword">var</span> ref = <span class="variable language_">this</span>;</span><br><span class="line"><span class="keyword">var</span> dispatch = ref.<span class="property">dispatch</span>;</span><br><span class="line"><span class="keyword">var</span> commit = ref.<span class="property">commit</span>;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">dispatch</span> = <span class="keyword">function</span> <span class="title function_">boundDispatch</span>(<span class="params">type, payload</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> dispatch.<span class="title function_">call</span>(store, type, payload);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>这里的 dispatch 主要是为了执行 dispatch 时，将其 this 确定绑定到 Store 中</p>
-<h3 id="Store-原型链的-dispatch"><a href="#Store-原型链的-dispatch" class="headerlink" title="Store 原型链的 dispatch"></a>Store 原型链的 dispatch</h3><ul>
-<li><p>获取到 action 对应的 type 和参数<br>传入的第一个参数可能是个 object，那么需要从 object 中取出 type 和 action 的参数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ref = <span class="title function_">unifyObjectStyle</span>(_type, _payload);</span><br><span class="line"><span class="keyword">var</span> type = ref.<span class="property">type</span>;</span><br><span class="line"><span class="keyword">var</span> payload = ref.<span class="property">payload</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> action = &#123; <span class="attr">type</span>: type, <span class="attr">payload</span>: payload &#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>循环执行 Store 提供的 subscribeAction 回调的 before</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="comment">// 拿到所有的subscribeAction列表，过滤掉只存在before的函数并且执行</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">_actionSubscribers</span></span><br><span class="line">    .<span class="title function_">slice</span>() <span class="comment">// shallow copy to prevent iterator invalidation if subscriber synchronously calls unsubscribe</span></span><br><span class="line">    .<span class="title function_">filter</span>(<span class="keyword">function</span> (<span class="params">sub</span>) &#123;</span><br><span class="line">      <span class="comment">// 过滤只存在before的函数</span></span><br><span class="line">      <span class="keyword">return</span> sub.<span class="property">before</span>;</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">forEach</span>(<span class="keyword">function</span> (<span class="params">sub</span>) &#123;</span><br><span class="line">      <span class="comment">// 循环执行对应的函数</span></span><br><span class="line">      <span class="keyword">return</span> sub.<span class="title function_">before</span>(action, <span class="variable language_">this</span>$1.<span class="property">state</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="keyword">if</span> (process.<span class="property">env</span>.<span class="property">NODE_ENV</span> !== <span class="string">&quot;production&quot;</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">&quot;[vuex] error in before action subscribers: &quot;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(e);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>执行 action 函数<br>action 是一个数组，重复的 action 名称是会放到同一个 actionType 下的<br>实际这里执行的是在 registerAction 对函数进行包装了一层的 action 函数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> result =</span><br><span class="line">  entry.<span class="property">length</span> &gt; <span class="number">1</span></span><br><span class="line">    ? <span class="title class_">Promise</span>.<span class="title function_">all</span>(</span><br><span class="line">        entry.<span class="title function_">map</span>(<span class="keyword">function</span> (<span class="params">handler</span>) &#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="title function_">handler</span>(payload);</span><br><span class="line">        &#125;)</span><br><span class="line">      )</span><br><span class="line">    : entry[<span class="number">0</span>](payload);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>循环执行 Store 提供的 subscribeAction 回调的 after 和 error，并将 action 执行结果传给此函数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve, reject</span>) &#123;</span><br><span class="line">  <span class="comment">// 在action成功执行之后</span></span><br><span class="line">  result.<span class="title function_">then</span>(</span><br><span class="line">    <span class="keyword">function</span> (<span class="params">res</span>) &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="variable language_">this</span>$1.<span class="property">_actionSubscribers</span></span><br><span class="line">          .<span class="title function_">filter</span>(<span class="keyword">function</span> (<span class="params">sub</span>) &#123;</span><br><span class="line">            <span class="comment">// 过滤只含有after的项</span></span><br><span class="line">            <span class="keyword">return</span> sub.<span class="property">after</span>;</span><br><span class="line">          &#125;)</span><br><span class="line">          .<span class="title function_">forEach</span>(<span class="keyword">function</span> (<span class="params">sub</span>) &#123;</span><br><span class="line">            <span class="comment">// 循环执行函数</span></span><br><span class="line">            <span class="keyword">return</span> sub.<span class="title function_">after</span>(action, <span class="variable language_">this</span>$1.<span class="property">state</span>);</span><br><span class="line">          &#125;);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="keyword">if</span> (process.<span class="property">env</span>.<span class="property">NODE_ENV</span> !== <span class="string">&quot;production&quot;</span>) &#123;</span><br><span class="line">          <span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">&quot;[vuex] error in after action subscribers: &quot;</span>);</span><br><span class="line">          <span class="variable language_">console</span>.<span class="title function_">error</span>(e);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="title function_">resolve</span>(res);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 如果出错了，就需要将错误传给error回调</span></span><br><span class="line">    <span class="keyword">function</span> (<span class="params">error</span>) &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="variable language_">this</span>$1.<span class="property">_actionSubscribers</span></span><br><span class="line">          .<span class="title function_">filter</span>(<span class="keyword">function</span> (<span class="params">sub</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> sub.<span class="property">error</span>;</span><br><span class="line">          &#125;)</span><br><span class="line">          .<span class="title function_">forEach</span>(<span class="keyword">function</span> (<span class="params">sub</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> sub.<span class="title function_">error</span>(action, <span class="variable language_">this</span>$1.<span class="property">state</span>, error);</span><br><span class="line">          &#125;);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="keyword">if</span> (process.<span class="property">env</span>.<span class="property">NODE_ENV</span> !== <span class="string">&quot;production&quot;</span>) &#123;</span><br><span class="line">          <span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">&quot;[vuex] error in error action subscribers: &quot;</span>);</span><br><span class="line">          <span class="variable language_">console</span>.<span class="title function_">error</span>(e);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="title function_">reject</span>(error);</span><br><span class="line">    &#125;</span><br><span class="line">  );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="registerAction-的-action"><a href="#registerAction-的-action" class="headerlink" title="registerAction 的 action"></a>registerAction 的 action</h3><p>这个函数才是真正执行项目中写的 action 回调</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">registerAction</span>(<span class="params">store, type, handler, local</span>) &#123;</span><br><span class="line">  <span class="comment">// 拿到当前action列表</span></span><br><span class="line">  <span class="keyword">var</span> entry = store.<span class="property">_actions</span>[type] || (store.<span class="property">_actions</span>[type] = []);</span><br><span class="line">  entry.<span class="title function_">push</span>(<span class="keyword">function</span> <span class="title function_">wrappedActionHandler</span>(<span class="params">payload</span>) &#123;</span><br><span class="line">    <span class="comment">// 这里是在Store.prototype.dispatch中调用action时，调用的函数</span></span><br><span class="line">    <span class="comment">// handler是项目中的action，将其this指向store</span></span><br><span class="line">    <span class="comment">// 传入root参数</span></span><br><span class="line">    <span class="keyword">var</span> res = handler.<span class="title function_">call</span>(</span><br><span class="line">      store,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">dispatch</span>: local.<span class="property">dispatch</span>,</span><br><span class="line">        <span class="attr">commit</span>: local.<span class="property">commit</span>,</span><br><span class="line">        <span class="attr">getters</span>: local.<span class="property">getters</span>,</span><br><span class="line">        <span class="attr">state</span>: local.<span class="property">state</span>,</span><br><span class="line">        <span class="attr">rootGetters</span>: store.<span class="property">getters</span>,</span><br><span class="line">        <span class="attr">rootState</span>: store.<span class="property">state</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      payload</span><br><span class="line">    );</span><br><span class="line">    <span class="comment">// 如果返回结果不是一个promise，那么也包装为一个promise返回</span></span><br><span class="line">    <span class="comment">// 这里保证了在Store.prototype.dispatch的执行结果必须是个promise</span></span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_">isPromise</span>(res)) &#123;</span><br><span class="line">      res = <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(res);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (store.<span class="property">_devtoolHook</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> res.<span class="title function_">catch</span>(<span class="keyword">function</span> (<span class="params">err</span>) &#123;</span><br><span class="line">        store.<span class="property">_devtoolHook</span>.<span class="title function_">emit</span>(<span class="string">&quot;vuex:error&quot;</span>, err);</span><br><span class="line">        <span class="keyword">throw</span> err;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="commit"><a href="#commit" class="headerlink" title="commit"></a>commit</h2><p>和 dispatch 一样，vuex 中关于 commit 的地方也有三个：</p>
-<ul>
-<li><p>进行初始化时 Store 中对 commit 的重新赋值</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">commit</span> = <span class="keyword">function</span> <span class="title function_">boundCommit</span>(<span class="params">type, payload, options</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> commit.<span class="title function_">call</span>(store, type, payload, options);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Store 的 prototype；</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Store</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">commit</span> = <span class="keyword">function</span> <span class="title function_">commit</span>(<span class="params">_type, _payload, _options</span>) &#123;&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在走初始化时，注册每个 action</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">registerMutation</span>(<span class="params">store, type, handler, local</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> entry = store.<span class="property">_mutations</span>[type] || (store.<span class="property">_mutations</span>[type] = []);</span><br><span class="line">  entry.<span class="title function_">push</span>(<span class="keyword">function</span> <span class="title function_">wrappedMutationHandler</span>(<span class="params">payload</span>) &#123;</span><br><span class="line">    handler.<span class="title function_">call</span>(store, local.<span class="property">state</span>, payload);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>那么当在项目中调用 commit 时，调用顺序是依次调用的，实际调用项目的 commit 函数，也是在 registerMutation 中进行调用的。平时写 commit 函数时的 state，就是在 registerMutation 的函数中进行赋值的</p>
-</li>
-</ul>
-<h3 id="Store-重新赋值-1"><a href="#Store-重新赋值-1" class="headerlink" title="Store 重新赋值"></a>Store 重新赋值</h3><p>作用和 dispatch 一样，也是确保执行的 this 指向 Store</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">commit</span> = <span class="keyword">function</span> <span class="title function_">boundCommit</span>(<span class="params">type, payload, options</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> commit.<span class="title function_">call</span>(store, type, payload, options);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Store-prototype-commit"><a href="#Store-prototype-commit" class="headerlink" title="Store.prototype.commit"></a>Store.prototype.commit</h3><ul>
-<li><p>和 dispatch 一样，将传入的参数格式化</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="variable language_">this</span>$1 = <span class="variable language_">this</span>;</span><br><span class="line"><span class="comment">// check object-style commit</span></span><br><span class="line"><span class="keyword">var</span> ref = <span class="title function_">unifyObjectStyle</span>(_type, _payload, _options);</span><br><span class="line"><span class="keyword">var</span> type = ref.<span class="property">type</span>;</span><br><span class="line"><span class="keyword">var</span> payload = ref.<span class="property">payload</span>;</span><br><span class="line"><span class="keyword">var</span> options = ref.<span class="property">options</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> mutation = &#123; <span class="attr">type</span>: type, <span class="attr">payload</span>: payload &#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行 commit<br>先获取到 commit 列表，然后执行 commit 函数，和 dispatch，这里执行的也是 registerMutation 中的函数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> entry = <span class="variable language_">this</span>.<span class="property">_mutations</span>[type];</span><br><span class="line"><span class="variable language_">this</span>.<span class="title function_">_withCommit</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  entry.<span class="title function_">forEach</span>(<span class="keyword">function</span> <span class="title function_">commitIterator</span>(<span class="params">handler</span>) &#123;</span><br><span class="line">    <span class="title function_">handler</span>(payload);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>_withCommit<br>这里将 Store 的_committing 置为 true，然后再去对应的 commit<br>因此可以通过 Store 的<code>_committing</code>字段来判断是否是通过 commit 进行的数据修改</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Store</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">_withCommit</span> = <span class="keyword">function</span> <span class="title function_">_withCommit</span>(<span class="params">fn</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> committing = <span class="variable language_">this</span>.<span class="property">_committing</span>;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">_committing</span> = <span class="literal">true</span>;</span><br><span class="line">  <span class="title function_">fn</span>();</span><br><span class="line">  <span class="comment">// 执行之后重置数据</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">_committing</span> = committing;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
-<li><p>执行 subscribe 列表<br>commit 执行结束之后，循环执行 subscribe 列表</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">_subscribers</span></span><br><span class="line">  .<span class="title function_">slice</span>() <span class="comment">// shallow copy to prevent iterator invalidation if subscriber synchronously calls unsubscribe</span></span><br><span class="line">  .<span class="title function_">forEach</span>(<span class="keyword">function</span> (<span class="params">sub</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">sub</span>(mutation, <span class="variable language_">this</span>$1.<span class="property">state</span>);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure></li>
-<li><p>输出日志<br>如果commit的时候，第三个参数是带有silent的，那么会输出一行日志</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (process.<span class="property">env</span>.<span class="property">NODE_ENV</span> !== <span class="string">&quot;production&quot;</span> &amp;&amp; options &amp;&amp; options.<span class="property">silent</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">warn</span>(</span><br><span class="line">    <span class="string">&quot;[vuex] mutation type: &quot;</span> +</span><br><span class="line">      type +</span><br><span class="line">      <span class="string">&quot;. Silent option has been removed. &quot;</span> +</span><br><span class="line">      <span class="string">&quot;Use the filter functionality in the vue-devtools&quot;</span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="registerMutation"><a href="#registerMutation" class="headerlink" title="registerMutation"></a>registerMutation</h3><p>实际情况下，action和commit都是被拉平了的，那么这里如何确保在执行的时候，传入项目的commit函数state的对应module下的呢？</p>
-<p>执行registerMutation的函数是在installModule，进行forEachMutation时调用的，在这个时候调用registerMutation传入的module。这个情况下，因为还在对每个模块进行遍历，模块是单独独立的，然后在执行wrappedMutationHandler时，由于闭包的特性，所以访问的local是没有被污染的真实的module</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">registerMutation</span> (<span class="params">store, type, handler, local</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> entry = store.<span class="property">_mutations</span>[type] || (store.<span class="property">_mutations</span>[type] = []);</span><br><span class="line">  entry.<span class="title function_">push</span>(<span class="keyword">function</span> <span class="title function_">wrappedMutationHandler</span> (<span class="params">payload</span>) &#123;</span><br><span class="line">    <span class="comment">// 主要是这里执行项目中真正编写的commit函数</span></span><br><span class="line">    <span class="comment">// 也是这里将module的state传入的</span></span><br><span class="line">    handler.<span class="title function_">call</span>(store, local.<span class="property">state</span>, payload);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 
       
     </div>

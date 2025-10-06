@@ -128,16 +128,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -154,6 +154,156 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/JavaScript/%E3%80%90JS%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/JavaScript/%E3%80%90JS%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" class="post-title-link" itemprop="url">【JS】记录小点</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-08-14 11:18:06 / Modified: 20:29:54" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JS/" itemprop="url" rel="index"><span itemprop="name">JS</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="Object-is、-和"><a href="#Object-is、-和" class="headerlink" title="Object.is、&#x3D;&#x3D;和&#x3D;&#x3D;&#x3D;"></a>Object.is、&#x3D;&#x3D;和&#x3D;&#x3D;&#x3D;</h3><p>判断两个值是否相等，满足其中一项条件则返回true</p>
+<ul>
+<li><p>&#x3D;&#x3D; </p>
+<ul>
+<li><p>相同类型的数据</p>
+<ul>
+<li>数组&#x2F;对象： 判断引用地址是否相同</li>
+<li>字符串：判断相同的字符且顺序相同</li>
+<li>数字：+0和-0相等；任何一个NaN不等（两个NaN不等）；值相同相等</li>
+<li>Boolean： 相同时相等</li>
+<li>BigInt：值相同相等</li>
+<li>Simple：引用相同符号相等</li>
+</ul>
+</li>
+<li><p>不相同的数据类型</p>
+<ul>
+<li>undefined&#x2F;null：undefined和null相等，其他任意类型都不相等</li>
+<li>对象：非引用类型&#x2F;symbol比较时，会先把对象通过<code>valueOf()</code>转换一下，然后再进行比较</li>
+<li>boolean：如果另一个是数字，那么把布尔值转为数字，true-&gt;1，false-&gt;0</li>
+<li>number和string：number转为string，转换失败导致NaN，而导致结果为false</li>
+<li>number与BigInt：按数值进行比较，如果数字是+∞或者NaN，返回false</li>
+<li>string与BigInt：使用与BigInt()构造函数相同的算法将string转为BigInt，然后进行比较</li>
+</ul>
+</li>
+<li><p>document.all<br>  在比较中被视为undefined，因此<code>document.all == null</code>&#x2F;<code>document.all == undefined</code>为true</p>
+</li>
+</ul>
+</li>
+<li><p>&#x3D;&#x3D;&#x3D;</p>
+<p>  不会进行数据格式转换</p>
+<ul>
+<li>数据类型不同：返回false</li>
+<li>都是对象时：比较引用地址是否相同</li>
+<li>null !&#x3D;&#x3D; undefined</li>
+<li>NaN与任意一个都不相等，包括NaN，即NaN !&#x3D;&#x3D; NaN为true</li>
+<li>数字：+0与-0相等</li>
+</ul>
+</li>
+<li><p>Object.is</p>
+<ul>
+<li>都是undefined</li>
+<li>都是null</li>
+<li>都是true或者false</li>
+<li>都是长度相同、字符相同、顺序相同的字符串</li>
+<li>数据&#x2F;对象引用的是同一个地址</li>
+<li>BigInt：有相同的数值</li>
+<li>Symbol：引用相同的symbol值</li>
+<li>都是数字且<ul>
+<li>都是+0</li>
+<li>都是-0</li>
+<li>都是NaN</li>
+<li>有相同的值且非零且不是NaN</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Object.is()与&#x3D;&#x3D;&#x3D;区别：</p>
+<ul>
+<li>+0和-0：Object.is()把+0和-0判断为相等，&#x3D;&#x3D;&#x3D;把-0和+0判断为不相等</li>
+<li>NaN： Object.is()把NaN判断为相等，&#x3D;&#x3D;&#x3D;把NaN判断为不相等</li>
+</ul>
+<p>Object.is()与&#x3D;&#x3D;区别：</p>
+<p>不会进行数据类型转换</p>
+<h3 id="WeakMap、Map"><a href="#WeakMap、Map" class="headerlink" title="WeakMap、Map"></a>WeakMap、Map</h3><p>Map和Object类似，object的键只能是字符串或者Sysmbol，而Map的键可以是任意类型，且顺序是按照插入顺序储存和迭代的。</p>
+<p>而WeakMap和Map类似，只是WeakMap的键只能是object，且其对object的引用是弱引用(当键引用不存在时，对象会被垃圾回收)。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> map = <span class="keyword">new</span> <span class="title class_">Map</span>()</span><br><span class="line"><span class="keyword">const</span> weakmap = <span class="keyword">new</span> <span class="title class_">WeakMap</span>()</span><br><span class="line">;(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> foo = &#123; <span class="attr">foo</span>: <span class="number">1</span>&#125;</span><br><span class="line">    <span class="keyword">const</span> bar = &#123; <span class="attr">bar</span>: <span class="number">2</span>&#125;</span><br><span class="line">    map.<span class="title function_">set</span>(foo, <span class="number">1</span>)</span><br><span class="line">    weakmap.<span class="title function_">set</span>(bar, <span class="number">2</span>)</span><br><span class="line">&#125;)();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(map)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(weakmap)</span><br></pre></td></tr></table></figure>
+
+<p>这里的输出结果为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Map</span>(<span class="number">1</span>) &#123;&#123;…&#125; =&gt; <span class="number">1</span>&#125;[[<span class="title class_">Entries</span>]]<span class="number">0</span>: &#123;<span class="function"><span class="params">Object</span> =&gt;</span> <span class="number">1</span>&#125;<span class="attr">key</span>: &#123;<span class="attr">foo</span>: <span class="number">1</span>&#125;<span class="attr">value</span>: 1<span class="attr">size</span>: <span class="number">1</span>[[<span class="title class_">Prototype</span>]]: <span class="title class_">Map</span></span><br><span class="line"><span class="title class_">WeakMap</span> &#123; <span class="language-xml"><span class="tag">&lt;<span class="name">items</span> <span class="attr">unknown</span>&gt;</span> &#125; </span></span><br></pre></td></tr></table></figure>
+
+<p>因为weakmap的键bar在函数执行后没有被引用的地方，因此会被回收掉，所以在后续输出的时候，weakmap是bar这个键了</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -868,6 +1018,156 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/HTTP/%E5%B0%8F%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/HTTP/%E5%B0%8F%E7%82%B9/" class="post-title-link" itemprop="url">小点</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-08-14 11:18:06 / Modified: 20:56:44" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/http/" itemprop="url" rel="index"><span itemprop="name">http</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h3><ul>
+<li>1xx：信息<ul>
+<li>100: 继续请求，初始请求已经接收，客户端继续发送剩余部分</li>
+<li>101：切换协议，要求服务器切换协议，服务端已确认切换</li>
+</ul>
+</li>
+<li>2xx：成功<ul>
+<li>201：服务器创建了新的资源</li>
+<li>202：服务器已接受请求，但未完成处理</li>
+<li>203：服务器成功处理，但返回的信息可能来自另一个来源</li>
+<li>204：服务器成功处理，但无返回内容</li>
+<li>205： 用户终端应该重置文档</li>
+<li>206：处理了部分get请求</li>
+</ul>
+</li>
+<li>3xx：重定向<ul>
+<li>301： 请求页面<strong>永久</strong>跳转到新的url</li>
+<li>302：服务器目前从不同位置的网页响应，但请求仍然继续使用原有位置来进行以后处理，即<strong>临时</strong>移动。请求方法可能会改变，比如post改为get</li>
+<li>304：自从上次请求后，请求网页未修改过</li>
+<li>305：请求者只能使用代理访问</li>
+<li>307：服务器目前从不同位置的网页响应，但请求仍然继续使用原有位置来进行以后处理，即<strong>临时</strong>移动。请求方法不需要改变</li>
+</ul>
+</li>
+<li>4xx：客户端错误<ul>
+<li>400：请求错误，服务端不理解请求语法</li>
+<li>401：未授权</li>
+<li>403：服务器拒绝请求</li>
+<li>404：未找到</li>
+<li>405：禁用请求的方法</li>
+<li>406：无法使用请求的内容特性响应请求的页面</li>
+<li>407：请求需要代理的身份验证</li>
+<li>408：请求超时</li>
+<li>409：请求的网页冲突，服务器无法完成请求</li>
+<li>410：已删除</li>
+<li>411：服务器无法处理请求，因为请求缺少一个或多个必要请求头字段</li>
+<li>412：服务器未满足请求者的前提条件</li>
+<li>413：请求实体过大</li>
+<li>414：请求的URI过长</li>
+<li>415：服务器不支持请求的格式</li>
+<li>416：请求范围不符合要求</li>
+<li>417：服务器无法满足表头字段要求</li>
+</ul>
+</li>
+<li>5xx：服务端错误<ul>
+<li>500：服务器内部错误</li>
+<li>501：服务器不具备完全请求的功能</li>
+<li>502：网关错误，服务器作为网关或代理出现错误</li>
+<li>503：服务器当前无法使用</li>
+<li>504：网关超时，服务器作为网关或代理出现超时</li>
+<li>505：服务器不支持请求的http版本</li>
+</ul>
+</li>
+</ul>
+<h3 id="http请求方式"><a href="#http请求方式" class="headerlink" title="http请求方式"></a>http请求方式</h3><ul>
+<li><p>ajax,axios</p>
+</li>
+<li><p>EventSource: SSE技术(服务端推送)</p>
+</li>
+<li><p>WebSocket</p>
+</li>
+<li><p>navigator.sendBeacon: 异步数据上报api,用于做数据采集,浏览器会在何时的时间进行数据上报.</p>
+<ul>
+<li>navigator.sendBeacon只能进行发送，无法接收到服务端返回的数据</li>
+<li>在页面卸载时也不会中断此次请求</li>
+<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1956250">[译] 用 sendBeacon 发送分析信息的优点</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7449402571187683343">Navigator.sendBeacon：前端数据发送的得力助手</a></li>
+</ul>
+</li>
+<li><p>SSE(服务器向浏览器发送数据)</p>
+<p>  浏览器通过<code>EventSource</code>的api去监听服务器是否有推送消息给客户端</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/HTTP/%E3%80%90http%E3%80%91%E9%98%9F%E5%A4%B4%E9%98%BB%E5%A1%9E/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1026,156 +1326,6 @@
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/huansky/p/14420723.html">HTTP 1.x 学习笔记 —— Web 性能权威指南</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/330300133">关于队头阻塞（Head-of-Line blocking），看这一篇就足够了</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_63951768/article/details/144917352">HTTP1.1 对头阻塞和 HTTP2 中对其的解决措施</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/HTTP/%E5%B0%8F%E7%82%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/HTTP/%E5%B0%8F%E7%82%B9/" class="post-title-link" itemprop="url">小点</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2025-08-14 11:18:06 / Modified: 20:56:44" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/http/" itemprop="url" rel="index"><span itemprop="name">http</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h3><ul>
-<li>1xx：信息<ul>
-<li>100: 继续请求，初始请求已经接收，客户端继续发送剩余部分</li>
-<li>101：切换协议，要求服务器切换协议，服务端已确认切换</li>
-</ul>
-</li>
-<li>2xx：成功<ul>
-<li>201：服务器创建了新的资源</li>
-<li>202：服务器已接受请求，但未完成处理</li>
-<li>203：服务器成功处理，但返回的信息可能来自另一个来源</li>
-<li>204：服务器成功处理，但无返回内容</li>
-<li>205： 用户终端应该重置文档</li>
-<li>206：处理了部分get请求</li>
-</ul>
-</li>
-<li>3xx：重定向<ul>
-<li>301： 请求页面<strong>永久</strong>跳转到新的url</li>
-<li>302：服务器目前从不同位置的网页响应，但请求仍然继续使用原有位置来进行以后处理，即<strong>临时</strong>移动。请求方法可能会改变，比如post改为get</li>
-<li>304：自从上次请求后，请求网页未修改过</li>
-<li>305：请求者只能使用代理访问</li>
-<li>307：服务器目前从不同位置的网页响应，但请求仍然继续使用原有位置来进行以后处理，即<strong>临时</strong>移动。请求方法不需要改变</li>
-</ul>
-</li>
-<li>4xx：客户端错误<ul>
-<li>400：请求错误，服务端不理解请求语法</li>
-<li>401：未授权</li>
-<li>403：服务器拒绝请求</li>
-<li>404：未找到</li>
-<li>405：禁用请求的方法</li>
-<li>406：无法使用请求的内容特性响应请求的页面</li>
-<li>407：请求需要代理的身份验证</li>
-<li>408：请求超时</li>
-<li>409：请求的网页冲突，服务器无法完成请求</li>
-<li>410：已删除</li>
-<li>411：服务器无法处理请求，因为请求缺少一个或多个必要请求头字段</li>
-<li>412：服务器未满足请求者的前提条件</li>
-<li>413：请求实体过大</li>
-<li>414：请求的URI过长</li>
-<li>415：服务器不支持请求的格式</li>
-<li>416：请求范围不符合要求</li>
-<li>417：服务器无法满足表头字段要求</li>
-</ul>
-</li>
-<li>5xx：服务端错误<ul>
-<li>500：服务器内部错误</li>
-<li>501：服务器不具备完全请求的功能</li>
-<li>502：网关错误，服务器作为网关或代理出现错误</li>
-<li>503：服务器当前无法使用</li>
-<li>504：网关超时，服务器作为网关或代理出现超时</li>
-<li>505：服务器不支持请求的http版本</li>
-</ul>
-</li>
-</ul>
-<h3 id="http请求方式"><a href="#http请求方式" class="headerlink" title="http请求方式"></a>http请求方式</h3><ul>
-<li><p>ajax,axios</p>
-</li>
-<li><p>EventSource: SSE技术(服务端推送)</p>
-</li>
-<li><p>WebSocket</p>
-</li>
-<li><p>navigator.sendBeacon: 异步数据上报api,用于做数据采集,浏览器会在何时的时间进行数据上报.</p>
-<ul>
-<li>navigator.sendBeacon只能进行发送，无法接收到服务端返回的数据</li>
-<li>在页面卸载时也不会中断此次请求</li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1956250">[译] 用 sendBeacon 发送分析信息的优点</a></li>
-<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7449402571187683343">Navigator.sendBeacon：前端数据发送的得力助手</a></li>
-</ul>
-</li>
-<li><p>SSE(服务器向浏览器发送数据)</p>
-<p>  浏览器通过<code>EventSource</code>的api去监听服务器是否有推送消息给客户端</p>
-</li>
-</ul>
 
       
     </div>
@@ -1846,201 +1996,6 @@
 </ul>
 <h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_components/Using_templates_and_slots#%E4%BD%BF%E7%94%A8%E6%A7%BD_slots_%E6%B7%BB%E5%8A%A0%E7%81%B5%E6%B4%BB%E5%BA%A6">使用 templates and slots</a></p>
 <p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1009633?areaSource=106001.5">shadow dom解析</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/HTML/%E3%80%90HTML%E3%80%91Shadow%20DOM/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/HTML/%E3%80%90HTML%E3%80%91Shadow%20DOM/" class="post-title-link" itemprop="url">【HTML】Shadow DOM</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/HTML/" itemprop="url" rel="index"><span itemprop="name">HTML</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="【HTML】Shadow-DOM"><a href="#【HTML】Shadow-DOM" class="headerlink" title="【HTML】Shadow DOM"></a>【HTML】Shadow DOM</h1><h2 id="概况"><a href="#概况" class="headerlink" title="概况"></a><h1>概况</h1></h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>能够为 Web 组件中的 DOM 和 CSS 提供了封装，实际上是在浏览器渲染文档的时候会给指定的 DOM 结构插入编写好的 DOM 元素，但是插入的 Shadow DOM 会与主文档的 DOM 保持<strong>分离</strong>，也就是说 Shadow DOM<strong>不存在</strong>于主 DOM 树上。shadow root 节点为起始根节点，在这个根节点的下方，可以是任意元素，和普通的 DOM 元素一样。</p>
-<p>并且 Shadow DOM 封装出来的 DOM 元素是<strong>独立</strong>的，外部的配置不会影响到内部，内部的配置也不会影响外部。</p>
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCfsSyD"><img src="https://s1.ax1x.com/2023/07/12/pCfsSyD.png" alt="pCfsSyD.png"></a></p>
-<h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h3><p>控制台-》设置按钮-》Preference -》 Elements -》点击 show user anent shadow dom 的 checkbox</p>
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCfrOF1"><img src="https://s1.ax1x.com/2023/07/12/pCfrOF1.png" alt="pCfrOF1.png"></a></p>
-<p>打开之后可以看到一些元素的真实布局及内容组成。</p>
-<h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><p><img src="https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM/shadowdom.svg" alt="image.png"></p>
-<ul>
-<li><p><code>Shadow host</code>：一个常规 DOM 节点，Shadow DOM 会被附加到这个节点上。</p>
-</li>
-<li><p><code>Shadow tree</code>：Shadow DOM 内部的 DOM 树。</p>
-</li>
-<li><p><code>Shadow boundary</code>：Shadow DOM 结束的地方，也是常规 DOM 开始的地方。</p>
-</li>
-<li><p><code>Shadow root</code>: Shadow tree 的根节点。</p>
-</li>
-</ul>
-<h2 id="custom-element-自定义标签"><a href="#custom-element-自定义标签" class="headerlink" title="custom element(自定义标签)"></a><h1>custom element(自定义标签)</h1></h2><h3 id="概况-1"><a href="#概况-1" class="headerlink" title="概况"></a>概况</h3><p>可以注册一个自定义标签，<code>CustomElementRegistry</code>提供注册自定义元素和查询已注册元素的方法，使用<code>customElements</code>可以直接获取其实例。</p>
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><table>
-<thead>
-<tr>
-<th>方法名</th>
-<th>作用</th>
-<th>参数</th>
-<th>返回值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>customElements.define</code></td>
-<td>定义了一个自定义元素</td>
-<td><code>name</code>: 自定义元素名; <code>constructor</code>: 自定义元素构造器; <code>options</code>: 控制元素如何定义(目前只支持extends)</td>
-<td>-</td>
-</tr>
-<tr>
-<td><code>customElements.get</code></td>
-<td>返回以前定义自定义元素的构造函数</td>
-<td><code>name</code>: 返回引用的构造函数的自定义元素的名字</td>
-<td>指定名字的自定义元素的构造函数，如果没有使用该名称的自定义元素定义，则为undefined。</td>
-</tr>
-<tr>
-<td><code>customElements.upgrade</code></td>
-<td>将更新节点子树中所有包含阴影的自定义元素，甚至在它们连接到主文档之前也是如此</td>
-<td><code>root</code>: 待升级的包含阴影的派生元素节点</td>
-<td>-</td>
-</tr>
-<tr>
-<td><code>customElements.whenDefined</code></td>
-<td>当一个自定义节点被定义时走入then，如果这个元素名没有被定义，那么返回的是一直pending状态</td>
-<td><code>name</code>: 自定义元素名</td>
-<td>Promise</td>
-</tr>
-</tbody></table>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">customElements.<span class="title function_">define</span>(<span class="string">&quot;test-shadow-dom&quot;</span>, <span class="title class_">TestShadowCls</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a><h1>使用</h1></h2><h3 id="挂载-shadow-dom"><a href="#挂载-shadow-dom" class="headerlink" title="挂载 shadow dom"></a>挂载 shadow dom</h3><p>可以调用<code>Element.attachShadow</code>将 Shadow Dom 选择挂载或者卸载。此方法返回的是一个类 dom，可以像操作普通 dom 一样对其进行操作</p>
-<table>
-<thead>
-<tr>
-<th>参数名</th>
-<th>作用</th>
-<th>可选值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>mode</code></td>
-<td><code>指定 Shadow DOM 树封装模式的字符串</code></td>
-<td><code>open</code>&#x2F;<code>closed</code></td>
-</tr>
-<tr>
-<td><code>delegatesFocus </code></td>
-<td><code>焦点委托</code></td>
-<td><code>boolean</code></td>
-</tr>
-</tbody></table>
-<ul>
-<li><p>挂载</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> shadow = el.<span class="title function_">attachShadow</span>(&#123;</span><br><span class="line">  <span class="attr">mode</span>: <span class="string">&quot;open&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">dir</span>(shadow);</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCfgDbD"><img src="https://s1.ax1x.com/2023/07/12/pCfgDbD.png" alt="pCfgDbD.png"></a></p>
-</li>
-<li><p>操作 shadow dom</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> html = <span class="string">`&lt;p&gt;测试1&lt;/p&gt;`</span>;</span><br><span class="line">shadow.<span class="property">innerHTML</span> = html;</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCfRCm8"><img src="https://s1.ax1x.com/2023/07/12/pCfRCm8.png" alt="pCfRCm8.png"></a></p>
-</li>
-</ul>
-<h3 id="自定义元素"><a href="#自定义元素" class="headerlink" title="自定义元素"></a>自定义元素</h3><p>Shadow DOM 可以渲染自定义的元素，类似于 vue3 中的组件，但里面的样式并不互相干扰。</p>
-<ul>
-<li><p>新建类</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">TestShadowCls</span> <span class="keyword">extends</span> <span class="title class_ inherited__">HTMLElement</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(); <span class="comment">//必要的，因为属于子类</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建一个 Shadow DOM 并为其加上需要的数据</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">addShadow</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">shadow</span> = <span class="variable language_">this</span>.<span class="title function_">attachShadow</span>(&#123;</span><br><span class="line">      <span class="attr">mode</span>: <span class="string">&quot;open&quot;</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">createChild</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="keyword">const</span> el = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;div&quot;</span>);</span><br><span class="line">  <span class="keyword">const</span> pel = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;p&quot;</span>);</span><br><span class="line">  pel.<span class="property">textContent</span> = <span class="string">&quot;测试文案&quot;</span>;</span><br><span class="line">  pel.<span class="title function_">setAttribute</span>(<span class="string">&quot;class&quot;</span>, <span class="string">&quot;test&quot;</span>)</span><br><span class="line">  <span class="keyword">const</span> imgae = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;img&quot;</span>);</span><br><span class="line">  imgae.<span class="title function_">setAttribute</span>(<span class="string">&quot;src&quot;</span>, <span class="string">&quot;https://psstatic.cdn.bcebos.com/video/wiseindex/aa6eef91f8b5b1a33b454c401_1660835115000.png&quot;</span>)</span><br><span class="line">  imgae.<span class="property">src</span>=<span class="string">&quot;https://psstatic.cdn.bcebos.com/video/wiseindex/aa6eef91f8b5b1a33b454c401_1660835115000.png&quot;</span>;</span><br><span class="line">  el.<span class="title function_">appendChild</span>(pel);</span><br><span class="line">  el.<span class="title function_">appendChild</span>(imgae)</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">shadow</span>.<span class="title function_">appendChild</span>(el)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>定义自定义的元素名</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">customElements.<span class="title function_">define</span>(<span class="string">&quot;test-shadow-dom&quot;</span>, <span class="title class_">TestShadowCls</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">  <span class="selector-tag">p</span>&#123;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">color</span>: red;</span></span><br><span class="line"><span class="language-css">  &#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">test-shadow-dom</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>渲染效果如下，里面的文案并没有因为<code>style</code>加上的元素样式而生效</p>
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCfqRu4"><img src="https://s1.ax1x.com/2023/07/12/pCfqRu4.png" alt="pCfqRu4.png"></a></p>
-</li>
-<li><p>添加样式</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">createClass</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="keyword">const</span> style = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;style&quot;</span>);</span><br><span class="line">  style.<span class="property">textContent</span> = <span class="string">`</span></span><br><span class="line"><span class="string">      .test&#123;</span></span><br><span class="line"><span class="string">          color: blue;</span></span><br><span class="line"><span class="string">          font-weight: 600</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">  `</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">shadow</span>.<span class="title function_">appendChild</span>(style)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>加上了之后，样式生效</p>
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCfL98f"><img src="https://s1.ax1x.com/2023/07/12/pCfL98f.png" alt="pCfL98f.png"></a></p>
-</li>
-</ul>
-<h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_components/Using_shadow_DOM">使用 shadow DOM</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/559759502">究竟什么是 Shadow DOM？</a></p>
 
       
     </div>

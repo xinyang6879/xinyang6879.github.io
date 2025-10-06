@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="vuex和redux不是不支持异步修改数据，而是其设计理念为了保证数据的追踪性，所以不希望异步修改数据  Vuex 和 Redux：同步数据流Vuex 和 Redux 都是 基于“可预测状态管理”思想 设计的。严格控制：只有 mutation&#x2F;reducer 能改数据，且必须是同步的  理念：Vuex 和 Redux 都遵循 Flux 架构，其核心是一个单向数据流。  理想中的同步数据流">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【vue】为什么vuex和redux不支持异步更改数据">
+<meta property="og:url" content="http://example.com/2025/09/30/Vue/%E3%80%90vue%E3%80%91%E4%B8%BA%E4%BB%80%E4%B9%88vuex%E5%92%8Credux%E4%B8%8D%E6%94%AF%E6%8C%81%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%94%B9%E6%95%B0%E6%8D%AE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="vuex和redux不是不支持异步修改数据，而是其设计理念为了保证数据的追踪性，所以不希望异步修改数据  Vuex 和 Redux：同步数据流Vuex 和 Redux 都是 基于“可预测状态管理”思想 设计的。严格控制：只有 mutation&#x2F;reducer 能改数据，且必须是同步的  理念：Vuex 和 Redux 都遵循 Flux 架构，其核心是一个单向数据流。  理想中的同步数据流">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-09-30T03:54:40.437Z">
+<meta property="article:modified_time" content="2025-10-06T11:41:14.867Z">
+<meta property="article:author" content="yangxin">
+<meta property="article:tag" content="vue react">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/09/30/Vue/%E3%80%90vue%E3%80%91%E4%B8%BA%E4%BB%80%E4%B9%88vuex%E5%92%8Credux%E4%B8%8D%E6%94%AF%E6%8C%81%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%94%B9%E6%95%B0%E6%8D%AE/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/09/30/Vue/%E3%80%90vue%E3%80%91%E4%B8%BA%E4%BB%80%E4%B9%88vuex%E5%92%8Credux%E4%B8%8D%E6%94%AF%E6%8C%81%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%94%B9%E6%95%B0%E6%8D%AE/","path":"2025/09/30/Vue/【vue】为什么vuex和redux不支持异步更改数据/","title":"【vue】为什么vuex和redux不支持异步更改数据"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【vue】为什么vuex和redux不支持异步更改数据 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vuex-%E5%92%8C-Redux%EF%BC%9A%E5%90%8C%E6%AD%A5%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="nav-number">1.</span> <span class="nav-text">Vuex 和 Redux：同步数据流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pinia"><span class="nav-number">2.</span> <span class="nav-text">Pinia</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/09/30/Vue/%E3%80%90vue%E3%80%91%E4%B8%BA%E4%BB%80%E4%B9%88vuex%E5%92%8Credux%E4%B8%8D%E6%94%AF%E6%8C%81%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%94%B9%E6%95%B0%E6%8D%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【vue】为什么vuex和redux不支持异步更改数据 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【vue】为什么vuex和redux不支持异步更改数据
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-09-30 11:54:40" itemprop="dateCreated datePublished" datetime="2025-09-30T11:54:40+08:00">2025-09-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-10-06 19:41:14" itemprop="dateModified" datetime="2025-10-06T19:41:14+08:00">2025-10-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vue-react/" itemprop="url" rel="index"><span itemprop="name">vue react</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>vuex和redux不是不支持异步修改数据，而是其设计理念为了保证数据的追踪性，所以不希望异步修改数据</p>
+<hr>
+<h3 id="Vuex-和-Redux：同步数据流"><a href="#Vuex-和-Redux：同步数据流" class="headerlink" title="Vuex 和 Redux：同步数据流"></a>Vuex 和 Redux：同步数据流</h3><p>Vuex 和 Redux 都是 <strong>基于“可预测状态管理”思想</strong> 设计的。严格控制：只有 mutation&#x2F;reducer 能改数据，且必须是同步的</p>
+<ul>
+<li><p>理念：Vuex 和 Redux 都遵循 Flux 架构，其核心是一个单向数据流。</p>
+<ul>
+<li><p>理想中的同步数据流：</p>
+</li>
+<li><p>View 触发一个 Action（在 Vuex 中）或 Action Creator（在 Redux 中）。</p>
+</li>
+<li><p>Action 提交一个 Mutation（Vuex）或 Dispatch 一个 Action（Redux）。</p>
+</li>
+<li><p>Mutation&#x2F;Reducer 同步地、原子性地修改 State。</p>
+</li>
+<li><p>State 变化后，自动通知 View 进行更新。</p>
+</li>
+</ul>
+<p>  这个流程的关键在于 Mutation&#x2F;Reducer 必须是纯函数(相同的输入，永远得到相同的输出，且无任何副作用（如 API 调用、定时器等）。)。</p>
+</li>
+</ul>
+<p>好处：这使得状态的变化变得可预测、可追踪、易于测试和调试。你可以在 DevTools 中清晰地看到每一个导致状态变化的 Action 和 Mutation，并且能够进行时间旅行调试。</p>
+<ul>
+<li><p>好处：</p>
+<ol>
+<li><p><strong>方便调试</strong>：同步修改可以很容易追踪 state 变化，方便做时间旅行（比如 Redux DevTools 可以时间旅行调试，因为每一步的修改都是可重现的）。</p>
+<p>   每个 state 的变化都有日志（devtools 能记录每次 mutation）</p>
+</li>
+<li><p><strong>保证状态快照一致性</strong>：如果允许在 mutation&#x2F;reducer 里直接写异步逻辑，调试和回放时就会变得不可预测（同样的输入不一定产生同样的输出）。</p>
+</li>
+<li><p><strong>可序列化</strong>：Redux 的 action 要求是纯对象，方便存储、回放、跨线程传输。</p>
+</li>
+<li><p>状态变更是 <strong>可预测、可重现</strong> 的</p>
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li>在 <strong>Vuex</strong> 中，异步逻辑放在 <code>actions</code> 里，最终还是通过 <strong>同步的 mutation</strong> 修改 state。</li>
+<li>在 <strong>Redux</strong> 中，异步逻辑通过中间件（比如 <code>redux-thunk</code>、<code>redux-saga</code>）来处理，最后也一定是 dispatch 一个 <strong>同步的 reducer</strong> 来改 state。</li>
+</ul>
+<p>它们通过严格的职责分离，将副作用（异步） 和状态更新（同步） 分开。Action 处理“发生了什么”，Mutation&#x2F;Reducer 处理“状态如何响应而变化”。</p>
+<hr>
+<h3 id="Pinia"><a href="#Pinia" class="headerlink" title="Pinia"></a>Pinia</h3><p>Pinia 的设计目标和 Vuex&#x2F;Redux 不同, 吸取了 Vuex 在实践中的经验和教训。它的设计更加现代化和灵活，它更贴近 <strong>组合式 API</strong> 的风格.</p>
+<p>在 Pinia 里，<code>state</code> 就是一个普通的 <code>ref</code>&#x2F;<code>reactive</code> 对象，你可以在 <code>actions</code> 里直接写 <code>await</code>，然后直接改 <code>this.xxx</code>。</p>
+<ul>
+<li><p>它并没有强制要求“只能同步修改”，因为 Pinia 的定位是：</p>
+<ul>
+<li><strong>轻量</strong>，更贴近 Vue3 的组合式 API。</li>
+<li>Vue 自身的响应式系统已经帮你保证数据一致性，不需要像 Redux 那样对“纯函数”和“同步性”要求那么严格。</li>
+</ul>
+</li>
+<li><p>所以 Pinia 更灵活，代价是：</p>
+</li>
+</ul>
+<ul>
+<li><p>好处</p>
+<ul>
+<li><p>设计理念的演进：Pinia 认为，强制开发者将同步和异步逻辑分开，虽然在大型项目中很有好处，但对于大多数中小型项目来说，增加了不必要的概念复杂性和模板代码。Pinia 选择相信开发者，给予他们更大的灵活性。</p>
+</li>
+<li><p>更简单的 API：移除 Mutation 这个概念，让学习曲线变得更平缓。你只需要知道，修改 state 可以在任何地方进行（包括 Action 内部），而 Action 本身可以包含任何逻辑。</p>
+</li>
+<li><p>与 Composition API 的良好集成：Pinia 的设计与 Vue 3 的 Composition API 思想一脉相承，鼓励组合和灵活性。在组合式函数中，你自然会写同步和异步的逻辑，Pinia 的 Action 与此保持一致。</p>
+</li>
+</ul>
+</li>
+<li><p>缺点</p>
+<ul>
+<li><strong>调试&#x2F;时间旅行能力弱于 Vuex&#x2F;Redux</strong>（由于改变来源不一定是可预测的（因为 action 里允许混合异步逻辑）。如果你在 action 里乱写异步，DevTools 只能看到最终修改，而无法逐步还原过程。）。</li>
+<li>更依赖 Vue 的响应式机制，而不是像 Redux 那样完全框架无关。</li>
+</ul>
+</li>
+<li><p>时间旅行</p>
+<ul>
+<li><p>原因：因为数据来源并非可预测的</p>
+</li>
+<li><p>解决：手动订阅 store，<code>store.$subscribe</code></p>
+</li>
+</ul>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> store = <span class="title function_">useCounterStore</span>()</span><br><span class="line">store.$subscribe(<span class="function">(<span class="params">mutation, state</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(mutation) <span class="comment">// &#123; type: &#x27;direct&#x27; | &#x27;patch object&#x27; | &#x27;patch function&#x27;, storeId: &#x27;counter&#x27;, events: [...] &#125;</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(state)    <span class="comment">// 当前 store 的最新状态</span></span><br><span class="line">&#125;)</span><br><span class="line">store.$onAction(<span class="function">(<span class="params">&#123; name, store, args, after, onError &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`action &quot;<span class="subst">$&#123;name&#125;</span>&quot; called with`</span>, args)</span><br><span class="line">    <span class="title function_">after</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`action &quot;<span class="subst">$&#123;name&#125;</span>&quot; finished with`</span>, result)</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="title function_">onError</span>(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`action &quot;<span class="subst">$&#123;name&#125;</span>&quot; failed`</span>, error)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">特性</th>
+<th align="left">Vuex &#x2F; Redux</th>
+<th align="left">Pinia</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>核心原则</strong></td>
+<td align="left"><strong>严格分离</strong>副作用和状态更新</td>
+<td align="left"><strong>灵活统一</strong>，Action 可处理一切</td>
+</tr>
+<tr>
+<td align="left"><strong>异步处理</strong></td>
+<td align="left">在 Action 中处理异步，通过提交 Mutation&#x2F;dispatch Action 来同步更新状态</td>
+<td align="left">在 Action 中直接处理异步并<strong>直接修改状态</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>可预测性</strong></td>
+<td align="left">极高，纯函数的 Reducer&#x2F;Mutation 使状态变化完全可追踪</td>
+<td align="left">较高，但需要开发者自觉维护清晰的逻辑</td>
+</tr>
+<tr>
+<td align="left"><strong>学习成本</strong></td>
+<td align="left">较高，需要理解 Action、Mutation、Reducer 等概念</td>
+<td align="left">较低，概念更少，API 更直观</td>
+</tr>
+<tr>
+<td align="left"><strong>代码风格</strong></td>
+<td align="left">更模板化，结构严谨</td>
+<td align="left">更简洁灵活，更贴近现代 JS 开发习惯</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vue-react/" rel="tag"># vue react</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/09/05/Vue/%E3%80%90vue%E3%80%91%E8%AF%A6%E8%A7%A3computed/" rel="prev" title="详解computed">
+                  <i class="fa fa-angle-left"></i> 详解computed
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

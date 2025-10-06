@@ -128,16 +128,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -154,6 +154,120 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/Vue/v-html%E6%B8%B2%E6%9F%93%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/Vue/v-html%E6%B8%B2%E6%9F%93%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6/" class="post-title-link" itemprop="url">v-html渲染自定义组件</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="v-html渲染自定义组件"><a href="#v-html渲染自定义组件" class="headerlink" title="v-html渲染自定义组件"></a>v-html渲染自定义组件</h2><h3 id="前景"><a href="#前景" class="headerlink" title="前景"></a>前景</h3><ul>
+<li><p>需求场景</p>
+<p>后端返回的特定的元素，前端用穿梭框显示，拿到对应的元素后，将其替换为vant组件进行渲染。</p>
+</li>
+<li><p>坑点：</p>
+<p><code>v-html</code>是vue3用于渲染html的指令，但是由于是直接渲染html的，自定义组件vue不会默认重新转化渲染。因此需要进行处理</p>
+</li>
+</ul>
+<h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><p>使用vue自带的<code>compile</code>函数进行进行渲染转换，再用<code>h</code>函数进行显示</p>
+<ul>
+<li><p>将<code>v-html</code>所用到的组件设置为全局组件</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Lazyload</span>, <span class="title class_">SwipeItem</span>, <span class="title class_">Swipe</span> &#125; <span class="keyword">from</span> <span class="string">&quot;vant&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">createApp</span>(<span class="title class_">App</span>);</span><br><span class="line">app.<span class="title function_">component</span>(<span class="string">&#x27;Swipe&#x27;</span>, <span class="title class_">Swipe</span>)</span><br><span class="line">app.<span class="title function_">component</span>(<span class="string">&#x27;swipeitem&#x27;</span>, <span class="title class_">SwipeItem</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>新建一个用于渲染的组件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">    &lt;script lang=<span class="string">&quot;ts&quot;</span>&gt;</span><br><span class="line">        <span class="keyword">import</span> &#123; h,&#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line">        <span class="comment">// 如果直接从vue引入会报warning，因此引入路径需要修改</span></span><br><span class="line">        <span class="keyword">import</span> &#123;compile&#125; <span class="keyword">from</span> <span class="string">&quot;vue/dist/vue.esm-bundler.js&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">        <span class="attr">props</span>: &#123;</span><br><span class="line">            <span class="attr">html</span>: &#123; <span class="attr">type</span>: <span class="title class_">String</span>, <span class="attr">required</span>: <span class="literal">true</span> &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="title function_">setup</span>(<span class="params">props</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="function">() =&gt;</span> <span class="title function_">h</span>(<span class="title function_">compile</span>(props.<span class="property">html</span>))</span><br><span class="line">        &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><ul>
+<li><p>优点</p>
+<p>自定义组件也可以进行渲染</p>
+</li>
+<li><p>缺点</p>
+<ul>
+<li><p>需要将用到的组件设置为全局组件，那么这样会使初始包变大</p>
+</li>
+<li><p>无法响应事件。组件标签上的事件无法执行，会有warning；事件只能在内部实现，无法暴露出去</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="参考link"><a href="#参考link" class="headerlink" title="参考link"></a>参考link</h3><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7153814550414884871">记录一下vue3 渲染带组件html字符串的方法</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1908,170 +2022,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/PWA/%E3%80%90pwa%E3%80%91mainifest/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/PWA/%E3%80%90pwa%E3%80%91mainifest/" class="post-title-link" itemprop="url">【pwa】mainifest</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/PWA/" itemprop="url" rel="index"><span itemprop="name">PWA</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="mainifest-json"><a href="#mainifest-json" class="headerlink" title="mainifest.json"></a>mainifest.json</h1><h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><p>通过 manifest.json 可以实现自定义启动画面、打开 url、设置界面颜色、设置桌面图标等</p>
-<h2 id="常用字段"><a href="#常用字段" class="headerlink" title="常用字段"></a>常用字段</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;short_name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pwa1&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pwa-测试用例1&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;icons&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;src&quot;</span><span class="punctuation">:</span> <span class="string">&quot;qr-code-fill-144.png&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;sizes&quot;</span><span class="punctuation">:</span> <span class="string">&quot;144x144&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;image/png&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;start_url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/test1&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;display&quot;</span><span class="punctuation">:</span> <span class="string">&quot;standalone&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;theme_color&quot;</span><span class="punctuation">:</span> <span class="string">&quot;blue&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;background_color&quot;</span><span class="punctuation">:</span> <span class="string">&quot;black&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>name: string</code></li>
-</ul>
-<p>描述应用的名称，会显示在桌面图标的标题位置和启动画面中</p>
-<ul>
-<li><p><code>short_name: string</code></p>
-<p>描述应用的短名称。当应用名字过长，在桌面图标无法全部显示时，会显示 shortname</p>
-</li>
-<li><p><code>scope：string</code></p>
-<p>设置 manifest 对于网站的作用范围。</p>
-</li>
-<li><p><code>start_url: string</code></p>
-<p>描述用户从设备主屏幕点击图标进入时的第一个地址，start_url 必须在 scope 的作用范围内</p>
-<ul>
-<li><p>如果为空，则以 manifest.json 作为 url</p>
-</li>
-<li><p>如果 url 打开失败，则和正常显示的网页打开错误的样式一样</p>
-</li>
-<li><p>如果设置的 url 和当前的项目不在一个域下，无法正常显示</p>
-</li>
-<li><p>如果 starturl 为相对地址，那么根路径基于 manifest 的路径</p>
-</li>
-<li><p>如果 starturl 为绝对路径，那么根路径为将</p>
-</li>
-</ul>
-</li>
-<li><p><code>icon：TIcon</code></p>
-<p>设置 webapp 图标集合。</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">TIcon</span> = &#123;</span><br><span class="line">  <span class="attr">src</span>: <span class="built_in">string</span>; <span class="comment">//图标地址</span></span><br><span class="line">  <span class="attr">type</span>: <span class="built_in">string</span>; <span class="comment">//图标mime类型，只能为image/png</span></span><br><span class="line">  <span class="attr">sizes</span>: <span class="built_in">string</span>; <span class="comment">//图标大小，用来表示width x height，单位为px，如果图标要适配多个尺寸，则多个尺寸用空格隔开。与真实图片大小要一致</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>适配规则：</p>
-<ul>
-<li><p>将 webapp 添加到桌面时，浏览器会适配最合适尺寸的图标。浏览器会首先去找与显示密度想匹配且尺寸调整为 48dp 屏幕密度的图标。例如在 2 倍像素的设备上使用 96px，3 倍像素的设备上使用 144px 的</p>
-</li>
-<li><p>如果没有找到合适的图标，那么会查找与设备特性匹配度最高的图标</p>
-</li>
-<li><p>如果图标路径错误，那么将显示浏览器的默认图标</p>
-</li>
-</ul>
-</li>
-<li><p><code>background_color: string</code></p>
-<p>启动画面的背景颜色。rgbs、hsl、hsla 等写法浏览器不支持。未设置时，默认白色</p>
-</li>
-<li><p><code>theme_color: string</code></p>
-<p>显示 web app 的主题色，显示在 banner 位置</p>
-</li>
-<li><p><code>display: &#39;fullscreen&#39;|&#39;standalone&#39;|&#39;minimal-ui&#39;|&#39;browser&#39;</code></p>
-<p>webapp 被启动时显示的类型</p>
-</li>
-<li><p><code>orientation</code>: <code>&#39;landscape-primary&#39;|&#39;landscape-secondary&#39;|&#39;landscape&#39;|&#39;portrait-primary&#39;|&#39;portrait-secondary&#39;|&#39;portrait&#39;|&#39;natural&#39;|&#39;any&#39;</code></p>
-<p>webapp 在屏幕上的显示方向</p>
-</li>
-<li><p><code>dir: &#39;ltr&#39;|&#39;rtl&#39;|&#39;auto&#39;</code></p>
-<p>文字的显示方向</p>
-</li>
-<li><p><code>related_applications: &#39;platform&#39;|&#39;id&#39;</code></p>
-<p>用于定义对应的原生应用，类似应用安装横幅提示的形式去推广、引流原生应用</p>
-</li>
-<li><p><code>prefer_related_applications: Boolean</code></p>
-<p>设置是否只允许用户安装原生应用</p>
-</li>
-</ul>
-<h2 id="生效条件"><a href="#生效条件" class="headerlink" title="生效条件"></a>生效条件</h2><ul>
-<li><p>必须是 https 或者 localhost</p>
-</li>
-<li><p>必须注册运行 service worker，且有 fetch 事件监听</p>
-</li>
-<li><p>manifest 必须要有 icons,且必须要至少有尺寸为144x144的</p>
-</li>
-<li><p>diaplay 设置为 standalone 或者 fullscreen</p>
-</li>
-<li><p>必须有 name 或者 short_name，start_url</p>
-</li>
-<li><p>prefer_related_applications 未设置或者为 false</p>
-</li>
-</ul>
-<h2 id="引导安装"><a href="#引导安装" class="headerlink" title="引导安装"></a>引导安装</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&quot;beforeinstallprompt&quot;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;beforeinstallprompt&quot;</span>);</span><br><span class="line">  e.<span class="title function_">preventDefault</span>();</span><br><span class="line">  e.<span class="title function_">prompt</span>();<span class="comment">//显示安装弹窗</span></span><br><span class="line">&#125;);</span><br><span class="line">navigator.<span class="property">serviceWorker</span></span><br><span class="line">  .<span class="title function_">register</span>(<span class="string">&quot;pwa1.js&quot;</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;service-pwa1注册成功&quot;</span>, res);</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;service-pwa1注册失败&quot;</span>, err);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/PWA/%E3%80%90pwa%E3%80%91pwa%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2394,7 +2344,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/JavaScript/%E3%80%90JS%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/PWA/%E3%80%90pwa%E3%80%91mainifest/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -2412,7 +2362,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/JavaScript/%E3%80%90JS%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" class="post-title-link" itemprop="url">【JS】记录小点</a>
+          <a href="/2025/08/14/PWA/%E3%80%90pwa%E3%80%91mainifest/" class="post-title-link" itemprop="url">【pwa】mainifest</a>
         </h2>
 
         <div class="post-meta-container">
@@ -2422,9 +2372,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2025-08-14 11:18:06 / Modified: 20:29:54" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2432,7 +2388,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/JS/" itemprop="url" rel="index"><span itemprop="name">JS</span></a>
+          <a href="/categories/PWA/" itemprop="url" rel="index"><span itemprop="name">PWA</span></a>
         </span>
     </span>
 
@@ -2446,78 +2402,86 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="Object-is、-和"><a href="#Object-is、-和" class="headerlink" title="Object.is、&#x3D;&#x3D;和&#x3D;&#x3D;&#x3D;"></a>Object.is、&#x3D;&#x3D;和&#x3D;&#x3D;&#x3D;</h3><p>判断两个值是否相等，满足其中一项条件则返回true</p>
-<ul>
-<li><p>&#x3D;&#x3D; </p>
-<ul>
-<li><p>相同类型的数据</p>
-<ul>
-<li>数组&#x2F;对象： 判断引用地址是否相同</li>
-<li>字符串：判断相同的字符且顺序相同</li>
-<li>数字：+0和-0相等；任何一个NaN不等（两个NaN不等）；值相同相等</li>
-<li>Boolean： 相同时相等</li>
-<li>BigInt：值相同相等</li>
-<li>Simple：引用相同符号相等</li>
-</ul>
-</li>
-<li><p>不相同的数据类型</p>
-<ul>
-<li>undefined&#x2F;null：undefined和null相等，其他任意类型都不相等</li>
-<li>对象：非引用类型&#x2F;symbol比较时，会先把对象通过<code>valueOf()</code>转换一下，然后再进行比较</li>
-<li>boolean：如果另一个是数字，那么把布尔值转为数字，true-&gt;1，false-&gt;0</li>
-<li>number和string：number转为string，转换失败导致NaN，而导致结果为false</li>
-<li>number与BigInt：按数值进行比较，如果数字是+∞或者NaN，返回false</li>
-<li>string与BigInt：使用与BigInt()构造函数相同的算法将string转为BigInt，然后进行比较</li>
-</ul>
-</li>
-<li><p>document.all<br>  在比较中被视为undefined，因此<code>document.all == null</code>&#x2F;<code>document.all == undefined</code>为true</p>
-</li>
-</ul>
-</li>
-<li><p>&#x3D;&#x3D;&#x3D;</p>
-<p>  不会进行数据格式转换</p>
-<ul>
-<li>数据类型不同：返回false</li>
-<li>都是对象时：比较引用地址是否相同</li>
-<li>null !&#x3D;&#x3D; undefined</li>
-<li>NaN与任意一个都不相等，包括NaN，即NaN !&#x3D;&#x3D; NaN为true</li>
-<li>数字：+0与-0相等</li>
-</ul>
-</li>
-<li><p>Object.is</p>
-<ul>
-<li>都是undefined</li>
-<li>都是null</li>
-<li>都是true或者false</li>
-<li>都是长度相同、字符相同、顺序相同的字符串</li>
-<li>数据&#x2F;对象引用的是同一个地址</li>
-<li>BigInt：有相同的数值</li>
-<li>Symbol：引用相同的symbol值</li>
-<li>都是数字且<ul>
-<li>都是+0</li>
-<li>都是-0</li>
-<li>都是NaN</li>
-<li>有相同的值且非零且不是NaN</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>Object.is()与&#x3D;&#x3D;&#x3D;区别：</p>
-<ul>
-<li>+0和-0：Object.is()把+0和-0判断为相等，&#x3D;&#x3D;&#x3D;把-0和+0判断为不相等</li>
-<li>NaN： Object.is()把NaN判断为相等，&#x3D;&#x3D;&#x3D;把NaN判断为不相等</li>
-</ul>
-<p>Object.is()与&#x3D;&#x3D;区别：</p>
-<p>不会进行数据类型转换</p>
-<h3 id="WeakMap、Map"><a href="#WeakMap、Map" class="headerlink" title="WeakMap、Map"></a>WeakMap、Map</h3><p>Map和Object类似，object的键只能是字符串或者Sysmbol，而Map的键可以是任意类型，且顺序是按照插入顺序储存和迭代的。</p>
-<p>而WeakMap和Map类似，只是WeakMap的键只能是object，且其对object的引用是弱引用(当键引用不存在时，对象会被垃圾回收)。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> map = <span class="keyword">new</span> <span class="title class_">Map</span>()</span><br><span class="line"><span class="keyword">const</span> weakmap = <span class="keyword">new</span> <span class="title class_">WeakMap</span>()</span><br><span class="line">;(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> foo = &#123; <span class="attr">foo</span>: <span class="number">1</span>&#125;</span><br><span class="line">    <span class="keyword">const</span> bar = &#123; <span class="attr">bar</span>: <span class="number">2</span>&#125;</span><br><span class="line">    map.<span class="title function_">set</span>(foo, <span class="number">1</span>)</span><br><span class="line">    weakmap.<span class="title function_">set</span>(bar, <span class="number">2</span>)</span><br><span class="line">&#125;)();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(map)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(weakmap)</span><br></pre></td></tr></table></figure>
+          <h1 id="mainifest-json"><a href="#mainifest-json" class="headerlink" title="mainifest.json"></a>mainifest.json</h1><h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><p>通过 manifest.json 可以实现自定义启动画面、打开 url、设置界面颜色、设置桌面图标等</p>
+<h2 id="常用字段"><a href="#常用字段" class="headerlink" title="常用字段"></a>常用字段</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;short_name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pwa1&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pwa-测试用例1&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;icons&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;src&quot;</span><span class="punctuation">:</span> <span class="string">&quot;qr-code-fill-144.png&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;sizes&quot;</span><span class="punctuation">:</span> <span class="string">&quot;144x144&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;image/png&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;start_url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/test1&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;display&quot;</span><span class="punctuation">:</span> <span class="string">&quot;standalone&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;theme_color&quot;</span><span class="punctuation">:</span> <span class="string">&quot;blue&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;background_color&quot;</span><span class="punctuation">:</span> <span class="string">&quot;black&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
-<p>这里的输出结果为：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Map</span>(<span class="number">1</span>) &#123;&#123;…&#125; =&gt; <span class="number">1</span>&#125;[[<span class="title class_">Entries</span>]]<span class="number">0</span>: &#123;<span class="function"><span class="params">Object</span> =&gt;</span> <span class="number">1</span>&#125;<span class="attr">key</span>: &#123;<span class="attr">foo</span>: <span class="number">1</span>&#125;<span class="attr">value</span>: 1<span class="attr">size</span>: <span class="number">1</span>[[<span class="title class_">Prototype</span>]]: <span class="title class_">Map</span></span><br><span class="line"><span class="title class_">WeakMap</span> &#123; <span class="language-xml"><span class="tag">&lt;<span class="name">items</span> <span class="attr">unknown</span>&gt;</span> &#125; </span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>name: string</code></li>
+</ul>
+<p>描述应用的名称，会显示在桌面图标的标题位置和启动画面中</p>
+<ul>
+<li><p><code>short_name: string</code></p>
+<p>描述应用的短名称。当应用名字过长，在桌面图标无法全部显示时，会显示 shortname</p>
+</li>
+<li><p><code>scope：string</code></p>
+<p>设置 manifest 对于网站的作用范围。</p>
+</li>
+<li><p><code>start_url: string</code></p>
+<p>描述用户从设备主屏幕点击图标进入时的第一个地址，start_url 必须在 scope 的作用范围内</p>
+<ul>
+<li><p>如果为空，则以 manifest.json 作为 url</p>
+</li>
+<li><p>如果 url 打开失败，则和正常显示的网页打开错误的样式一样</p>
+</li>
+<li><p>如果设置的 url 和当前的项目不在一个域下，无法正常显示</p>
+</li>
+<li><p>如果 starturl 为相对地址，那么根路径基于 manifest 的路径</p>
+</li>
+<li><p>如果 starturl 为绝对路径，那么根路径为将</p>
+</li>
+</ul>
+</li>
+<li><p><code>icon：TIcon</code></p>
+<p>设置 webapp 图标集合。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">TIcon</span> = &#123;</span><br><span class="line">  <span class="attr">src</span>: <span class="built_in">string</span>; <span class="comment">//图标地址</span></span><br><span class="line">  <span class="attr">type</span>: <span class="built_in">string</span>; <span class="comment">//图标mime类型，只能为image/png</span></span><br><span class="line">  <span class="attr">sizes</span>: <span class="built_in">string</span>; <span class="comment">//图标大小，用来表示width x height，单位为px，如果图标要适配多个尺寸，则多个尺寸用空格隔开。与真实图片大小要一致</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<p>因为weakmap的键bar在函数执行后没有被引用的地方，因此会被回收掉，所以在后续输出的时候，weakmap是bar这个键了</p>
+<p>适配规则：</p>
+<ul>
+<li><p>将 webapp 添加到桌面时，浏览器会适配最合适尺寸的图标。浏览器会首先去找与显示密度想匹配且尺寸调整为 48dp 屏幕密度的图标。例如在 2 倍像素的设备上使用 96px，3 倍像素的设备上使用 144px 的</p>
+</li>
+<li><p>如果没有找到合适的图标，那么会查找与设备特性匹配度最高的图标</p>
+</li>
+<li><p>如果图标路径错误，那么将显示浏览器的默认图标</p>
+</li>
+</ul>
+</li>
+<li><p><code>background_color: string</code></p>
+<p>启动画面的背景颜色。rgbs、hsl、hsla 等写法浏览器不支持。未设置时，默认白色</p>
+</li>
+<li><p><code>theme_color: string</code></p>
+<p>显示 web app 的主题色，显示在 banner 位置</p>
+</li>
+<li><p><code>display: &#39;fullscreen&#39;|&#39;standalone&#39;|&#39;minimal-ui&#39;|&#39;browser&#39;</code></p>
+<p>webapp 被启动时显示的类型</p>
+</li>
+<li><p><code>orientation</code>: <code>&#39;landscape-primary&#39;|&#39;landscape-secondary&#39;|&#39;landscape&#39;|&#39;portrait-primary&#39;|&#39;portrait-secondary&#39;|&#39;portrait&#39;|&#39;natural&#39;|&#39;any&#39;</code></p>
+<p>webapp 在屏幕上的显示方向</p>
+</li>
+<li><p><code>dir: &#39;ltr&#39;|&#39;rtl&#39;|&#39;auto&#39;</code></p>
+<p>文字的显示方向</p>
+</li>
+<li><p><code>related_applications: &#39;platform&#39;|&#39;id&#39;</code></p>
+<p>用于定义对应的原生应用，类似应用安装横幅提示的形式去推广、引流原生应用</p>
+</li>
+<li><p><code>prefer_related_applications: Boolean</code></p>
+<p>设置是否只允许用户安装原生应用</p>
+</li>
+</ul>
+<h2 id="生效条件"><a href="#生效条件" class="headerlink" title="生效条件"></a>生效条件</h2><ul>
+<li><p>必须是 https 或者 localhost</p>
+</li>
+<li><p>必须注册运行 service worker，且有 fetch 事件监听</p>
+</li>
+<li><p>manifest 必须要有 icons,且必须要至少有尺寸为144x144的</p>
+</li>
+<li><p>diaplay 设置为 standalone 或者 fullscreen</p>
+</li>
+<li><p>必须有 name 或者 short_name，start_url</p>
+</li>
+<li><p>prefer_related_applications 未设置或者为 false</p>
+</li>
+</ul>
+<h2 id="引导安装"><a href="#引导安装" class="headerlink" title="引导安装"></a>引导安装</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&quot;beforeinstallprompt&quot;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;beforeinstallprompt&quot;</span>);</span><br><span class="line">  e.<span class="title function_">preventDefault</span>();</span><br><span class="line">  e.<span class="title function_">prompt</span>();<span class="comment">//显示安装弹窗</span></span><br><span class="line">&#125;);</span><br><span class="line">navigator.<span class="property">serviceWorker</span></span><br><span class="line">  .<span class="title function_">register</span>(<span class="string">&quot;pwa1.js&quot;</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;service-pwa1注册成功&quot;</span>, res);</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;service-pwa1注册失败&quot;</span>, err);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
 
       
     </div>
