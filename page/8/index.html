@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">110</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -154,6 +154,743 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91vitetest%E6%B5%8B%E8%AF%95Store/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/vueTest/%E3%80%90vueTest%E3%80%91vitetest%E6%B5%8B%E8%AF%95Store/" class="post-title-link" itemprop="url">【vueTest】vitetest测试Store踩坑记录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-08-14 11:18:06 / Modified: 11:20:07" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/VueTest/" itemprop="url" rel="index"><span itemprop="name">VueTest</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
+<li>node: 20.18.0</li>
+<li>pnpm: 9.14.2</li>
+<li>pinia: 2.3.0</li>
+<li>vue: 3.5.13</li>
+<li>vite: 6.0.5</li>
+<li>vitest: 2.1.8</li>
+<li>jsdom: 25.0.1</li>
+<li>@vue&#x2F;test-utils: 2.4.6</li>
+<li>@vitest&#x2F;coverage-v8: 2.1.8</li>
+<li>@vitest&#x2F;eslint-plugin: 1.1.20</li>
+<li>@vitejs&#x2F;plugin-vue: 5.2.1</li>
+</ul>
+<h2 id="被测试的函数用到内容"><a href="#被测试的函数用到内容" class="headerlink" title="被测试的函数用到内容"></a>被测试的函数用到内容</h2><ul>
+<li>npm 包函数</li>
+<li>pinia 数据</li>
+<li>项目的函数</li>
+</ul>
+<h2 id="报错记录"><a href="#报错记录" class="headerlink" title="报错记录"></a>报错记录</h2><h3 id="npm-包报错"><a href="#npm-包报错" class="headerlink" title="npm 包报错"></a>npm 包报错</h3><p>报错内容： <code>Error: Failed to resolve entry for package &quot;xxx&quot;. The package may have incorrect main/module/exports specified in its package.json.</code></p>
+<p>解决办法：</p>
+<p>在<code>vite.config.ts</code>的 alias 添加对应包的 module 路径的配置</p>
+<p>比如这个项目中用到的是<code>@wltech/utils</code>，然后在 node_modules 中找到这个包的<code>package.json</code>，找到<code>module</code>字段，那么这个包的路径映射就是<code>包名/包module路径</code></p>
+<h3 id="未模拟-pinia"><a href="#未模拟-pinia" class="headerlink" title="未模拟 pinia"></a>未模拟 pinia</h3><p>在被单测函数中，在对应的 store 取值时会报错<code>TypeError: Cannot read properties of undefined (reading &#39;xxx&#39;)</code></p>
+<h3 id="直接使用-mock-模拟路径函数"><a href="#直接使用-mock-模拟路径函数" class="headerlink" title="直接使用 mock 模拟路径函数"></a>直接使用 mock 模拟路径函数</h3><h4 id="default-导出"><a href="#default-导出" class="headerlink" title="default 导出"></a>default 导出</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vi.<span class="title function_">doMock</span>(<span class="string">&quot;xxx&quot;</span>, <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">  <span class="attr">functionName</span>: vi.<span class="title function_">fn</span>().<span class="title function_">mockReturnValue</span>(<span class="string">&quot;&quot;</span>),</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+
+<p>如果需要 mock 的文件，里面导出是<code>export default</code>，那么在 mock 时需要在数据最外层加上<code>default</code>，否则会报错<br><code>Error: [vitest] No &quot;default&quot; export is defined on the &quot;@/hooks/useJudgePcOrAppOrWx&quot; mock. Did you forget to return it from &quot;vi.mock&quot;? If you need to partially mock a module, you can use &quot;importOriginal&quot; helper inside:</code></p>
+<p>解决方案</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vi.<span class="title function_">doMock</span>(<span class="string">&quot;xxx&quot;</span>, <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">  <span class="attr">default</span>: vi.<span class="title function_">fn</span>().<span class="title function_">mockReturnValue</span>(<span class="string">&quot;&quot;</span>),</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+
+<p>所以 pinia 在模拟时，需要加上<code>default</code></p>
+<h4 id="模拟数据用导入的数据"><a href="#模拟数据用导入的数据" class="headerlink" title="模拟数据用导入的数据"></a>模拟数据用导入的数据</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; mockData &#125; <span class="keyword">from</span> <span class="string">&quot;./mock&quot;</span>;</span><br><span class="line">vi.<span class="title function_">mock</span>(<span class="string">&quot;@/store&quot;</span>, <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">  <span class="attr">default</span>: &#123;</span><br><span class="line">    <span class="attr">piniaData</span>: mockData,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+
+<p>报错：<code>Error: [vitest] There was an error when mocking a module. If you are using &quot;vi.mock&quot; factory, make sure there are no top level variables inside, since this call is hoisted to top of the file. Read more: https://vitest.dev/api/vi.html#vi-mock</code></p>
+<p>原因：在<code>vitest</code>中，<code>vi.mock</code>的 mock 函数是<code>hoisted</code>到文件顶部的，其优先级高于 import，导致在<code>import</code>之前就执行了<code>vi.mock</code>，导致<code>import</code>时，pinia 的 store 没有被 mock 到</p>
+<h4 id="同一个-describe-中，mock-同一个路径，所有获取的是-mock-最后一次的数据"><a href="#同一个-describe-中，mock-同一个路径，所有获取的是-mock-最后一次的数据" class="headerlink" title="同一个 describe 中，mock 同一个路径，所有获取的是 mock 最后一次的数据"></a>同一个 describe 中，mock 同一个路径，所有获取的是 mock 最后一次的数据</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">vi.<span class="title function_">mock</span>(<span class="string">&quot;@/store&quot;</span>, <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">  <span class="attr">default</span>: &#123;</span><br><span class="line">    <span class="attr">piniaData</span>: <span class="number">1</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;));</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Store</span>.<span class="property">piniaData</span>);</span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line">vi.<span class="title function_">mock</span>(<span class="string">&quot;@/store&quot;</span>, <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">  <span class="attr">default</span>: &#123;</span><br><span class="line">    <span class="attr">piniaData</span>: <span class="number">2</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;));</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Store</span>.<span class="property">piniaData</span>);</span><br><span class="line"><span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<p>和上个问题原因一样，mock 是所有一次性执行的，试过在加上下面这些清除数据，但是依旧无效</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">beforeEach</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  vi.<span class="title function_">clearAllMocks</span>();</span><br><span class="line">  vi.<span class="title function_">resetModules</span>();</span><br><span class="line">  vi.<span class="title function_">stubEnv</span>(<span class="string">&quot;VITE_APP_OPEN_COLLECT&quot;</span>, <span class="string">&quot;true&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="title function_">afterEach</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 清理 mock</span></span><br><span class="line">  vi.<span class="title function_">clearAllMocks</span>();</span><br><span class="line">  vi.<span class="title function_">resetModules</span>();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="解决方案：doMock-替代-mock"><a href="#解决方案：doMock-替代-mock" class="headerlink" title="解决方案：doMock 替代 mock"></a>解决方案：doMock 替代 mock</h2><p>好处：</p>
+<ul>
+<li>mock 的数据可以通过外部导入</li>
+<li>每次 mock 然后获取，都是拿到的最新数据</li>
+</ul>
+<p>注意点：</p>
+<ul>
+<li>doMock使用时，需要和动态引入被单测的文件  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; fuName &#125; = <span class="keyword">await</span> <span class="keyword">import</span>(<span class="string">&#x27;需要单测的函数路径&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> result = <span class="title function_">fuName</span>();</span><br><span class="line"><span class="title function_">expect</span>(result).<span class="title function_">toEqual</span>(<span class="string">&quot;预期结果&quot;</span>);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; describe, test, expect, vi, beforeEach, afterEach &#125; <span class="keyword">from</span> <span class="string">&quot;vitest&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">mockRunEnv</span> = (<span class="params"></span></span><br><span class="line"><span class="params">  isMiniApp = <span class="literal">true</span>,</span></span><br><span class="line"><span class="params">  getQueryVariable = <span class="string">&quot;&quot;</span>,</span></span><br><span class="line"><span class="params">  isWxWorkBrowser = <span class="literal">false</span>,</span></span><br><span class="line"><span class="params">  isWxBrowser = <span class="literal">true</span>,</span></span><br><span class="line"><span class="params">  isIOS = <span class="literal">false</span>,</span></span><br><span class="line"><span class="params">  isAndroid = <span class="literal">true</span>,</span></span><br><span class="line"><span class="params">  isPC = <span class="literal">false</span></span></span><br><span class="line"><span class="params"></span>) =&gt; &#123;</span><br><span class="line">  vi.<span class="title function_">doMock</span>(<span class="string">&quot;xxx&quot;</span>, <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">    <span class="attr">isMiniApp</span>: vi.<span class="title function_">fn</span>().<span class="title function_">mockReturnValue</span>(isMiniApp),</span><br><span class="line">    <span class="attr">getQueryVariable</span>: vi.<span class="title function_">fn</span>().<span class="title function_">mockReturnValue</span>(getQueryVariable),</span><br><span class="line">    <span class="attr">isWxWorkBrowser</span>: vi.<span class="title function_">fn</span>().<span class="title function_">mockReturnValue</span>(isWxWorkBrowser),</span><br><span class="line">    <span class="attr">isWxBrowser</span>: vi.<span class="title function_">fn</span>().<span class="title function_">mockReturnValue</span>(isWxBrowser),</span><br><span class="line">    <span class="attr">isIOS</span>: vi.<span class="title function_">fn</span>().<span class="title function_">mockReturnValue</span>(isIOS),</span><br><span class="line">    <span class="attr">isAndroid</span>: vi.<span class="title function_">fn</span>().<span class="title function_">mockReturnValue</span>(isAndroid),</span><br><span class="line">  &#125;));</span><br><span class="line">  vi.<span class="title function_">doMock</span>(<span class="string">&quot;xxx&quot;</span>, <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">    <span class="attr">isInMobileWechat</span>: vi.<span class="title function_">fn</span>().<span class="title function_">mockReturnValue</span>(isMiniApp),</span><br><span class="line">  &#125;));</span><br><span class="line">  vi.<span class="title function_">doMock</span>(<span class="string">&quot;xxx&quot;</span>, <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">    <span class="attr">useJudgePcOrAppOrWx</span>: vi.<span class="title function_">fn</span>().<span class="title function_">mockReturnValue</span>(isPC),</span><br><span class="line">  &#125;));</span><br><span class="line">&#125;;</span><br><span class="line"><span class="title function_">describe</span>(<span class="string">&quot;函数单测&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">beforeEach</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    vi.<span class="title function_">clearAllMocks</span>();</span><br><span class="line">    vi.<span class="title function_">resetModules</span>();</span><br><span class="line">    vi.<span class="title function_">stubEnv</span>(<span class="string">&quot;VITE_APP_OPEN_COLLECT&quot;</span>, <span class="string">&quot;true&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="title function_">afterEach</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 清理 mock</span></span><br><span class="line">    vi.<span class="title function_">clearAllMocks</span>();</span><br><span class="line">    vi.<span class="title function_">resetModules</span>();</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="title function_">test</span>(<span class="string">&quot;在微信浏览器环境中&quot;</span>, <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="title function_">mockRunEnv</span>(<span class="literal">false</span>, <span class="string">&quot;&quot;</span>, <span class="literal">false</span>, <span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">const</span> &#123; fuName &#125; = <span class="keyword">await</span> <span class="keyword">import</span>(<span class="string">&#x27;需要单测的函数路径&#x27;</span>);</span><br><span class="line">    <span class="keyword">const</span> result = <span class="title function_">fuName</span>();</span><br><span class="line">    <span class="title function_">expect</span>(result).<span class="title function_">toEqual</span>(<span class="string">&quot;在微信浏览器环境中的预期结果&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="title function_">test</span>(<span class="string">&quot;在PC环境中&quot;</span>, <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="title function_">mockRunEnv</span>(<span class="literal">false</span>, <span class="string">&quot;&quot;</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">const</span> &#123; fuName &#125; = <span class="keyword">await</span> <span class="keyword">import</span>(<span class="string">&#x27;需要单测的函数路径&#x27;</span>);</span><br><span class="line">    <span class="keyword">const</span> result = <span class="title function_">fuName</span>();</span><br><span class="line">    <span class="title function_">expect</span>(result).<span class="title function_">toEqual</span>(<span class="string">&quot;在PC环境中的预期结果&quot;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><ul>
+<li><code>pnpm test:unit</code><br>  运行单测</li>
+<li><code>pnpm test:coverage</code><br>  查看所有测试覆盖率</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" class="post-title-link" itemprop="url">【vue】记录小点</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-15 16:43:36" itemprop="dateModified" datetime="2025-08-15T16:43:36+08:00">2025-08-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="v-model-语法糖"><a href="#v-model-语法糖" class="headerlink" title="v-model 语法糖"></a>v-model 语法糖</h3><p>在对于原生组件的 v-model 中，编译时会转换为两个部分</p>
+<ul>
+<li>一个绑定到元素的 value&#x2F;check 属性，这样数据变化时会让页面更新</li>
+<li>一个监听元素的变化事件（input 等），当事件触发时就改变数据</li>
+</ul>
+<p><code>&lt;input v-model=&quot;message&quot;&gt;</code> 会被转换成：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">_createVNode</span>(<span class="string">&quot;input&quot;</span>, &#123;</span><br><span class="line">  <span class="attr">modelValue</span>: message, <span class="comment">// 属性绑定</span></span><br><span class="line">  <span class="string">&quot;onUpdate:modelValue&quot;</span>: <span class="function">(<span class="params">$event</span>) =&gt;</span> (message = $event), <span class="comment">// 事件监听</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当初始化渲染时，将<code>message</code>的值赋给 input 的 value，所以输入框显示的是 message 的初始值。</li>
+<li>当用户输入时，触发 input 事件，事件处理函数会将输入框的新值赋给<code>message</code>。</li>
+<li>由于<code>message</code>是响应式数据（比如通过 ref 或 reactive 创建），它的改变会触发依赖更新，即重新执行组件的渲染函数（重新生成虚拟 DOM，然后进行 Diff 更新视图）。但是注意，这里因为 input 的 value 绑定的是 message，所以重新渲染时会设置 input 的 value，但用户正在输入时设置 value 会不会导致问题呢？不会，因为 Vue 在更新 DOM 时，如果发现是输入元素，并且它的值没有变化（或者即使变化了，但不会打断用户的输入，因为 Vue 通过异步更新和事件处理已经做了协调），所以不会干扰用户输入。</li>
+</ul>
+<p>Vue 的处理机制包括：</p>
+<ul>
+<li><p>输入状态检测</p>
+<ul>
+<li>Vue 会检测到 input 元素是否处于”正在输入”状态</li>
+<li>在用户输入期间，即使组件重新渲染，也不会强制更新 input 的 value</li>
+<li>异步更新队列</li>
+</ul>
+</li>
+<li><p>所有 DOM 更新都会放入异步队列中</p>
+<ul>
+<li>用户输入期间的更新会被延迟执行，避免打断用户操作</li>
+<li>DOM 属性更新协调</li>
+</ul>
+</li>
+<li><p>Vue 在更新 input 的 value 时会检查：</p>
+<ul>
+<li>元素是否为当前活跃的输入元素</li>
+<li>用户是否正在进行输入操作</li>
+<li>新值是否与当前用户输入的内容冲突</li>
+</ul>
+</li>
+</ul>
+<h3 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h3><p>c1: 旧节点；c2: 新节点；e1：旧节点的长度；e2：新节点的长度；</p>
+<ul>
+<li><p>先遍历相同头节点的情况</p>
+<p>这里得到 i：新旧节点相同头部的 index</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. sync from start</span></span><br><span class="line"><span class="comment">// (a b) c</span></span><br><span class="line"><span class="comment">// (a b) d e</span></span><br><span class="line"><span class="keyword">while</span> (i &lt;= e1 &amp;&amp; i &lt;= e2) &#123;</span><br><span class="line">  <span class="keyword">const</span> n1 = c1[i];</span><br><span class="line">  <span class="keyword">const</span> n2 = (c2[i] = optimized</span><br><span class="line">    ? <span class="title function_">cloneIfMounted</span>(c2[i])</span><br><span class="line">    : <span class="title function_">normalizeVNode</span>(c2[i]));</span><br><span class="line">  <span class="comment">// 如果是相同头节点</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="title function_">isSameVNodeType</span>(n1, n2)) &#123;</span><br><span class="line">    <span class="title function_">patch</span>(</span><br><span class="line">      n1,</span><br><span class="line">      n2,</span><br><span class="line">      container,</span><br><span class="line">      <span class="literal">null</span>,</span><br><span class="line">      parentComponent,</span><br><span class="line">      parentSuspense,</span><br><span class="line">      isSVG,</span><br><span class="line">      slotScopeIds,</span><br><span class="line">      optimized</span><br><span class="line">    );</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  i++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>遍历尾节点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 2. sync from end</span></span><br><span class="line"><span class="comment">// a (b c)</span></span><br><span class="line"><span class="comment">// d e (b c)</span></span><br><span class="line"><span class="keyword">while</span> (i &lt;= e1 &amp;&amp; i &lt;= e2) &#123;</span><br><span class="line">  <span class="keyword">const</span> n1 = c1[e1];</span><br><span class="line">  <span class="keyword">const</span> n2 = (c2[e2] = optimized</span><br><span class="line">    ? <span class="title function_">cloneIfMounted</span>(c2[e2])</span><br><span class="line">    : <span class="title function_">normalizeVNode</span>(c2[e2]));</span><br><span class="line">  <span class="keyword">if</span> (<span class="title function_">isSameVNodeType</span>(n1, n2)) &#123;</span><br><span class="line">    <span class="title function_">patch</span>(</span><br><span class="line">      n1,</span><br><span class="line">      n2,</span><br><span class="line">      container,</span><br><span class="line">      <span class="literal">null</span>,</span><br><span class="line">      parentComponent,</span><br><span class="line">      parentSuspense,</span><br><span class="line">      isSVG,</span><br><span class="line">      slotScopeIds,</span><br><span class="line">      optimized</span><br><span class="line">    );</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  e1--;</span><br><span class="line">  e2--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>旧节点被遍历结束了，但是新节点没有遍历结束</p>
+<p>这个时候剩余的新节点一定需要重新生成 dom</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 3. common sequence + mount</span></span><br><span class="line"><span class="comment">// (a b)</span></span><br><span class="line"><span class="comment">// (a b) c</span></span><br><span class="line"><span class="comment">// i = 2, e1 = 1, e2 = 2</span></span><br><span class="line"><span class="comment">// (a b)</span></span><br><span class="line"><span class="comment">// c (a b)</span></span><br><span class="line"><span class="comment">// i = 0, e1 = -1, e2 = 0</span></span><br><span class="line"><span class="keyword">if</span> (i &gt; e1) &#123;</span><br><span class="line">  <span class="keyword">if</span> (i &lt;= e2) &#123;</span><br><span class="line">    <span class="keyword">const</span> nextPos = e2 + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">const</span> anchor = nextPos &lt; l2 ? c2[nextPos].<span class="property">el</span> : parentAnchor;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= e2) &#123;</span><br><span class="line">      <span class="title function_">patch</span>(</span><br><span class="line">        <span class="literal">null</span>,</span><br><span class="line">        (c2[i] = optimized ? <span class="title function_">cloneIfMounted</span>(c2[i]) : <span class="title function_">normalizeVNode</span>(c2[i])),</span><br><span class="line">        container,</span><br><span class="line">        anchor,</span><br><span class="line">        parentComponent,</span><br><span class="line">        parentSuspense,</span><br><span class="line">        isSVG,</span><br><span class="line">        slotScopeIds,</span><br><span class="line">        optimized</span><br><span class="line">      );</span><br><span class="line">      i++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>旧节点没有遍历结束，但是新节点遍历结束了</p>
+<p>那么直接把旧节点的 dom 全部卸载掉</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 4. common sequence + unmount</span></span><br><span class="line">      <span class="comment">// (a b) c</span></span><br><span class="line">      <span class="comment">// (a b)</span></span><br><span class="line">      <span class="comment">// i = 2, e1 = 2, e2 = 1</span></span><br><span class="line">      <span class="comment">// a (b c)</span></span><br><span class="line">      <span class="comment">// (b c)</span></span><br><span class="line">      <span class="comment">// i = 0, e1 = 0, e2 = -1</span></span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> (i &gt; e2) &#123;</span><br><span class="line">          <span class="keyword">while</span> (i &lt;= e1) &#123;</span><br><span class="line">              <span class="title function_">unmount</span>(c1[i], parentComponent, parentSuspense, <span class="literal">true</span>);</span><br><span class="line">              i++;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>建立剩余的新节点的节点与节点 key 的 map</p>
+<ul>
+<li><p>如果启用了优化（optimized 为 true），则使用 cloneIfMounted 复用已挂载的节点</p>
+<ul>
+<li><p>判断逻辑：<br>child.el &#x3D;&#x3D;&#x3D; null: 节点未挂载</p>
+<p>当一个 vnode 刚创建但尚未渲染到 DOM 时，el 属性为 null<br>这种情况下直接返回原节点，无需克隆<br>child.memo: 节点被标记为需要记忆</p>
+<p>如果节点有 memo 标记（用于优化），也直接返回原节点<br>其他情况: 节点已挂载</p>
+<p>如果 child.el 不为 null（说明已经挂载到真实 DOM 元素）<br>则调用 cloneVNode(child) 创建新节点</p>
+</li>
+<li><p>工作原理：<br>未挂载节点: vnode.el &#x3D; null，表示该虚拟节点还未对应真实 DOM 元素</p>
+<p>已挂载节点: vnode.el 指向实际的 DOM 元素，表示该虚拟节点已经渲染到页面上</p>
+</li>
+</ul>
+</li>
+<li><p>否则使用 normalizeVNode 标准化节点</p>
+</li>
+<li><p>同时将处理后的节点重新赋值给 c2[i]</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> s2 = i; <span class="comment">// next starting index</span></span><br><span class="line"><span class="comment">// 5.1 build key:index map for newChildren</span></span><br><span class="line"><span class="keyword">const</span> keyToNewIndexMap = <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line"><span class="keyword">for</span> (i = s2; i &lt;= e2; i++) &#123;</span><br><span class="line">  <span class="keyword">const</span> nextChild = (c2[i] = optimized</span><br><span class="line">    ? <span class="title function_">cloneIfMounted</span>(c2[i])</span><br><span class="line">    : <span class="title function_">normalizeVNode</span>(c2[i]));</span><br><span class="line">  <span class="keyword">if</span> (nextChild.<span class="property">key</span> != <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (keyToNewIndexMap.<span class="title function_">has</span>(nextChild.<span class="property">key</span>)) &#123;</span><br><span class="line">      <span class="title function_">warn$1</span>(</span><br><span class="line">        <span class="string">`Duplicate keys found during update:`</span>,</span><br><span class="line">        <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(nextChild.<span class="property">key</span>),</span><br><span class="line">        <span class="string">`Make sure keys are unique.`</span></span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">    keyToNewIndexMap.<span class="title function_">set</span>(nextChild.<span class="property">key</span>, i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>遍历旧节点，查找旧节点剩余的节点是否在新节点里面有，如果有就加上，如果没有就卸载</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> j;</span><br><span class="line"><span class="keyword">let</span> patched = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">const</span> toBePatched = e2 - s2 + <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> moved = <span class="literal">false</span>;</span><br><span class="line"><span class="comment">// used to track whether any node has moved</span></span><br><span class="line"><span class="keyword">let</span> maxNewIndexSoFar = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// works as Map&lt;newIndex, oldIndex&gt;</span></span><br><span class="line"><span class="comment">// Note that oldIndex is offset by +1</span></span><br><span class="line"><span class="comment">// and oldIndex = 0 is a special value indicating the new node has</span></span><br><span class="line"><span class="comment">// no corresponding old node.</span></span><br><span class="line"><span class="comment">// used for determining longest stable subsequence</span></span><br><span class="line"><span class="keyword">const</span> newIndexToOldIndexMap = <span class="keyword">new</span> <span class="title class_">Array</span>(toBePatched);</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; toBePatched; i++) newIndexToOldIndexMap[i] = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (i = s1; i &lt;= e1; i++) &#123;</span><br><span class="line">  <span class="keyword">const</span> prevChild = c1[i];</span><br><span class="line">  <span class="keyword">if</span> (patched &gt;= toBePatched) &#123;</span><br><span class="line">    <span class="comment">// 所有新节点都已处理，剩余的旧节点需要删除</span></span><br><span class="line">    <span class="title function_">unmount</span>(prevChild, parentComponent, parentSuspense, <span class="literal">true</span>);</span><br><span class="line">    <span class="keyword">continue</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> newIndex;</span><br><span class="line">  <span class="keyword">if</span> (prevChild.<span class="property">key</span> != <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="comment">// 有 key 的节点，直接通过 Map 查找新位置</span></span><br><span class="line">    newIndex = keyToNewIndexMap.<span class="title function_">get</span>(prevChild.<span class="property">key</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 无 key 节点，需要遍历查找相同类型的节点</span></span><br><span class="line">    <span class="keyword">for</span> (j = s2; j &lt;= e2; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (</span><br><span class="line">        newIndexToOldIndexMap[j - s2] === <span class="number">0</span> &amp;&amp;</span><br><span class="line">        <span class="title function_">isSameVNodeType</span>(prevChild, c2[j])</span><br><span class="line">      ) &#123;</span><br><span class="line">        newIndex = j;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (newIndex === <span class="literal">undefined</span>) &#123;</span><br><span class="line">    <span class="comment">// 节点在新列表中不存在，需要删除</span></span><br><span class="line">    <span class="title function_">unmount</span>(prevChild, parentComponent, parentSuspense, <span class="literal">true</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 节点存在，记录映射关系并更新</span></span><br><span class="line">    newIndexToOldIndexMap[newIndex - s2] = i + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (newIndex &gt;= maxNewIndexSoFar) &#123;</span><br><span class="line">      maxNewIndexSoFar = newIndex;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      moved = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 更新已存在的节点，prevChild：旧节点，c2[newIndex]：新节点</span></span><br><span class="line">    <span class="title function_">patch</span>(</span><br><span class="line">      prevChild,</span><br><span class="line">      c2[newIndex],</span><br><span class="line">      container,</span><br><span class="line">      <span class="literal">null</span>,</span><br><span class="line">      parentComponent,</span><br><span class="line">      parentSuspense,</span><br><span class="line">      isSVG,</span><br><span class="line">      slotScopeIds,</span><br><span class="line">      optimized</span><br><span class="line">    );</span><br><span class="line">    patched++;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>计算最长递增子序列</p>
+<ul>
+<li>找出新旧节点中相对位置不变的节点序列</li>
+<li>如果节点发生了移动（moved 为 true），则调用 getSequence 计算 newIndexToOldIndexMap 的最长递增子序列</li>
+<li>最长递增子序列（LIS）用于找出不需要移动的节点， 只移动位置发生变化的节点，从而最小化 DOM 操作</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> increasingNewIndexSequence = moved</span><br><span class="line">  ? <span class="title function_">getSequence</span>(newIndexToOldIndexMap)</span><br><span class="line">  : <span class="variable constant_">EMPTY_ARR</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>反向遍历剩余的新节点，因为在前几个步骤中，新节点的前后都可能已经又其他节点的，通过锚点可以利用<code>insertBefore(newNode, referenceNode)</code>具体插入在哪个元素前。如果从头开始，后节点可能不存在，因此是反向遍历</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">j = increasingNewIndexSequence.<span class="property">length</span> - <span class="number">1</span>;</span><br><span class="line"><span class="comment">// looping backwards so that we can use last patched node as anchor</span></span><br><span class="line"><span class="keyword">for</span> (i = toBePatched - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">  <span class="comment">// s2新子节点数组的起始索引，即在此下标之前的节点都已经挂载好了</span></span><br><span class="line">  <span class="keyword">const</span> nextIndex = s2 + i;</span><br><span class="line">  <span class="keyword">const</span> nextChild = c2[nextIndex];</span><br><span class="line">  <span class="comment">// 这里就是获取当前节点的下一个节点，用于节点插入</span></span><br><span class="line">  <span class="keyword">const</span> anchor = nextIndex + <span class="number">1</span> &lt; l2 ? c2[nextIndex + <span class="number">1</span>].<span class="property">el</span> : parentAnchor;</span><br><span class="line">  <span class="comment">// 如果新节点在旧节点中不存在，那么直接插入即可</span></span><br><span class="line">  <span class="keyword">if</span> (newIndexToOldIndexMap[i] === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// mount new</span></span><br><span class="line">    <span class="title function_">patch</span>(</span><br><span class="line">      <span class="literal">null</span>,</span><br><span class="line">      nextChild,</span><br><span class="line">      container,</span><br><span class="line">      anchor,</span><br><span class="line">      parentComponent,</span><br><span class="line">      parentSuspense,</span><br><span class="line">      isSVG,</span><br><span class="line">      slotScopeIds,</span><br><span class="line">      optimized</span><br><span class="line">    );</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (moved) &#123;</span><br><span class="line">    <span class="comment">// move if:</span></span><br><span class="line">    <span class="comment">// There is no stable subsequence (e.g. a reverse)</span></span><br><span class="line">    <span class="comment">// OR current node is not among the stable sequence</span></span><br><span class="line">    <span class="comment">// 移动旧节点到新节点</span></span><br><span class="line">    <span class="keyword">if</span> (j &lt; <span class="number">0</span> || i !== increasingNewIndexSequence[j]) &#123;</span><br><span class="line">      <span class="title function_">move</span>(nextChild, container, anchor, <span class="number">2</span> <span class="comment">/* REORDER */</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      j--;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>为什么采用最长递增子序列算法进行移动，而不是把所有已存在节点进行移动</p>
+<ul>
+<li>采用LIS算法，只需要移动部分节点，这些节点依据LIS列表中的位置去进行定位即可</li>
+<li>移动所有节点，会耗费大量时间  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// 旧子节点: [A, B, C, D, E]</span><br><span class="line">// 新子节点: [B, C, E, A, D]</span><br><span class="line">// 索引映射: [1, 2, 4, 0, 3] (新索引对应的老索引)</span><br><span class="line"></span><br><span class="line">// 如果移动所有节点:</span><br><span class="line">// 1. B -&gt; 移动到位置0</span><br><span class="line">// 2. C -&gt; 移动到位置1  </span><br><span class="line">// 3. E -&gt; 移动到位置2</span><br><span class="line">// 4. A -&gt; 移动到位置3</span><br><span class="line">// 5. D -&gt; 移动到位置4</span><br><span class="line">// 总共5次移动</span><br><span class="line"></span><br><span class="line">// 使用LIS优化:</span><br><span class="line">// LIS: [1, 2, 4] 对应 [B, C, E] - 这些节点已经按正确顺序排列</span><br><span class="line">// 需要移动: [0, 3] 对应 [A, D]</span><br><span class="line">// 1. A -&gt; 移动到位置3</span><br><span class="line">// 2. D -&gt; 移动到位置4  </span><br><span class="line">// 总共2次移动</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="useRouter和useRoute"><a href="#useRouter和useRoute" class="headerlink" title="useRouter和useRoute"></a>useRouter和useRoute</h3><p>都是用于vue中的路由操作</p>
+<p>区别：</p>
+<ul>
+<li><p>useRouter() - 路由器实例</p>
+<ul>
+<li><p>作用：获取整个 路由器的实例对象（相当于 Vue 2 中的 this.$router）。</p>
+</li>
+<li><p>功能：用于 编程式导航（如跳转页面、前进&#x2F;后退等操作）。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="title function_">useRouter</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导航到新路由（添加历史记录）</span></span><br><span class="line">router.<span class="title function_">push</span>(<span class="string">&#x27;/home&#x27;</span>); </span><br><span class="line">router.<span class="title function_">push</span>(&#123; <span class="attr">path</span>: <span class="string">&#x27;/user&#x27;</span>, <span class="attr">query</span>: &#123; <span class="attr">id</span>: <span class="number">1</span> &#125; &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 替换当前路由（无历史记录）</span></span><br><span class="line">router.<span class="title function_">replace</span>(<span class="string">&#x27;/login&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 前进/后退</span></span><br><span class="line">router.<span class="title function_">go</span>(<span class="number">1</span>);  <span class="comment">// 前进一步</span></span><br><span class="line">router.<span class="title function_">go</span>(-<span class="number">1</span>); <span class="comment">// 后退一步</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>useRoute() - 当前路由信息</p>
+<ul>
+<li><p>作用：获取 当前激活的路由对象（相当于 Vue 2 中的 this.$route）。</p>
+</li>
+<li><p>功能：用于 读取当前路由信息（路径、参数、查询等）。</p>
+</li>
+<li><p>route是响应式的，因此当路由变化时，任何依赖 route 的计算属性或侦听器都会自动更新。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> route = <span class="title function_">useRoute</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 路由路径（如 &quot;/user/123&quot;）</span></span><br><span class="line">route.<span class="property">path</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 动态路由参数（如 /user/:id → &#123; id: &#x27;123&#x27; &#125;）</span></span><br><span class="line">route.<span class="property">params</span>.<span class="property">id</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查询参数（如 ?name=John → &#123; name: &#x27;John&#x27; &#125;）</span></span><br><span class="line">route.<span class="property">query</span>.<span class="property">name</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 路由元信息（在路由配置中定义的 meta 字段）</span></span><br><span class="line">route.<span class="property">meta</span>.<span class="property">requiresAuth</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 完整的 URL（包含查询参数和 hash）</span></span><br><span class="line">route.<span class="property">fullPath</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">watch</span>(<span class="function">() =&gt;</span> route.<span class="property">params</span>.<span class="property">id</span>, <span class="function">(<span class="params">newId</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;ID 变化了:&#x27;</span>, newId);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/Vue/%E5%B0%8F%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/Vue/%E5%B0%8F%E7%82%B9/" class="post-title-link" itemprop="url">小点</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-05-09 17:29:53" itemprop="dateModified" datetime="2025-05-09T17:29:53+08:00">2025-05-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="渐进式框架理解"><a href="#渐进式框架理解" class="headerlink" title="渐进式框架理解"></a>渐进式框架理解</h3><p>渐进式表示: 没有做过多的事情,vuejs只提供了最核心的组件系统和双向数据绑定,pinia、vue-router都是围绕vuejs开发的库</p>
+<p>如果使用react还需要理解:</p>
+<ul>
+<li>函数时编程理念</li>
+<li>副作用</li>
+<li>什么是纯函数</li>
+<li>如何隔离避免副作用</li>
+</ul>
+<h3 id="组件之间传值方式"><a href="#组件之间传值方式" class="headerlink" title="组件之间传值方式"></a>组件之间传值方式</h3><p>父向子</p>
+<ul>
+<li>props</li>
+<li>inject</li>
+<li>vuex</li>
+<li>调用子组件实例的方法+defineExpose</li>
+</ul>
+<p>子向父</p>
+<ul>
+<li>emit</li>
+<li>引用类型可以修改或者用Vue.set</li>
+<li>vuex</li>
+</ul>
+<h3 id="v-if和v-show区别"><a href="#v-if和v-show区别" class="headerlink" title="v-if和v-show区别"></a>v-if和v-show区别</h3><p>相同点:</p>
+<p>都是vuejs中用于控制元素是否显示的指令</p>
+<p>不同点:</p>
+<ul>
+<li>v-if是在节点中都没有这个元素, 动态向dom树添加或者删除这个节点; v-show是使用了display:none让元素不显示</li>
+<li>v-if切换是有一个局部编译&#x2F;卸载的过程,切换过程中适当销毁和重建内部的事件监听和子组件;而v-show只是css切换</li>
+<li>在初始编译过程中,v-if如果是false那么就不会编译,v-show都会编译</li>
+<li>v-if切换是会销毁和创建;v-show只编译一次.因此v-show性能更好(如果存在多次切换条件)</li>
+</ul>
+<p>v-if判断是否加载,可以减轻服务器压力,但在需要加载时,会由更高的切换开销</p>
+<p>v-show跳转dom的style属性,可以使得用户操作更加流畅,但由更高的初始渲染开销</p>
+<h3 id="vue的计算属性"><a href="#vue的计算属性" class="headerlink" title="vue的计算属性"></a>vue的计算属性</h3><p>设计初衷是用于简单运算,在computed中放入太多逻辑会让模板过重且难以维护</p>
+<p>用法:</p>
+<ul>
+<li>在一个计算属性中可以完成各种复杂的逻辑,包括运算和函数调用等,只要最终返回一个结果即可</li>
+<li>计算属性可以依赖多个vue实例的数据,只要其中任一数据变化,计算属性就会重新执行,视图也会更新</li>
+</ul>
+<p>getter和setter</p>
+<p>每个计算属性都包括一个getter和setter,通常使用的都是computed的默认用法,只是利用了getter来读取.在用户需要时,可以提供一个setter函数,当手动修改computed的值就像修改一个普通数据那样时,就会触发setter</p>
+<p>computed缓存</p>
+<p>computed会有对数据的缓存,多次使用同一个computed不会重复计算,除非数据变化.</p>
+<p>其基于computed的依赖进行缓存的,计算属性只有在其相关依赖发生改变时才会重新求值</p>
+<h3 id="vue-router有哪几种导航钩子"><a href="#vue-router有哪几种导航钩子" class="headerlink" title="vue-router有哪几种导航钩子"></a>vue-router有哪几种导航钩子</h3><p>守卫类型</p>
+<ul>
+<li><p>全局守卫: router.beforeEach(to, from, next)</p>
+<p>  当一个导航触发时,其会按照创建顺序调用.守卫是异步解析执行,此时导航在所有守卫resolve完之前一直处于等待状态</p>
+</li>
+<li><p>全局解析守卫: router.beforeResolve(to, from, next)</p>
+<p>  在全局解析守卫中可以使用beforeResolve注册一个全局守卫.和beforeEach类似,但其在导航被确认之前,同时在所有组件内守卫和异步路由组件被解析之后调用</p>
+</li>
+<li><p>全局后置钩子: router.afterEach(to, from)</p>
+<p>  也可以注册全局后置钩子,但这个没有next,也无法改变导航本身</p>
+</li>
+<li><p>路由独享的守卫: beforeEnter</p>
+<p>  可以在路由配置这个函数</p>
+</li>
+<li><p>组件内的守卫: beforeRouteUpdate,beforeRouteEnter,  beforeRouterLeave</p>
+</li>
+</ul>
+<p>参数:</p>
+<p>to(即将要进入的页面路由对象), </p>
+<p>from(从哪儿来的页面路由对象), </p>
+<p>next(一定要调用这个方法来resolve这个钩子,否则页面会一直等待)</p>
+<h3 id="vue-router导航解析流程"><a href="#vue-router导航解析流程" class="headerlink" title="vue-router导航解析流程"></a>vue-router导航解析流程</h3><ul>
+<li>导航被触发</li>
+<li>调用离开组件的beforeRouterLeave钩子</li>
+<li>调用全局的beforeEach函数</li>
+<li>在重用的组件调用beforeRouteUpdate</li>
+<li>在路由配置中调用beforeEnter</li>
+<li>解析异步路由组件</li>
+<li>调用组件的beforeRouteEnter</li>
+<li>调用全局的beforeResolve</li>
+<li>导航被确认</li>
+<li>调用全局的afterEach</li>
+<li>触发DOM更新</li>
+<li>用创建好的实例调用beforeRouteEnter守卫中传给next的回调函数</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E5%8F%98%E9%87%8Fapi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/Vue/%E3%80%90vue%E3%80%91%E5%8F%98%E9%87%8Fapi/" class="post-title-link" itemprop="url">【vue】变量api</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-12 15:00:32" itemprop="dateModified" datetime="2025-08-12T15:00:32+08:00">2025-08-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="ref-和-reactive-区别"><a href="#ref-和-reactive-区别" class="headerlink" title="ref 和 reactive 区别"></a>ref 和 reactive 区别</h3><p>根本区别：</p>
+<ul>
+<li><p><code>ref</code>只用于定义<code>typeof val !== &#39;object&#39;</code>的数据类型，且内部是基于 class 实现的。如果 ref 传入的是一个 object 类型，那么也会通过 reactive 的方法去执行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">toReactive</span> = (<span class="params">value</span>) =&gt; <span class="title function_">isObject</span>(value) ? <span class="title function_">reactive</span>(value) : value;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RefImpl</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">value, __v_isShallow</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">__v_isShallow</span> = __v_isShallow;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">dep</span> = <span class="literal">undefined</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">__v_isRef</span> = <span class="literal">true</span>;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_rawValue</span> = __v_isShallow ? value : <span class="title function_">toRaw</span>(value);</span><br><span class="line">      <span class="comment">// 判断传入的初始数据是否为对象，如果是那么就转为reactive的实现</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">_value</span> = __v_isShallow ? value : <span class="title function_">toReactive</span>(value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">value</span>() &#123;</span><br><span class="line">        <span class="title function_">trackRefValue</span>(<span class="variable language_">this</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_value</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">set</span> <span class="title function_">value</span>(<span class="params">newVal</span>) &#123;</span><br><span class="line">        newVal = <span class="variable language_">this</span>.<span class="property">__v_isShallow</span> ? newVal : <span class="title function_">toRaw</span>(newVal);</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_">hasChanged</span>(newVal, <span class="variable language_">this</span>.<span class="property">_rawValue</span>)) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">_rawValue</span> = newVal;、</span><br><span class="line">            <span class="comment">// 在赋新值的时候也会执行一次</span></span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">_value</span> = <span class="variable language_">this</span>.<span class="property">__v_isShallow</span> ? newVal : <span class="title function_">toReactive</span>(newVal);</span><br><span class="line">            <span class="title function_">triggerRefValue</span>(<span class="variable language_">this</span>, newVal);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>reactive</code>用于定义<code>typeof val === &#39;object&#39;</code>的数据类型，且内部基于 proxy 实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createReactiveObject</span>(<span class="params"></span></span><br><span class="line"><span class="params">  target,</span></span><br><span class="line"><span class="params">  isReadonly,</span></span><br><span class="line"><span class="params">  baseHandlers,</span></span><br><span class="line"><span class="params">  collectionHandlers,</span></span><br><span class="line"><span class="params">  proxyMap</span></span><br><span class="line"><span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="title function_">isObject</span>(target)) &#123;</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">`value cannot be made reactive: <span class="subst">$&#123;<span class="built_in">String</span>(target)&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// target is already a Proxy, return it.</span></span><br><span class="line">  <span class="comment">// exception: calling readonly() on a reactive object</span></span><br><span class="line">  <span class="keyword">if</span> (</span><br><span class="line">    target[<span class="string">&quot;__v_raw&quot;</span> <span class="comment">/* RAW */</span>] &amp;&amp;</span><br><span class="line">    !(isReadonly &amp;&amp; target[<span class="string">&quot;__v_isReactive&quot;</span> <span class="comment">/* IS_REACTIVE */</span>])</span><br><span class="line">  ) &#123;</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// target already has corresponding Proxy</span></span><br><span class="line">  <span class="keyword">const</span> existingProxy = proxyMap.<span class="title function_">get</span>(target);</span><br><span class="line">  <span class="keyword">if</span> (existingProxy) &#123;</span><br><span class="line">    <span class="keyword">return</span> existingProxy;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// only specific value types can be observed.</span></span><br><span class="line">  <span class="keyword">const</span> targetType = <span class="title function_">getTargetType</span>(target);</span><br><span class="line">  <span class="keyword">if</span> (targetType === <span class="number">0</span> <span class="comment">/* INVALID */</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 通过proxy实现数据拦截</span></span><br><span class="line">  <span class="keyword">const</span> proxy = <span class="keyword">new</span> <span class="title class_">Proxy</span>(</span><br><span class="line">    target,</span><br><span class="line">    targetType === <span class="number">2</span> <span class="comment">/* COLLECTION */</span> ? collectionHandlers : baseHandlers</span><br><span class="line">  );</span><br><span class="line">  proxyMap.<span class="title function_">set</span>(target, proxy);</span><br><span class="line">  <span class="keyword">return</span> proxy;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>其他区别：</p>
+<ul>
+<li><p>ref 使用时需要通过<code>.value</code>访问（但是在 template 中不需要），reactive 不需要</p>
+</li>
+<li><p>在使用过程中，ref 可以使用任意数据类型，reactive 只能使用对象、数组、map 等</p>
+</li>
+<li><p>ref 可以直接替换整个数据，也不会丢失响应式，reactive 会丢失</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> data = <span class="title function_">ref</span>(&#123; <span class="attr">a</span>: <span class="number">1</span> &#125;);</span><br><span class="line">data.<span class="property">value</span> = &#123; <span class="attr">b</span>: <span class="number">2</span> &#125;; <span class="comment">//不会丢失响应式</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> data2 = <span class="title function_">reactive</span>(&#123; <span class="attr">a</span>: <span class="number">1</span> &#125;);</span><br><span class="line">data2 = &#123; <span class="attr">b</span>: <span class="number">2</span> &#125;; <span class="comment">//会丢失</span></span><br><span class="line"><span class="comment">// data2 = reactive(&#123;b: 2&#125;) //会丢失</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解构</p>
+<ul>
+<li>ref 解构后依旧可以保持响应式</li>
+<li>reactive 需要通过 toRefs 才可以保持</li>
+</ul>
+</li>
+<li><p>父子数据传递</p>
+<ul>
+<li>ref 在子组件可以通过<code>update:xxx</code>更新到父组件的值</li>
+<li>reactive 无法通过此方法更新，父组件也无法通过 watch 进行获取最新的值</li>
+</ul>
+</li>
+</ul>
+<h3 id="shallowRef"><a href="#shallowRef" class="headerlink" title="shallowRef"></a>shallowRef</h3><p>和ref的流程一样，只是不会走判断如果是对象，那么就会走reactive的逻辑</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">shallowRef</span>(<span class="params">value</span>) &#123;</span><br><span class="line">      <span class="comment">// 这里的true表示不需要走reactive的逻辑（即使是个对象</span></span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">createRef</span>(value, <span class="literal">true</span>);</span><br><span class="line">&#125;</span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">RefImpl</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">value, __v_isShallow</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">__v_isShallow</span> = __v_isShallow;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">dep</span> = <span class="literal">undefined</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">__v_isRef</span> = <span class="literal">true</span>;</span><br><span class="line">      <span class="comment">//   不走reactive的逻辑</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">_rawValue</span> = __v_isShallow ? value : <span class="title function_">toRaw</span>(value);</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">_value</span> = __v_isShallow ? value : <span class="title function_">toReactive</span>(value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">value</span>() &#123;</span><br><span class="line">        <span class="title function_">trackRefValue</span>(<span class="variable language_">this</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_value</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">set</span> <span class="title function_">value</span>(<span class="params">newVal</span>) &#123;</span><br><span class="line">        newVal = <span class="variable language_">this</span>.<span class="property">__v_isShallow</span> ? newVal : <span class="title function_">toRaw</span>(newVal);</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_">hasChanged</span>(newVal, <span class="variable language_">this</span>.<span class="property">_rawValue</span>)) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">_rawValue</span> = newVal;</span><br><span class="line">          <span class="comment">//   即使是重新赋值，也不会触发</span></span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">_value</span> = <span class="variable language_">this</span>.<span class="property">__v_isShallow</span> ? newVal : <span class="title function_">toReactive</span>(newVal);</span><br><span class="line">            <span class="title function_">triggerRefValue</span>(<span class="variable language_">this</span>, newVal);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/Vue/v-model%E5%92%8Creactive%E7%BB%84%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/Vue/v-model%E5%92%8Creactive%E7%BB%84%E5%90%88%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">v-model 和 reactive 组合使用的问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>父组件的数据是一个<code>reactive</code>的数据，传入子组件时用<code>v-model:xxx</code>的形式传入子组件，那么子组件在此情况下调用<code>update:xxx</code>时，并不会引起父组件的数据变化(包含页面和通过<code>watch</code>等方式去监听的回调)</p>
+<h3 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h3><blockquote>
+<p>父组件代码</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">test</span> <span class="attr">v-model:data</span>=<span class="string">&quot;testdata&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> testdata = <span class="title function_">reactive</span>(&#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;父级参数&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="title function_">watch</span>(</span><br><span class="line">  <span class="function">() =&gt;</span> testdata,</span><br><span class="line">  <span class="function">(<span class="params">val</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;父级变化了11111&quot;</span>, val);</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123; <span class="attr">deep</span>: <span class="literal">true</span> &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>子组件代码</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">:value</span>=<span class="string">&quot;test.name&quot;</span> @<span class="attr">input</span>=<span class="string">&quot;onIpt&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123;reactive, watchEffect&#125; <span class="keyword">from</span> <span class="string">&quot;vue&quot;</span></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> props = <span class="title function_">defineProps</span>([<span class="string">&#x27;data&#x27;</span>])</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> emit = <span class="title function_">defineEmits</span>([<span class="string">&#x27;update:data&#x27;</span>])</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> test = <span class="title function_">reactive</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">name</span>: <span class="string">&quot;123&quot;</span></span></span><br><span class="line"><span class="language-javascript">&#125;)</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> <span class="title function_">onIpt</span> = e =&gt; &#123;</span></span><br><span class="line"><span class="language-javascript">  test.<span class="property">name</span> = e.<span class="property">target</span>.<span class="property">value</span></span></span><br><span class="line"><span class="language-javascript">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;子组件更新&quot;</span>, test)</span></span><br><span class="line"><span class="language-javascript">  <span class="title function_">emit</span>(<span class="string">&quot;update:data&quot;</span>, test)</span></span><br><span class="line"><span class="language-javascript">&#125;</span></span><br><span class="line"><span class="language-javascript"><span class="title function_">watchEffect</span>(<span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;子组件接收到的父组件数据更新&quot;</span>, test)</span></span><br><span class="line"><span class="language-javascript">  test.<span class="property">name</span> = props.<span class="property">data</span>.<span class="property">name</span>;</span></span><br><span class="line"><span class="language-javascript">&#125;)</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>实际操作</p>
+</blockquote>
+<p>在进行输入的时候，只触发了<code>onIpt</code>函数，父组件的<code>watch</code>和子组件的<code>watchEffect</code>都未触发</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pPIiMwT"><img src="https://z1.ax1x.com/2023/09/20/pPIiMwT.png" alt="pPIiMwT.png"></a></p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>在<a target="_blank" rel="noopener" href="https://cn.vuejs.org/guide/essentials/reactivity-fundamentals.html#limitations-of-reactive">vue</a>的官方文档上面写明的<code>reactive</code>的局限性：</p>
+<ul>
+<li><p><em>有限的值类型</em></p>
+<p>它只能用于对象类型 (对象、数组和如 Map、Set 这样的集合类型)。它不能持有如 string、number 或 boolean 这样的原始类型。</p>
+</li>
+<li><p><em>不能替换整个对象</em></p>
+<p>由于 Vue 的响应式跟踪是通过属性访问实现的，因此我们必须始终保持对响应式对象的相同引用。这意味着我们不能轻易地“替换”响应式对象，因为这样的话与第一个引用的响应性连接将丢失</p>
+</li>
+<li><p><em>对解构操作不友好</em></p>
+<p>当我们将响应式对象的原始类型属性解构为本地变量时，或者将该属性传递给函数时，我们将丢失响应性连接</p>
+</li>
+</ul>
+<p>上面第二条说明了<code>reactive</code>的响应式是依据  <strong>属性访问</strong> 实现的，而<code>update:data</code>的时候是传递的整个对象，所以并不会引起<code>reactive</code>的响应式。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="父组件的数据改为ref"><a href="#父组件的数据改为ref" class="headerlink" title="父组件的数据改为ref"></a>父组件的数据改为<code>ref</code></h3><p>ref是针对整体的一个响应式，因此就不会产生这个问题</p>
+<h3 id="利用js引用对象的特性，修改prop的属性"><a href="#利用js引用对象的特性，修改prop的属性" class="headerlink" title="利用js引用对象的特性，修改prop的属性"></a>利用js引用对象的特性，修改prop的属性</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">onIpt</span> = e =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> data = props.<span class="property">data</span>;</span><br><span class="line">  data.<span class="property">name</span> = e.<span class="property">target</span>.<span class="property">value</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;子组件更新&quot;</span>, data)</span><br><span class="line">  <span class="comment">// 实际是否加上update的函数，父组件的watch都会触发</span></span><br><span class="line">  <span class="comment">// emit(&quot;update:data&quot;, test)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是这样不符合单向数据流的特性，因此这个方法不合适</p>
+<h3 id="父组件监听事件"><a href="#父组件监听事件" class="headerlink" title="父组件监听事件"></a>父组件监听事件</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">test</span> <span class="attr">v-model:data</span>=<span class="string">&quot;testdata&quot;</span> @<span class="attr">update:data</span>=<span class="string">&quot;onUpdateData&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">onUpdateData</span> = (<span class="params">data</span>) =&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;父组件事件的回调&quot;</span>, data)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样在子组件调用<code>update:data</code>的方法时，也会触发父组件的<code>onUpdateData</code>方法</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1460,1046 +2197,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/React/%E3%80%90React%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/React/%E3%80%90React%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" class="post-title-link" itemprop="url">记录</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-07-25 16:31:30" itemprop="dateModified" datetime="2025-07-25T16:31:30+08:00">2025-07-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/react/" itemprop="url" rel="index"><span itemprop="name">react</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="useMemo-和-React-memo-优化组件的区别"><a href="#useMemo-和-React-memo-优化组件的区别" class="headerlink" title="useMemo 和 React.memo 优化组件的区别"></a>useMemo 和 React.memo 优化组件的区别</h2><p>react 中，如果父组件的状态更新了，那么也会导致子组件也会重新渲染，从头开始渲染一次子组件（若无其他优化手段的情况下</p>
-<p>useMemo 和 React.memo 都可以用于缓存组件，当父组件的状态变化时，如果不涉及到其子组件对应条件修改时，对应的子组件是会重新跳过渲染的</p>
-<p>React.memo 缓存的是组件渲染结果，useMemo 缓存的是计算结果。</p>
-<ul>
-<li><p>React.memo</p>
-<p>包装组件，在 props 未变化时跳过重新渲染</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">MemoizedComponent</span> = <span class="title class_">React</span>.<span class="title function_">memo</span>(</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">MyComponent</span>(<span class="params">props</span>) &#123;</span><br><span class="line">    <span class="comment">/* 使用 props 渲染 */</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">/* 可选的自定义比较函数 */</span></span><br><span class="line">  <span class="function">(<span class="params">prevProps, nextProps</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 返回 true 表示 props 相等（跳过渲染）</span></span><br><span class="line">    <span class="comment">// 返回 false 表示 props 不同（需要渲染）</span></span><br><span class="line">    <span class="keyword">return</span> prevProps.<span class="property">value</span> === nextProps.<span class="property">value</span>;</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>useMemo</p>
-<p>缓存计算结果，只有当依赖项变化时才重新计算</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> memoizedValue = <span class="title function_">useMemo</span>(</span><br><span class="line">  <span class="function">() =&gt;</span> <span class="language-xml"><span class="tag">&lt;<span class="name">Text</span>&gt;</span>&#123;a&#125;<span class="tag">&lt;/<span class="name">Text</span>&gt;</span></span>,</span><br><span class="line">  [a, b] <span class="comment">// 依赖项数组</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
-<li><p>对比</p>
-<table>
-<thead>
-<tr>
-<th>特性</th>
-<th>React.memo</th>
-<th>useMemo</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>本质</td>
-<td>缓存 JSX 元素</td>
-<td>包装组件</td>
-</tr>
-<tr>
-<td>类型</td>
-<td>高阶组件 (HOC)</td>
-<td>React Hook</td>
-</tr>
-<tr>
-<td>作用对象</td>
-<td>整个组件</td>
-<td>单个值&#x2F;计算结果</td>
-</tr>
-<tr>
-<td>优化级别</td>
-<td>父组件内部优化</td>
-<td>子组件自身优化</td>
-</tr>
-<tr>
-<td>主要用途</td>
-<td>防止不必要的组件重新渲染</td>
-<td>避免昂贵的重复计算</td>
-</tr>
-<tr>
-<td>触发条件</td>
-<td>当 props 改变时</td>
-<td>当依赖项改变时</td>
-</tr>
-<tr>
-<td>返回值</td>
-<td>记忆化组件</td>
-<td>记忆化值</td>
-</tr>
-<tr>
-<td>使用位置</td>
-<td>组件定义处</td>
-<td>组件内部</td>
-</tr>
-<tr>
-<td>优化级别</td>
-<td>组件级别</td>
-<td>计算级别</td>
-</tr>
-<tr>
-<td>重新执行是否状态重置</td>
-<td>❌（不会导致状态重置</td>
-<td>✔</td>
-</tr>
-<tr>
-<td>影响范围</td>
-<td>仅影响当前使用位置</td>
-<td>影响所有使用该组件的地方</td>
-</tr>
-</tbody></table>
-</li>
-<li><p>场景推荐</p>
-<ul>
-<li>useMemo<ul>
-<li>避免大规模组件树重复渲染</li>
-<li>保持组件引用稳定</li>
-<li>条件渲染优化</li>
-</ul>
-</li>
-<li>React.memo<ul>
-<li>纯展示组件优化</li>
-<li>防止props未变的重新渲染</li>
-<li>自定义比较逻辑</li>
-</ul>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>场景</th>
-<th>推荐方式</th>
-<th>原因</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>纯展示组件</td>
-<td>React.memo</td>
-<td>保持状态，响应props变化</td>
-</tr>
-<tr>
-<td>大型列表项渲染</td>
-<td>useMemo(() &#x3D;&gt; &lt;&gt;)</td>
-<td>避免重复创建大量元素</td>
-</tr>
-<tr>
-<td>需要保持内部状态的组件</td>
-<td>React.memo</td>
-<td>防止状态意外重置</td>
-</tr>
-<tr>
-<td>需要稳定引用的组件（如动画）</td>
-<td>useMemo(() &#x3D;&gt; &lt;&gt;)</td>
-<td>确保组件引用不变</td>
-</tr>
-<tr>
-<td>条件渲染的昂贵组件</td>
-<td>useMemo(() &#x3D;&gt; &lt;&gt;)</td>
-<td>避免重复挂载&#x2F;卸载开销</td>
-</tr>
-<tr>
-<td>需要深度比较props的组件</td>
-<td>React.memo + 比较函数</td>
-<td>自定义比较逻辑更灵活</td>
-</tr>
-</tbody></table>
-<p>  优化组件的创建过程时 → 使用 useMemo(() &#x3D;&gt; <Component />)</p>
-<p>  想优化组件的渲染行为时 → 使用 React.memo(Component)</p>
-</li>
-<li><p>useMemo会导致状态重置</p>
-</li>
-</ul>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// React 内部伪代码</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">reconcileChildren</span>(<span class="params">parentFiber</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (parentFiber.<span class="property">alternate</span> === <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="comment">// 首次渲染：挂载新组件</span></span><br><span class="line">    <span class="keyword">const</span> newFiber = <span class="title function_">createFiberFromElement</span>(element);</span><br><span class="line">    parentFiber.<span class="property">child</span> = newFiber;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 更新：比较新旧元素</span></span><br><span class="line">    <span class="keyword">const</span> oldFiber = parentFiber.<span class="property">alternate</span>.<span class="property">child</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (oldFiber.<span class="property">elementType</span> === element.<span class="property">type</span>) &#123;</span><br><span class="line">      <span class="comment">// 类型相同：复用 Fiber（保持状态）</span></span><br><span class="line">      <span class="title function_">reuseFiber</span>(oldFiber, element);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 类型不同：创建新 Fiber（重置状态）</span></span><br><span class="line">      <span class="keyword">const</span> newFiber = <span class="title function_">createFiberFromElement</span>(element);</span><br><span class="line">      parentFiber.<span class="property">child</span> = newFiber;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>当依赖项变化时，返回的是新 React 元素</li>
-<li>React 比较新旧元素时发现 element.type 相同但 element !&#x3D;&#x3D; oldFiber.element</li>
-<li>React 将其视为新组件实例，创建新 Fiber 节点 → 状态重置</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/React/%E3%80%90React%E3%80%91hooks/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/React/%E3%80%90React%E3%80%91hooks/" class="post-title-link" itemprop="url">hooks</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-08-29 10:50:58" itemprop="dateModified" datetime="2025-08-29T10:50:58+08:00">2025-08-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/react/" itemprop="url" rel="index"><span itemprop="name">react</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <ul>
-<li><p>缓存相关</p>
-<ul>
-<li>useEffect&#x2F;useLayoutEffect </li>
-<li>useCallback</li>
-<li>useMemo</li>
-</ul>
-</li>
-<li><p>react相关</p>
-<ul>
-<li>useContext</li>
-<li>useDebugValue</li>
-<li>useId</li>
-<li>useImperativeHandle</li>
-<li>useReducer</li>
-<li>useSyncExternalStore</li>
-</ul>
-</li>
-<li><p>数据相关</p>
-<ul>
-<li>useDeferredValue</li>
-<li>useRef</li>
-<li>useState</li>
-<li>useTransition</li>
-</ul>
-</li>
-</ul>
-<h2 id="useCallback"><a href="#useCallback" class="headerlink" title="useCallback"></a>useCallback</h2><h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul>
-<li><p>参数：<code>useCallback(fn, dependencies)</code></p>
-<ul>
-<li><p><code>fn: function</code>: 缓存的函数。此函数可以接受任何参数并且返回任何值。React 将会在初次渲染而非调用时返回该函数。当进行下一次渲染时，如果 dependencies 相比于上一次渲染时没有改变，那么 React 将会返回相同的函数。否则，React 将返回在最新一次渲染中传入的函数，并且将其缓存以便之后使用。React 不会调用此函数，而是返回此函数。你可以自己决定何时调用以及是否调用。</p>
-</li>
-<li><p><code>dependencies: array</code>: 依赖项，当依赖项发生变化时，fn会重新执行。响应式值包括 props、state，和所有在你组件内部直接声明的变量和函数。如果你的代码检查工具 配置了 React，那么它将校验每一个正确指定为依赖的响应式值。依赖列表必须具有确切数量的项，并且必须像 [dep1, dep2, dep3] 这样编写。React 使用 <code>Object.is</code> 比较每一个依赖和它的之前的值。</p>
-</li>
-<li><p>返回值：<code>function</code>: 缓存的函数在初次渲染时，useCallback 返回你已经传入的 fn 函数。在之后的渲染中, 如果依赖没有改变，useCallback 返回上一次渲染中缓存的 fn 函数；否则返回这一次渲染传入的 fn。</p>
-</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="useRef"><a href="#useRef" class="headerlink" title="useRef"></a>useRef</h2><p>返回一个 ref 对象。这个 ref 对象在组件的整个生命周期内保持不变，但是修改这个值的时候不会触发组件的更新</p>
-<ul>
-<li><p>与定义一个普通变量的区别是</p>
-<ul>
-<li>useRef：</li>
-</ul>
-<p>  在组件重新渲染时保持其值</p>
-<p>  修改.current属性不会触发重新渲染</p>
-<p>  适合存储需要在渲染间保持但不影响渲染逻辑的值</p>
-<ul>
-<li>普通变量：</li>
-</ul>
-<p>  每次组件重新渲染时都会重新初始化</p>
-<p>  无法在多次渲染之间保持状态</p>
-<p>  适合存储临时计算值或单次渲染所需数据</p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/PWA/%E3%80%90pwa%E3%80%91Service%20Worker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/PWA/%E3%80%90pwa%E3%80%91Service%20Worker/" class="post-title-link" itemprop="url">【pwa】Service Worker</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2025-08-14 11:18:06 / Modified: 11:19:54" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/PWA/" itemprop="url" rel="index"><span itemprop="name">PWA</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="service-worker"><a href="#service-worker" class="headerlink" title="service worker"></a>service worker</h1><h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><ul>
-<li><p>是一个独立的worker线程，有自己的上下文，独立于当前网页的进程</p>
-</li>
-<li><p>安装成功后，只能手动卸载，否则将永远存在</p>
-</li>
-<li><p>service worker节省性能，使用时自动唤醒，不使用时自动休眠</p>
-<p>属于事件驱动型Worker，Service Worker在空闲时进入空闲状态节省内存和处理器使用；当有onfetch&#x2F;onasync&#x2F;onmessage&#x2F;onpush等事件时才会激活线程</p>
-</li>
-<li><p>必须运行在https下或者localhost下</p>
-</li>
-<li><p>注册时必须是当前域名下</p>
-</li>
-</ul>
-<h2 id="相关接口"><a href="#相关接口" class="headerlink" title="相关接口"></a>相关接口</h2><h3 id="ServiceWorker"><a href="#ServiceWorker" class="headerlink" title="ServiceWorker"></a>ServiceWorker</h3><p>对ServiceWorker线程的引用，可用于获取线程信息和向线程发送信息</p>
-<h3 id="ServiceWorkerRegistration"><a href="#ServiceWorkerRegistration" class="headerlink" title="ServiceWorkerRegistration"></a>ServiceWorkerRegistration</h3><ul>
-<li><p>对于ServiceWorker注册实例的引用，可用于注册同步消息，推送消息，通知等</p>
-</li>
-<li><p>Service Worker注册成功后的实例，可以控制共享相同源的一个或者多个页面</p>
-</li>
-<li><p>该对象的持久化列表由浏览器维护</p>
-</li>
-<li><p>ServiceWorkerContainer和ServiceWorkerGlobalScope可以通过<code>await navigator.serviceWorker.ready</code>、<code>navigator.serviceWorker.getRegistration()</code>、<code>self.registration</code>获取</p>
-</li>
-</ul>
-<h3 id="ServiceWorkerContaine"><a href="#ServiceWorkerContaine" class="headerlink" title="ServiceWorkerContaine"></a>ServiceWorkerContaine</h3><ul>
-<li><p>window环境下用于注册、注销Service Worker线程的容器</p>
-</li>
-<li><p>对Service Worker从注册到卸载的整个流程进行控制</p>
-</li>
-<li><p>通过window.navigator.serviceWorker访问Service WorkerRegistration和Service Worker接口</p>
-</li>
-</ul>
-<h3 id="ServiceWorkerGlobalScope"><a href="#ServiceWorkerGlobalScope" class="headerlink" title="ServiceWorkerGlobalScope"></a>ServiceWorkerGlobalScope</h3><ul>
-<li><p>Service Worker线程中的Context</p>
-</li>
-<li><p>不支持处理同步请求，只能处理异步</p>
-</li>
-</ul>
-<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><h3 id="脚本生命周期"><a href="#脚本生命周期" class="headerlink" title="脚本生命周期"></a>脚本生命周期</h3><ul>
-<li>parsed（解析成功）</li>
-</ul>
-<p> 当ServiceWorkerContainer.register执行成功后，并不意味着注册的Service Worker文件已经安装或者激活了，而是注册的Service Worker文件解析完成了，符合文件同源及https协议等</p>
-<ul>
-<li><p>installing（正在安装）</p>
-<p>ServiceWorkerGlobalScope.oninstall事件被触发，可以在这个事件中做一些静态资源的缓存等操作</p>
-</li>
-<li><p>installed（安装成功）</p>
-<p>ServiceWorkerGlobalScope.oninstall处理完成后，状态即为installed，此时新的Service Worker线程处于等待状态，可以手动调用self.skipWating或者重新打开页面进行激活</p>
-<p>网站第一次安装时会自动触发激活</p>
-</li>
-<li><p>activating（正在激活）</p>
-</li>
-</ul>
-<p> 触发ServiceWorkerGlobalScope.onactivate事件，可以在这个事件中处理一些旧版本的资源删除操作。</p>
-<p> 此状态手动调用self.clients.claim()，相关页面会立刻被新的Service Worker线程控制，并触发ServiceWorkerContainer.oncontrollerchange事件</p>
-<ul>
-<li><p>activated（激活成功）</p>
-<p>ServiceWorkerGlobalScope.onactivate事件中的处理逻辑完成后，状态变为已激活</p>
-</li>
-<li><p>redundant（废弃）</p>
-<p>安装失败、激活失败会导致当前注册的Service Worker线程废弃。</p>
-<p>新的Service Worker线程激活成功会导致旧的Service Worker线程废弃</p>
-</li>
-</ul>
-<h3 id="线程的生命周期"><a href="#线程的生命周期" class="headerlink" title="线程的生命周期"></a>线程的生命周期</h3><ul>
-<li><p>STARTING（正在启动）</p>
-</li>
-<li><p>RUNNING（正在运行）</p>
-</li>
-<li><p>STOPPING（正在停止）</p>
-</li>
-<li><p>STOPPED（已停止）</p>
-</li>
-</ul>
-<h3 id="线程退出条件"><a href="#线程退出条件" class="headerlink" title="线程退出条件"></a>线程退出条件</h3><ul>
-<li><p>Service Worker文件中存在异常情况（Js语法错误、worker安装失败&#x2F;激活失败、Service Worker线程执行时存在未捕获的异常）</p>
-</li>
-<li><p>Service Worker线程监听事件函数是否处理完成，变为空闲状态时，Service Worker线程会自动退出</p>
-</li>
-<li><p>Service Worker Js执行时间过长（js执行时间超过30s，fetch请求超过5min）</p>
-</li>
-<li><p>启动Service Worker线程的30s后，浏览器会周期性检查线程是否可以退出，关掉超过30s的线程</p>
-</li>
-</ul>
-<h3 id="更新Service-Worker文件的条件"><a href="#更新Service-Worker文件的条件" class="headerlink" title="更新Service Worker文件的条件"></a>更新Service Worker文件的条件</h3><ul>
-<li><p>线上运行的文件与浏览器运行的文件有一个字节不同</p>
-</li>
-<li><p>注册的Service Worker文件发生变化时，即使只是换了一个名字，也会认为这是一个新的文件，会触发更新</p>
-</li>
-<li><p>手动调用ServiceWorkerRegistration.update()时，浏览器会主动拉去新的Service Worker文件进行比对，比如发现不一致，那么会触发更新</p>
-</li>
-<li><p>importScripts包含进来的js文件内容发生变化时，默认情况下遵循http缓存规则，也可以通过设置updateViaCache配置不走缓存</p>
-</li>
-<li><p>当安装24h后，浏览器会主动无缓存地拉取相关文件进行比较</p>
-</li>
-</ul>
-<h4 id="触发更新后"><a href="#触发更新后" class="headerlink" title="触发更新后"></a>触发更新后</h4><ul>
-<li><p>更新的线程和现在的线程一起启动，并且都有自己的install事件</p>
-</li>
-<li><p>如果新的Service Worker线程出现不正常的状态码(4xx&#x2F;5xx)、解析失败、执行过程中发生错误等，浏览器会丢弃新的Service Worker线程，但当前的Service Worker线程仍处于活跃状态</p>
-</li>
-<li><p>新的Service Worker安装成功后将处于waiting状态，直到当前的Service Worker控制的client为0</p>
-</li>
-<li><p>可以使用self.skipWaiting()防止等待状态，将其立即激活</p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/PWA/%E3%80%90pwa%E3%80%91pwa%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/PWA/%E3%80%90pwa%E3%80%91pwa%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/" class="post-title-link" itemprop="url">【pwa】pwa功能模块</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2025-08-14 11:18:06 / Modified: 11:20:00" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/PWA/" itemprop="url" rel="index"><span itemprop="name">PWA</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="pwa-功能模块"><a href="#pwa-功能模块" class="headerlink" title="pwa 功能模块"></a>pwa 功能模块</h1><h2 id="fetch"><a href="#fetch" class="headerlink" title="fetch"></a>fetch</h2><p>对 http 接口进行抽象，包含<code>Request</code>、<code>Response</code>、<code>Headers</code>、<code>Body</code>模块。Fetch Api 是异步化接口，所有请求接口都以<code>Promise</code>结果返回</p>
-<p><code>fetch()</code>方法由<code>Content Security Policy</code>的<code>connect-src</code>指令控制，而不是他请求的资源。fetch()接收到一个错误的 http 状态码时（如 4xx、5xx），并不会标记为<code>Promise.reject</code>，而是<code>Promise.reslove</code>，但返回的 Response 接口对象的 ok 属性会被置为<code>false</code>。</p>
-<p>仅在网络出现故障或者请求被浏览器取消时才会返回<code>Promise.reject</code></p>
-<h1></h1>
-
-<h3 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h3><p>Fetch Api 的 Request 接口表示资源请求，和 fetch()方法拥有相同的构造器</p>
-<ul>
-<li><p>构造器</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> req = <span class="keyword">new</span> <span class="title class_">Request</span>(url, options);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>方法</p>
-<blockquote>
-<p><code>clone()</code>: 用于创建请求对象的副本</p>
-</blockquote>
-</li>
-<li><p>例子</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Request</span>(<span class="string">&quot;xxx&quot;</span>, &#123;</span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&quot;no-cors&quot;</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1></h1>
-
-<h3 id="Headers"><a href="#Headers" class="headerlink" title="Headers"></a>Headers</h3><p>用于构造 Request 的 headers 属性，主要用于 http 请求和响应头的各种操作，可以通过 Request.headers 和 Response.headers 属性获取 Headers 对象</p>
-<ul>
-<li><p>构造器</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> headers = <span class="keyword">new</span> <span class="title class_">Headers</span>(options);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>方法</p>
-<ul>
-<li><p>append(name, value)</p>
-<p>将新值附加到 Headers 接口对象上，主要用于为一个属性添加多个值，如果没有，则添加该字段及值</p>
-</li>
-<li><p>delete(name):</p>
-<p>删除 Header 接口对象上的标头字段</p>
-</li>
-<li><p>entries():</p>
-<p>返回一个包含 Header 接口对象字段和值的迭代器</p>
-</li>
-<li><p>forEach(callback(values, name)):</p>
-<p>为 Header 接口对象的遍历器增加回调函数</p>
-</li>
-<li><p>get(name):</p>
-<p>获取 Header 中键为 name 的值</p>
-</li>
-<li><p>has(name):</p>
-<p>判断 Header 是否有键为 name 的</p>
-</li>
-<li><p>keys():</p>
-<p>返回 Header 接口对象所有字段的迭代器</p>
-</li>
-<li><p>set(name, value):</p>
-<p>为 Headers 接口对象设置字段和值</p>
-</li>
-<li><p>values():</p>
-<p>返回 Header 接口对象所有值的迭代器</p>
-</li>
-</ul>
-</li>
-<li><p>例子</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Request</span>(<span class="string">&quot;xxx&quot;</span>, &#123;</span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&quot;no-cors&quot;</span>,</span><br><span class="line">    <span class="attr">headers</span>: <span class="keyword">new</span> <span class="title class_">Headers</span>(&#123;</span><br><span class="line">      <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;xxx&quot;</span>,</span><br><span class="line">    &#125;),</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1></h1>
-
-<h3 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h3><p>请求响应类型为 Reponse，通过 Reponse 接口可以直接创建一个新的 Reponse 接口对象</p>
-<p>Reponse 接口对象的正文信息只能使用一次，多次使用需要进行复制</p>
-<ul>
-<li><p>构造器</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> res = <span class="keyword">new</span> <span class="title class_">Response</span>(<span class="attr">body</span>: <span class="title class_">TBody</span>, options)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">TBody</span> =</span><br><span class="line">  | <span class="string">&quot;Blob&quot;</span></span><br><span class="line">  | <span class="string">&quot;BufferSource&quot;</span></span><br><span class="line">  | <span class="string">&quot;FormData&quot;</span></span><br><span class="line">  | <span class="string">&quot;ReadableStream&quot;</span></span><br><span class="line">  | <span class="string">&quot;URLSearchParams&quot;</span></span><br><span class="line">  | <span class="built_in">string</span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>方法</p>
-<ul>
-<li><p>clone()</p>
-<p>创建响应对象的副本，响应内容完全一样</p>
-</li>
-<li><p>error()</p>
-<p>用于返回与网络错误关联的新的 Response 对象</p>
-</li>
-<li><p>redirect(url, status)</p>
-<p>用于返回一个重定向到指定的 Url 的 Response 对象</p>
-</li>
-</ul>
-</li>
-<li><p>例子</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="title class_">Response</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123; <span class="attr">data</span>: <span class="number">1</span> &#125;), &#123;</span><br><span class="line">  <span class="attr">headers</span>: <span class="keyword">new</span> <span class="title class_">Headers</span>(&#123;&#125;),</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1></h1>
-
-<h3 id="Body"><a href="#Body" class="headerlink" title="Body"></a>Body</h3><p>由 Response 和 Request 接口对象实现，为这些接口对象提供了主体流和是否使用标志及 MIME 类型</p>
-<ul>
-<li><p>方法</p>
-<ul>
-<li><p>arrayBuffer():</p>
-<p>将 Response 流读完并返回一个 ArrayBuffer 类型的 Promise 对象</p>
-</li>
-<li><p>blob():</p>
-<p>将 Response 流读取完成并返回一个 blob 类型的 Promise 对象。当 Response.type&#x3D;opaque 时，则生成的 Blob.size&#x3D;0，Blob.type 为空，使用 URL.createObjectURL 会报错</p>
-</li>
-<li><p>formData():</p>
-<p>将 Response 流读取完成并返回一个 FormData 类型的 Promise 对象。</p>
-</li>
-<li><p>json():</p>
-<p>将 Response 流读取完成并返回一个 json 类型的 Promise 对象。如果 Response 流的内容不符合 json 字符串规则，报错</p>
-</li>
-<li><p>text():</p>
-<p>将 Response 流读取完成并返回一个字符串类型的 Promise 对象，使用 UTF-8 解码</p>
-</li>
-</ul>
-</li>
-</ul>
-<h1></h1>
-
-<h2 id="Notification"><a href="#Notification" class="headerlink" title="Notification"></a>Notification</h2><p>用于配置和显示用户的桌面通知。</p>
-<ul>
-<li>必须在 https 或者本地域名下使用<h1></h1></li>
-</ul>
-<h3 id="消息展示流程"><a href="#消息展示流程" class="headerlink" title="消息展示流程"></a>消息展示流程</h3><ul>
-<li><p>判断是否支持 Notification</p>
-</li>
-<li><p>支持的情况下判断是否授权，未授权会进行授权确认</p>
-</li>
-<li><p>授权成功后就可以展示通知信息</p>
-<h1></h1></li>
-</ul>
-<h3 id="构造"><a href="#构造" class="headerlink" title="构造"></a>构造</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> not = <span class="keyword">new</span> <span class="title class_">Notification</span>(title, options);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>options:</p>
-<ul>
-<li><p>actions: TNotificationActions[]，表示在显示通知用户可用的操作选项</p>
-<p>当用户选择这些操作项后，Service Worker 会通过 onnotificationclick 事件获取用户的选择操作，此属性只在 Service Worker 下有效。</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">TNotificationActions</span> = &#123;</span><br><span class="line">  <span class="attr">action</span>: <span class="built_in">string</span>; <span class="comment">//显示在通知上的action标志</span></span><br><span class="line">  <span class="attr">title</span>: <span class="built_in">string</span>; <span class="comment">//显示在通知上的action标题</span></span><br><span class="line">  <span class="attr">icon</span>: <span class="built_in">string</span>; <span class="comment">//显示在action上的icon Url</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>badge: 在没有足够空间显示消息时，显示 badge 设置的图片</p>
-</li>
-<li><p>body： 通知中显示的内容消息</p>
-</li>
-<li><p>data：用于消息通知的数据传递。通过 e.currentTarget.data 获取</p>
-</li>
-<li><p>dir：设置显示通知的方向</p>
-</li>
-<li><p>icon：消息通知中显示的图标的 url</p>
-</li>
-<li><p>lang：设置通知中的语言，必须是有效 bcp 47 语言标记</p>
-</li>
-<li><p>renotify：Boolean，新通知替换旧通知时是否通知用户，默认为 false，表示不会通知</p>
-</li>
-<li><p>requireInteraction：通知应该保持活动状态，直到用户单击或者关闭它，而不是自动关闭。必须带 tag 才有效果</p>
-</li>
-<li><p>silent：消息是否是静默通知</p>
-</li>
-<li><p>tag：给消息 tag，用于进行消息分组</p>
-</li>
-<li><p>timestamp：设置创建通知的时机</p>
-</li>
-<li><p>vibrate：收到消息通知时的震动模式。以毫秒为单位的时间数组。如[100,200,300]表示震动 100ms，暂停 200ms，然后震动 300ms</p>
-</li>
-</ul>
-</li>
-</ul>
-<h1></h1>
-
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.html</span></span><br><span class="line">navigator.<span class="property">serviceWorker</span>.<span class="property">ready</span>.<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;ready&quot;</span>);</span><br><span class="line">  <span class="comment">//   打开授权</span></span><br><span class="line">  <span class="title class_">Notification</span>.<span class="title function_">requestPermission</span>().<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> not = <span class="keyword">new</span> <span class="title class_">Notification</span>(<span class="string">&quot;test&quot;</span>, &#123;</span><br><span class="line">      <span class="attr">body</span>: <span class="string">&quot;测试内容内容11111&quot;</span>,</span><br><span class="line">      <span class="attr">icon</span>: <span class="string">&quot;qr-code-fill.png&quot;</span>,</span><br><span class="line">      <span class="attr">requireInteraction</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">navigator.<span class="property">serviceWorker</span>.<span class="property">ready</span>.<span class="title function_">then</span>(<span class="function">(<span class="params">swReg</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;ready&quot;</span>);</span><br><span class="line">  <span class="title class_">Notification</span>.<span class="title function_">requestPermission</span>().<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 使用actions属性，不能用new来创建了</span></span><br><span class="line">    swReg.<span class="title function_">showNotification</span>(<span class="string">&quot;test&quot;</span>, &#123;</span><br><span class="line">      <span class="attr">body</span>: <span class="string">&quot;测试内容内容11111&quot;</span>,</span><br><span class="line">      <span class="attr">icon</span>: <span class="string">&quot;qr-code-fill.png&quot;</span>,</span><br><span class="line">      <span class="attr">requireInteraction</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">actions</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">action</span>: <span class="string">&quot;1&quot;</span>,</span><br><span class="line">          <span class="attr">title</span>: <span class="string">&quot;傻狗&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">action</span>: <span class="string">&quot;2&quot;</span>,</span><br><span class="line">          <span class="attr">title</span>: <span class="string">&quot;laoto&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      ],</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h1></h1>
-
-<h2 id="Sync后台同步"><a href="#Sync后台同步" class="headerlink" title="Sync后台同步"></a>Sync后台同步</h2><p>Sync Api可以在用户处理一些数据上传的操作时，无需关心网络环境，所有相关操作均会在合适的时机去完成数据同步</p>
-<h3 id="SyncManager"><a href="#SyncManager" class="headerlink" title="SyncManager"></a>SyncManager</h3><ul>
-<li><p>获取</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">navigator.<span class="property">serviceWorker</span>.<span class="property">ready</span>.<span class="title function_">then</span>(<span class="function"><span class="params">swReg</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="title class_">SyncManager</span> = swReg.<span class="property">sync</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><ul>
-<li><p>register(tag)</p>
-<p>注册一个Sync tag。tag值自定义，注册成功后，当网络成功时，会立即触发onsync事件</p>
-</li>
-<li><p>getTags()</p>
-<p>获取已注册但未完成的Sync tag</p>
-</li>
-</ul>
-<h1></h1>
-
-<h3 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h3><p>Sync注册成功后，当前网络会立即触发onsync事件，可在该事件里处理Sync tag是否完成。此事件需要在ServiceWorkerGlobalScope中监听</p>
-<h1></h1>
-
-<h3 id="Sync流程"><a href="#Sync流程" class="headerlink" title="Sync流程"></a>Sync流程</h3><ul>
-<li><p>Registered sync: 注册sync</p>
-</li>
-<li><p>Dispatched sync event：发出event事件</p>
-</li>
-<li><p>Sync completed： Sync完成</p>
-</li>
-</ul>
-<p>Sync tag是否完成取决于SyncEvent.waitUntil中的Promise是否返回reject。如果不是reject则立即完成；如果是reject，目前chrome浏览器会最多尝试3此onsync事件的触发，每次周期间隔至少5min</p>
-<h1></h1>
-
-<h2 id="Cache"><a href="#Cache" class="headerlink" title="Cache"></a>Cache</h2><ul>
-<li><p>Cache Api与其他存储的主要区别</p>
-<ul>
-<li><p>Cache存储虽然也是键值对进行存储，主要存储流式数据，但键是Request，值为Response。</p>
-</li>
-<li><p>Cache存储是异步化的</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>Cache主要涉及CacheStorage接口和Cache接口</p>
-<h1></h1>
-
-<h3 id="CacheStorage"><a href="#CacheStorage" class="headerlink" title="CacheStorage"></a>CacheStorage</h3><ul>
-<li><p>用于管理Cache接口对象</p>
-</li>
-<li><p>一个域名浏览器指挥创建一个CacheStorage，底层会创建相应的目录，相关的Cache会被存储在该目录下。</p>
-<h1></h1></li>
-</ul>
-<h3 id="Cache-1"><a href="#Cache-1" class="headerlink" title="Cache"></a>Cache</h3><ul>
-<li><p>键是Request，值为Response</p>
-</li>
-<li><p>Cache数据生成后，缓存数据会一直存在，修改删除操作需要api方法调用</p>
-</li>
-<li><p>Cache只能存储Get请求的Request，Cache的添加方法进行相同的请求时会覆盖之前的</p>
-<h1></h1></li>
-</ul>
-<h3 id="opaque响应缓存问题"><a href="#opaque响应缓存问题" class="headerlink" title="opaque响应缓存问题"></a>opaque响应缓存问题</h3><p>不透明响应：采用mode:no-cors的不允许跨域的跨域请求，Response的类型为opaque</p>
-<p>这类响应的status为0，body长度不可读，因此不能确认响应完整性及正确性，所以缓存下来无法查看其长度和内容</p>
-<p>Chrome浏览器对这种响应做了一层数据填充，来保证不透明响应的数据安全性</p>
-<h1></h1>
-
-<h2 id="Push消息推送"><a href="#Push消息推送" class="headerlink" title="Push消息推送"></a>Push消息推送</h2><h3 id="涉及接口"><a href="#涉及接口" class="headerlink" title="涉及接口"></a>涉及接口</h3><ul>
-<li><p>PushManager：推送服务器的订阅和订阅信息的获取等</p>
-</li>
-<li><p>PushSubscription：订阅成功后的对象，主要用于获取订阅信息</p>
-</li>
-<li><p>PushMessageData：push事件推送的消息对象</p>
-</li>
-</ul>
-<h1></h1>
-
-<h3 id="推送"><a href="#推送" class="headerlink" title="推送"></a>推送</h3><h4 id="浏览器订阅"><a href="#浏览器订阅" class="headerlink" title="浏览器订阅"></a>浏览器订阅</h4><p>需要应用服务器的公钥，通过公钥和浏览器的用户通知得到授权，然后由浏览器向关联的消息推送服务器进行订阅，获取包含消息推送服务器的信息，最后将这些信息发送到应用服务器进行保存。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">nagigator.<span class="property">serviceWorker</span>.<span class="property">ready</span>.<span class="title function_">then</span>(<span class="function"><span class="params">swReg</span>=&gt;</span>&#123;</span><br><span class="line">    swReg.<span class="property">pushManager</span>.<span class="title function_">subscribe</span>(&#123;</span><br><span class="line">        <span class="attr">userVisibleOnly</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">applicationServerKey</span>: <span class="title function_">urlB64ToUint8Array</span>(<span class="string">&quot;xx&quot;</span>)</span><br><span class="line">    &#125;).<span class="title function_">then</span>(<span class="function"><span class="params">pushSub</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="title function_">fetch</span>(<span class="string">&quot;https://server-address&quot;</span>, &#123;</span><br><span class="line">            <span class="attr">method</span>: <span class="string">&quot;post&quot;</span>,</span><br><span class="line">            <span class="attr">bdy</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(pushSub.<span class="title function_">toJSON</span>())</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h1></h1>
-
-<h4 id="应用服务器推送"><a href="#应用服务器推送" class="headerlink" title="应用服务器推送"></a>应用服务器推送</h4><p>应用服务器安装web push协议将消息发送到订阅信息中的消息推送服务器即可，无需关心浏览器端</p>
-<h1></h1>
-
-<h4 id="浏览器端接收"><a href="#浏览器端接收" class="headerlink" title="浏览器端接收"></a>浏览器端接收</h4><p>消息推送服务器接收到消息后会进行校验，通过后会向订阅的浏览器客户端进行消息推送。</p>
-<p>此时将收到的消息通过Ntification Api进行展示</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">self.<span class="title function_">addEventListener</span>(<span class="string">&quot;push&quot;</span>, <span class="function"><span class="params">e</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> data = e.<span class="property">data</span>.<span class="title function_">json</span>()</span><br><span class="line">    self.<span class="property">registration</span>.<span class="title function_">showNotification</span>(data.<span class="property">title</span>, &#123;</span><br><span class="line">        <span class="attr">body</span>: data.<span class="property">body</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/PWA/%E3%80%90pwa%E3%80%91mainifest/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/PWA/%E3%80%90pwa%E3%80%91mainifest/" class="post-title-link" itemprop="url">【pwa】mainifest</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/PWA/" itemprop="url" rel="index"><span itemprop="name">PWA</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="mainifest-json"><a href="#mainifest-json" class="headerlink" title="mainifest.json"></a>mainifest.json</h1><h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><p>通过 manifest.json 可以实现自定义启动画面、打开 url、设置界面颜色、设置桌面图标等</p>
-<h2 id="常用字段"><a href="#常用字段" class="headerlink" title="常用字段"></a>常用字段</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;short_name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pwa1&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pwa-测试用例1&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;icons&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;src&quot;</span><span class="punctuation">:</span> <span class="string">&quot;qr-code-fill-144.png&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;sizes&quot;</span><span class="punctuation">:</span> <span class="string">&quot;144x144&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;image/png&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;start_url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/test1&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;display&quot;</span><span class="punctuation">:</span> <span class="string">&quot;standalone&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;theme_color&quot;</span><span class="punctuation">:</span> <span class="string">&quot;blue&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;background_color&quot;</span><span class="punctuation">:</span> <span class="string">&quot;black&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>name: string</code></li>
-</ul>
-<p>描述应用的名称，会显示在桌面图标的标题位置和启动画面中</p>
-<ul>
-<li><p><code>short_name: string</code></p>
-<p>描述应用的短名称。当应用名字过长，在桌面图标无法全部显示时，会显示 shortname</p>
-</li>
-<li><p><code>scope：string</code></p>
-<p>设置 manifest 对于网站的作用范围。</p>
-</li>
-<li><p><code>start_url: string</code></p>
-<p>描述用户从设备主屏幕点击图标进入时的第一个地址，start_url 必须在 scope 的作用范围内</p>
-<ul>
-<li><p>如果为空，则以 manifest.json 作为 url</p>
-</li>
-<li><p>如果 url 打开失败，则和正常显示的网页打开错误的样式一样</p>
-</li>
-<li><p>如果设置的 url 和当前的项目不在一个域下，无法正常显示</p>
-</li>
-<li><p>如果 starturl 为相对地址，那么根路径基于 manifest 的路径</p>
-</li>
-<li><p>如果 starturl 为绝对路径，那么根路径为将</p>
-</li>
-</ul>
-</li>
-<li><p><code>icon：TIcon</code></p>
-<p>设置 webapp 图标集合。</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">TIcon</span> = &#123;</span><br><span class="line">  <span class="attr">src</span>: <span class="built_in">string</span>; <span class="comment">//图标地址</span></span><br><span class="line">  <span class="attr">type</span>: <span class="built_in">string</span>; <span class="comment">//图标mime类型，只能为image/png</span></span><br><span class="line">  <span class="attr">sizes</span>: <span class="built_in">string</span>; <span class="comment">//图标大小，用来表示width x height，单位为px，如果图标要适配多个尺寸，则多个尺寸用空格隔开。与真实图片大小要一致</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>适配规则：</p>
-<ul>
-<li><p>将 webapp 添加到桌面时，浏览器会适配最合适尺寸的图标。浏览器会首先去找与显示密度想匹配且尺寸调整为 48dp 屏幕密度的图标。例如在 2 倍像素的设备上使用 96px，3 倍像素的设备上使用 144px 的</p>
-</li>
-<li><p>如果没有找到合适的图标，那么会查找与设备特性匹配度最高的图标</p>
-</li>
-<li><p>如果图标路径错误，那么将显示浏览器的默认图标</p>
-</li>
-</ul>
-</li>
-<li><p><code>background_color: string</code></p>
-<p>启动画面的背景颜色。rgbs、hsl、hsla 等写法浏览器不支持。未设置时，默认白色</p>
-</li>
-<li><p><code>theme_color: string</code></p>
-<p>显示 web app 的主题色，显示在 banner 位置</p>
-</li>
-<li><p><code>display: &#39;fullscreen&#39;|&#39;standalone&#39;|&#39;minimal-ui&#39;|&#39;browser&#39;</code></p>
-<p>webapp 被启动时显示的类型</p>
-</li>
-<li><p><code>orientation</code>: <code>&#39;landscape-primary&#39;|&#39;landscape-secondary&#39;|&#39;landscape&#39;|&#39;portrait-primary&#39;|&#39;portrait-secondary&#39;|&#39;portrait&#39;|&#39;natural&#39;|&#39;any&#39;</code></p>
-<p>webapp 在屏幕上的显示方向</p>
-</li>
-<li><p><code>dir: &#39;ltr&#39;|&#39;rtl&#39;|&#39;auto&#39;</code></p>
-<p>文字的显示方向</p>
-</li>
-<li><p><code>related_applications: &#39;platform&#39;|&#39;id&#39;</code></p>
-<p>用于定义对应的原生应用，类似应用安装横幅提示的形式去推广、引流原生应用</p>
-</li>
-<li><p><code>prefer_related_applications: Boolean</code></p>
-<p>设置是否只允许用户安装原生应用</p>
-</li>
-</ul>
-<h2 id="生效条件"><a href="#生效条件" class="headerlink" title="生效条件"></a>生效条件</h2><ul>
-<li><p>必须是 https 或者 localhost</p>
-</li>
-<li><p>必须注册运行 service worker，且有 fetch 事件监听</p>
-</li>
-<li><p>manifest 必须要有 icons,且必须要至少有尺寸为144x144的</p>
-</li>
-<li><p>diaplay 设置为 standalone 或者 fullscreen</p>
-</li>
-<li><p>必须有 name 或者 short_name，start_url</p>
-</li>
-<li><p>prefer_related_applications 未设置或者为 false</p>
-</li>
-</ul>
-<h2 id="引导安装"><a href="#引导安装" class="headerlink" title="引导安装"></a>引导安装</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&quot;beforeinstallprompt&quot;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;beforeinstallprompt&quot;</span>);</span><br><span class="line">  e.<span class="title function_">preventDefault</span>();</span><br><span class="line">  e.<span class="title function_">prompt</span>();<span class="comment">//显示安装弹窗</span></span><br><span class="line">&#125;);</span><br><span class="line">navigator.<span class="property">serviceWorker</span></span><br><span class="line">  .<span class="title function_">register</span>(<span class="string">&quot;pwa1.js&quot;</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;service-pwa1注册成功&quot;</span>, res);</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;service-pwa1注册失败&quot;</span>, err);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -2512,7 +2209,7 @@
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2025</span>
+    <span itemprop="copyrightYear">2026</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>

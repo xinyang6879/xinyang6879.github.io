@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="为什么要引入任务调度React 15（之前）的痛点 旧架构是 同步渲染：更新一旦开始，就会一直占用主线程直到完成。  整个组件树的渲染是同步、不可中断的。  一旦开始 reconcilation（协调）阶段，会从顶到底一次性完成所有 diff，再统一更新 DOM。  假如树很大（几千组件），或者一次 setState 涉及大量组件更新，就可能导致：  掉帧（jank）：浏览器无法流畅地进行布局和绘">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react的任务及其优先级">
+<meta property="og:url" content="http://example.com/2025/10/30/React/%E3%80%90React%E3%80%91%E4%BB%BB%E5%8A%A1%E4%BC%98%E5%85%88%E7%BA%A7/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="为什么要引入任务调度React 15（之前）的痛点 旧架构是 同步渲染：更新一旦开始，就会一直占用主线程直到完成。  整个组件树的渲染是同步、不可中断的。  一旦开始 reconcilation（协调）阶段，会从顶到底一次性完成所有 diff，再统一更新 DOM。  假如树很大（几千组件），或者一次 setState 涉及大量组件更新，就可能导致：  掉帧（jank）：浏览器无法流畅地进行布局和绘">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-10-30T09:52:55.603Z">
+<meta property="article:modified_time" content="2025-11-05T12:18:12.378Z">
+<meta property="article:author" content="yangxin">
+<meta property="article:tag" content="react">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/10/30/React/%E3%80%90React%E3%80%91%E4%BB%BB%E5%8A%A1%E4%BC%98%E5%85%88%E7%BA%A7/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2025/10/30/React/%E3%80%90React%E3%80%91%E4%BB%BB%E5%8A%A1%E4%BC%98%E5%85%88%E7%BA%A7/","path":"2025/10/30/React/【React】任务优先级/","title":"react的任务及其优先级"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>react的任务及其优先级 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%BC%95%E5%85%A5%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6"><span class="nav-number">1.</span> <span class="nav-text">为什么要引入任务调度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#React-15%EF%BC%88%E4%B9%8B%E5%89%8D%EF%BC%89%E7%9A%84%E7%97%9B%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">React 15（之前）的痛点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-Fiber%EF%BC%88v16%EF%BC%8C2017%EF%BC%89%E2%80%94%E2%80%94%E4%B8%BA%E5%B9%B6%E5%8F%91%E6%B8%B2%E6%9F%93%E5%A5%A0%E5%9F%BA"><span class="nav-number">1.2.</span> <span class="nav-text">React Fiber（v16，2017）——为并发渲染奠基</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scheduler%E8%B0%83%E5%BA%A6%E5%99%A8%E5%92%8C%E5%B9%B6%E5%8F%91%E6%B8%B2%E6%9F%93"><span class="nav-number">2.</span> <span class="nav-text">Scheduler调度器和并发渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E5%99%A8%EF%BC%88Scheduler%EF%BC%89%E2%80%94%E2%80%94%E5%86%B3%E5%AE%9A%E2%80%9C%E4%BD%95%E6%97%B6%E6%89%A7%E8%A1%8C%E2%80%9D"><span class="nav-number">2.1.</span> <span class="nav-text">任务调度器（Scheduler）——决定“何时执行”</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Scheduler-%E7%9A%84%E6%A0%B8%E5%BF%83%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.1.1.</span> <span class="nav-text">Scheduler 的核心循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97%E7%9A%84%E4%BA%A4%E4%BA%92"><span class="nav-number">2.1.2.</span> <span class="nav-text">浏览器的任务队列的交互</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E7%94%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%94%9F%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.1.3.</span> <span class="nav-text">不用浏览器原生任务队列原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%A4%E4%BA%92"><span class="nav-number">2.1.4.</span> <span class="nav-text">交互</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Scheduler-%E7%9A%84%E8%81%8C%E8%B4%A3%EF%BC%9A"><span class="nav-number">2.1.5.</span> <span class="nav-text">Scheduler 的职责：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E7%8E%B0%E4%BE%9D%E6%97%A7%E6%98%AF%E5%90%8C%E6%AD%A5%E6%B8%B2%E6%9F%93"><span class="nav-number">2.1.6.</span> <span class="nav-text">表现依旧是同步渲染</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E6%B8%B2%E6%9F%93%EF%BC%88Concurrent-Rendering%EF%BC%89%E2%80%94%E2%80%94%E5%88%A9%E7%94%A8%E8%B0%83%E5%BA%A6%E5%AE%9E%E7%8E%B0%E6%96%B0%E8%83%BD%E5%8A%9B"><span class="nav-number">2.2.</span> <span class="nav-text">并发渲染（Concurrent Rendering）——利用调度实现新能力</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%83%BD%E5%8A%9B"><span class="nav-number">2.2.1.</span> <span class="nav-text">能力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lanes%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.2.2.</span> <span class="nav-text">Lanes模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B"><span class="nav-number">2.2.3.</span> <span class="nav-text">流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="nav-number">2.2.4.</span> <span class="nav-text">中断与恢复</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-1"><span class="nav-number">2.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">3.</span> <span class="nav-text">任务优先级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">3.1.</span> <span class="nav-text">优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%80%85%E6%89%8B%E5%8A%A8%E4%BF%AE%E6%94%B9%E4%BC%98%E5%85%88%E7%BA%A7api"><span class="nav-number">3.2.</span> <span class="nav-text">开发者手动修改优先级api</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E5%B8%B8%E7%94%A8%EF%BC%88%E7%A8%B3%E5%AE%9A-API%EF%BC%89"><span class="nav-number">3.2.1.</span> <span class="nav-text">推荐常用（稳定 API）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E5%A4%AA%E5%B8%B8%E7%94%A8-%E4%B8%8D%E7%A8%B3%E5%AE%9A%EF%BC%88%E4%BD%8E%E7%BA%A7%EF%BC%89API%EF%BC%88%E6%9D%A5%E8%87%AA-scheduler-%E5%8C%85%EF%BC%89"><span class="nav-number">3.2.2.</span> <span class="nav-text">不太常用 &#x2F; 不稳定（低级）API（来自 scheduler 包）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#API%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">3.2.3.</span> <span class="nav-text">API优先级</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/10/30/React/%E3%80%90React%E3%80%91%E4%BB%BB%E5%8A%A1%E4%BC%98%E5%85%88%E7%BA%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="react的任务及其优先级 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          react的任务及其优先级
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-10-30 17:52:55" itemprop="dateCreated datePublished" datetime="2025-10-30T17:52:55+08:00">2025-10-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-11-05 20:18:12" itemprop="dateModified" datetime="2025-11-05T20:18:12+08:00">2025-11-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/react/" itemprop="url" rel="index"><span itemprop="name">react</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="为什么要引入任务调度"><a href="#为什么要引入任务调度" class="headerlink" title="为什么要引入任务调度"></a>为什么要引入任务调度</h2><h3 id="React-15（之前）的痛点"><a href="#React-15（之前）的痛点" class="headerlink" title="React 15（之前）的痛点"></a>React 15（之前）的痛点</h3><ul>
+<li><p>旧架构是 <strong>同步渲染</strong>：更新一旦开始，就会<strong>一直占用主线程</strong>直到完成。</p>
+</li>
+<li><p>整个组件树的渲染是同步、不可中断的。</p>
+</li>
+<li><p>一旦开始 reconcilation（协调）阶段，会从顶到底一次性完成所有 diff，再统一更新 DOM。</p>
+</li>
+<li><p>假如树很大（几千组件），或者一次 setState 涉及大量组件更新，就可能导致：</p>
+<ul>
+<li><strong>掉帧（jank）</strong>：浏览器无法流畅地进行布局和绘制（16.67ms一帧的规则被打破）</li>
+<li><strong>UI 卡顿</strong>：浏览器无法及时响应用户交互（点击、输入等），造成卡顿感。（无法响应用户输入）</li>
+<li><strong>低优先级更新阻塞高优先级任务</strong></li>
+</ul>
+</li>
+</ul>
+<p>React 团队需要一种方式：</p>
+<blockquote>
+<p>“让渲染可以分片执行、可以中断、可以优先处理紧急任务（比如输入）。”</p>
+</blockquote>
+<hr>
+<h3 id="React-Fiber（v16，2017）——为并发渲染奠基"><a href="#React-Fiber（v16，2017）——为并发渲染奠基" class="headerlink" title="React Fiber（v16，2017）——为并发渲染奠基"></a>React Fiber（v16，2017）——为并发渲染奠基</h3><p>Fiber 是 React 为了支持“可中断渲染（interruptible rendering）”而引入的虚拟执行单元。</p>
+<p>Fiber 是 React 16 重构的核心，Fiber 并不是“任务调度器”，而是一种数据结构 + 渲染引擎重写。：</p>
+<ul>
+<li><p>将原本“递归渲染”的过程改成了“循环 + 可中断的任务单元”。</p>
+</li>
+<li><p>每个组件对应一个 <strong>Fiber 节点</strong>，其中保存：</p>
+<ul>
+<li>更新优先级（lanes）</li>
+<li>指向父&#x2F;子&#x2F;兄弟 fiber 的指针</li>
+<li>待处理的 effect 列表</li>
+</ul>
+</li>
+</ul>
+<p>这样 React 就能：</p>
+<ol>
+<li>拆分渲染为小任务单元；</li>
+<li>渲染到一半可以暂停；</li>
+<li>暂停后可以恢复；</li>
+<li>或丢弃并重来。</li>
+<li>可以多帧执行（time slicing）</li>
+</ol>
+<p>但 Fiber 自身只定义了“怎么中断和恢复渲染”。</p>
+<blockquote>
+<p>它还缺一个“什么时候中断”的机制。</p>
+</blockquote>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">┌───────────────────────────────┐</span><br><span class="line">│         React 应用更新         │</span><br><span class="line">└──────────────┬────────────────┘</span><br><span class="line">               │</span><br><span class="line">               ▼</span><br><span class="line">     产生更新 → 进入 Fiber 架构</span><br><span class="line">               │</span><br><span class="line">               ▼</span><br><span class="line">  Fiber 生成工作单元（unit of work）</span><br><span class="line">               │</span><br><span class="line">               ▼</span><br><span class="line">   Scheduler 根据优先级调度任务执行</span><br><span class="line">               │</span><br><span class="line">               ▼</span><br><span class="line">   React 逐步执行任务（渲染 Fiber）</span><br><span class="line">               │</span><br><span class="line">               ▼</span><br><span class="line">   可能被中断 / 暂停 / 恢复 / 放弃</span><br><span class="line">               │</span><br><span class="line">               ▼</span><br><span class="line">   提交阶段（commit）→ 浏览器渲染 DOM</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>版本</th>
+<th>关键点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>React 15 之前</td>
+<td>同步渲染</td>
+<td>无中断机制，主线程被长任务阻塞</td>
+</tr>
+<tr>
+<td>React 16（2017）</td>
+<td>引入 Fiber + Scheduler</td>
+<td>为并发渲染奠基</td>
+</tr>
+<tr>
+<td>React 17（2020）</td>
+<td>架构稳定期</td>
+<td>无新特性，内部重构</td>
+</tr>
+<tr>
+<td>React 18（2022）</td>
+<td>启用 Concurrent Features</td>
+<td>并发渲染正式落地</td>
+</tr>
+</tbody></table>
+<h2 id="Scheduler调度器和并发渲染"><a href="#Scheduler调度器和并发渲染" class="headerlink" title="Scheduler调度器和并发渲染"></a>Scheduler调度器和并发渲染</h2><p>Scheduler是任务调度，用于<strong>控制“任务”在主线程中的执行顺序与优先级</strong></p>
+<p>并发渲染是<strong>控制“渲染过程”如何被拆分、暂停、恢复和放弃</strong></p>
+<p>并发渲染在渲染阶段利用 Scheduler 实现异步可中断的渲染</p>
+<p>任务调度是并发渲染的使能技术之一，但并发渲染还包含Fiber架构、渲染逻辑等其他组成部分。Scheduler提供了并发渲染需要的”中断决策”能力。</p>
+<h3 id="任务调度器（Scheduler）——决定“何时执行”"><a href="#任务调度器（Scheduler）——决定“何时执行”" class="headerlink" title="任务调度器（Scheduler）——决定“何时执行”"></a>任务调度器（Scheduler）——决定“何时执行”</h3><p>React 在 <strong>v16 同时引入了 <code>scheduler</code> 包</strong>。</p>
+<p>主要是为了解决一个根本矛盾：“JavaScript执行（特别是渲染计算）与浏览器渲染&#x2F;用户交互争抢主线程资源”。</p>
+<p>React的目标是实现“可中断的异步渲染”，而要实现中断和恢复，就必须有一个中枢系统来管理和协调哪些工作应该先执行，哪些可以后执行。这个中枢系统就是任务调度器。</p>
+<p>核心目标：</p>
+<ul>
+<li><p>保证高优先级任务（如用户输入）能够及时响应。</p>
+</li>
+<li><p>合理安排低优先级任务（如渲染离屏内容）的执行时机，避免阻塞主线程。</p>
+</li>
+<li><p>利用浏览器的空闲时间进行工作。</p>
+</li>
+</ul>
+<h4 id="Scheduler-的核心循环"><a href="#Scheduler-的核心循环" class="headerlink" title="Scheduler 的核心循环"></a>Scheduler 的核心循环</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (taskQueue.<span class="property">length</span> &gt; <span class="number">0</span> &amp;&amp; !<span class="title function_">shouldYield</span>()) &#123;</span><br><span class="line">  <span class="title function_">performUnitOfWork</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>shouldYield()</code> → 检查是否快超过 5ms、是否有高优先级任务进来。</p>
+<p>与Fiber交互：</p>
+<ol>
+<li><strong>触发更新</strong>：<code>setState</code>、<code>ReactDOM.render</code>等触发了一次更新。</li>
+<li><strong>调度器接手</strong>：调度器接收到一个更新任务，并为其分配一个优先级。</li>
+<li><strong>调度执行</strong>：调度器根据当前主线程的繁忙程度和任务的优先级，决定何时执行<strong>Fiber Reconciler</strong>的工作循环。</li>
+<li><strong>Fiber Reconciler工作</strong>：工作循环开始，一次处理一个Fiber节点（一个工作单元）。</li>
+<li><strong>询问调度器</strong>：在处理完一个Fiber节点后，Fiber Reconciler会去<strong>询问调度器</strong>：“主线程还剩下多少空闲时间？是否有更高优先级的任务插队？”</li>
+<li><strong>决策</strong>：<ul>
+<li>如果时间充足且无更高优先级任务，继续处理下一个Fiber节点。</li>
+<li>如果时间不够了，<strong>Fiber Reconciler会保存当前进度（中断）</strong>，并将控制权交还给浏览器。</li>
+<li>如果有更高优先级任务到达，<strong>调度器会中止当前正在进行的Fiber渲染任务</strong>，让它为高优任务让路。</li>
+</ul>
+</li>
+<li><strong>恢复</strong>：当浏览器空闲或高优任务完成后，调度器会重新安排之前未完成的Fiber渲染任务，从之前中断的地方继续执行。</li>
+<li><strong>提交</strong>：当所有Fiber工作单元都完成（即完成了Reconcilation，构建好了新的Fiber树），React会<strong>同步地、不可中断地</strong>执行DOM更新（Commit阶段）。</li>
+</ol>
+<h4 id="浏览器的任务队列的交互"><a href="#浏览器的任务队列的交互" class="headerlink" title="浏览器的任务队列的交互"></a>浏览器的任务队列的交互</h4><h4 id="不用浏览器原生任务队列原因"><a href="#不用浏览器原生任务队列原因" class="headerlink" title="不用浏览器原生任务队列原因"></a>不用浏览器原生任务队列原因</h4><p>浏览器原生的宏任务&#x2F;微任务模型（setTimeout&#x2F;Promise.then）只是时间切片的一种手段，但它们有许多限制</p>
+<ul>
+<li><p>缺乏多级优先级控制</p>
+<p>浏览器只分宏&#x2F;微任务，但无法表达 React 需要的细粒度优先级（Immediate &#x2F; UserBlocking &#x2F; Normal &#x2F; Low &#x2F; Idle）。</p>
+<p>React 需要在“用户输入”优先于“后台渲染”的情况下做抢占和插队，浏览器队列无法灵活做到这一点。</p>
+</li>
+<li><p>跨浏览器行为差异 &amp; 不可控</p>
+<p>requestIdleCallback 在不同浏览器上行为不同（甚至某些环境不支持）。依赖这些 API 会导致不可预测性。</p>
+<p>浏览器任务队列与渲染管线（compositing&#x2F;paint）和事件顺序复杂交互，React 需要精确控制何时 yield。</p>
+</li>
+<li><p>无法轻易中断长任务</p>
+<p>把工作拆进一堆 setTimeout(fn, 0) 并不能为 React 提供“按优先级抢占”的能力，也会引入大量调度开销和延迟（微小任务切换开销高）。</p>
+</li>
+<li><p>需要集成 React 的优先级语义</p>
+<p>React 的优先级语义（lanes、startTransition、输入优先级）需要被 scheduler 理解并映射到执行策略里。浏览器的事件循环对这些语义一无所知。</p>
+</li>
+<li><p>避免 starvation（饥饿）与保证实时粒度</p>
+<p>React 需要在短时间窗口（几 ms）内决定是否继续工作。自己计算 deadline（frameBudget）并根据 performance.now() 判断更精确。</p>
+</li>
+</ul>
+<h4 id="交互"><a href="#交互" class="headerlink" title="交互"></a>交互</h4><ul>
+<li><p>定义了自己的优先级系统：Immediate, UserBlocking, Normal, Low, Idle 等。这比浏览器的“宏任务”和“微任务”两种粗略的优先级要精细得多。</p>
+</li>
+<li><p>智能调度：调度器会根据优先级，决定将React任务（如组件的渲染&#x2F;更新）放入浏览器的哪个时机执行。</p>
+</li>
+<li><p>利用浏览器API：</p>
+<ol>
+<li><p>对于最高优先级的任务，它会用 <code>Promise.resolve().then()</code>（微任务）或甚至同步执行来尽快处理。</p>
+</li>
+<li><p>对于普通优先级的任务，它会优先使用 <code>MessageChannel</code>（宏任务）来让出主线程，以便浏览器处理用户交互和渲染。</p>
+</li>
+<li><p>对于低优先级的任务，它会使用 <code>requestIdleCallback</code>（或其polyfill）来在浏览器空闲时期执行。</p>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="Scheduler-的职责："><a href="#Scheduler-的职责：" class="headerlink" title="Scheduler 的职责："></a>Scheduler 的职责：</h4><ol>
+<li><strong>维护任务队列</strong>（每个任务带有优先级与过期时间）</li>
+<li><strong>根据优先级选择下一个任务执行</strong></li>
+<li><strong>利用浏览器空闲时间（<code>requestIdleCallback</code> &#x2F; <code>MessageChannel</code>）执行任务</strong></li>
+<li><strong>在需要时中断执行，让出主线程</strong></li>
+</ol>
+<p>也就是：</p>
+<blockquote>
+<p>Fiber 负责“怎么做”，Scheduler 负责“什么时候做”。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">React 16+</span><br><span class="line">   ↓</span><br><span class="line">Fiber：把渲染分割成小任务</span><br><span class="line">   ↓</span><br><span class="line">Scheduler：调度这些任务何时执行</span><br><span class="line">   ↓</span><br><span class="line">浏览器事件循环：真正执行任务并渲染</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="表现依旧是同步渲染"><a href="#表现依旧是同步渲染" class="headerlink" title="表现依旧是同步渲染"></a>表现依旧是同步渲染</h4><p>react16只是增加了一个可中断的渲染逻辑，但是如果中断之后，无法接上中断之前的渲染东西，只能从头再来一次渲染</p>
+<p>React16 做的核心改动是：</p>
+<p>1、把递归渲染改成了循环（Fiber），可以分片执行</p>
+<p>2、引入 Scheduler，使得渲染可以被打断（理论成立，但是未默认启用）</p>
+<p>3、但 React 16 默认仍然是“同步模式”，只有 Suspense 或 startTransition 才会启用异步调度能力（而这些 API 在 16 时代还未稳定）</p>
+<p>因此在react16的时候，只是把一个长任务拆分为多个小任务，但是正常更新的时候还是一口气执行完毕</p>
+<p>那么在极端情况下，react16比react15会快些，但是在普通场景下，可能15与16差不多</p>
+<p>React16 的优势是<strong>不卡顿</strong>，不是<strong>更快</strong></p>
+<h3 id="并发渲染（Concurrent-Rendering）——利用调度实现新能力"><a href="#并发渲染（Concurrent-Rendering）——利用调度实现新能力" class="headerlink" title="并发渲染（Concurrent Rendering）——利用调度实现新能力"></a>并发渲染（Concurrent Rendering）——利用调度实现新能力</h3><p>因此实际上，react18才真正给并发渲染，不卡顿的能力</p>
+<p>但react16-17，是为<strong>React 18（2022）</strong>出现的并发渲染打基础，所以并发渲染是 Fiber + Scheduler 的成果</p>
+<p>并发渲染不是单一技术，而是 Fiber（可分片的工作单元）+ Scheduler（优先级 &amp; 时间片）在浏览器事件循环之上协同工作的一套运行时策略。 它把渲染拆成小单元，可暂停&#x2F;恢复&#x2F;放弃，优先处理紧急任务（例如用户输入），以保证主线程响应性，同时在 commit 阶段一次性同步应用副作用与 DOM 更新。</p>
+<h4 id="能力"><a href="#能力" class="headerlink" title="能力"></a>能力</h4><table>
+<thead>
+<tr>
+<th>能力</th>
+<th>含义</th>
+<th>实现依赖</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>可中断渲染</td>
+<td>渲染大树时可以暂停以让出主线程</td>
+<td>Scheduler + Fiber</td>
+</tr>
+<tr>
+<td>可恢复渲染</td>
+<td>暂停后继续上次渲染</td>
+<td>Fiber 的链式结构</td>
+</tr>
+<tr>
+<td>可丢弃渲染</td>
+<td>如果状态变化太快，可以放弃旧渲染</td>
+<td>调度优先级判断</td>
+</tr>
+<tr>
+<td>低优先级更新延迟</td>
+<td>比如 <code>useTransition</code></td>
+<td>Scheduler 管理多个队列</td>
+</tr>
+</tbody></table>
+<p>React 18 默认启用<strong>并发特性</strong>（Concurrent Features）：</p>
+<ul>
+<li><code>startTransition</code> &#x2F; <code>useTransition</code></li>
+<li><code>useDeferredValue</code></li>
+<li>Suspense 新特性</li>
+<li>自动批处理（automatic batching）</li>
+</ul>
+<h4 id="Lanes模型"><a href="#Lanes模型" class="headerlink" title="Lanes模型"></a>Lanes模型</h4><p><strong>Lane</strong> &#x3D; 表示一种优先级&#x2F;槽（类似车道）。一个 root 可以同时有多个正在等待的更新，这些更新被映射到不同的 lane。</p>
+<p>用<strong>位掩码（bitmask）</strong>来表示哪些 lanes 正在 pending：<code>pendingLanes</code> 是一个整数，每一位代表一类优先级（或一条“车道”）。</p>
+<ul>
+<li><p>出现原因</p>
+<p>React 16 的 expirationTime（概念）</p>
+<p>在 React 16 的早期并发尝试里，给每次更新计算一个 expirationTime（数值时间戳&#x2F;截止时间）。</p>
+<p>意图：更新有一个“过期时间”，越紧急的更新过期时间越早；调度器优先执行过期时间早的任务。</p>
+<p>局限：单一数值的优先关系比较粗糙，难以同时表达“多个并发更新属于不同优先级且能共存”的情形；也不容易高效合并&#x2F;跟踪多个并发优先级。</p>
+</li>
+<li><p>核心思想</p>
+<p>用一组位（bitmask）表示“哪些优先级的更新同时存在于 root 上”。每一位代表一种优先级 lane（或一类优先级槽）。</p>
+<p>一个 root 上的 pending lanes 可以同时包含多种优先级的更新（多个位同时为 1）。</p>
+<p>调度时选择最高优先级的 lane（通常是最靠前的一位或按优先级权重计算）去进行渲染；低优先级的 lane 会被延迟或合并。</p>
+</li>
+<li><p>作用</p>
+<ul>
+<li><strong>高效</strong>：位操作（AND、OR、XOR、取低位）快速，适合频繁判断&#x2F;合并&#x2F;清除。</li>
+<li><strong>能同时表达多种优先级</strong>：不同优先级的更新可以并存（多位同时为 1）。</li>
+<li><strong>便于合并&#x2F;抢占</strong>：选出当前应执行的最高优先级 lane 非常快。</li>
+</ul>
+</li>
+<li><p>优点</p>
+<ul>
+<li>可以并行追踪不同优先级的更新（例如：一个高优先级的输入更新，正在被处理；同时存在一个低优先级的数据加载更- 新）。</li>
+<li>更容易做“合并&#x2F;抢占&#x2F;丢弃”逻辑：当高优先级更新来临，低优先级 lane 可以被暂停或丢弃。而expirationTime 是“标量”（一个时间戳），当并发更新很多并且频繁变更时，计算&#x2F;合并逻辑复杂且不够灵活。</li>
+<li>位操作高效（快速判断、合并）。·</li>
+</ul>
+</li>
+<li><p>合并、抢占与过期</p>
+<ul>
+<li>合并：若多个更新落到同一 lane，会被合并（同一位重复 OR 不改变值）。</li>
+<li>抢占：当高优先级更新到达，Scheduler 选出更高 lane 并暂停当前低优先的渲染（保存 nextUnitOfWork），转而处理高优先级 lane。</li>
+<li>过期策略：每个 lane 还可以映射到“过期时间”（expirationTime），用于当长时间没执行时强制提升优先级&#x2F;执行。</li>
+</ul>
+</li>
+</ul>
+<h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><blockquote>
+<p>职责</p>
+</blockquote>
+<ul>
+<li><p><strong>浏览器事件循环（宏任务 &#x2F; 微任务 &#x2F; RAF &#x2F; requestIdleCallback）</strong><br>— 提供低级宿主回调、帧时机、空闲窗口。React 使用它们作为触发点（host callback），但不依赖其优先级语义。</p>
+</li>
+<li><p><strong>Scheduler（React 的调度层，<code>scheduler</code> 包逻辑）</strong><br>— 维护任务队列与 timer 队列、计算是否该让出（<code>shouldYield()</code>）、选择哪个优先级的任务执行、通过 <code>MessageChannel</code> &#x2F; <code>postMessage</code> &#x2F; RAF &#x2F; setTimeout 等 host API 调度执行。暴露 runWithPriority &#x2F; scheduleCallback（内部使用不稳定 API）。</p>
+</li>
+<li><p><strong>Lane 模型（React18 的优先级表示，bitmask）</strong><br>— 在 root 上用位掩码表示哪些优先级的更新 pending。快速选择最高优先级 lane 进行渲染，支持并存、合并、抢占。</p>
+</li>
+<li><p><strong>Fiber（可中断的渲染单元）</strong><br>— 每个组件对应一个 Fiber 节点。使用 <code>current &lt;-&gt; workInProgress</code> 双缓存，保存中间态、hooks 状态、effect tag、指针（child&#x2F;sibling&#x2F;return&#x2F;alternate）。<code>performUnitOfWork</code> 是对单个 Fiber 的处理单元。</p>
+</li>
+<li><p><strong>Render 阶段（可中断）与 Commit 阶段（不可中断）</strong><br>— Render：构建 &#x2F; diff workInProgress 树，生成 effect list（可中断、可丢弃）。<br>— Commit：把 effect list 原子性地应用到 DOM、执行 layout effects、update refs（不可中断，flush-before-paint）。</p>
+</li>
+</ul>
+<blockquote>
+<p>从setState到DOM更新大致流程</p>
+</blockquote>
+<ol>
+<li><p><strong>产生更新</strong></p>
+<ul>
+<li><code>setState</code>, props change, 或外部事件触发更新。React 为此次更新分配一个 lane（基于事件类型与 API，如 startTransition）。将该 lane 的位 <code>OR</code> 到 <code>root.pendingLanes</code>。</li>
+</ul>
+</li>
+<li><p><strong>scheduleWork（调度请求）</strong></p>
+<ul>
+<li>React 调用 Scheduler 的 <code>scheduleCallback(priority, flushWork)</code>，确保在一个合适的宿主时机（MessageChannel&#x2F;RAF&#x2F;idle）运行 <code>flushWork</code>。</li>
+</ul>
+</li>
+<li><p><strong>Scheduler 触发执行（host callback）</strong></p>
+<ul>
+<li>Scheduler 在 host 回调中启动 <code>performConcurrentWorkOnRoot(root)</code>，并传入一个“时间截点&#x2F;deadline”或自行用 <code>performance.now()</code> 计算 frameBudget。</li>
+</ul>
+</li>
+<li><p><strong>Render Phase（workLoop） — 可中断执行</strong></p>
+<ul>
+<li><code>workLoop</code> 循环：<code>while (nextUnitOfWork &amp;&amp; !shouldYield()) &#123; nextUnitOfWork = performUnitOfWork(nextUnitOfWork); &#125;</code></li>
+<li><code>performUnitOfWork</code> 包含 <code>beginWork</code>（计算、diff、产生&#x2F;复用子 Fiber）和在无子节点时 <code>completeUnitOfWork</code>（构建 effect list 并回溯）。</li>
+<li><code>shouldYield()</code> 基于 Scheduler 判断（超出 frameBudget，或有更高优先级任务到来） → 若为 true，则暂停 render，并把当前 <code>nextUnitOfWork</code> 保存在 root&#x2F;workInProgress 上以便下次恢复。</li>
+</ul>
+</li>
+<li><p><strong>被抢占 &#x2F; 暂停 &#x2F; 恢复</strong></p>
+<ul>
+<li>如果在 render 中出现更高优先级更新（例如用户输入），Scheduler 可能暂停当前低优先级 render，切换去处理高优先级 lane（选择 <code>pickHighestPriorityLanes(root.pendingLanes)</code>）。渲染中间态 <code>workInProgress</code> 保留或（在策略下）被丢弃并重建。</li>
+</ul>
+</li>
+<li><p><strong>Render 完成 &#x2F; 进入 Commit</strong></p>
+<ul>
+<li>当为 <code>workInProgressRoot</code> 选择的 lanes 的 render 做完（或到期&#x2F;过期策略允许 commit），React 进入 commit 阶段。commit 是同步、不可中断的：apply DOM mutations、run layout effects、call lifecycle、update refs。</li>
+</ul>
+</li>
+<li><p><strong>清理 pendingLanes &#x2F; schedule 下轮工作</strong></p>
+<ul>
+<li>Commit 后清除已处理的 lanes（<code>root.pendingLanes &amp;= ~processedLanes</code>）。若还有 pending lanes（或被暂停后仍有剩余），Scheduler 会 schedule 下一个 host callback 继续处理。</li>
+</ul>
+</li>
+<li><p><strong>副作用（useEffect）异步运行</strong></p>
+<ul>
+<li><code>useEffect</code> 的回调在 commit 后安排为异步任务（不阻塞绘制），而 <code>useLayoutEffect</code> 在 commit 阶段同步执行（因此 commit 不能中断）。</li>
+</ul>
+</li>
+</ol>
+<p>注意：</p>
+<ul>
+<li><p><strong>浏览器任务队列只是宿主触发器</strong>：React 不把更新直接放进 <code>setTimeout</code>&#x2F;microtask 然后依赖浏览器来优先排序。相反，React 的 Scheduler 决定优先级并在合适的宿主回调点（MessageChannel、postMessage、RAF、requestIdleCallback）触发自己的 <code>flushWork</code>。</p>
+<ul>
+<li><code>MessageChannel</code> 被频繁用作“最小延迟且跨浏览器稳定”的触发器（比 setTimeout 更低延迟、顺序更可控）。</li>
+<li><code>requestIdleCallback</code> 有时用于后台&#x2F;低优先任务，但不可完全依赖（兼容&#x2F;行为差异）。</li>
+</ul>
+</li>
+<li><p><strong>Scheduler 决定何时 yield（让出主线程）</strong>：通过 <code>performance.now()</code> 与 frameBudget 或 host 提供的 deadline 评估是否应中断当前 render。浏览器在它的 event loop 中会在合适时机执行这些 host callbacks，所以 React 能在不阻塞浏览器帧渲染的情况下“占用小段时间再让出”。</p>
+</li>
+<li><p><strong>优先级插队（抢占）</strong>：当高优先更新到来，Scheduler 会优先处理其 lane，暂停低优渲染并保存中间状态。该抢占并不是浏览器原生“中断”任务，而是 Scheduler 在下一个调度点（或立即 if possible）触发高优任务而不是继续低优任务。</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">React18 运行机制三层关系</span><br><span class="line"></span><br><span class="line">┌───────────────┐</span><br><span class="line">│   Scheduler   │  ← 任务调度系统（决定哪个任务先执行）</span><br><span class="line">│   - 时间切片  │</span><br><span class="line">│   - 过期调度  │</span><br><span class="line">│   - 优先级队列│</span><br><span class="line">└───────────────┘</span><br><span class="line">          ↓ 调度 Fiber 任务</span><br><span class="line">┌───────────────┐</span><br><span class="line">│     Fiber     │  ← 数据结构与渲染执行单元</span><br><span class="line">│   - 可中断     │</span><br><span class="line">│   - 可恢复     │</span><br><span class="line">│   - 双缓存树   │</span><br><span class="line">└───────────────┘</span><br><span class="line">          ↓ 使用 Lanes 分配优先级</span><br><span class="line">┌───────────────┐</span><br><span class="line">│     Lanes     │  ← React18 优先级与任务模型</span><br><span class="line">│   - bitmask    │</span><br><span class="line">│   - 可并发执行 │</span><br><span class="line">│   - 支持多任务 │</span><br><span class="line">└───────────────┘</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="中断与恢复"><a href="#中断与恢复" class="headerlink" title="中断与恢复"></a>中断与恢复</h4><p><strong>核心</strong>：React 使用<strong>双链表 &#x2F; 双缓存树（current &lt;-&gt; workInProgress）</strong>来做到“在不破坏当前 committed UI 的情况下准备新 UI”。这也是“可恢复”能力的基础。</p>
+<ul>
+<li><p>关键数据结构</p>
+<ul>
+<li>Fiber 节点包含指针：return、child、sibling、以及 alternate（指向另一棵树上的对应节点）。</li>
+<li>root.current 指向当前已提交的树（commit），workInProgress 指向正在构建的树（render phase）。</li>
+<li>workInProgressRoot 保存当前渲染会话的根（以及 nextUnitOfWork 指针）。</li>
+</ul>
+</li>
+<li><p>工作流程（保存&#x2F;恢复）</p>
+<ul>
+<li><p>准备 workInProgress：</p>
+<p>当要开始 render 时，基于 root.current 克隆出 workInProgress（或复用 alternate）：workInProgress &#x3D; createWorkInProgress(root.current).</p>
+</li>
+<li><p>逐个 performUnitOfWork：</p>
+<p>每个 Fiber 的 beginWork 会读取 props&#x2F;state，从 updateQueue 中弹出更新，生成子 fiber 等。</p>
+<p>如果时间片到期，会把当前的 nextUnitOfWork 保存在 workInProgress 上（或 root 上），然后 scheduleCallback 继续下次执行。</p>
+</li>
+<li><p>暂停时保存点：</p>
+<p>因为 workInProgress 是独立对象，已做的变更（计算出的 props&#x2F;children&#x2F;effects）保存在它上面，下一次调度从 nextUnitOfWork 继续，不需要从头重建全部状态（只是对尚未执行的部分需要继续）。</p>
+</li>
+<li><p>被抢占的恢复：</p>
+<p>若出现更高优先级更新，React 可以中止当前 workInProgress（它仍在内存），转去处理高优更新；之后再回来继续剩余的 workInProgress，或根据策略丢弃并重建一个新的 workInProgress（例如当数据变了太多时，会选择重来）。</p>
+</li>
+</ul>
+</li>
+<li><p>为什么能“恢复”</p>
+<ul>
+<li>workInProgress 是渲染中间态的完整 snapshot（包含已构建的 Fiber 子树、effect list）。</li>
+<li>不像早期只能“暂停并从头开始”，现在可以从保存的 nextUnitOfWork 继续处理尚未完成的节点。这就是“恢复”。</li>
+</ul>
+</li>
+<li><p>注意：</p>
+<ol>
+<li><p>Commit 阶段始终使用 workInProgress 完全生成的 effect list；commit 一旦开始，必须同步完成（见后面 commit 不能中断的原因）。</p>
+</li>
+<li><p>某些场景会丢弃 workInProgress（例如重要新的更新合并进来并改变了渲染目标），React 会创建一个新的 workInProgress 并放弃旧的，避免为过时计算浪费时间。</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">React 渲染演进路线图</span><br><span class="line">┌─────────────────────────────────────┐</span><br><span class="line">│ React 15 (Stack Reconciler)        │</span><br><span class="line">│  - 递归渲染（call stack）          │</span><br><span class="line">│  - 不可中断，不能恢复              │</span><br><span class="line">│  - 长任务阻塞 UI，掉帧             │</span><br><span class="line">│  - setState = 立即同步更新         │</span><br><span class="line">└─────────────────────────────────────┘</span><br><span class="line">                ↓（核心问题：UI 卡顿）</span><br><span class="line">┌─────────────────────────────────────┐</span><br><span class="line">│ React 16 (Fiber Reconciler)        │</span><br><span class="line">│  ✅ Fiber: 拆分渲染单元            │</span><br><span class="line">│  ✅ 可中断（但默认不抢占）         │</span><br><span class="line">│  ✅ 引入 Scheduler（但不启用并发）│</span><br><span class="line">│  ❌ 只能“暂停后重头执行”          │</span><br><span class="line">│  ❌ 没有真正的优先级系统           │</span><br><span class="line">│  ✅ commit 阶段仍同步 &amp; 不可中断 │</span><br><span class="line">└─────────────────────────────────────┘</span><br><span class="line">                ↓（仍未真正解决调度与流畅协作）</span><br><span class="line">┌─────────────────────────────────────┐</span><br><span class="line">│ React 18 (Concurrent Features)     │</span><br><span class="line">│  ✅ 启用真正可中断 + 可恢复渲染     │</span><br><span class="line">│  ✅ Lane 优先级模型（bitmask）     │</span><br><span class="line">│  ✅ 支持 startTransition/suspense  │</span><br><span class="line">│  ✅ 可被高优先级任务抢占           │</span><br><span class="line">│  ✅ render 可多次执行，commit 一次 │</span><br><span class="line">│  ✅ 避免 UI 卡顿，实现流畅交互     │</span><br><span class="line">└─────────────────────────────────────┘</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="任务优先级"><a href="#任务优先级" class="headerlink" title="任务优先级"></a>任务优先级</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">用户层 (React API)</span><br><span class="line">│</span><br><span class="line">├── flushSync()                        → 最高优先级（Sync）</span><br><span class="line">│</span><br><span class="line">├── startTransition / useTransition()  → 降级更新（Concurrent Transition）</span><br><span class="line">│</span><br><span class="line">├── useDeferredValue()                 → 延后渲染某个值（内部实现同 Transition）</span><br><span class="line">│</span><br><span class="line">└── scheduler (内部任务调度器)</span><br><span class="line">     ├── unstable_scheduleCallback(priority, callback)</span><br><span class="line">     ├── unstable_runWithPriority(priority, fn)</span><br><span class="line">     └── unstable_*Priority 常量（Immediate / UserBlocking / Normal / Low / Idle）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h3><ol>
+<li><p><strong>Immediate &#x2F; Sync（同步）</strong></p>
+<ul>
+<li>立即执行，typical: <code>flushSync</code>、React 内部在某些情况下强制同步提交（例如事件处理器里某些操作）。</li>
+<li>用于需要瞬时看到结果的操作（例如表单提交后的导航）。</li>
+</ul>
+</li>
+<li><p><strong>UserBlocking（用户阻塞 &#x2F; 离散输入）</strong></p>
+<ul>
+<li>针对用户输入（点击、键入），需要快速响应但允许短暂中断。</li>
+<li>React 将离散输入赋予比普通更新更高的优先级以保证流畅。</li>
+</ul>
+</li>
+<li><p><strong>Normal &#x2F; Default（默认）</strong></p>
+<ul>
+<li>常规更新（例如数据返回后 setState）属于此类。</li>
+</ul>
+</li>
+<li><p><strong>Low（低）</strong></p>
+<ul>
+<li>不紧急的后台更新（例如统计埋点的 UI 影响部分）。</li>
+</ul>
+</li>
+<li><p><strong>Idle（空闲）</strong></p>
+<ul>
+<li>只有当主线程空闲才处理的任务（最晚执行）。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><p>根据事件类型分配优先级</p>
+<ul>
+<li><strong>离散事件（例如点击、键盘按下）</strong>：通常分配较高的优先级（UserBlocking &#x2F; Sync depending），以保持快速响应。</li>
+<li><strong>持续性&#x2F;拖动&#x2F;滚动类事件</strong>：会分配连续输入的优先级，允许更频繁的更新但仍要保证流畅。</li>
+<li><strong>非交互更新（例如数据加载、渲染大型列表）</strong>：通常为 Normal&#x2F;Low，可以用 <code>startTransition</code> 明确把它们降为 Transition。</li>
+<li><strong>后台&#x2F;统计&#x2F;日志写入</strong>：可安排到 Idle。</li>
+</ul>
+</li>
+</ul>
+<h3 id="开发者手动修改优先级api"><a href="#开发者手动修改优先级api" class="headerlink" title="开发者手动修改优先级api"></a>开发者手动修改优先级api</h3><h4 id="推荐常用（稳定-API）"><a href="#推荐常用（稳定-API）" class="headerlink" title="推荐常用（稳定 API）"></a>推荐常用（稳定 API）</h4><ul>
+<li><p><code>flushSync()</code>（来自 <code>react-dom</code>）最高优先级: 唯一一个提升的</p>
+<p>强制同步地立即执行更新（会导致当前更新不被时间切片中断）。慎用，仅在确实需要立即反映 UI 时使用（例如在事件处理流程中需要确保 DOM 已更新以测量布局）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; flushSync &#125; <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span>;</span><br><span class="line"><span class="title function_">flushSync</span>(<span class="function">() =&gt;</span> <span class="title function_">setState</span>(x));</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>属于 “同步优先级”（Sync &#x2F; Immediate）。</li>
+<li>React 会立即执行所有任务、立刻提交（commit）。</li>
+<li>会 中断 React 的时间切片机制，不允许被打断。</li>
+</ul>
+<p>常用于：</p>
+<p>  执行 DOM 测量前的强制同步更新。</p>
+<p>  保证状态立刻生效（例如强制让 UI 更新后马上计算尺寸）。</p>
+</li>
+<li><p><code>startTransition(() =&gt; &#123; setState(...) &#125;)</code></p>
+<p>把一段更新标记为<strong>Transition</strong>（比较低优先级）。用于把非紧急更新降为低优先级（例如列表过滤、搜索结果渲染、页面切换动画后的内容加载等）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; startTransition &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">onChange</span>(<span class="params">e</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> v = e.<span class="property">target</span>.<span class="property">value</span>;</span><br><span class="line">  <span class="title function_">setText</span>(v); <span class="comment">// 同步更新文本输入（保持输入流畅）</span></span><br><span class="line">  <span class="title function_">startTransition</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">setFilter</span>(v); <span class="comment">// 把过滤结果的更新降优先级</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>useTransition()</code> + <code>isPending</code></p>
+<p>组合使用可以在 UI 上显示 pending 指示器。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [isPending, startTransition] = <span class="title function_">useTransition</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">handleClick</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="title function_">startTransition</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">setBigState</span>(...);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>React 会给useTransition和startTransition更新打上一个 “transition lane”，这类更新：</p>
+<p>优先级低于 同步&#x2F;用户输入。</p>
+<p>可被中断或延迟。</p>
+<p>一旦有更高优先级的任务出现（例如用户输入），会暂停并让更紧急任务先执行。</p>
+</li>
+<li><p><code>useDeferredValue(value)</code></p>
+<p>将某个值延后渲染，常用于防抖式渲染大型列表。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> deferred = <span class="title function_">useDeferredValue</span>(inputValue);</span><br></pre></td></tr></table></figure>
+
+<p>属于 transition 内部的一种延迟机制；</p>
+<p>优先级 ≈ startTransition；</p>
+<p>但区别在于：</p>
+<p>useTransition 是手动包裹一段更新逻辑；</p>
+<p>useDeferredValue 是对现有值延后渲染。</p>
+</li>
+<li><p>批量更新：React 18 里事件处理、Promise、setTimeout 等已被自动批处理，但仍可使用 <code>unstable_batchedUpdates</code>（来自 <code>react-dom</code>）做手动批处理（低级）。</p>
+</li>
+</ul>
+<h4 id="不太常用-不稳定（低级）API（来自-scheduler-包）"><a href="#不太常用-不稳定（低级）API（来自-scheduler-包）" class="headerlink" title="不太常用 &#x2F; 不稳定（低级）API（来自 scheduler 包）"></a>不太常用 &#x2F; 不稳定（低级）API（来自 scheduler 包）</h4><ul>
+<li><p><code>scheduler</code> 包里有 <code>unstable_runWithPriority</code>, <code>unstable_scheduleCallback</code>, 以及若干 <code>unstable_*Priority</code> 常量。它们能更细粒度地控制调度优先级，但是低级、不稳定 API。只有当你写自定义渲染器或需要非常精细的控制时才使用。示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; unstable_runWithPriority, unstable_UserBlockingPriority &#125; <span class="keyword">from</span> <span class="string">&#x27;scheduler&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">unstable_runWithPriority</span>(unstable_UserBlockingPriority, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 在 user-blocking 优先级下执行某些任务</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<blockquote>
+<p>建议：优先使用 React 提供的稳定高级接口（startTransition、useTransition、useDeferredValue、flushSync）。仅在确有必要时考虑 scheduler。</p>
+</blockquote>
+<hr>
+<h4 id="API优先级"><a href="#API优先级" class="headerlink" title="API优先级"></a>API优先级</h4><table>
+<thead>
+<tr>
+<th>API</th>
+<th>优先级</th>
+<th>是否可被打断</th>
+<th>是否手动包裹逻辑</th>
+<th>使用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>flushSync</td>
+<td>最高（Sync）</td>
+<td>❌ 不可中断</td>
+<td>✅</td>
+<td>强制立即更新</td>
+</tr>
+<tr>
+<td>setState（默认）</td>
+<td>Normal</td>
+<td>✅ 可中断</td>
+<td>❌</td>
+<td>普通更新</td>
+</tr>
+<tr>
+<td>startTransition &#x2F; useTransition</td>
+<td>Transition（低于 Normal）</td>
+<td>✅ 可中断</td>
+<td>✅</td>
+<td>大渲染降优先</td>
+</tr>
+<tr>
+<td>useDeferredValue</td>
+<td>Transition（延迟）</td>
+<td>✅ 可中断</td>
+<td>❌</td>
+<td>延迟值渲染（防卡顿）</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/react/" rel="tag"># react</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/10/30/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91capacitor%E6%89%93%E5%8C%85/" rel="prev" title="capacitor将web项目打包为iOS&#x2F;Android原生应用">
+                  <i class="fa fa-angle-left"></i> capacitor将web项目打包为iOS/Android原生应用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/01/09/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="next" title="微前端">
+                  微前端 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

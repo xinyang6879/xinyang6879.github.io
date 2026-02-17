@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">110</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -154,6 +154,1010 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/HTTP/%E5%B0%8F%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/HTTP/%E5%B0%8F%E7%82%B9/" class="post-title-link" itemprop="url">小点</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-08-14 11:18:06 / Modified: 20:56:44" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/http/" itemprop="url" rel="index"><span itemprop="name">http</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h3><ul>
+<li>1xx：信息<ul>
+<li>100: 继续请求，初始请求已经接收，客户端继续发送剩余部分</li>
+<li>101：切换协议，要求服务器切换协议，服务端已确认切换</li>
+</ul>
+</li>
+<li>2xx：成功<ul>
+<li>201：服务器创建了新的资源</li>
+<li>202：服务器已接受请求，但未完成处理</li>
+<li>203：服务器成功处理，但返回的信息可能来自另一个来源</li>
+<li>204：服务器成功处理，但无返回内容</li>
+<li>205： 用户终端应该重置文档</li>
+<li>206：处理了部分get请求</li>
+</ul>
+</li>
+<li>3xx：重定向<ul>
+<li>301： 请求页面<strong>永久</strong>跳转到新的url</li>
+<li>302：服务器目前从不同位置的网页响应，但请求仍然继续使用原有位置来进行以后处理，即<strong>临时</strong>移动。请求方法可能会改变，比如post改为get</li>
+<li>304：自从上次请求后，请求网页未修改过</li>
+<li>305：请求者只能使用代理访问</li>
+<li>307：服务器目前从不同位置的网页响应，但请求仍然继续使用原有位置来进行以后处理，即<strong>临时</strong>移动。请求方法不需要改变</li>
+</ul>
+</li>
+<li>4xx：客户端错误<ul>
+<li>400：请求错误，服务端不理解请求语法</li>
+<li>401：未授权</li>
+<li>403：服务器拒绝请求</li>
+<li>404：未找到</li>
+<li>405：禁用请求的方法</li>
+<li>406：无法使用请求的内容特性响应请求的页面</li>
+<li>407：请求需要代理的身份验证</li>
+<li>408：请求超时</li>
+<li>409：请求的网页冲突，服务器无法完成请求</li>
+<li>410：已删除</li>
+<li>411：服务器无法处理请求，因为请求缺少一个或多个必要请求头字段</li>
+<li>412：服务器未满足请求者的前提条件</li>
+<li>413：请求实体过大</li>
+<li>414：请求的URI过长</li>
+<li>415：服务器不支持请求的格式</li>
+<li>416：请求范围不符合要求</li>
+<li>417：服务器无法满足表头字段要求</li>
+</ul>
+</li>
+<li>5xx：服务端错误<ul>
+<li>500：服务器内部错误</li>
+<li>501：服务器不具备完全请求的功能</li>
+<li>502：网关错误，服务器作为网关或代理出现错误</li>
+<li>503：服务器当前无法使用</li>
+<li>504：网关超时，服务器作为网关或代理出现超时</li>
+<li>505：服务器不支持请求的http版本</li>
+</ul>
+</li>
+</ul>
+<h3 id="http请求方式"><a href="#http请求方式" class="headerlink" title="http请求方式"></a>http请求方式</h3><ul>
+<li><p>ajax,axios</p>
+</li>
+<li><p>EventSource: SSE技术(服务端推送)</p>
+</li>
+<li><p>WebSocket</p>
+</li>
+<li><p>navigator.sendBeacon: 异步数据上报api,用于做数据采集,浏览器会在何时的时间进行数据上报.</p>
+<ul>
+<li>navigator.sendBeacon只能进行发送，无法接收到服务端返回的数据</li>
+<li>在页面卸载时也不会中断此次请求</li>
+<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1956250">[译] 用 sendBeacon 发送分析信息的优点</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7449402571187683343">Navigator.sendBeacon：前端数据发送的得力助手</a></li>
+</ul>
+</li>
+<li><p>SSE(服务器向浏览器发送数据)</p>
+<p>  浏览器通过<code>EventSource</code>的api去监听服务器是否有推送消息给客户端</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/HTTP/%E3%80%90http%E3%80%91%E9%98%9F%E5%A4%B4%E9%98%BB%E5%A1%9E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/HTTP/%E3%80%90http%E3%80%91%E9%98%9F%E5%A4%B4%E9%98%BB%E5%A1%9E/" class="post-title-link" itemprop="url">【Htpp】队头阻塞</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-21 17:20:25" itemprop="dateModified" datetime="2025-03-21T17:20:25+08:00">2025-03-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/http/" itemprop="url" rel="index"><span itemprop="name">http</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="http1队头阻塞"><a href="#http1队头阻塞" class="headerlink" title="http1队头阻塞"></a>http1队头阻塞</h2><p>除了TCP的本身限制外，http1的先进先出（FIFO）的设计导致的。即浏览器在发送了请求后，必须按照发送顺序获取到相应的响应结果。例如请求A、请求B按顺序发送，请求A需要1s响应，请求B需要0.1s响应，即使B请求响应更加快速，但是浏览器依旧需要等待A的响应才能获取到B的响应。这就是http1的队头阻塞</p>
+<h3 id="FIFO"><a href="#FIFO" class="headerlink" title="FIFO"></a>FIFO</h3><h4 id="使用原因"><a href="#使用原因" class="headerlink" title="使用原因"></a>使用原因</h4><ul>
+<li><p>简化协议实现</p>
+<p>  http1设计在早期互联网，顺序处理模型更加简单，减少协议复杂性</p>
+</li>
+<li><p>避免资源竞争</p>
+<p>  顺序处理可以避免服务器或客户端因并发处理多个请求导致数据混乱</p>
+</li>
+<li><p>兼容性</p>
+<p>  早期浏览器和服务器对并发有限制，因此使用FIFO是权衡之后的结果</p>
+</li>
+</ul>
+<h4 id="表现"><a href="#表现" class="headerlink" title="表现"></a>表现</h4><p>请求顺序化和相应顺序化</p>
+<h4 id="导致问题"><a href="#导致问题" class="headerlink" title="导致问题"></a>导致问题</h4><ul>
+<li><p>队头阻塞</p>
+</li>
+<li><p>性能问题</p>
+<p>  高并发情况下，FIFO机制会导致连接利用率低下，无法充分利用带宽</p>
+</li>
+</ul>
+<h4 id="改进尝试"><a href="#改进尝试" class="headerlink" title="改进尝试"></a>改进尝试</h4><p>管道化：允许客户端在未接受响应是连续发送多个请求</p>
+<ul>
+<li><p>缺点</p>
+<ul>
+<li>响应必须按顺序返回</li>
+<li>服务器实现复杂，且易因队头阻塞导致性能问题</li>
+<li>浏览器默认禁用管道话</li>
+</ul>
+</li>
+</ul>
+<p>因此管道化实际并未解决队头阻塞问题</p>
+<h2 id="http2"><a href="#http2" class="headerlink" title="http2"></a>http2</h2><h3 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h3><ul>
+<li><p>二进制分帧</p>
+<p>  http2中引入了二进制分帧的概念，即将请求的参数及数据全部分解为一个一个的二进制格式帧，这样可以提升传输和解析的效率。</p>
+</li>
+<li><p>多路复用</p>
+<p>  流是一组双向的帧序列，每个流都有一个唯一的标识符，并且可以在同一个连接中并发传输多个流，可以最大程度实现多路复用</p>
+<p>  一个流可以由多个帧组成，这些帧按顺序发送，接收方根据流标识符将其重新组合为完整的请求或响应</p>
+</li>
+</ul>
+<p>因此多个http可以同时并发传输或者交错传输，从而减少队头阻塞</p>
+<h3 id="帧"><a href="#帧" class="headerlink" title="帧"></a>帧</h3><h4 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h4><p>每个帧有一个固定头部（9字节），包括：</p>
+<ul>
+<li><p>长度：Length</p>
+<p>  帧负载长度，由24位3个字节大小表示</p>
+</li>
+<li><p>类型：Type</p>
+<p>  帧类型，说明格式及其语义，用8位1个字节表示</p>
+</li>
+<li><p>标志：Flags</p>
+<p>  指示帧的特定属性或状态，用8位1个字节表示</p>
+</li>
+<li><p>流标识符：Stream Identifier</p>
+<p>  表示该帧关联的流，用31为表示，上限为2^31</p>
+</li>
+<li><p>帧数据</p>
+<p>  传输的数据内容Payload由帧类型决定</p>
+</li>
+<li><p>R<br>  1位保留字段，未定义，以0x0结尾</p>
+</li>
+</ul>
+<h4 id="帧类型"><a href="#帧类型" class="headerlink" title="帧类型"></a>帧类型</h4><p>Pad Length：填充字节长度<br>E：标识流是否为独占，设置PRIORITY时才有值<br>Stream Dependency：流的依赖流，设置PRIORITY时才有值<br>Weight：流优先级权重，设置PRIORITY时才有值<br>Header Block Fragment：Header块片段<br>Padding：填充字节长度</p>
+<ul>
+<li><p>DATA帧</p>
+<p>  数据帧主要存储http2数据报文，包含8位填充字节+填充字节长度（PADDED）标记位true时说明由填充字节+Data具体传输的数据</p>
+</li>
+<li><p>HEADER帧</p>
+<p>  包含Pad Length（填充字节长度）+E（标识流是否为独占，设置PRIORITY时才有值）+Stream Dependency（流的依赖流，设置PRIORITY时才有值）+ Weight（流优先级权重，设置PRIORITY时才有值）+ Header Block Fragment（Header块片段）+ Padding（填充字节长度）</p>
+</li>
+<li><p>PROIRITY帧</p>
+<p>  发送流的优先级，包含E+Stream Dependency+Weight</p>
+</li>
+<li><p>RST_STREAM帧</p>
+<p>  当发送错误或取消时，用于终止一个流，包含Error Code，32位错误代码，说明错误原因</p>
+</li>
+<li><p>SETTINGS帧</p>
+<p>  用于传达连接端点之间的配置参数，标为ACK&#x3D;0表示被对等的SETTINGS帧使用，不为0时表示FRAME_SIZE_ERROR连接错误</p>
+</li>
+<li><p>PUSH_PROMISE帧</p>
+<p>  服务端向客户端推送的帧，客户端可以返回RST_STREAM拒绝</p>
+</li>
+<li><p>PING帧</p>
+<p>  心跳监测，测量发送往还时间，确定连接是否正常，ACK&#x3D;0表示PING帧响应，1表示PING帧</p>
+</li>
+<li><p>GOAWAY帧</p>
+<p>  用于关闭连接或发出错误，允许停止接受新的流并完成前面的流处理</p>
+<p>  包括R+Last Stream Id + Error Code + Addictional Debug Data</p>
+</li>
+<li><p>WINDOW_UPDATE帧</p>
+<p>  用于连接和流的流量控制</p>
+</li>
+<li><p>CONTINUATION帧</p>
+<p>  一种持续帧，用于继续传输Header头块片段。通常Header块比较大，在HEADERS、PUSH_PROMISE、CONTINUATION帧之后继续传输</p>
+</li>
+</ul>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>http2只解决了应用层的问题，但是由于其还是基于tcp的，因此tcp硬伤的队头阻塞依旧存在</p>
+<p>tcp由于“可靠传输”而包含的按序到达的机制，使得http2的队头阻塞问题仍然存在</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/huansky/p/14420723.html">HTTP 1.x 学习笔记 —— Web 性能权威指南</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/330300133">关于队头阻塞（Head-of-Line blocking），看这一篇就足够了</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_63951768/article/details/144917352">HTTP1.1 对头阻塞和 HTTP2 中对其的解决措施</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/HTML/%E5%B0%8F%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/HTML/%E5%B0%8F%E7%82%B9/" class="post-title-link" itemprop="url">【HTML】记录小点</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-05-09 16:47:55" itemprop="dateModified" datetime="2025-05-09T16:47:55+08:00">2025-05-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/HTML/" itemprop="url" rel="index"><span itemprop="name">HTML</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="如何区分H5、HTML、XHTML"><a href="#如何区分H5、HTML、XHTML" class="headerlink" title="如何区分H5、HTML、XHTML"></a>如何区分H5、HTML、XHTML</h3><p>基本概念：</p>
+<ul>
+<li><p>H5：是html、xhtml和html dom的新标准，h5最先是由web’超文本应用技术工作组命名的一种超文本标记语言，随后与w3c的xhtml2.0结合，产生了现在的h5。可以理解为h5&#x3D;html+css3+HTML+JS+API</p>
+</li>
+<li><p>HTML：超文本标记语言，是一种基本的web网页设计语言</p>
+</li>
+<li><p>XHTML：可扩展的文本标记语言，是一种置标语言，表现方式和HTML类似，不过语法更加严格。本质上讲，XHTML是一个过度技术，结合了XML的强大功能及大多数HTML的简单特性</p>
+</li>
+</ul>
+<p>特性区别</p>
+<ul>
+<li><p>H5：</p>
+<ul>
+<li>用于绘画的canvas</li>
+<li>用于媒介的video和audio元素</li>
+<li>对本地离线储存有更好的支持</li>
+<li>新的特殊内容元素：article、aside、footer、header、hgroup、nav、section</li>
+<li>新的表单控件：calendar、date、time、email、url、search</li>
+<li>语义化标签，例如header、h1、footer等，有利于SEO</li>
+</ul>
+</li>
+<li><p>HTML</p>
+<ul>
+<li>标识文本，例如定义标题文本、段落文本、列表文本等</li>
+<li>建立超链接，便于页面链接的跳转</li>
+<li>创建列表，把信息有序地组织在一起以方便预览</li>
+<li>在网页中显示图像、声音、视频、动画等多媒体信息</li>
+<li>可以制作表格、表单</li>
+<li>无语义化标签</li>
+</ul>
+</li>
+<li><p>XHTML：</p>
+<ul>
+<li>要求正确嵌套</li>
+<li>所有元素必须关闭</li>
+<li>区分大小写</li>
+<li>属性要用双引号</li>
+<li>用id属性替代name</li>
+<li>特殊字符处理</li>
+<li>处理各大浏览器的兼容问题</li>
+</ul>
+</li>
+</ul>
+<h3 id="W3C"><a href="#W3C" class="headerlink" title="W3C"></a>W3C</h3><ul>
+<li>W3C标准规范要求：书写标签必须闭合、标签小写、不乱嵌套，可以提高机器人对网页的搜索概率</li>
+<li>建议使用CSS和JS脚本，从而达到结构与行为、结构与表现的分离，提高页面渲染速度，可以更快显示页面内容</li>
+<li>不需要变动页面内容，可以提供打印版本而不需要复制内容，提高网站易用性。</li>
+<li>标签样式分离，合理语义化标签，使内容能被更多用户访问和更广泛的设备访问，使用更少的代码和组件，从而降低维护成本，且改版容易</li>
+</ul>
+<h3 id="HTML的DOCTYPE作用"><a href="#HTML的DOCTYPE作用" class="headerlink" title="HTML的DOCTYPE作用"></a>HTML的DOCTYPE作用</h3><ul>
+<li><p>定义</p>
+<p>  是Document Type的简写，不是HTML标签，也没有结束标签，只用于告诉浏览器当前HTML是用什么版本编写的，是一种标记语言的文档类型声明</p>
+<p>  必须在html第一行，在html标签前面，其会影响代码验证，并决定了浏览器应该如何显示用户的web文档</p>
+</li>
+<li><p>作用</p>
+<p>  用于声明文档类型，浏览器通过这个可以了解预期的文档类型，这样可以知道用哪一种规范（DTD）解析文档（html或xhtml）</p>
+</li>
+</ul>
+<h3 id="HTML的DOCTYPE的种类"><a href="#HTML的DOCTYPE的种类" class="headerlink" title="HTML的DOCTYPE的种类"></a>HTML的DOCTYPE的种类</h3><ul>
+<li><p>严格版本Strict、过渡版本Transitional和基于框架Frameset</p>
+</li>
+<li><p>严格版本&#x2F;标准模式：呈现遵循最新标准的网页</p>
+</li>
+<li><p>松散&#x2F;兼容&#x2F;包容模式：为传统浏览器设计的网页</p>
+</li>
+</ul>
+<h3 id="Quirks是什么，与标准模式区别"><a href="#Quirks是什么，与标准模式区别" class="headerlink" title="Quirks是什么，与标准模式区别"></a>Quirks是什么，与标准模式区别</h3><ul>
+<li><p>Quirks&#x2F;包容模式</p>
+<p>  IE6之前的页面不会写DTD，所以ie6假定了如果写了DTD，那么就意味着这个页面采用对css支持更好的布局，如果没有，就采用兼容之前的布局方式，这就是quirks模式</p>
+</li>
+<li><p>区别</p>
+<ul>
+<li><p>盒模型</p>
+<p>  标准模式：宽度&#x3D;width</p>
+<p>  quirks模式：宽度&#x3D;padding+width+border</p>
+</li>
+<li><p>设置百分比的高度：</p>
+<p>  标准模式：元素高度是由内容来决定的。如果父元素没有设置高度，那么子元素设置的高度百分比是无效的</p>
+</li>
+<li><p>设置行内元素高度</p>
+<p>  标准模式：行内元素高度设置是无效的</p>
+<p>  quirks模式：行内元素可以设置高度</p>
+</li>
+<li><p>设置水平居中</p>
+<p>  标准模式：margin&#x3D;auto是有效的</p>
+<p>  quirks模式：auto是无效的</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="h5新特性"><a href="#h5新特性" class="headerlink" title="h5新特性"></a>h5新特性</h3><ul>
+<li>离线缓存：关闭浏览器后再次打开时恢复数据，减少网络流量</li>
+<li>音视频、调用摄像头、手机相册、通讯录等</li>
+<li>地理定位</li>
+<li>canvas绘图</li>
+<li>拖拽、撤销历史、文本选择等</li>
+<li>开发和维护成本低于app，页面内存占用小，减少用户不必要支出</li>
+<li>css3支持字体嵌入、版面排版</li>
+<li>figure: 规定独立的流内容(图片,代码等),figure的内容应该与主内容相关,同时元素位置相对于主内容是独立的,如果被删除不会造成影响</li>
+</ul>
+<h3 id="元素alt和title"><a href="#元素alt和title" class="headerlink" title="元素alt和title"></a>元素alt和title</h3><ul>
+<li>相同处：都属于提示类文案</li>
+<li>不同<ul>
+<li>alt在图片中，加载失败时显示alt，而title是会出现一个小浮窗</li>
+<li>alt是img必要属性，只能用在img、area和input元素中，title不是img必要属性，任何元素都可以使用</li>
+<li>alt只能是元素属性，title可以作为属性，也可以作为标签&lt;title&gt;使用</li>
+<li>a标签嵌套img标签时，起作用的是img的title属性</li>
+<li>无障碍：alt可以触发阅读器，title不行</li>
+<li>SEO：alt可以作为图片的SEO优化，title对于元素的SEO优化较小</li>
+</ul>
+</li>
+</ul>
+<h3 id="background-image和img设置图片有什么区别"><a href="#background-image和img设置图片有什么区别" class="headerlink" title="background-image和img设置图片有什么区别"></a>background-image和img设置图片有什么区别</h3><p>相同点：</p>
+<ul>
+<li>都可以显示图片</li>
+<li>可以设置图片大小</li>
+</ul>
+<p>不同点: </p>
+<ul>
+<li>background-image是css属性，img是html标签</li>
+<li>background-image设置宽高需要配合background-position、background-size等属性，img标签与width、height配合</li>
+<li>img可以设置alt属性，用于优化seo和图片加载失败的描述，background-image不行</li>
+<li>img可以使用srcset属性用于响应式图片（srcset&#x3D;”image-1x.jpg 1x, image-2x.jpg 2x” ）</li>
+<li>img是作为独立元素，影响文档流；background-image是作为背景图，不影响文档流</li>
+<li>加载时机:<ul>
+<li>img：html渲染到img标签时就会进行图片加载</li>
+<li>background-image：<ul>
+<li>内联（style&#x3D;”background-image:url(image.jpg)”: 和img标签类似，解析到则进行加载</li>
+<li>外部css：css文件下载并解析后执行</li>
+<li>当页面内容加载过多时，可能会降低background-image的加载优先级，因此会被认为是装饰性图片</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>懒加载<ul>
+<li>img：loading&#x3D;”lazy”，chrome76+，firefox75+</li>
+<li>background-image：只能通过js或css实现</li>
+</ul>
+</li>
+<li>大图时导致页面延迟渲染<ul>
+<li>img：<ul>
+<li>在解析html时，若未加上loading&#x3D;”lazy”，那么就会立马进行图片加载，这个时候会占用带宽，因此会导致关键资源加载延迟</li>
+<li>未设置宽高时，由于图片加载后，会导致其余元素位置变化，而触发回流</li>
+</ul>
+</li>
+<li>background-image：<ul>
+<li>对图片的加载是在css解析过程中进行的</li>
+<li>背景图的加载一般会触发重绘，通常不会导致回流（除非元素尺寸依赖于背景图</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>优缺点：</p>
+<ul>
+<li><p>img：</p>
+<ul>
+<li>优点：<ul>
+<li>语义化</li>
+<li>利于seo和无障碍优化</li>
+<li>响应式：loading&#x3D;”lazy”（有兼容性</li>
+<li>打印支持：在打印时显示图片</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>影响其他元素</li>
+<li>图片较大会影响页面渲染，图片过多会增加http请求</li>
+</ul>
+</li>
+<li>场景<ul>
+<li>内容性图片：如文章配图、产品展示图、用户头像等。</li>
+<li>需要 SEO 优化的图片：如商品图片、图表等。</li>
+<li>需要可访问性支持的图片：如信息图、图表等。</li>
+<li>需要打印的图片：如报告、文档中的插图。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>background-image：</p>
+<ul>
+<li>优点：<ul>
+<li>利用雪碧图可以减少http请求</li>
+<li>不占用文档流</li>
+<li>图片加载失败不会影响页面结构</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>不利于seo和无障碍</li>
+<li>默认不打印背景图片</li>
+<li>响应式：需要手动写</li>
+</ul>
+</li>
+<li>场景：<ul>
+<li>装饰性图片：如按钮图标、背景纹理、边框装饰等。</li>
+<li>CSS 雪碧图：合并多个小图标减少请求。</li>
+<li>全屏背景或遮罩：如页面背景图、模态框遮罩层。</li>
+<li>动态效果控制：通过 CSS 动画或过渡实现背景图变化。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="乱码原因"><a href="#乱码原因" class="headerlink" title="乱码原因"></a>乱码原因</h3><ul>
+<li>不同编码内容混杂：html乱码是由html编码问题造成的</li>
+<li>未设置html编码，设置meta头text&#x2F;html;charset&#x3D;utf-8</li>
+<li>编辑工具的编码问题，例如使用记事本直接写html可能会造成乱码</li>
+<li>浏览器不能自动检测网页编码，造成网页乱码</li>
+</ul>
+<h3 id="js放在html不同位置有什么区别"><a href="#js放在html不同位置有什么区别" class="headerlink" title="js放在html不同位置有什么区别"></a>js放在html不同位置有什么区别</h3><ul>
+<li>如果使用<code>window.</code>，将js放在里面，则在哪儿都一样，因为都是需要等body之后再加载</li>
+<li>如果不使用<code>window.</code>，放在head中，代码不会执行。因为html执行顺序不同，html从开始运行到进入index.js文件，其中被function包围起来的代码不会被运行，直接执行最后一句代码。如果html页面没有加载完，找不到元素会报错</li>
+</ul>
+<h3 id="什么是列表及列表分类"><a href="#什么是列表及列表分类" class="headerlink" title="什么是列表及列表分类"></a>什么是列表及列表分类</h3><p>列表定义：</p>
+<ul>
+<li>是一种信息资源的展示方式</li>
+<li>可以使得信息结构化和条理化，并以列表的样式显示出来，便于阅读者快速方便的获取信息</li>
+<li>ul、ol、dl不能嵌套其他标签，但是li可以</li>
+</ul>
+<p>列表分类</p>
+<ul>
+<li>ol：有序列表<ul>
+<li>有顺序，每个li独占一行</li>
+<li>一般用于排序类型的列表</li>
+<li>默认li标签前面有顺序标记</li>
+</ul>
+</li>
+<li>ul：无序列表<ul>
+<li>无顺序，每个li独占一行</li>
+<li>一般用于无序类型的列表，例如导航栏等</li>
+<li>默认li标签前面有·标记</li>
+</ul>
+</li>
+<li>dl：自定义列表<ul>
+<li>无顺序，dt、dd标签独占一行</li>
+<li>一般用于一个标题下有一个或多个列表项</li>
+<li>默认无标记</li>
+</ul>
+</li>
+</ul>
+<h3 id="常见表单元素"><a href="#常见表单元素" class="headerlink" title="常见表单元素"></a>常见表单元素</h3><ul>
+<li><p>input</p>
+<p>  type类型包括：password、text、image、hidden、file</p>
+</li>
+<li><p>textarea</p>
+<p>  可设置行列数</p>
+</li>
+<li><p>button</p>
+</li>
+<li><p>select</p>
+<p>  option、label</p>
+</li>
+<li><p>radio</p>
+</li>
+<li><p>checkbox</p>
+</li>
+</ul>
+<h3 id="表单提交方式"><a href="#表单提交方式" class="headerlink" title="表单提交方式"></a>表单提交方式</h3><ul>
+<li><p>submit提交</p>
+<p>  在form表单加上action属性，且input加上type&#x3D;submit</p>
+</li>
+<li><p>axios提交</p>
+</li>
+</ul>
+<h3 id="为什么使用h5标签布局网页"><a href="#为什么使用h5标签布局网页" class="headerlink" title="为什么使用h5标签布局网页"></a>为什么使用h5标签布局网页</h3><p>对h5来说，网页结构与使用更加语义化，利于seo</p>
+<p>section和article标签相似，且和nav也类似</p>
+<p>nav：非常常见的标签，本身无任何语义，用作布局及样式话标签</p>
+<p>section：用作一段有专题性的内容，一般在这个标签里面会带有标题。典型场景包括文章章节、标签对话框的标签页或论文中有编号的部分</p>
+<p>article：特殊的section标签，代表一个独立完整的相关内容块</p>
+<h3 id="如何达到表单的初步验证"><a href="#如何达到表单的初步验证" class="headerlink" title="如何达到表单的初步验证"></a>如何达到表单的初步验证</h3><p>验证属性</p>
+<ul>
+<li><code>required</code>：必填<ul>
+<li><code>valueMissing</code>: 判断当前元素是否为空，配合<code>required</code>使用</li>
+</ul>
+</li>
+<li><code>pattern</code>：正则验证当前元素值是否匹配<ul>
+<li><code>patternMismatch</code>: 判断当前元素是否符合正则，配合<code>pattern</code>使用</li>
+</ul>
+</li>
+<li><code>max</code>和<code>min</code>：验证当前元素最大或最小值，一般用于染个&#x2F;number类型的元素<ul>
+<li>rangeUnderflow：判断当前元素值是否小于min属性值，配合min属性使用</li>
+</ul>
+</li>
+<li><code>minlength</code>和<code>maxlength</code>：验证内容最大长度和最小长度<ul>
+<li><code>tooLong</code>: 判断当前元素长度是否符合，配合<code>maxlength</code>使用</li>
+</ul>
+</li>
+<li><code>validity</code>：h5表单提供的一种有效状态，有效状态通过<code>validityState</code>获取，<code>validityState</code>通过<code>validity</code>获取</li>
+</ul>
+<p>验证状态</p>
+<ul>
+<li><code>typeMismatch</code>: 判断当前元素值的类型是否匹配，配合email&#x2F;number&#x2F;url使用</li>
+<li><code>stepMismatch</code>: 判断当前元素是否与step设置相同，配合step使用，并不与min、max属性值比较</li>
+<li><code>valid</code>: 判断当前元素是否正确，返回true标识验证成功</li>
+<li><code>customError</code>: 配合<code>setCustomValidity()</code>方法使用</li>
+<li>setCustomValidity(message)：设置自定义错误信息，一旦使用该方法修改默认错误提示后，即使输入正确也会有提示</li>
+</ul>
+<h3 id="iframe优缺点"><a href="#iframe优缺点" class="headerlink" title="iframe优缺点"></a>iframe优缺点</h3><p>优点:</p>
+<ul>
+<li>解决加载缓慢的第三方内容</li>
+<li>iframe跨域通信(postMessage)</li>
+<li>iframe无刷新文件上传</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>阻塞主页面的onLoad事件</li>
+<li>不利于seo</li>
+<li>页面产生多,不利于管理</li>
+<li>增加服务器请求</li>
+<li>可能会导致资源无法共用<ul>
+<li>同源+缓存策略(未过期&#x2F;不需要重新请求)会从缓存中读取</li>
+<li>同源 + 缓存过期但有 ETag	⚠️ 发送条件请求（可能返回 304）</li>
+<li>跨域 + 无 CORS 缓存策略	✅ 重新请求</li>
+<li>请求头或方法不同	✅ 重新请求</li>
+</ul>
+</li>
+</ul>
+<h3 id="页面性能优化"><a href="#页面性能优化" class="headerlink" title="页面性能优化"></a>页面性能优化</h3><ul>
+<li>内容方面<ul>
+<li>减少http请求</li>
+<li>使用http2&#x2F;3</li>
+<li>减少dom元素数量</li>
+<li>请求缓存</li>
+<li>使用多域名负载网页内的多个文件,图片</li>
+<li>使用gzip压缩</li>
+</ul>
+</li>
+<li>css<ul>
+<li>css放到页面上端</li>
+<li>把js和css分离开</li>
+<li>精简js和css</li>
+<li>避免css表达式</li>
+</ul>
+</li>
+<li>js<ul>
+<li>tree shanking</li>
+<li>放到页面底部</li>
+<li>减少重复代码</li>
+</ul>
+</li>
+<li>图片<ul>
+<li>优化图片</li>
+<li>不缩放图片</li>
+<li>使用恰当的图片格式(webp更好)</li>
+<li>css雪碧图优化</li>
+</ul>
+</li>
+</ul>
+<h3 id="图片懒加载和预加载"><a href="#图片懒加载和预加载" class="headerlink" title="图片懒加载和预加载"></a>图片懒加载和预加载</h3><p>懒加载: 滚动到了图片的位置,才进行加载.</p>
+<p>减少不必要的访问数据库或延迟访问数据的次数,减少服务器端的压力</p>
+<p>预加载: 在还没到图片位置的时候,就开始加载图片</p>
+<p>在网页全部加载之前加载图片,那么当用户查看时,可以之间从缓存中渲染图片,减少等待时间</p>
+<p>当图片过大时,可能会导致页面白屏时间加长</p>
+<h3 id="a标签作用"><a href="#a标签作用" class="headerlink" title="a标签作用"></a>a标签作用</h3><ul>
+<li><p>外部页面连接</p>
+</li>
+<li><p>本地页面链接</p>
+<p>  href指向相对路径,就可以打开当前目录下对应的文件</p>
+</li>
+<li><p>锚点链接</p>
+</li>
+<li><p>其他</p>
+<ul>
+<li>打开email: <code>&lt;a href=&#39;mailto:邮件接收人&#39;&gt;&lt;/a&gt;</code></li>
+<li>短链,打开小程序,qq等</li>
+<li>打电话: <code>&lt;a href=&#39;tel: 180xxx&#39;&gt;&lt;/a&gt;</code></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/HTML/%E3%80%90HTML%E3%80%91%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/HTML/%E3%80%90HTML%E3%80%91%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">【HTML】记录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-08-14 11:18:06 / Modified: 11:19:28" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/HTML/" itemprop="url" rel="index"><span itemprop="name">HTML</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="input-type-file的cancel事件"><a href="#input-type-file的cancel事件" class="headerlink" title="input type&#x3D;file的cancel事件"></a>input type&#x3D;file的cancel事件</h3><p>mdn并未写明当前的<code>input</code>标签支持cancel事件</p>
+<h4 id="触发条件"><a href="#触发条件" class="headerlink" title="触发条件"></a>触发条件</h4><p>在pc端中，点击上传的输入框，然后在弹出的文件选择器中点击取消按钮，即可触发当前这个事件</p>
+<h4 id="表现"><a href="#表现" class="headerlink" title="表现"></a>表现</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 子组件 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">id</span>=<span class="string">&quot;ipt1&quot;</span> @<span class="attr">cancel</span>=<span class="string">&quot;cancle2&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;上传123&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">input</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 父组件 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">childComp</span> @<span class="attr">cancel</span>=<span class="string">&quot;cancle1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">childComp</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在vue3项目中，会触发子组件的<code>cancle2</code>事件</p>
+<p>若在子组件中没有<code>cancle2</code>事件，那么这个事件会冒泡到父组件中，执行<code>cancle1</code>事件。因此若父组件有监听子组件的cancel事件，那么在这个情况下会直接执行，可能会导致触发其他问题</p>
+<p>浏览器：谷歌、火狐都支持</p>
+<h4 id="监听"><a href="#监听" class="headerlink" title="监听"></a>监听</h4><blockquote>
+<p>vue</p>
+</blockquote>
+<ul>
+<li>组件直接监听</li>
+<li>子组件未监听，父组件监听</li>
+<li>window.addEventListener(‘cancel’): 会执行两次，触发元素是window</li>
+<li>document.getElementById(‘’).addEventListener(‘cancel’): 不执行</li>
+</ul>
+<blockquote>
+<p>普通html</p>
+</blockquote>
+<ul>
+<li>window.addEventListener(‘cancel’): 只执行一次，触发元素是window</li>
+<li>document.getElementById(‘’).addEventListener(‘cancel’): 只执行一次，触发元素是对应的元素</li>
+</ul>
+<p>技术栈：vue3+ts+pinia+vite+vantui<br>项目介绍：PC+H5，支持多种资料类型上传，可配置资料留资，悬浮码等功能，增加内容分发等功能，企业微信侧边栏可快速发送</p>
+<p>● 负责核心复杂功能模块的设计与实现<br>1、资料上传：支持pdf、图片、公众号等5种资料类型上传，可配置资料留资，悬浮码等功能，增加内容分发等功能，企业微信侧边栏可快速发送</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/HTML/%E3%80%90HTML%E3%80%91templates%20and%20slots/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/HTML/%E3%80%90HTML%E3%80%91templates%20and%20slots/" class="post-title-link" itemprop="url">【HTML】templates and slots</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/HTML/" itemprop="url" rel="index"><span itemprop="name">HTML</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="【HTML】templates-and-slots"><a href="#【HTML】templates-and-slots" class="headerlink" title="【HTML】templates and slots"></a>【HTML】templates and slots</h1><h2 id="概况"><a href="#概况" class="headerlink" title="概况"></a><h1>概况</h1></h2><p>可以用来灵活填充 Web 组件的 shadow DOM 的模板。可以复用相同的标记结构。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ul>
+<li><p>编写一个 template</p>
+<p>直接在页面中编写一个 template 不会直接在页面中显示出来</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span> <span class="attr">id</span>=<span class="string">&quot;test&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-tag">p</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">color</span>: white;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">background-color</span>: <span class="number">#666</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">padding</span>: <span class="number">5px</span>;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">  </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>测试template<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注册自定义模板</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">customElements.<span class="title function_">define</span>(</span><br><span class="line">  <span class="string">&quot;test-template&quot;</span>,</span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">extends</span> <span class="title class_">HTMLElement</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">super</span>();</span><br><span class="line">      <span class="keyword">let</span> template = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;test&quot;</span>);</span><br><span class="line">      <span class="keyword">let</span> templateContent = template.<span class="property">content</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">const</span> shadowRoot = <span class="variable language_">this</span>.<span class="title function_">attachShadow</span>(&#123; <span class="attr">mode</span>: <span class="string">&quot;open&quot;</span> &#125;);</span><br><span class="line">      shadowRoot.<span class="title function_">appendChild</span>(templateContent.<span class="title function_">cloneNode</span>(<span class="literal">true</span>));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>组件显示</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">test-template</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>页面显示</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pC4aUiV"><img src="https://s1.ax1x.com/2023/07/14/pC4aUiV.png" alt="pC4aUiV.png"></a></p>
+<p>template 的元素的样式也是独立的，并不会因为父级定义的同一个样式而影响内部。</p>
+<p>虽然 template 和使用在同一个页面，但是如果直接在 Elements 面板里面修改 template 的内容，<strong>不会</strong>影响到渲染的地方。</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pC4aWRO"><img src="https://s1.ax1x.com/2023/07/14/pC4aWRO.png" alt="pC4aWRO.png"></a></p>
+</li>
+<li><p>添加 slot</p>
+<p>添加的slot的样式只收到父级的影响，并不会受到template中定义的样式影响</p>
+<p>如果是template中并没有定义对于的slot，那么传入的slot并不会被渲染</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span> <span class="attr">id</span>=<span class="string">&quot;test&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-tag">p</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">color</span>: white;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">background-color</span>: <span class="number">#666</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">padding</span>: <span class="number">5px</span>;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">  </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">&quot;text1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>测试template<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">test-template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>默认slot的内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">slot</span>=<span class="string">&quot;text1&quot;</span>&gt;</span>具名插槽的内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">test-template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pC4azLj"><img src="https://s1.ax1x.com/2023/07/14/pC4azLj.png" alt="pC4azLj.png"></a></p>
+<ul>
+<li>获取slot名</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> el = <span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;test-template p&#x27;</span>)</span><br><span class="line">  el.<span class="title function_">forEach</span>(<span class="function"><span class="params">ele</span>=&gt;</span>&#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(ele.<span class="property">slot</span>)</span><br><span class="line">  &#125;)</span><br><span class="line"><span class="comment">//  输出：&quot;&quot;, &quot;text1&quot;, &quot;text2&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_components/Using_templates_and_slots#%E4%BD%BF%E7%94%A8%E6%A7%BD_slots_%E6%B7%BB%E5%8A%A0%E7%81%B5%E6%B4%BB%E5%BA%A6">使用 templates and slots</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1009633?areaSource=106001.5">shadow dom解析</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1072,1010 +2076,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/css/%E5%B0%8F%E7%82%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/css/%E5%B0%8F%E7%82%B9/" class="post-title-link" itemprop="url">【css】小点</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-05-04 09:06:06" itemprop="dateModified" datetime="2025-05-04T09:06:06+08:00">2025-05-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="块级和行内"><a href="#块级和行内" class="headerlink" title="块级和行内"></a>块级和行内</h3><p>行内多为描述性标记，块级多为结构性标记。块级元素即使声明了宽度也独占一行</p>
-<h3 id="link和-import"><a href="#link和-import" class="headerlink" title="link和@import"></a>link和@import</h3><ul>
-<li><p>从属关系：</p>
-<ul>
-<li>@import是css提供的语法，只有导入样式表的作用</li>
-<li>link是html提供的标签，可以加载css文件，也可以定义rss、rel链接属性等</li>
-</ul>
-</li>
-<li><p>加载顺序</p>
-<ul>
-<li>@import引入的将会在页面解析完成后被加载</li>
-<li>link引入的同时css被加载</li>
-</ul>
-</li>
-<li><p>兼容性</p>
-<ul>
-<li>@import是css2.1的特性，在ie5之后才可以使用</li>
-<li>link是html标签，兼容性好</li>
-</ul>
-</li>
-<li><p>dom可控性</p>
-<ul>
-<li>无法使用@import的方式插入样式，因为dom方法基于文档</li>
-<li>插入link标签可以改变样式，通过js操作dom即可</li>
-</ul>
-</li>
-</ul>
-<h3 id="css的引入方式"><a href="#css的引入方式" class="headerlink" title="css的引入方式"></a>css的引入方式</h3><ul>
-<li>内联样式:style</li>
-<li>内部样式表:<style></style>标签</li>
-<li>link引入</li>
-<li>@import引入</li>
-</ul>
-<h3 id="css3新特性"><a href="#css3新特性" class="headerlink" title="css3新特性"></a>css3新特性</h3><ul>
-<li>阴影: box-shadow、text-shadow</li>
-<li>圆角: border-raduis</li>
-<li>盒子模型: box-sizing</li>
-<li>渐变: linear-gradient、radial-gradient</li>
-<li>颜色:新增RGB、HSLA模式</li>
-<li>过渡: transition</li>
-<li>背景: background-size、background-origin、background-clip</li>
-<li>伪元素: selection(唯一在css3中新增的)</li>
-<li>新增伪类<ul>
-<li>p: first-of-type: 选择属于其父元素的首个p元素的每个p元素</li>
-<li>p:only-of-type: 选择属于其父元素唯一的p元素的每个p元素</li>
-<li>p:last-of-type: 选择属于其父元素的最后一个p元素的每个p元素</li>
-<li>p:only-child: 选择属于其父元素的唯一子元素的每个p元素</li>
-<li>p:nth-child(n): 选择属于其父元素的第n个子元素的每个p元素</li>
-<li>:enabled、:disabled: 控制表单控件的禁用状态</li>
-<li>:checked: 单选框或复选框被选中</li>
-</ul>
-</li>
-</ul>
-<h3 id="为什么需要初始化css"><a href="#为什么需要初始化css" class="headerlink" title="为什么需要初始化css"></a>为什么需要初始化css</h3><ul>
-<li><p>浏览器差异</p>
-<p>  由于各家浏览器内核可能使用不同,不同浏览器对有些标签的默认值是不同的,如果没有初始化,那么就在不同浏览器中表现会有差异</p>
-</li>
-<li><p>提高编码质量</p>
-<p>  如果不初始化,整个页面较乱,重复的css有很多</p>
-</li>
-</ul>
-<h3 id="浏览器解析css选择器"><a href="#浏览器解析css选择器" class="headerlink" title="浏览器解析css选择器"></a>浏览器解析css选择器</h3><p>浏览器解析加载资源与渲染顺序</p>
-<ul>
-<li>浏览器下周的顺序从上到下,渲染也是从上到下,下载和渲染并行</li>
-<li>渲染在某一部分时,其上的所有部分都已经下载完成(不是所有相关联的元素都已经下载完成,例如img)</li>
-<li>如果遇到语义解释性的标签嵌入文件(例如css或js文件),那么ie的下载过程会启用单独连接进行下载,且在下载后进行解析,解析过程中,停止后续元素的下载渲染.此时渲染会被阻塞,必须等js或者css资源加载完毕后才进行后续的渲染</li>
-<li>样式表下载完成后,将和之前下载的所有样式表一起进行解析.解析完成后,将会对之前所有的元素(包括已经渲染的)重新进行渲染.</li>
-</ul>
-<p>浏览器对css选择器的解析规则</p>
-<p>解析是从右到左的,例如p .classA,会先查找classA的元素,再<br>去查找classA元素的父元素是否是p标签</p>
-<h3 id="隐藏元素方法"><a href="#隐藏元素方法" class="headerlink" title="隐藏元素方法"></a>隐藏元素方法</h3><ul>
-<li><p>display:none</p>
-<p>  点击失效,不会占位置</p>
-</li>
-<li><p>opacity:0</p>
-<p>  占位置,有点击事件</p>
-</li>
-<li><p>visible:hidden</p>
-<p>  占位置,无点击事件</p>
-</li>
-<li><p>background:transparent</p>
-<p>  背景色透明化</p>
-</li>
-<li><p>position:absolute&#x2F;fixed + left: -100vw</p>
-<p>  移出屏幕</p>
-</li>
-<li><p>filter:blur(0)</p>
-<p>  将元素模糊度设置为0,从而使元素消失在页面中</p>
-</li>
-<li><p>height: 0 + width: 0</p>
-<p>  将高度和宽度设置为0,使元素消失在页面中</p>
-</li>
-</ul>
-<h4 id="visible-hidden和display-none的区别"><a href="#visible-hidden和display-none的区别" class="headerlink" title="visible:hidden和display:none的区别"></a>visible:hidden和display:none的区别</h4><ul>
-<li>当父元素设置的visibility:hidden时,子元素会继承这个样式,若子元素设置的visible不是hidden,那么子元素可以显示在页面中</li>
-<li>transition动画中,visible生效,但是display是无用的</li>
-<li>visible:hidden不会影响计数器的计数,display:none会</li>
-</ul>
-<p>display&#x3D;none不显示对应的元素及其子元素,在文档布局中不再分配空间(回流+重绘)</p>
-<p>visible&#x3D;hidden只不再显示当前元素,但是在文档空间中还是会保留这个元素的(重绘)</p>
-<h3 id="css选择器有哪些-哪些可以继承"><a href="#css选择器有哪些-哪些可以继承" class="headerlink" title="css选择器有哪些,哪些可以继承"></a>css选择器有哪些,哪些可以继承</h3><ul>
-<li>class: 可继承</li>
-<li>id</li>
-<li>标签: 可继承</li>
-<li>后代选择器: 可继承</li>
-<li>群组选择器: 可继承</li>
-</ul>
-<h3 id="font属性设置"><a href="#font属性设置" class="headerlink" title="font属性设置"></a>font属性设置</h3><p>缩写:<code>font: 变体、字号、行高、字体</code>,使用顺序不区分,但是一般字号和行高写一起,中间用&#x2F;分开,例如10px&#x2F;20px</p>
-<p>font属性</p>
-<ul>
-<li>大小:font-size</li>
-<li>样式:font-style</li>
-<li>字重: font-weight</li>
-<li>行高: line-height</li>
-<li>字体: font-family</li>
-<li>大小写: text-transform: uppercase(大写)&#x2F;lowercase(小写)&#x2F;capitalize(首字母大写)</li>
-<li>修饰: text-decoration: underline(下划线)&#x2F;overline(上划线)&#x2F;line-through(删除线)&#x2F;none(无修饰)</li>
-<li>变体: font-variant: small-caps(小型大写字母)&#x2F;normal(正常)</li>
-</ul>
-<h3 id="line-height"><a href="#line-height" class="headerlink" title="line-height"></a>line-height</h3><p>影响</p>
-<ul>
-<li>代替元素:line-height无影响</li>
-<li>非代替元素: line-height影响</li>
-<li>行内元素: line-height用于计算line-box高度</li>
-<li>块级元素: line-height指定元素内部line-box的最小高度</li>
-</ul>
-<p>值类型:</p>
-<ul>
-<li>normal: 取决于用户代理,浏览器使用默认值,大概1.2</li>
-<li>number: 无单位情况是number * 元素字体大小</li>
-<li>length: 指定length用于计算line-box高度</li>
-<li>percentage: 与元素自身的字体大小有关,计算值是给定的百分比 * 元素计算后的字体大小</li>
-</ul>
-<p>默认值: normal,可以继承.如果父元素的值是一个百分比,那么子级继承的是父级计算之后的结果</p>
-<p>行高: 上下文本行的基线间的垂直距离</p>
-<p>行距:一行底线到下一行定县的垂直距离,即第一行线和第二行线之间的垂直距离</p>
-<p>半行距&#x3D;行距的一半&#x3D;(行高-字体size)&#x2F;2</p>
-<h3 id="css优化"><a href="#css优化" class="headerlink" title="css优化"></a>css优化</h3><ul>
-<li>压缩</li>
-<li>合理设计,复用,减少渲染时间</li>
-<li>合并属性</li>
-<li>减少抵消代码例如滤镜、!import引入等</li>
-<li>减少css嵌套</li>
-<li>减少css rest使用</li>
-<li>考虑继承</li>
-<li>渲染: 慎用高性能属性(float&#x2F;定位等); 减少页面重绘重排</li>
-</ul>
-<h3 id="字体用偶数还是奇数"><a href="#字体用偶数还是奇数" class="headerlink" title="字体用偶数还是奇数"></a>字体用偶数还是奇数</h3><ul>
-<li>使用偶数较容易和页面中其他部分的字号构成一个比例关系</li>
-<li>浏览器原因:低版本的ie6会把奇数字号转为偶数</li>
-<li>ui设计稿给的大部分是偶数(PS提供偶数)</li>
-</ul>
-<h3 id="first-child和first-of-type区别"><a href="#first-child和first-of-type区别" class="headerlink" title="first-child和first-of-type区别"></a>first-child和first-of-type区别</h3><p>first-child表示的是父元素其下的第一个元素</p>
-<p>first-of-type表示的是父元素其下,符合条件的第一个元素,可能并不是第一个元素</p>
-<h3 id="伪类和伪元素"><a href="#伪类和伪元素" class="headerlink" title="伪类和伪元素"></a>伪类和伪元素</h3><p>伪类: 表示元素处于的某种状态</p>
-<p>伪元素: 某个元素的子元素,虽然在逻辑上存在,但实际不存在于文档流中</p>
-<h3 id="inline-block和float区别"><a href="#inline-block和float区别" class="headerlink" title="inline-block和float区别"></a>inline-block和float区别</h3><p>inline-block: 具有block的属性,但是排列顺序按照inline来定</p>
-<p>float:当设置元素浮动时,相邻元素会一句自身大小排满一行,如果父容器宽度不够换行.当设置了元素浮动时,元素就已经脱离了文档流了,相邻元素会呈环绕装排列</p>
-<p>都可以并行显示,可以设置宽高</p>
-<p>区别:</p>
-<ul>
-<li><p>inline-block:水平排列一行,即使元素高度不一致,会以高度最大的元素高度未行高,即使高度小的元素周围留空,也不会有第二行的元素上浮补位.可以设置默认的垂直对齐基线</p>
-</li>
-<li><p>float: 让元素脱离文档流,呈环绕状排列,如果遇到上行有空白,且当前元素宽度小于等于空白处,那么元素会上行补位.默认顶部对齐</p>
-</li>
-</ul>
-<h3 id="absolute和float区别"><a href="#absolute和float区别" class="headerlink" title="absolute和float区别"></a>absolute和float区别</h3><p>float主要调节包围文字,position主要用于调节定位</p>
-<p>float可以将元素从文档里抽出,并不占文档流的空间.position的absolute和fixed也不会占据文档流,但这两个不适合用于给整个网页做布局,因为这样需要为页面上的每一个元素设置坐标来定位</p>
-<p>float可以用来做布局</p>
-<h3 id="web安全色"><a href="#web安全色" class="headerlink" title="web安全色"></a>web安全色</h3><p>不同的平台(mac,pc等)有不同的调色板,不同浏览器也有不同的调色板,那么就可能会导致同一个图片,在mac和pc浏览器的显示效果有差异</p>
-<p>将颜色的十进制&#x2F;rgb转为十六进制使用S</p>
-<h3 id="float元素浮动"><a href="#float元素浮动" class="headerlink" title="float元素浮动"></a>float元素浮动</h3><p>浮动规则: 向指定方向移动,直到碰到包含它的元素或同样float元素的边框.如果元素浮动则不占空间,block元素浮动会失去block属性变为inline-block.但与absolute的元素不影响其他元素不同,float有时会影响周边元素</p>
-<ul>
-<li>float元素前面是非block元素,且这些元素在同一行,则浮动会影响它前面的元素,把它前面的非block元素挤到边上</li>
-<li>如果前面非block元素放不下,则去影响它的下一行,此时可以把过长的inline元素们作为一个整体当block去看.如果float元素下面是非block元素,则会把该元素往边上挤;如果下面是block元素,则会覆盖上该元素,但只是背景的覆盖,依然会把该block元素内容挤到边上</li>
-<li>如果浮动元素面积够大,并且下面不出现清理浮动的css,那么下面的元素都会有影响</li>
-<li>如果给float元素加上偏移,则会挡住其他元素,不管这个元素是block还是inline</li>
-</ul>
-<h4 id="font-face"><a href="#font-face" class="headerlink" title="@font-face"></a>@font-face</h4><p>css功能,允许使用自定义的网络字体</p>
-<h3 id="opacity和background透明色"><a href="#opacity和background透明色" class="headerlink" title="opacity和background透明色"></a>opacity和background透明色</h3><ul>
-<li>opacity:0: 作用于元素以及元素内所有内容的透明度</li>
-<li>transparent: 只能用于元素颜色或者背景色</li>
-</ul>
-<h3 id="css雪碧图"><a href="#css雪碧图" class="headerlink" title="css雪碧图"></a>css雪碧图</h3><p>优点:</p>
-<ul>
-<li>减少http请求次数,提高页面性能</li>
-<li>减少图片总字节,3个图片字节＜3个图片合成的1张图片字节</li>
-<li>解决图片命名很多</li>
-<li>更换风格方便</li>
-</ul>
-<p>缺点</p>
-<ul>
-<li>在图片合并时,需要把多张图片有序合理的合并为一张图片,还需要留好足够的空间,防止出现不必要的背景.在宽屏、高分辨率的屏幕下自适应页面,如果图片不够宽,容易出现背景断裂</li>
-<li>雪碧图在开发时比较麻烦,需要测量每个单元背景的精确位置</li>
-<li>维护麻烦,一个图标的改动就需要改动合并的图片</li>
-</ul>
-<h3 id="获取元素背景色"><a href="#获取元素背景色" class="headerlink" title="获取元素背景色"></a>获取元素背景色</h3><p><code>getComputedStyle</code>, 但还需要考虑</p>
-<ul>
-<li>硬件加速时,存在layer squashing的情况</li>
-<li>存在floating元素显示在任意元素上方的情况</li>
-<li>考虑opacity</li>
-<li>zindex</li>
-</ul>
-<p>但当多个元素堆叠在一起或背景色带透明度情况下, 可以使用alpha blending</p>
-<h3 id="px-em和rem"><a href="#px-em和rem" class="headerlink" title="px,em和rem"></a>px,em和rem</h3><p>px: 实际上就是像素,用px设置字体时比较稳定和准确.但px不支持用户进行浏览器缩放或者不同移动端的兼容,因为像素是固定的,屏幕大小可能会有变化</p>
-<pre><code>- ie无法调整使用px作为单位的字体大小
-- px是相对长度单位,是相对于显示器屏幕分辨率而言的
-</code></pre>
-<p>em: 依据父元素的fontsize来决定的.</p>
-<pre><code>- em是相对长度单位,如果当前未对行内文本的字体尺寸设置,那么则相对于浏览器的默认字体尺寸
-- em不是固定的,会继承父级的字体大小
-</code></pre>
-<p>rem: 依据根元素的fontsize来决定的.</p>
-<pre><code>- 一般来说,1em=1rem=100&amp;=16px
-</code></pre>
-<h3 id="屏幕适配方法"><a href="#屏幕适配方法" class="headerlink" title="屏幕适配方法"></a>屏幕适配方法</h3><ul>
-<li><p>响应式</p>
-<p>  主要是工作量大,维护难</p>
-</li>
-<li><p>设置viewport进行缩放</p>
-<p>  可能会导致页面元素模糊</p>
-</li>
-<li><p>固定宽度</p>
-<p>  在大屏手机上页面看起来小</p>
-</li>
-<li><p>流式布局</p>
-<p>  页面布局通过百分比来定义宽度,高度大都使用px固定.因此在大屏幕手机下显示效果比较大,宽度很大</p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/css/%E3%80%90css%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" class="post-title-link" itemprop="url">【css】记录小点</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-05-03 11:49:02" itemprop="dateModified" datetime="2025-05-03T11:49:02+08:00">2025-05-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="border：0与border：none区别"><a href="#border：0与border：none区别" class="headerlink" title="border：0与border：none区别"></a>border：0与border：none区别</h2><h3 id="相同点"><a href="#相同点" class="headerlink" title="相同点"></a>相同点</h3><p>两者都可以将元素的边框设为不可见</p>
-<h3 id="不同点"><a href="#不同点" class="headerlink" title="不同点"></a>不同点</h3><ul>
-<li><p>性能差异</p>
-</li>
-<li><p>border：0</p>
-</li>
-</ul>
-<p>其表示为将元素边框设置为0像素，虽然在页面上无法看见，但是浏览器依旧会对边框进行渲染。因此渲染的是一个像素为0的b order。</p>
-<p>即border：0依旧会占用内存</p>
-<ul>
-<li>border：none</li>
-</ul>
-<p>其表示的是将元素边框设置无，因此浏览器在解析时，并不会对其进行渲染</p>
-<p>即其不会占用浏览器内存</p>
-<ul>
-<li>兼容</li>
-</ul>
-<p>在ie6&#x2F;7的button元素中，border：none并不会生效</p>
-<h2 id="垂直居中"><a href="#垂直居中" class="headerlink" title="垂直居中"></a>垂直居中</h2><h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">display</span>: table-cell;</span><br><span class="line"><span class="comment">// 子元素</span></span><br><span class="line">vertical-<span class="attr">align</span>: center;</span><br></pre></td></tr></table></figure>
-
-<h3 id="文字"><a href="#文字" class="headerlink" title="文字"></a>文字</h3><ul>
-<li>line-height</li>
-</ul>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">height</span>: <span class="number">20px</span>;</span><br><span class="line"><span class="attribute">line-height</span>: <span class="number">20px</span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="line-height"><a href="#line-height" class="headerlink" title="line-height"></a>line-height</h2><ul>
-<li><p>line-height指的是两行文字基线与基线之间的高度</p>
-</li>
-<li><p>单位为%时，计算规则是相对于当前元素的font-size计算的，即0.x*fontsize</p>
-</li>
-<li><p>无单位时，是相对于当前元素的font-size计算的，即x*fontsize</p>
-</li>
-</ul>
-<h2 id="vertical-align"><a href="#vertical-align" class="headerlink" title="vertical-align"></a>vertical-align</h2><ul>
-<li>元素没有设置时，继承的是父元素line-height的像素值，即如果父元素的line-height是%单位，那么浏览器计算出来的实际line-height值才会被子元素继承。</li>
-</ul>
-<h2 id="元素选择器"><a href="#元素选择器" class="headerlink" title="元素选择器"></a>元素选择器</h2><table>
-<thead>
-<tr>
-<th>选择器</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>#</td>
-<td>id选择器</td>
-</tr>
-<tr>
-<td>.</td>
-<td>class选择器</td>
-</tr>
-<tr>
-<td>M N</td>
-<td>后代选择器，选择M元素内部后代的所有N元素</td>
-</tr>
-<tr>
-<td>M&gt;N</td>
-<td>子代选择器，选择M元素内部后代的第一个子级N元素</td>
-</tr>
-<tr>
-<td>M～N</td>
-<td>兄弟选择器，选择M元素后所有的同级N元素</td>
-</tr>
-<tr>
-<td>M+N</td>
-<td>相邻选择器，选择M元素相邻的下一个N元素，M和N是同一级</td>
-</tr>
-</tbody></table>
-<p>属性选择器:</p>
-<ul>
-<li>A[attr]: 下面其带有指定属性的元素,可以有多个,例如.name[title][id]:选择name的class下同时带有title和id属性的元素</li>
-<li>A[attribute<del>&#x3D;value]: 选取属性值中包含指定词汇的元素.例如p[class</del>&#x3D;name],只要是个p元素且class包含的name的元素就符合</li>
-<li>A[attribute|&#x3D;value]: 选取属性值中全等于指定词汇的元素,例如p[class|&#x3D;name],只要是p元素且class属性是name的元素就符合,如果class有其他的,那就不符合</li>
-<li>A[attribute^&#x3D;value]: 选取属性值以value开头的元素</li>
-<li>A[attribute$&#x3D;value]: 选取属性值以value结尾的元素</li>
-<li>A[attribute*&#x3D;value]: 选取属性值包含value的元素</li>
-<li>A[attribute|&#x3D;value]: 选取属性值等于value或者以value开头的元素</li>
-</ul>
-<h2 id="包含块"><a href="#包含块" class="headerlink" title="包含块"></a>包含块</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>与css盒子模型类似。作用是为这个矩形内部的后代元素提供一个参考，一个元素的大小和定位往往是由该元素所在的包含块决定的。</p>
-<h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><ul>
-<li>根元素</li>
-</ul>
-<p>html元素，它没有父元素，是页面中最顶端的元素。根元素存在的包含块，被称为初始包含块。</p>
-<ul>
-<li>固定定位元素</li>
-</ul>
-<p>若元素的position&#x3D;fixed，那么它的包含块是当前可视窗口，即当前浏览器的窗口</p>
-<p>注意：<strong>小程序</strong>中position&#x3D;fixed会<strong>受到box-shadow</strong>的影响</p>
-<pre><code>box-shadow 会创建一个新的层级上下文，这可能会影响 fixed 元素的层级表现，导致它不如预期地固定在视口上。
-</code></pre>
-<ul>
-<li>静态定位和相对定位元素</li>
-</ul>
-<p>若元素的position&#x3D;relative&#x2F;absolute，那么其包含块是由离他最近的块级祖先元素创建的。祖先元素必须是block、inline-block或table-cell</p>
-<ul>
-<li>绝对定位元素</li>
-</ul>
-<p>若元素的position&#x3D;absolute，那么其包含块是最近的position！&#x3D;static的元素。祖先元素可以是块元素，也可以是行内元素</p>
-<h2 id="em"><a href="#em" class="headerlink" title="em"></a>em</h2><p>em是相对于当前元素的父元素计算的</p>
-<p>但是当用于fontsize时，如果多有个嵌套的元素，那么从父层到子层，其元素字号会越来越小</p>
-<h2 id="background-size-auto-渲染规则"><a href="#background-size-auto-渲染规则" class="headerlink" title="background-size: auto 渲染规则"></a>background-size: auto 渲染规则</h2><ul>
-<li>如果图像没有内在尺寸和内在比例</li>
-</ul>
-<p>按背景定位区域的大小进行渲染，等同于设置属性100%</p>
-<ul>
-<li>水平和垂直方向同时具有内在尺寸</li>
-</ul>
-<p>按图像原始大小进行渲染</p>
-<ul>
-<li>没有内在尺寸，但有内在比例</li>
-</ul>
-<p>渲染效果等同于contain</p>
-<ul>
-<li>只有一个方向有内在尺寸，但具有内在比例</li>
-</ul>
-<p>图像会拉伸到该内在尺寸的大小，同时宽高比符合内在比例</p>
-<ul>
-<li>只有一个方向有内在尺寸，没有内在比例</li>
-</ul>
-<p>图像有内在尺寸的一侧会拉伸到该内在尺寸大小，没有设置内在尺寸的一侧会拉伸到背景定位区域大小</p>
-<p>##background-size：一个为auto，一个为非auto</p>
-<ul>
-<li>有内在比例</li>
-</ul>
-<p>会拉伸到指定的尺寸，宽高依然保持原有的比例</p>
-<ul>
-<li>没有内在比例</li>
-</ul>
-<p>图像会拉伸到指定尺寸。</p>
-<p>如果图像有内在尺寸，则auto到计算尺寸就是图像的尺寸</p>
-<p>如果图像没有内在尺寸，那么auto的计算尺寸就是背景定位区域的尺寸</p>
-<h2 id="background-position"><a href="#background-position" class="headerlink" title="background-position"></a>background-position</h2><ul>
-<li>只有一个值</li>
-</ul>
-<p>例如：20px &#x3D;&#x3D; 20px center</p>
-<p>如果只有一个值，那么无论是具体的数值或者百分比或者是关键字，另一个值一定是center</p>
-<ul>
-<li><p>两个值</p>
-</li>
-<li><p>两个都是关键属性值</p>
-</li>
-</ul>
-<p>left、right表示水平，top、bottom表示垂直。</p>
-<p>不能包含对立的方位，即top bottom是无效的</p>
-<ul>
-<li>一个是关键属性值，一个是数值或者百分比</li>
-</ul>
-<p>如果第一个值是百分比或者数值，那么表示水平方向，另一个关键属性值表示垂直方向</p>
-<p>如果第一个值是关键属性值，那么表示水平方向，另一个百分比或者数值表示垂直方向</p>
-<ul>
-<li>两个值都是数值或者百分比</li>
-</ul>
-<p>第一个表示水平方向，第二个表示垂直方向</p>
-<ul>
-<li>3个值或者4个值</li>
-</ul>
-<p>数值和百分比表示偏移量，第一个值一定要是关键属性值，这个关键属性值表示偏移方向</p>
-<h2 id="opacity"><a href="#opacity" class="headerlink" title="opacity"></a>opacity</h2><p>opacity不等于1的元素会创建一个层叠上下文，层叠顺序会变高</p>
-<h2 id="border-raduis"><a href="#border-raduis" class="headerlink" title="border-raduis"></a>border-raduis</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><ul>
-<li>只有一个值</li>
-</ul>
-<p>表示圆角属性作用在全部四个角上</p>
-<ul>
-<li>有两个值</li>
-</ul>
-<p>第一个作用于左上角和右下角，第二个作用于右上角和左下角</p>
-<ul>
-<li>三个值</li>
-</ul>
-<p>第一个作用于左上角，第二个作用于右上角和左下角，第三个作用于右下角</p>
-<ul>
-<li>四个值</li>
-</ul>
-<p>按照顺时针的方向，左上、右上、右下、左下</p>
-<h3 id="水平半径和垂直半径"><a href="#水平半径和垂直半径" class="headerlink" title="水平半径和垂直半径"></a>水平半径和垂直半径</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-left</span>-<span class="attribute">top</span>-radius: <span class="number">10px</span> <span class="number">20px</span></span><br><span class="line">border-raduis：<span class="number">10px</span> / <span class="number">20px</span></span><br></pre></td></tr></table></figure>
-<p>表示圆角是水平半径为10px，垂直半径为20px的椭圆产生的</p>
-<h3 id="重叠曲线"><a href="#重叠曲线" class="headerlink" title="重叠曲线"></a>重叠曲线</h3><p>f&#x3D;min(Lh&#x2F;Sh, Lv&#x2F;Sv)</p>
-<p>S为半径之和，L为元素宽高，h和v表示方向，f为计算值。</p>
-<p>Lh：元素宽</p>
-<p>Sh：垂直方向的半径和</p>
-<p>Lv：元素高度</p>
-<p>Sv：水平方向的半径和</p>
-<p>如果f计算值小于1，那么所有圆角半径都乘以f</p>
-<p>eg：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-top</span>-<span class="attribute">left</span>-raduis：<span class="number">30px</span> <span class="number">100%</span>；</span><br><span class="line"><span class="attribute">border-bottom</span>-<span class="attribute">left</span>-raduis：<span class="number">30px</span> <span class="number">100%</span>；</span><br><span class="line"><span class="attribute">width</span>：<span class="number">150px</span>；</span><br><span class="line"><span class="attribute">height</span>：<span class="number">100px</span>；</span><br></pre></td></tr></table></figure>
-<p>左上角和左下角的垂直半径是100%（元素高），水平半径是30px<br>f&#x3D;min（150&#x2F;60，100&#x2F;200）&#x3D;0.5</p>
-<p>所以渲染结果为</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-top</span>-<span class="attribute">left</span>-raduis：<span class="number">15px</span> <span class="number">50%</span>；</span><br><span class="line"><span class="attribute">border-bottom</span>-<span class="attribute">left</span>-raduis：<span class="number">15px</span> <span class="number">50%</span>；</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91%E6%BB%9A%E5%8A%A8%E8%B4%B4%E5%90%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/css/%E3%80%90css%E3%80%91%E6%BB%9A%E5%8A%A8%E8%B4%B4%E5%90%88/" class="post-title-link" itemprop="url">【css】滚动贴合</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="【css】滚动贴合"><a href="#【css】滚动贴合" class="headerlink" title="【css】滚动贴合"></a>【css】滚动贴合</h1><h2 id="scroll-snap-type"><a href="#scroll-snap-type" class="headerlink" title="scroll-snap-type"></a>scroll-snap-type</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>可以设置滚动贴合的方向和方式。</p>
-<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><ul>
-<li><p><code>none</code></p>
-<p>  没有贴合点的效果</p>
-</li>
-<li><p><code>x</code>&#x2F;<code>y</code> 或者 <code>inline</code>&#x2F;<code>block</code></p>
-<ul>
-<li><p><code>x</code>: </p>
-<p>  可以设置水平轴上的捕捉位置</p>
-</li>
-<li><p><code>y</code>: </p>
-<p>  可以设置垂直轴上的捕捉位置</p>
-</li>
-<li><p><code>block</code></p>
-<p>  可以设置块状元素排列一个滚动方向的捕捉位置，默认文档流指的是垂直方向</p>
-</li>
-<li><p><code>inline</code></p>
-<p>  可以设置内联状元素排列一个滚动方向的捕捉位置，默认文档流指的是水平方向</p>
-</li>
-</ul>
-<p>  在默认文档流的情况下，这<code>x</code>和<code>inline</code>, <code>y</code>和<code>block</code>的表现都是一样的。但其实际上还是有区别的</p>
-<blockquote>
-<p><code>x</code>和<code>y</code>是物理轴，x对应于水平滚动，y对应于垂直滚动。</p>
-</blockquote>
-<blockquote>
-<p><code>block</code>和<code>inline</code>是逻辑轴，block对应于垂直滚动，inline对应于水平滚动。</p>
-</blockquote>
-<p>  在改变文档流(<code>writing-mode</code>)之后，那么<code>x</code>和<code>inline</code>的表现就会不一致了。</p>
-<p>  <font color=red>普通</font>文档流的情况下，设置的<code>x</code>属性，贴合属性的<font color=red>生效</font><br>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pC5wZWV"><img src="https://s1.ax1x.com/2023/07/15/pC5wZWV.png" alt="pC5wZWV.png"></a></p>
-<p>  <font color=red>改变</font>文档流的情况下，设置的<code>x</code>属性，贴合属性的<font color=red>不生效</font><br>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pC5wnQU"><img src="https://s1.ax1x.com/2023/07/15/pC5wnQU.png" alt="pC5wnQU.png"></a></p>
-<p>  <font color=red>改变</font>文档流的情况下，设置的<code>inline</code>属性，贴合属性的<font color=red>生效</font><br>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pC5wuyF"><img src="https://s1.ax1x.com/2023/07/15/pC5wuyF.png" alt="pC5wuyF.png"></a></p>
-</li>
-<li><p><code>both</code></p>
-<p> 滚动容器会独立捕捉到其两个轴上的位置（可能会捕捉到每个轴上的不同元素）</p>
-<p> 不管是正常文档流和改变文档流后，都会被捕获</p>
-</li>
-<li><p><code>mandatory</code>和<code>proximity</code></p>
-<ul>
-<li><p><code>mandatory</code>    </p>
-<p>  滚动操作结束后，滚动容器必须对齐到最近的一个滚动捕捉点。无论用户滚动的距离有多远，都会强制对齐到最近的捕捉点。这种模式下，用户不能停在两个捕捉点之间。</p>
-</li>
-<li><p><code>proximity</code><br>  当滚动操作结束后，只有当最近的滚动捕捉点在一定范围内时，滚动容器才会对齐到该捕捉点。如果最近的捕捉点距离太远，用户可以停在两个捕捉点之间。</p>
-</li>
-</ul>
-<p>  所以，<code>mandatory</code>比<code>proximity</code>更严格，它会强制滚动容器对齐到最近的滚动捕捉点，而<code>proximity</code>则允许用户在两个滚动捕捉点之间停下。</p>
-</li>
-</ul>
-<h2 id="scroll-snap-align"><a href="#scroll-snap-align" class="headerlink" title="scroll-snap-align"></a>scroll-snap-align</h2><h3 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h3><p>用于子元素的属性，设置其捕获点</p>
-<h3 id="属性-1"><a href="#属性-1" class="headerlink" title="属性"></a>属性</h3><ul>
-<li><p><code>start</code></p>
-<p>  设置捕获点为元素的起始位置</p>
-<p>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pC5woYq"><img src="https://s1.ax1x.com/2023/07/15/pC5woYq.png" alt="pC5woYq.png"></a></p>
-</li>
-<li><p><code>center</code></p>
-<p>  设置捕获点是元素居中</p>
-<p>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pC5wHpV"><img src="https://s1.ax1x.com/2023/07/15/pC5wHpV.png" alt="pC5wHpV.png"></a></p>
-</li>
-<li><p><code>start</code></p>
-<p>  设置捕获点为元素的结束位置</p>
-<p>  <a target="_blank" rel="noopener" href="https://imgse.com/i/pC5wblT"><img src="https://s1.ax1x.com/2023/07/15/pC5wblT.png" alt="pC5wblT.png"></a></p>
-</li>
-</ul>
-<h2 id="scroll-margin-scroll-padding"><a href="#scroll-margin-scroll-padding" class="headerlink" title="scroll-margin &#x2F; scroll-padding"></a>scroll-margin &#x2F; scroll-padding</h2><h3 id="作用-2"><a href="#作用-2" class="headerlink" title="作用"></a>作用</h3><p>可以设置贴合间距</p>
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pC5rEBF"><img src="https://s1.ax1x.com/2023/07/15/pC5rEBF.png" alt="pC5rEBF.png"></a></p>
-<p><code>scroll-margin</code>是作用于子元素的，而<code>scroll-margin</code>是父元素才生效的。这两个属性和<code>margin</code>&#x2F;<code>padding</code>一样，可以设置例如<code>scroll-margin-top</code>这些属性用于不同方向的样式</p>
-<h2 id="scroll-behavior"><a href="#scroll-behavior" class="headerlink" title="scroll-behavior"></a>scroll-behavior</h2><h3 id="作用-3"><a href="#作用-3" class="headerlink" title="作用"></a>作用</h3><p>可以设置滚动时是否需要显示动画</p>
-<h3 id="属性-2"><a href="#属性-2" class="headerlink" title="属性"></a>属性</h3><ul>
-<li><p><code>auto</code></p>
-<p>  默认值，表示滚动行为立即跳转到目标位置，没有过渡效果</p>
-</li>
-<li><p><code>smooth</code></p>
-<p>  滚动行为会平滑地过渡到目标位置，产生一种动画效果。</p>
-</li>
-</ul>
-<h2 id="overscroll-behavior"><a href="#overscroll-behavior" class="headerlink" title="overscroll-behavior"></a><code>overscroll-behavior</code></h2><h3 id="作用-4"><a href="#作用-4" class="headerlink" title="作用"></a>作用</h3><p>用于控制页面在滚动到底部或顶部时的行为。即如果子元素滚动到最底部后继续滚动，是否需要连带父元素滚动</p>
-<h3 id="属性-3"><a href="#属性-3" class="headerlink" title="属性"></a>属性</h3><ul>
-<li><p><code>auto</code></p>
-<p>  允许滚动行为传播到父元素</p>
-</li>
-<li><p><code>contain</code></p>
-<p>  防止滚动行为传播到父元素，但允许页面的弹性滚动效果（比如在移动设备上，滚动到底部时页面会稍微弹一下）</p>
-</li>
-<li><p><code>none</code></p>
-<p>  不允许滚动行为传播到父元素</p>
-</li>
-</ul>
-<h2 id="兼容性"><a href="#兼容性" class="headerlink" title="兼容性"></a>兼容性</h2><ol>
-<li><p><code>scroll-snap-type</code> 和 <code>scroll-snap-align</code>：这两个属性在所有主流浏览器中都得到了支持，包括 Firefox、Chrome、Edge、Opera 和 Safari。</p>
-</li>
-<li><p><code>scroll-margin</code>：这个属性在 Firefox 和 Chrome（包括基于 Chromium 的浏览器如 Edge 和 Opera）中得到了支持，但在 Safari 中的支持情况不太理想。</p>
-</li>
-<li><p><code>overscroll-behavior</code>和<code>scroll-behavior</code>：这个属性在 Firefox 和 Chrome（包括基于 Chromium 的浏览器如 Edge 和 Opera）中得到了很好的支持，但在 Safari 中尚未被支持。</p>
-</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91BFC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/css/%E3%80%90css%E3%80%91BFC/" class="post-title-link" itemprop="url">【css】BFC</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>定义：页面中的一块渲染区域，同一个格式化上下文内和不同格式化上下文之间的定位方式都会发生变化</p>
-<h2 id="bfc-块级格式化上下文"><a href="#bfc-块级格式化上下文" class="headerlink" title="bfc(块级格式化上下文)"></a>bfc(块级格式化上下文)</h2><h3 id="创建条件"><a href="#创建条件" class="headerlink" title="创建条件"></a>创建条件</h3><ul>
-<li><p>根元素</p>
-</li>
-<li><p>脱离普通文档流的元素(浮动，绝对定位，固定定位)</p>
-</li>
-<li><p>非块级元素(包含flex，table)</p>
-</li>
-<li><p>overflow ！&#x3D;&#x3D; visible(默认值)的块级元素</p>
-</li>
-</ul>
-<h3 id="影响"><a href="#影响" class="headerlink" title="影响"></a>影响</h3><ul>
-<li><p>同一个bfc内的相邻块级元素垂直外边距会发生折叠，即两者边距取决于双方边距的最大值而不是边距和</p>
-</li>
-<li><p>内部元素与外部元素互不影响，因为bfc是独立容器</p>
-</li>
-<li><p>在计算bfc高度时，内部的浮动元素也会被计算在哪内</p>
-</li>
-</ul>
-<h2 id="ifc-内联格式化上下文"><a href="#ifc-内联格式化上下文" class="headerlink" title="ifc(内联格式化上下文)"></a>ifc(内联格式化上下文)</h2><h3 id="形成"><a href="#形成" class="headerlink" title="形成"></a>形成</h3><p>多个内联（块级）元素排列在一起的时候，这些内联（块级）元素之间不能穿插块级元素，否则会被切割为多个ifc</p>
-<h3 id="影响-1"><a href="#影响-1" class="headerlink" title="影响"></a>影响</h3><ul>
-<li><p>一个ifc内的元素都是水平排列的</p>
-</li>
-<li><p>横向的margin，border，padding属性对这些元素都是有效的</p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/css/%E3%80%90css%E3%80%91border-raduis/" class="post-title-link" itemprop="url">【css】border-raduis</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="border-raduis"><a href="#border-raduis" class="headerlink" title="border-raduis"></a>border-raduis</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><ul>
-<li>只有一个值</li>
-</ul>
-<p>表示圆角属性作用在全部四个角上</p>
-<ul>
-<li>有两个值</li>
-</ul>
-<p>第一个作用于左上角和右下角，第二个作用于右上角和左下角</p>
-<ul>
-<li>三个值</li>
-</ul>
-<p>第一个作用于左上角，第二个作用于右上角和左下角，第三个作用于右下角</p>
-<ul>
-<li>四个值</li>
-</ul>
-<p>按照顺时针的方向，左上、右上、右下、左下</p>
-<h3 id="水平半径和垂直半径"><a href="#水平半径和垂直半径" class="headerlink" title="水平半径和垂直半径"></a>水平半径和垂直半径</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-left</span>-<span class="attribute">top</span>-radius: <span class="number">10px</span> <span class="number">20px</span></span><br><span class="line">border-raduis：<span class="number">10px</span> / <span class="number">20px</span></span><br></pre></td></tr></table></figure>
-<p>表示圆角是水平半径为10px，垂直半径为20px的椭圆产生的</p>
-<h3 id="重叠曲线"><a href="#重叠曲线" class="headerlink" title="重叠曲线"></a>重叠曲线</h3><p>f&#x3D;min(Lh&#x2F;Sh, Lv&#x2F;Sv)</p>
-<p>S为半径之和，L为元素宽高，h和v表示方向，f为计算值。</p>
-<p>Lh：元素宽</p>
-<p>Sh：垂直方向的半径和</p>
-<p>Lv：元素高度</p>
-<p>Sv：水平方向的半径和</p>
-<p>如果f计算值小于1，那么所有圆角半径都乘以f</p>
-<p>eg：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-top</span>-<span class="attribute">left</span>-raduis：<span class="number">30px</span> <span class="number">100%</span>；</span><br><span class="line"><span class="attribute">border-bottom</span>-<span class="attribute">left</span>-raduis：<span class="number">30px</span> <span class="number">100%</span>；</span><br><span class="line"><span class="attribute">width</span>：<span class="number">150px</span>；</span><br><span class="line"><span class="attribute">height</span>：<span class="number">100px</span>；</span><br></pre></td></tr></table></figure>
-<p>左上角和左下角的垂直半径是100%（元素高），水平半径是30px<br>f&#x3D;min（150&#x2F;60，100&#x2F;200）&#x3D;0.5</p>
-<p>所以渲染结果为</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">border-top</span>-<span class="attribute">left</span>-raduis：<span class="number">15px</span> <span class="number">50%</span>；</span><br><span class="line"><span class="attribute">border-bottom</span>-<span class="attribute">left</span>-raduis：<span class="number">15px</span> <span class="number">50%</span>；</span><br></pre></td></tr></table></figure>
-
-<h2 id="渲染细节"><a href="#渲染细节" class="headerlink" title="渲染细节"></a>渲染细节</h2><p>如果元素设置了border边框，则圆角半径会被分为内半径和外半径</p>
-<ul>
-<li><p>padding边缘的圆角大小为设置的border- radius - 边框厚度</p>
-</li>
-<li><p>如果相邻两侧边框厚度不同，则圆角大小将在较厚和较薄边界之间显示平滑过度</p>
-</li>
-<li><p>圆角边框的连接线和直角边框连接线位置一致，但是角度有所不同</p>
-</li>
-<li><p>border-raduis不支持负值</p>
-</li>
-<li><p>圆角以外的区域不可点击，无法响应click事件</p>
-</li>
-<li><p>borser-radius没有继承性</p>
-</li>
-<li><p>支持transition过渡效果，支持animation动画效果</p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/11/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -2088,7 +2088,7 @@
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2025</span>
+    <span itemprop="copyrightYear">2026</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>

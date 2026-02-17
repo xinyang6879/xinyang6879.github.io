@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">110</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -154,6 +154,625 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%B8%B2%E6%9F%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%B8%B2%E6%9F%93/" class="post-title-link" itemprop="url">大数据渲染</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-09-08 11:57:18" itemprop="dateModified" datetime="2025-09-08T11:57:18+08:00">2025-09-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" itemprop="url" rel="index"><span itemprop="name">业务场景</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="大数据渲染"><a href="#大数据渲染" class="headerlink" title="大数据渲染"></a>大数据渲染</h1><h2 id="table-分页"><a href="#table-分页" class="headerlink" title="table 分页"></a>table 分页</h2><ul>
+<li>每页展示固定的数据</li>
+</ul>
+<h1></h1>
+
+<h2 id="定时更新-分批渲染"><a href="#定时更新-分批渲染" class="headerlink" title="定时更新,分批渲染"></a>定时更新,分批渲染</h2><p>用<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/64917985?from_voters_page=true"><code>requestAnimationFrame</code></a>或者定时器, 加上<code>DocumentFragment</code>进行每次数据的加载</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="title function_">requestAnimationFrame</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> fragment = <span class="keyword">new</span> <span class="title class_">DocumentFragment</span>();</span><br><span class="line">  <span class="keyword">const</span> fruits = [<span class="string">&quot;Apple&quot;</span>, <span class="string">&quot;Orange&quot;</span>, <span class="string">&quot;Banana&quot;</span>, <span class="string">&quot;Melon&quot;</span>];</span><br><span class="line">  fruits.<span class="title function_">forEach</span>(<span class="function">(<span class="params">fruit</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> ele = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;p&quot;</span>);</span><br><span class="line">    ele.<span class="property">textContent</span> = fruit;</span><br><span class="line">    fragment.<span class="title function_">appendChild</span>(ele);</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(fragment);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>requestAnimationFrame</code>是在<code>style/layout/paint</code>之前触发</li>
+</ul>
+<h2 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h2><p>使用<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2016/11/intersectionobserver_api.html"><code>IntersectionObserver</code></a>判断元素是否显示</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 新建一个监听对象</span></span><br><span class="line"><span class="keyword">let</span> io = <span class="keyword">new</span> <span class="title class_">IntersectionObserver</span>(</span><br><span class="line">  <span class="function">(<span class="params">entris</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;IntersectionObserver&quot;</span>, entris);</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">root</span>: <span class="literal">null</span>,</span><br><span class="line">    <span class="attr">thresholds</span>: <span class="number">1</span>,</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"><span class="comment">// 开始监听</span></span><br><span class="line">io.<span class="title function_">observe</span>(<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;b&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>当元素初次在页面上显示, 以及之后每次显示和隐藏都会触发回调</p>
+</li>
+<li><p>IntersectionObserver API 是异步的，不随着目标元素的滚动同步触发。</p>
+</li>
+<li><p>只有线程空闲下来，才会执行观察器。这意味着，这个观察器的优先级非常低，只在其他任务执行完，浏览器有了空闲才会执行。</p>
+</li>
+</ul>
+<h2 id="虚拟滚动"><a href="#虚拟滚动" class="headerlink" title="虚拟滚动"></a>虚拟滚动</h2><p>原理是：用一个大的div撑出所需要的高度实现滚动条，然后元素通过transform: translateY()显示元素。</p>
+<ol>
+<li><p><strong>切片渲染（Windowing）</strong></p>
+<ul>
+<li>我们有一个容器（<code>container</code>），它有一个固定的高度（<code>clientHeight</code>），这个高度决定了可视区域的大小。</li>
+<li>容器内部有一个“垫片”或“占位符”元素（<code>placeholder</code>），它的高度等于<strong>所有列表项的总高度</strong>（<code>itemSize * itemCount</code>）。这个元素的作用是撑开容器，让滚动条的行为和拥有全部数据的列表一样。</li>
+<li>容器内部还有一个列表（<code>list</code>），它负责实际渲染当前需要显示的项。它的位置是通过 <code>transform: translateY(...)</code> 来动态调整的。</li>
+</ul>
+</li>
+<li><p><strong>计算可视区域（Calculation）</strong></p>
+<ul>
+<li>监听容器的 <code>scroll</code> 事件（或使用 <code>Intersection Observer</code> API）。</li>
+<li>当用户滚动时，根据容器的 <code>scrollTop</code>（滚动距离）来计算：<ul>
+<li><strong>起始索引（startIndex）</strong>：当前应该从第几条数据开始渲染。<ul>
+<li><code>startIndex = Math.floor(scrollTop / itemHeight)</code></li>
+</ul>
+</li>
+<li><strong>结束索引（endIndex）</strong>：当前应该渲染到第几条数据结束。通常会多渲染一些（例如前后多渲染 5 条），以防止滚动时出现空白。<ul>
+<li><code>endIndex = startIndex + Math.ceil(clientHeight / itemHeight) + bufferSize</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>根据 <code>startIndex</code> 和 <code>endIndex</code>，从完整的数据列表中“切片”出需要显示的数据（<code>visibleData = allData.slice(startIndex, endIndex)</code>）。</li>
+</ul>
+</li>
+<li><p><strong>动态渲染与定位（Rendering &amp; Positioning）</strong></p>
+<ul>
+<li>将“切片”得到的 <code>visibleData</code> 渲染到页面上。</li>
+<li>同时，计算列表的偏移量（<code>offset</code>）。因为起始索引之前还有很多未渲染的项，我们需要将列表向下平移，让当前渲染的项出现在正确的位置。<ul>
+<li><code>offset = startIndex * itemHeight</code></li>
+</ul>
+</li>
+<li>将列表元素设置为 <code>style=&quot;transform: translateY($&#123;offset&#125;px)&quot;</code>。</li>
+</ul>
+</li>
+<li><p><strong>回收与复用（Recycling）</strong></p>
+<ul>
+<li>当用户滚动时，会不断地计算新的 <code>startIndex</code> 和 <code>endIndex</code>。</li>
+<li>之前渲染的 DOM 节点不会被销毁，而是被<strong>复用</strong>来显示新的数据内容。只是更新它们内部的内容（如文本、图片），这比创建和销毁 DOM 节点的性能开销要小得多。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="三、一个简化的代码示例"><a href="#三、一个简化的代码示例" class="headerlink" title="三、一个简化的代码示例"></a>三、一个简化的代码示例</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">onscroll</span>=<span class="string">&quot;handleScroll&quot;</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 这个 div 用于撑开高度，模拟完整列表的滚动条 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;total-placeholder&quot;</span> <span class="attr">style</span>=<span class="string">&quot;height: &#123;&#123;totalHeight&#125;&#125;px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- 实际渲染可见项的列表，通过 transform 调整位置 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;real-list&quot;</span> <span class="attr">style</span>=<span class="string">&quot;transform: translateY(&#123;&#123;offset&#125;&#125;px);&quot;</span>&gt;</span></span><br><span class="line">    &#123;&#123;#each visibleItems as item&#125;&#125;</span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;list-item&quot;</span>&gt;</span>Item &#123;&#123;item.id&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    &#123;&#123;/each&#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 伪代码逻辑</span></span><br><span class="line"><span class="keyword">const</span> itemCount = <span class="number">10000</span>; <span class="comment">// 总数据量</span></span><br><span class="line"><span class="keyword">const</span> itemHeight = <span class="number">50</span>;   <span class="comment">// 每项高度</span></span><br><span class="line"><span class="keyword">const</span> buffer = <span class="number">5</span>;        <span class="comment">// 缓冲区数量</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">handleScroll</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 1. 获取滚动位置</span></span><br><span class="line">  <span class="keyword">const</span> scrollTop = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;.viewport&#x27;</span>).<span class="property">scrollTop</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2. 计算起始和结束索引</span></span><br><span class="line">  <span class="keyword">const</span> startIndex = <span class="title class_">Math</span>.<span class="title function_">max</span>(<span class="number">0</span>, <span class="title class_">Math</span>.<span class="title function_">floor</span>(scrollTop / itemHeight) - buffer);</span><br><span class="line">  <span class="keyword">const</span> endIndex = <span class="title class_">Math</span>.<span class="title function_">min</span>(</span><br><span class="line">    itemCount - <span class="number">1</span>,</span><br><span class="line">    startIndex + <span class="title class_">Math</span>.<span class="title function_">ceil</span>(clientHeight / itemHeight) + buffer</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 3. 切片获取可见数据</span></span><br><span class="line">  <span class="keyword">const</span> visibleData = allData.<span class="title function_">slice</span>(startIndex, endIndex + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 4. 计算偏移量</span></span><br><span class="line">  <span class="keyword">const</span> offset = startIndex * itemHeight;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 5. 更新 DOM</span></span><br><span class="line">  <span class="comment">// - 更新 .real-list 的 translateY 为 offset</span></span><br><span class="line">  <span class="comment">// - 将 visibleData 渲染到 .real-list 中</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="四、关键优化与注意事项"><a href="#四、关键优化与注意事项" class="headerlink" title="四、关键优化与注意事项"></a>四、关键优化与注意事项</h3><ol>
+<li><p><strong>定高 vs 不定高</strong>：</p>
+<ul>
+<li><strong>定高</strong>：实现最简单，计算性能最好（如上例）。几乎所有虚拟滚动库都首选支持定高。</li>
+<li><strong>不定高</strong>：实现更复杂。需要预先知道或动态测量每一项的高度，通常需要维护一个“位置索引表”（<code>positionCache</code>）来记录每个索引的偏移量，计算量更大。</li>
+</ul>
+</li>
+<li><p><strong>缓冲区（Buffer）</strong>：</p>
+<ul>
+<li>在可视区域之外多渲染一些项目，可以防止在快速滚动时出现短暂的空白。</li>
+</ul>
+</li>
+<li><p><strong>使用绝对定位或 Transform</strong>：</p>
+<ul>
+<li>使用 <code>transform: translateY()</code> 来移动列表通常比使用 <code>top</code> 进行绝对定位性能更好，因为它不会触发重排（Reflow），只触发重绘（Repaint）。</li>
+</ul>
+</li>
+<li><p><strong>现代 API</strong>：</p>
+<ul>
+<li>优先使用 <code>Intersection Observer</code> 来替代 <code>scroll</code> 事件监听，因为它更高效，并且是在主线程之外异步触发的。</li>
+</ul>
+</li>
+<li><p><strong>框架集成</strong>：</p>
+<ul>
+<li>在 React 中，有 <code>react-window</code> 和 <code>react-virtualized</code> 等著名库。</li>
+<li>在 Vue 中，有 <code>vue-virtual-scroller</code> 等库。</li>
+<li>它们都封装了上述核心逻辑，提供了简单易用的组件。</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/%E3%80%90%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF%E3%80%91%E6%98%AF%E5%90%A6%E5%A4%96%E9%83%A8%E5%9C%A8%E8%B0%83%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/%E3%80%90%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF%E3%80%91%E6%98%AF%E5%90%A6%E5%A4%96%E9%83%A8%E5%9C%A8%E8%B0%83%E8%AF%95/" class="post-title-link" itemprop="url">是否外部在调试</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF/" itemprop="url" rel="index"><span itemprop="name">业务场景</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ul>
+<li><p>键盘</p>
+<p>用F12键去判断是否有打开</p>
+</li>
+<li><p>浏览器内外宽度差</p>
+</li>
+<li><p>开发者人员工具变量是否为true</p>
+</li>
+<li><p>console</p>
+</li>
+<li><p>代码运行时间差</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> time = <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line"><span class="keyword">const</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">debugger</span></span><br><span class="line"><span class="keyword">const</span> time2 = <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line"><span class="keyword">const</span> space = time2 - time;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>toString</p>
+<p>  当鼠标放在函数名上时，会调用函数的toString方法</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">isDebug</span>(<span class="params"></span>) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">isDebug.<span class="title function_">toString</span>() = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;debuging&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">isDebug</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>caller</p>
+<p>  返回函数调用方，监测栈的层数</p>
+</li>
+<li><p>监测非浏览器的环境</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E8%87%AA%E5%AE%9E%E7%8E%B0md%E9%A2%84%E8%A7%88+%E6%96%87%E5%AD%97%E6%89%93%E5%AD%97%E6%9C%BA%E6%95%88%E6%9E%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E8%87%AA%E5%AE%9E%E7%8E%B0md%E9%A2%84%E8%A7%88+%E6%96%87%E5%AD%97%E6%89%93%E5%AD%97%E6%9C%BA%E6%95%88%E6%9E%9C/" class="post-title-link" itemprop="url">【小程序】自实现md预览+文字打字机效果</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-05-19 13:56:09" itemprop="dateModified" datetime="2025-05-19T13:56:09+08:00">2025-05-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" itemprop="url" rel="index"><span itemprop="name">小程序</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="实现预览效果"><a href="#实现预览效果" class="headerlink" title="实现预览效果"></a>实现预览效果</h2><p>由于后端返回的是 md 格式的文本，由于文本中的标题、列表会和&#x2F;&#x2F;n 同时出现，因此使用<code>marked</code>会无法正确识别标题、列表等语法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 统一处理行内格式：加粗、斜体、链接、行内代码</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">parseInlineMarkdown</span>(<span class="params">text</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> text</span><br><span class="line">    .<span class="title function_">replace</span>(<span class="regexp">/\*\*(.*?)\*\*/g</span>, <span class="string">&quot;&lt;strong&gt;$1&lt;/strong&gt;&quot;</span>) <span class="comment">// 加粗</span></span><br><span class="line">    .<span class="title function_">replace</span>(<span class="regexp">/\*(.*?)\*/g</span>, <span class="string">&quot;&lt;em&gt;$1&lt;/em&gt;&quot;</span>) <span class="comment">// 斜体 *</span></span><br><span class="line">    .<span class="title function_">replace</span>(<span class="regexp">/_(.*?)_/g</span>, <span class="string">&quot;&lt;em&gt;$1&lt;/em&gt;&quot;</span>) <span class="comment">// 斜体 _</span></span><br><span class="line">    .<span class="title function_">replace</span>(<span class="regexp">/`(.*?)`/g</span>, <span class="string">&quot;&lt;code&gt;$1&lt;/code&gt;&quot;</span>) <span class="comment">// 行内代码</span></span><br><span class="line">    .<span class="title function_">replace</span>(</span><br><span class="line">      <span class="regexp">/$$([^$$]+)$$$([^$$]+)$$/g</span>,</span><br><span class="line">      <span class="string">&#x27;&lt;a href=&quot;$2&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;$1&lt;/a&gt;&#x27;</span></span><br><span class="line">    ); <span class="comment">// 链接</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">markdownToHTML</span>(<span class="params">markdown</span>) &#123;</span><br><span class="line">  <span class="comment">// 处理转义换行符并分割文本</span></span><br><span class="line">  <span class="keyword">const</span> <span class="attr">text</span>: string = (markdown.<span class="title function_">replace</span>(<span class="regexp">/&amp;@#\$&amp;$/</span>, <span class="string">&quot;&quot;</span>) || <span class="string">&quot;&quot;</span>)</span><br><span class="line">    .<span class="title function_">replace</span>(<span class="regexp">/\\\\n/g</span>, <span class="string">&quot;\\n&quot;</span>)</span><br><span class="line">    .<span class="title function_">replace</span>(<span class="regexp">/\\n/g</span>, <span class="string">&quot;\n&quot;</span>)</span><br><span class="line">    .<span class="title function_">replace</span>(<span class="regexp">/\s\\S/g</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(markdown, text);</span><br><span class="line">  <span class="keyword">const</span> <span class="attr">lines</span>: string[] = text.<span class="title function_">split</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> <span class="attr">html</span>: string[] = [];</span><br><span class="line">  <span class="keyword">let</span> inList = <span class="literal">false</span>; <span class="comment">// 跟踪列表状态</span></span><br><span class="line">  <span class="keyword">let</span> inCodeBlock = <span class="literal">false</span>; <span class="comment">// 跟踪是否在代码块中</span></span><br><span class="line">  <span class="keyword">let</span> <span class="attr">codeBlockContent</span>: string[] = []; <span class="comment">// 暂存代码块内容</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> line <span class="keyword">of</span> lines) &#123;</span><br><span class="line">    <span class="keyword">const</span> trimmedLine = line.<span class="title function_">replace</span>(<span class="regexp">/\s\\S/g</span>, <span class="string">&quot; &quot;</span>).<span class="title function_">trim</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断是否是代码块开始或结束</span></span><br><span class="line">    <span class="keyword">if</span> (trimmedLine.<span class="title function_">startsWith</span>(<span class="string">&quot;```&quot;</span>)) &#123;</span><br><span class="line">      <span class="keyword">if</span> (inCodeBlock) &#123;</span><br><span class="line">        <span class="comment">// 如果已经在代码块中，表示代码块结束</span></span><br><span class="line">        html.<span class="title function_">push</span>(</span><br><span class="line">          <span class="string">&quot;&lt;pre style=&#x27; white-space: pre-wrap;word-wrap: break-word;overflow-x: auto;max-width: 100%;&#x27;&gt;&lt;code&gt;&quot;</span> +</span><br><span class="line">            codeBlockContent.<span class="title function_">join</span>(<span class="string">&quot;\n&quot;</span>) +</span><br><span class="line">            <span class="string">&quot;&lt;/code&gt;&lt;/pre&gt;&quot;</span></span><br><span class="line">        );</span><br><span class="line">        codeBlockContent = []; <span class="comment">// 清空暂存内容</span></span><br><span class="line">        inCodeBlock = <span class="literal">false</span>; <span class="comment">// 退出代码块模式</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 如果不在代码块中，表示代码块开始</span></span><br><span class="line">        inCodeBlock = <span class="literal">true</span>; <span class="comment">// 进入代码块模式</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">continue</span>; <span class="comment">// 跳过后续逻辑，直接处理下一行</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果在代码块中，收集代码块内容</span></span><br><span class="line">    <span class="keyword">if</span> (inCodeBlock) &#123;</span><br><span class="line">      codeBlockContent.<span class="title function_">push</span>(line);</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 匹配 # 到 ###### 并提取层级</span></span><br><span class="line">    <span class="keyword">const</span> headingMatch = trimmedLine.<span class="title function_">match</span>(<span class="regexp">/^(\#&#123;1,6&#125;)\s+(.+)$/</span>);</span><br><span class="line">    <span class="keyword">if</span> (headingMatch) &#123;</span><br><span class="line">      <span class="comment">// 关闭前一个列表</span></span><br><span class="line">      <span class="keyword">if</span> (inList) &#123;</span><br><span class="line">        html.<span class="title function_">push</span>(<span class="string">&quot;&lt;/ul&gt;&quot;</span>);</span><br><span class="line">        inList = <span class="literal">false</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">const</span> level = headingMatch[<span class="number">1</span>].<span class="property">length</span>; <span class="comment">// 获取标题级别 1-6</span></span><br><span class="line">      <span class="keyword">const</span> content = headingMatch[<span class="number">2</span>].<span class="title function_">replace</span>(</span><br><span class="line">        <span class="regexp">/\*\*(.*?)\*\*/g</span>,</span><br><span class="line">        <span class="string">&quot;&lt;strong&gt;$1&lt;/strong&gt;&quot;</span></span><br><span class="line">      ); <span class="comment">// 处理加粗</span></span><br><span class="line"></span><br><span class="line">      html.<span class="title function_">push</span>(<span class="string">`&lt;h<span class="subst">$&#123;level&#125;</span>&gt;<span class="subst">$&#123;content&#125;</span>&lt;/h<span class="subst">$&#123;level&#125;</span>&gt;`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 处理横线 ---</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (trimmedLine === <span class="string">&quot;---&quot;</span>) &#123;</span><br><span class="line">      html.<span class="title function_">push</span>(<span class="string">&quot;&lt;hr&gt;&quot;</span>);</span><br><span class="line">      <span class="keyword">continue</span>; <span class="comment">// 跳过后续逻辑，直接处理下一行</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 处理列表项 (-)</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="regexp">/^-/</span>.<span class="title function_">test</span>(trimmedLine)) &#123;</span><br><span class="line">      <span class="comment">// 首次进入列表时添加&lt;ul&gt;</span></span><br><span class="line">      <span class="keyword">if</span> (!inList) &#123;</span><br><span class="line">        html.<span class="title function_">push</span>(<span class="string">&quot;&lt;ul&gt;&quot;</span>);</span><br><span class="line">        inList = <span class="literal">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 处理列表项内容并转换加粗</span></span><br><span class="line">      <span class="keyword">let</span> content = trimmedLine</span><br><span class="line">        .<span class="title function_">replace</span>(<span class="regexp">/^-\s+/</span>, <span class="string">&quot;&quot;</span>)</span><br><span class="line">        .<span class="title function_">replace</span>(<span class="regexp">/\*\*(.*?)\*\*/g</span>, <span class="string">&quot;&lt;strong&gt;$1&lt;/strong&gt;&quot;</span>);</span><br><span class="line">      content = <span class="title function_">parseInlineMarkdown</span>(content);</span><br><span class="line">      html.<span class="title function_">push</span>(<span class="string">`&lt;li&gt;<span class="subst">$&#123;content&#125;</span>&lt;/li&gt;`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 处理普通文本</span></span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 关闭已存在的列表</span></span><br><span class="line">      <span class="keyword">if</span> (inList) &#123;</span><br><span class="line">        html.<span class="title function_">push</span>(<span class="string">&quot;&lt;/ul&gt;&quot;</span>);</span><br><span class="line">        inList = <span class="literal">false</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 非空行转为段落</span></span><br><span class="line">      <span class="keyword">if</span> (trimmedLine !== <span class="string">&quot;&quot;</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> content = <span class="title function_">parseInlineMarkdown</span>(trimmedLine);</span><br><span class="line">        <span class="keyword">if</span> (content === <span class="string">&quot;&lt;br /&gt;&quot;</span>) &#123;</span><br><span class="line">          html.<span class="title function_">push</span>(<span class="string">&quot;&lt;br /&gt;&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          html.<span class="title function_">push</span>(<span class="string">`&lt;p&gt;<span class="subst">$&#123;content&#125;</span>&lt;/p&gt;`</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 关闭最后一个列表</span></span><br><span class="line">  <span class="keyword">if</span> (inList) html.<span class="title function_">push</span>(<span class="string">&quot;&lt;/ul&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> html.<span class="title function_">join</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>支持常用的几种语法：</p>
+<ul>
+<li>标题</li>
+<li>列表</li>
+<li>代码块（行内&#x2F;块状</li>
+<li>加粗、斜体</li>
+</ul>
+<p>其他的可以按照需求自行扩展</p>
+<h2 id="实现打字机效果"><a href="#实现打字机效果" class="headerlink" title="实现打字机效果"></a>实现打字机效果</h2><h3 id="将-html-转为可遍历的节点数组"><a href="#将-html-转为可遍历的节点数组" class="headerlink" title="将 html 转为可遍历的节点数组"></a>将 html 转为可遍历的节点数组</h3><p>上一步是把 md 文本字符串转为 html 字符串，但需要实现打字机效果的话，需要将 html 转为可遍历的节点数组，以实现打字机效果。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将HTML转换为可遍历的节点数组</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">htmlToNodes</span> = (<span class="params">html: string</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> tagRegex = <span class="regexp">/(&lt;\/?[^&gt;]+&gt;)/g</span>;</span><br><span class="line">  <span class="keyword">return</span> html</span><br><span class="line">    .<span class="title function_">split</span>(tagRegex)</span><br><span class="line">    .<span class="title function_">filter</span>(<span class="function">(<span class="params">chunk</span>) =&gt;</span> chunk.<span class="title function_">trim</span>())</span><br><span class="line">    .<span class="title function_">flatMap</span>(<span class="function">(<span class="params">chunk</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (chunk.<span class="title function_">startsWith</span>(<span class="string">&quot;&lt;&quot;</span>)) <span class="keyword">return</span> [chunk];</span><br><span class="line">      <span class="keyword">return</span> chunk.<span class="title function_">split</span>(<span class="string">&quot;&quot;</span>).<span class="title function_">map</span>(<span class="function">(<span class="params">char</span>) =&gt;</span> (char === <span class="string">&quot; &quot;</span> ? <span class="string">&quot;&amp;nbsp;&quot;</span> : char));</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="打字机效果"><a href="#打字机效果" class="headerlink" title="打字机效果"></a>打字机效果</h3><p>使用定时器去定时添加文字</p>
+<p>父组件调用<code>stopTimer</code>可以停止文字继续显示</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [currentIndex, setCurrentIndex] = <span class="title function_">useState</span>(<span class="number">0</span>);</span><br><span class="line"><span class="comment">// displayContent是需要显示的html节点</span></span><br><span class="line"><span class="keyword">const</span> [displayContent, setDisplayContent] = useState&lt;string[]&gt;([]);</span><br><span class="line"></span><br><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  timer = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (currentIndex &lt; nodes.<span class="property">length</span>) &#123;</span><br><span class="line">      <span class="title function_">setDisplayContent</span>(<span class="function">(<span class="params">prev</span>) =&gt;</span> [...prev, nodes[currentIndex]]);</span><br><span class="line">      <span class="title function_">setCurrentIndex</span>(<span class="function">(<span class="params">prev</span>) =&gt;</span> prev + <span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">clearInterval</span>(timer);</span><br><span class="line">      timer = <span class="literal">null</span>;</span><br><span class="line">      <span class="keyword">if</span> (onStop &amp;&amp; nodes.<span class="property">length</span>) <span class="title function_">onStop</span>(); <span class="comment">// 触发 onStop 回调</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, <span class="number">50</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (timer) <span class="built_in">clearInterval</span>(timer);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;, [nodes, currentIndex]);</span><br><span class="line"></span><br><span class="line"><span class="title function_">useImperativeHandle</span>(ref, <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">    <span class="attr">stopTimer</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (timer) &#123;</span><br><span class="line">        <span class="built_in">clearInterval</span>(timer);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">RichText</span> <span class="attr">className</span>=<span class="string">&quot;break-all leading-[56rpx]&quot;</span> <span class="attr">nodes</span>=<span class="string">&#123;displayContent.join(</span>&quot;&quot;)&#125;</span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">View</span>, <span class="title class_">RichText</span> &#125; <span class="keyword">from</span> <span class="string">&quot;@tarojs/components&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; markdownToHTML &#125; <span class="keyword">from</span> <span class="string">&quot;@/hooks/useMd&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">FC</span>, <span class="title class_">PropsWithChildren</span>, useState, useEffect, useMemo, useRef, useImperativeHandle, forwardRef &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line">type <span class="title class_">TAIAnswerProps</span> = &#123;</span><br><span class="line">  <span class="attr">text</span>: string;</span><br><span class="line">  onStop?: <span class="function">() =&gt;</span> <span class="keyword">void</span>;       <span class="comment">// 新增 prop：定时器停止时通知父组件</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 ref 暴露方法给父组件</span></span><br><span class="line"><span class="keyword">export</span> type <span class="title class_">AIAnswerRef</span> = &#123;</span><br><span class="line">  <span class="attr">stopTimer</span>: <span class="function">() =&gt;</span> <span class="keyword">void</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 正确使用 forwardRef 并定义 ref 类型</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">AIAnswer</span>: <span class="variable constant_">FC</span>&lt;<span class="title class_">PropsWithChildren</span>&lt;<span class="title class_">TAIAnswerProps</span>&gt;&gt; &amp; &#123; ref?: <span class="title class_">React</span>.<span class="property">Ref</span>&lt;<span class="title class_">AIAnswerRef</span>&gt; &#125; = forwardRef&lt;</span><br><span class="line">  <span class="title class_">AIAnswerRef</span>,</span><br><span class="line">  <span class="title class_">PropsWithChildren</span>&lt;<span class="title class_">TAIAnswerProps</span>&gt;</span><br><span class="line">&gt;(<span class="function">(<span class="params">&#123; text, onStop &#125;, ref</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> [displayContent, setDisplayContent] = useState&lt;string[]&gt;([]);</span><br><span class="line">  <span class="keyword">const</span> [currentIndex, setCurrentIndex] = <span class="title function_">useState</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">const</span> [htmlStr, setHtmlStr] = <span class="title function_">useState</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 将HTML转换为可遍历的节点数组</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">htmlToNodes</span> = (<span class="params">html: string</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> tagRegex = <span class="regexp">/(&lt;\/?[^&gt;]+&gt;)/g</span>;</span><br><span class="line">    <span class="keyword">return</span> html</span><br><span class="line">      .<span class="title function_">split</span>(tagRegex)</span><br><span class="line">      .<span class="title function_">filter</span>(<span class="function">(<span class="params">chunk</span>) =&gt;</span> chunk.<span class="title function_">trim</span>())</span><br><span class="line">      .<span class="title function_">flatMap</span>(<span class="function">(<span class="params">chunk</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (chunk.<span class="title function_">startsWith</span>(<span class="string">&quot;&lt;&quot;</span>)) <span class="keyword">return</span> [chunk];</span><br><span class="line">        <span class="keyword">return</span> chunk.<span class="title function_">split</span>(<span class="string">&quot;&quot;</span>).<span class="title function_">map</span>(<span class="function">(<span class="params">char</span>) =&gt;</span> (char === <span class="string">&quot; &quot;</span> ? <span class="string">&quot;&amp;nbsp;&quot;</span> : char));</span><br><span class="line">      &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 使用useMemo缓存节点数组</span></span><br><span class="line">  <span class="keyword">const</span> nodes = <span class="title function_">useMemo</span>(<span class="function">() =&gt;</span> <span class="title function_">htmlToNodes</span>(htmlStr), [htmlStr]);</span><br><span class="line">  <span class="keyword">let</span> timer = <span class="literal">null</span></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;nodes&quot;</span>, nodes)</span><br><span class="line">    timer = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (currentIndex &lt; nodes.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="title function_">setDisplayContent</span>(<span class="function">(<span class="params">prev</span>) =&gt;</span> [...prev, nodes[currentIndex]]);</span><br><span class="line">        <span class="title function_">setCurrentIndex</span>(<span class="function">(<span class="params">prev</span>) =&gt;</span> prev + <span class="number">1</span>);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">clearInterval</span>(timer);</span><br><span class="line">        timer = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (onStop &amp;&amp; nodes.<span class="property">length</span>) <span class="title function_">onStop</span>(); <span class="comment">// 触发 onStop 回调</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;, <span class="number">50</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (timer) <span class="built_in">clearInterval</span>(timer);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;, [nodes, currentIndex]);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    text &amp;&amp; <span class="title function_">setHtmlStr</span>(<span class="title function_">markdownToHTML</span>(text));</span><br><span class="line">  &#125;, [text]);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useImperativeHandle</span>(ref, <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">    <span class="attr">stopTimer</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (timer) &#123;</span><br><span class="line">        <span class="built_in">clearInterval</span>(timer);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;));</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">View</span> <span class="attr">className</span>=<span class="string">&quot;flex justify-start pt-[20rpx]&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;text ? (</span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">View</span> <span class="attr">className</span>=<span class="string">&quot;inline-block py-[15rpx] text-[28rpx]&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">RichText</span> <span class="attr">className</span>=<span class="string">&quot;break-all leading-[56rpx]&quot;</span> <span class="attr">nodes</span>=<span class="string">&#123;displayContent.join(</span>&quot;&quot;)&#125; /&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">View</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        ) : (</span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">View</span> <span class="attr">className</span>=<span class="string">&quot;inline-block py-[15rpx] text-[28rpx]&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            正在生成...</span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">View</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        )&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">View</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">AIAnswer</span>;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E6%BF%80%E5%8A%B1%E5%B9%BF%E5%91%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91%E6%BF%80%E5%8A%B1%E5%B9%BF%E5%91%8A/" class="post-title-link" itemprop="url">【小程序】上传和下载文件</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-04-19 16:01:35" itemprop="dateModified" datetime="2025-04-19T16:01:35+08:00">2025-04-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" itemprop="url" rel="index"><span itemprop="name">小程序</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="接入激励广告"><a href="#接入激励广告" class="headerlink" title="接入激励广告"></a>接入激励广告</h2><p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/ad/rewarded-video-ad.html">激励视频广告</a></p>
+<p>小程序的激励广告可以使得小程序增加一个收入来源，在小程序管理后台【流量主】-》【广告管理】-》【新建广告位】，可以选择创建激励视频、插屏、视频贴片和原生模板广告，可以设置广告时长（6-15 秒、6-30 秒、6-60 秒、60-不限）</p>
+<p>创建完成后，会有个广告 id，这个 id 可以作为前端加载初始化的参数。一个小程序可以有多个广告 id，因此可以用不同的广告 id 来去区分不同场景</p>
+<h3 id="载入"><a href="#载入" class="headerlink" title="载入"></a>载入</h3><p>小程序官方文件推荐在<code>onLoad</code>生命周期中加载广告组件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rewardedVideoAdRef = wx.<span class="title function_">createRewardedVideoAd</span>(&#123; <span class="attr">adUnitId</span>: <span class="string">&quot;广告id&quot;</span> &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>在其加载完成后，如果在未加载完成的情况下，是无法调起广告的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 监听广告加载事件，加载完成后隐藏加载提示</span></span><br><span class="line">rewardedVideoAdRef.<span class="title function_">onLoad</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">resolve</span>(<span class="string">&quot;onload&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 监听广告错误事件，隐藏加载提示并打印错误信息</span></span><br><span class="line">rewardedVideoAdRef.<span class="title function_">onError</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">reject</span>(<span class="string">&quot;onerror&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h3><p>广告加载完成会有一段时间，调用<code>show</code>到实际展示时也会有一段时间，建议给个 loading</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">uni.<span class="title function_">showLoading</span>(&#123; <span class="attr">title</span>: <span class="string">&quot;加载中&quot;</span> &#125;);</span><br><span class="line">rewardedVideoAdRef</span><br><span class="line">  .<span class="title function_">show</span>()</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 可以拿到广告的打开时间</span></span><br><span class="line">    showTime = <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>();</span><br><span class="line">    uni.<span class="title function_">hideLoading</span>();</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    uni.<span class="title function_">hideLoading</span>();</span><br><span class="line">    failCb &amp;&amp; <span class="title function_">failCb</span>(err);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="监听关闭"><a href="#监听关闭" class="headerlink" title="监听关闭"></a>监听关闭</h3><p>小程序提供了<code>onClose</code>事件，在用户主动点击关闭按钮时触发，即使广告已经结束的情况下，不会主动关闭，需要用户手动操作</p>
+<p>其中的<code>isEnded</code>标识这次关闭事件是否完整观看，如果完整观看则返回 true，否则返回 false</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">rewardedVideoAdRef?.<span class="title function_">onClose</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> closeTime = <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>();</span><br><span class="line">  <span class="comment">//   向后端发送广告数据</span></span><br><span class="line">  <span class="keyword">if</span> (isAutoUp) &#123;</span><br><span class="line">    <span class="title function_">reportAdData</span>(&#123;</span><br><span class="line">      <span class="attr">view_time</span>: showTime,</span><br><span class="line">      <span class="attr">finish_time</span>: closeTime,</span><br><span class="line">      <span class="attr">finished</span>: res.<span class="property">isEnded</span>,</span><br><span class="line">      <span class="attr">id</span>: videoAdData?.<span class="property">id</span>,</span><br><span class="line">    &#125;).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      successCb &amp;&amp; <span class="title function_">successCb</span>(res.<span class="property">isEnded</span>);</span><br><span class="line">      <span class="title function_">resolve</span>(res.<span class="property">isEnded</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    successCb &amp;&amp; <span class="title function_">successCb</span>(res.<span class="property">isEnded</span>);</span><br><span class="line">    <span class="title function_">resolve</span>(res.<span class="property">isEnded</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="全部代码"><a href="#全部代码" class="headerlink" title="全部代码"></a>全部代码</h3><p>将激励视频相关的全部抽离到一个 hooks 中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 钩子函数，用于管理微信激励视频广告的生命周期</span></span><br><span class="line"><span class="comment"> * 包括广告的创建和显示</span></span><br><span class="line"><span class="comment"> * 该函数返回两个函数：createAd用于创建广告，showAd用于显示广告</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">useRewardedVideoAd</span> = (<span class="params">failCb</span>) =&gt; &#123;</span><br><span class="line">  <span class="comment">// 初始化微信激励视频广告对象为null</span></span><br><span class="line">  <span class="keyword">let</span> rewardedVideoAdRef = <span class="literal">null</span>;</span><br><span class="line">  <span class="comment">// 广告是否加载失败</span></span><br><span class="line">  <span class="keyword">let</span> onLoadVideoAdFail = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">let</span> showTime = <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 创建微信激励视频广告的函数</span></span><br><span class="line"><span class="comment">   * 该函数会检查是否存在wx.createRewardedVideoAd方法，如果存在则创建广告</span></span><br><span class="line"><span class="comment">   * 并监听广告的加载、错误和关闭事件</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">onCreateAd</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (wx.<span class="property">createRewardedVideoAd</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> loaded = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">let</span> timer = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">const</span> maxLoading = <span class="number">20000</span>;</span><br><span class="line">        <span class="comment">// 创建微信激励视频广告实例</span></span><br><span class="line">        rewardedVideoAdRef = wx.<span class="title function_">createRewardedVideoAd</span>(&#123; <span class="attr">adUnitId</span>: <span class="string">&quot;广告id&quot;</span> &#125;);</span><br><span class="line">        <span class="comment">// 监听广告加载事件，加载完成后隐藏加载提示</span></span><br><span class="line">        rewardedVideoAdRef.<span class="title function_">onLoad</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">          uni.<span class="title function_">hideLoading</span>();</span><br><span class="line">          loaded = <span class="literal">true</span>;</span><br><span class="line">          <span class="built_in">clearTimeout</span>(timer);</span><br><span class="line">          <span class="variable language_">console</span>.<span class="title function_">trace</span>();</span><br><span class="line">          <span class="title function_">resolve</span>(<span class="string">&quot;onload&quot;</span>);</span><br><span class="line">          <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;rewardedVideoAdRef---onLoad event emit,&quot;</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">// 监听广告错误事件，隐藏加载提示并打印错误信息</span></span><br><span class="line">        rewardedVideoAdRef.<span class="title function_">onError</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">          uni.<span class="title function_">hideLoading</span>();</span><br><span class="line">          loaded = <span class="literal">true</span>;</span><br><span class="line">          <span class="built_in">clearTimeout</span>(timer);</span><br><span class="line">          onLoadVideoAdFail = <span class="literal">true</span>;</span><br><span class="line">          <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;rewardedVideoAdRef---onError event emit&quot;</span>, err);</span><br><span class="line">          <span class="title function_">reject</span>(<span class="string">&quot;onerror&quot;</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">// 这个是为了防止无法进入onload或者onerror的回调</span></span><br><span class="line">        timer = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">          onLoadVideoAdFail = <span class="literal">true</span>;</span><br><span class="line">          <span class="built_in">clearTimeout</span>(timer);</span><br><span class="line">          <span class="keyword">if</span> (!loaded) &#123;</span><br><span class="line">            <span class="title function_">reject</span>(<span class="string">&quot;onerror&quot;</span>);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;, maxLoading);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">onCloseAd</span> = (<span class="params">isAutoUp = <span class="literal">true</span>, extraParams = &#123;&#125;, successCb</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">/**</span></span><br><span class="line"><span class="comment">       * 监听广告关闭事件，根据用户是否完整观看视频执行不同逻辑</span></span><br><span class="line"><span class="comment">       * 如果用户完整观看视频，打印相应信息</span></span><br><span class="line"><span class="comment">       * 否则，打印用户未完整观看视频的信息</span></span><br><span class="line"><span class="comment">       */</span></span><br><span class="line"></span><br><span class="line">      rewardedVideoAdRef?.<span class="title function_">onClose</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> closeTime = <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>();</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;rewardedVideoAdRef---onClose event emit&quot;</span>, isAutoUp, res);</span><br><span class="line">        <span class="keyword">if</span> (isAutoUp) &#123;</span><br><span class="line">          <span class="title function_">reportAdData</span>(&#123;</span><br><span class="line">            <span class="attr">view_time</span>: showTime,</span><br><span class="line">            <span class="attr">finish_time</span>: closeTime,</span><br><span class="line">            <span class="attr">finished</span>: res.<span class="property">isEnded</span>,</span><br><span class="line">            <span class="attr">id</span>: <span class="string">&quot;广告id&quot;</span>,</span><br><span class="line">            ...extraParams,</span><br><span class="line">          &#125;).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            successCb &amp;&amp; <span class="title function_">successCb</span>(res.<span class="property">isEnded</span>);</span><br><span class="line">            <span class="title function_">resolve</span>(res.<span class="property">isEnded</span>);</span><br><span class="line">          &#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          successCb &amp;&amp; <span class="title function_">successCb</span>(res.<span class="property">isEnded</span>);</span><br><span class="line">          <span class="title function_">resolve</span>(res.<span class="property">isEnded</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 显示微信激励视频广告的函数</span></span><br><span class="line"><span class="comment">   * 尝试显示广告，如果显示失败则重新创建并尝试显示</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">onShowAd</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (rewardedVideoAdRef) &#123;</span><br><span class="line">      uni.<span class="title function_">showLoading</span>(&#123; <span class="attr">title</span>: <span class="string">&quot;加载中&quot;</span> &#125;);</span><br><span class="line">      <span class="comment">// 尝试显示广告，如果显示失败则重新创建广告并再次尝试显示</span></span><br><span class="line">      rewardedVideoAdRef</span><br><span class="line">        .<span class="title function_">show</span>()</span><br><span class="line">        .<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">          showTime = <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>();</span><br><span class="line">          uni.<span class="title function_">hideLoading</span>();</span><br><span class="line">        &#125;)</span><br><span class="line">        .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;onShowAd---catch&quot;</span>, err);</span><br><span class="line">          uni.<span class="title function_">hideLoading</span>();</span><br><span class="line">          failCb &amp;&amp; <span class="title function_">failCb</span>(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">onLoadAd</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">onCreateAd</span>().<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">resolve</span>(res);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 返回创建和显示广告的函数，供外部调用</span></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    onCreateAd,</span><br><span class="line">    onShowAd,</span><br><span class="line">    rewardedVideoAdRef,</span><br><span class="line">    onCloseAd,</span><br><span class="line">    onLoadVideoAdFail,</span><br><span class="line">    onLoadAd,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>使用方式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 视频关闭回调</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">onClose</span> = (<span class="params">isEnab</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (!isEnab) &#123;</span><br><span class="line">    uni.<span class="title function_">showToast</span>(&#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&quot;增加权益失败&quot;</span>,</span><br><span class="line">      <span class="attr">icon</span>: <span class="string">&quot;none&quot;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  uni.<span class="title function_">navigateBack</span>();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title function_">onCreateAd</span>()</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">onShowAd</span>();</span><br><span class="line">    <span class="title function_">onCloseAd</span>(<span class="literal">true</span>, &#123;&#125;, <span class="function">(<span class="params">isEnab</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">onClose</span>(isEnab);</span><br><span class="line">    &#125;);</span><br><span class="line">    isShowed = <span class="literal">true</span>;</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    uni.<span class="title function_">hideLoading</span>();</span><br><span class="line">    uni.<span class="title function_">showToast</span>(&#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&quot;视频获取失败&quot;</span>,</span><br><span class="line">      <span class="attr">icon</span>: <span class="string">&quot;error&quot;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91uniapp%E5%8F%91%E5%B8%83%E6%8F%92%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%91uniapp%E5%8F%91%E5%B8%83%E6%8F%92%E4%BB%B6/" class="post-title-link" itemprop="url">【小程序】uniapp发布插件</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" itemprop="url" rel="index"><span itemprop="name">小程序</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="【小程序】uniapp发布插件"><a href="#【小程序】uniapp发布插件" class="headerlink" title="【小程序】uniapp发布插件"></a>【小程序】uniapp发布插件</h1><p><a target="_blank" rel="noopener" href="https://uniapp.dcloud.net.cn/plugin/uni_modules.html#%E4%BD%BF%E7%94%A8-uni-modules-%E6%8F%92%E4%BB%B6">uni-modules-插件</a></p>
+<h2 id="新建发布uni-modules插件"><a href="#新建发布uni-modules插件" class="headerlink" title="新建发布uni_modules插件"></a>新建发布uni_modules插件</h2><ul>
+<li><p>在<code>uni_modules</code>右键，选择新建一个<code>uni_modules插件</code></p>
+<p>此时会生成一个插件模板代码</p>
+</li>
+<li><p>写好对应的文件后，在<code>插件目录右键</code>，选择<code>发布到插件市场</code></p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCBR6uq"><img src="https://s1.ax1x.com/2023/07/01/pCBR6uq.png" alt="pCBR6uq.png"></a></p>
+<p>填写好对应的信息后，直接进行保存即可</p>
+</li>
+<li><p>发布好后，即可在uniapp插件市场中进行下载</p>
+</li>
+</ul>
+<h2 id="更新插件"><a href="#更新插件" class="headerlink" title="更新插件"></a>更新插件</h2><ul>
+<li><p>更新好具体的内容后，右键选择<code>发布到插件市场</code></p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pCBWUMR"><img src="https://s1.ax1x.com/2023/07/01/pCBWUMR.png" alt="pCBWUMR.png"></a></p>
+</li>
+</ul>
+<p>更新即可</p>
+<h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h2><ul>
+<li><p>发布和导入是同一个项目</p>
+<p>项目里面如果又导入了这个插件，那么在uni_modules下导入的插件会被覆盖</p>
+</li>
+<li><p>发布的包必须包含的文件</p>
+<ul>
+<li><p><code>components/插件名/插件名.vue</code></p>
+<p>如果没有这个文件，那么在发布时会报错</p>
+</li>
+<li><p><code>package.json</code></p>
+<p>用于配置发布插件的一些信息</p>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -971,993 +1590,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91%E6%97%A0%E5%A4%B4%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%9F%E6%88%90%E5%9B%BE%E7%89%87%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0%E5%AF%B9%E8%B1%A1%E5%82%A8%E5%AD%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E3%80%90%E4%BA%91%E6%89%98%E7%AE%A1%E3%80%91%E6%97%A0%E5%A4%B4%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%9F%E6%88%90%E5%9B%BE%E7%89%87%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0%E5%AF%B9%E8%B1%A1%E5%82%A8%E5%AD%98/" class="post-title-link" itemprop="url">【云托管】无头浏览器生成图片并上传到对象储存</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-04-03 16:41:41" itemprop="dateModified" datetime="2025-04-03T16:41:41+08:00">2025-04-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" itemprop="url" rel="index"><span itemprop="name">小程序</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="无头浏览器截图"><a href="#无头浏览器截图" class="headerlink" title="无头浏览器截图"></a>无头浏览器截图</h2><p>使用库 puppeteer</p>
-<p>云托管 cli 的 nodejs 版本是 14.20.1，因此最新的 puppeteer 不兼容，部署发布会报错，需要将其降低到 17</p>
-<ul>
-<li>dockerFile 配置字体</li>
-</ul>
-<p>没有配置导致中文字体出现方括号</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    apt-get install -y \</span></span><br><span class="line"><span class="language-bash">    fonts-arphic-ukai \</span></span><br><span class="line"><span class="language-bash">    fonts-arphic-uming \</span></span><br><span class="line"><span class="language-bash">    fonts-ipafont-mincho \</span></span><br><span class="line"><span class="language-bash">    fonts-unfonts-core</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>开启无头浏览器</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> browser;</span><br><span class="line"><span class="comment">// 启动浏览器</span></span><br><span class="line">browser = <span class="keyword">await</span> puppeteer.<span class="title function_">launch</span>(&#123;</span><br><span class="line">  <span class="attr">headless</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">executablePath</span>: process.<span class="property">env</span>.<span class="property">PUPPETEER_EXECUTABLE_PATH</span>,</span><br><span class="line">  <span class="attr">args</span>: [</span><br><span class="line">    <span class="string">&quot;--no-sandbox&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--disable-setuid-sandbox&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--disable-dev-shm-usage&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--single-process&quot;</span>,</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">timeout</span>: <span class="number">60000</span>, <span class="comment">// 增加超时时间</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 开启一个新的标签页</span></span><br><span class="line"><span class="keyword">const</span> page = <span class="keyword">await</span> browser.<span class="title function_">newPage</span>();</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>加载对应页面</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 读取 HTML 文件</span></span><br><span class="line"><span class="keyword">const</span> filePath = path.<span class="title function_">join</span>(__dirname, <span class="string">&quot;./template-1.html&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> htmlContent = fs.<span class="title function_">readFileSync</span>(filePath, <span class="string">&quot;utf8&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">escapeRegExp</span> = (<span class="params">str</span>) =&gt; str.<span class="title function_">replace</span>(<span class="regexp">/[.*+?^$&#123;&#125;()|[\]\\]/g</span>, <span class="string">&quot;\\$&amp;&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> [key, value] <span class="keyword">of</span> <span class="title class_">Object</span>.<span class="title function_">entries</span>(dataToReplace)) &#123;</span><br><span class="line">  <span class="keyword">const</span> escapedKey = <span class="title function_">escapeRegExp</span>(key);</span><br><span class="line">  htmlContent = htmlContent.<span class="title function_">replace</span>(<span class="keyword">new</span> <span class="title class_">RegExp</span>(escapedKey, <span class="string">&quot;g&quot;</span>), value);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 加载修改后的 HTML 内容</span></span><br><span class="line"><span class="keyword">await</span> page.<span class="title function_">setContent</span>(htmlContent, &#123; <span class="attr">waitUntil</span>: <span class="string">&quot;networkidle0&quot;</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置视口大小</span></span><br><span class="line"><span class="comment">// 修改后：根据 4 倍缩放调整视口</span></span><br><span class="line"><span class="keyword">await</span> page.<span class="title function_">setViewport</span>(&#123;</span><br><span class="line">  <span class="attr">width</span>: <span class="number">220</span>,</span><br><span class="line">  <span class="attr">height</span>: <span class="number">176</span>,</span><br><span class="line">  <span class="attr">deviceScaleFactor</span>: <span class="number">2</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>截图保存</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 创建截图目录</span></span><br><span class="line"><span class="keyword">const</span> screenshotDir = path.<span class="title function_">join</span>(__dirname, <span class="string">&quot;screenshots&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (!fs.<span class="title function_">existsSync</span>(screenshotDir)) &#123;</span><br><span class="line">  fs.<span class="title function_">mkdirSync</span>(screenshotDir, &#123; <span class="attr">recursive</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> name = <span class="title class_">Math</span>.<span class="title function_">random</span>() + <span class="string">&quot;_screenshot.png&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> picName = path.<span class="title function_">join</span>(screenshotDir, name);</span><br><span class="line"><span class="comment">// 添加字体加载等待</span></span><br><span class="line"><span class="keyword">await</span> page.<span class="title function_">evaluate</span>(<span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">ensureFonts</span> = (<span class="params">callback</span>) =&gt; &#123;</span><br><span class="line">    <span class="variable language_">document</span>.<span class="property">fonts</span>.<span class="property">ready</span>.<span class="title function_">then</span>(callback);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> <span class="title function_">ensureFonts</span>(resolve));</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 截图并保存</span></span><br><span class="line"><span class="keyword">await</span> page.<span class="title function_">screenshot</span>(&#123; <span class="attr">path</span>: picName, <span class="attr">fullPage</span>: <span class="literal">true</span> &#125;);</span><br></pre></td></tr></table></figure>
-
-<h2 id="上传到对象储存"><a href="#上传到对象储存" class="headerlink" title="上传到对象储存"></a>上传到对象储存</h2><p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/development/storage/service/upload.html">https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/development/storage/service/upload.html</a></p>
-<p>上传到对象储存需要走两部，获取上传链接，然后再进行文件上传</p>
-<p>服务端可以通过配置云调用，将<code>tcb/uploadfile</code>和<code>tcb/batchdownloadfile</code>配置到云调用中，那么服务端就不需要再传 access_token 了，且可以通过<code>req.headers?.[&quot;x-wx-openid&quot;]</code>获取到用户的 unionid</p>
-<h3 id="获取上传链接"><a href="#获取上传链接" class="headerlink" title="获取上传链接"></a>获取上传链接</h3><p>uploadFileResponse 返回的 token 有效期是半小时</p>
-<p>同名的文件是被覆盖</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> uploadFileResponse = <span class="keyword">await</span> axios.<span class="title function_">post</span>(</span><br><span class="line">  <span class="string">&quot;http://api.weixin.qq.com/tcb/uploadfile&quot;</span>,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">env</span>: <span class="string">&quot;微信云托管环境ID&quot;</span>,</span><br><span class="line">    <span class="attr">path</span>: <span class="string">`shareCard/<span class="subst">$&#123;name&#125;</span>`</span>, <span class="comment">//目录及文件名称</span></span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"><span class="keyword">if</span> (uploadFileResponse.<span class="property">status</span> !== <span class="number">200</span> || !uploadFileResponse.<span class="property">data</span>.<span class="property">url</span>) &#123;</span><br><span class="line">  <span class="keyword">await</span> browser.<span class="title function_">close</span>();</span><br><span class="line">  <span class="title function_">reject</span>(uploadFileResponse);</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h3><p>接口链接是获取上传链接时返回的 url，依据接口的参数拼接</p>
-<p>此接口无返回，状态码 status 返回 204，因此不要判断其状态码是 200 才算是正常的！！！</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> result = uploadFileResponse.<span class="property">data</span>;</span><br><span class="line"><span class="keyword">const</span> data = <span class="keyword">new</span> <span class="title class_">FormData</span>();</span><br><span class="line">data.<span class="title function_">append</span>(<span class="string">&quot;key&quot;</span>, <span class="string">`shareCard/<span class="subst">$&#123;name&#125;</span>`</span>);</span><br><span class="line">data.<span class="title function_">append</span>(<span class="string">&quot;Signature&quot;</span>, result.<span class="property">authorization</span>);</span><br><span class="line">data.<span class="title function_">append</span>(<span class="string">&quot;x-cos-security-token&quot;</span>, result.<span class="property">token</span>);</span><br><span class="line">data.<span class="title function_">append</span>(<span class="string">&quot;x-cos-meta-fileid&quot;</span>, result.<span class="property">cos_file_id</span>);</span><br><span class="line"><span class="keyword">const</span> fileStream = fs.<span class="title function_">createReadStream</span>(picName);</span><br><span class="line">data.<span class="title function_">append</span>(<span class="string">&quot;file&quot;</span>, fileStream, &#123;</span><br><span class="line">  <span class="attr">filename</span>: name,</span><br><span class="line">  <span class="attr">contentType</span>: <span class="string">&quot;image/png&quot;</span>,</span><br><span class="line">  <span class="attr">knownLength</span>: fs.<span class="title function_">statSync</span>(picName).<span class="property">size</span>,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// COS 直传</span></span><br><span class="line"><span class="keyword">const</span> uploadRes = <span class="keyword">await</span> axios.<span class="title function_">post</span>(result.<span class="property">url</span>, data, &#123;</span><br><span class="line">  <span class="attr">headers</span>: data.<span class="title function_">getHeaders</span>(),</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h3 id="获取文件下载链接"><a href="#获取文件下载链接" class="headerlink" title="获取文件下载链接"></a>获取文件下载链接</h3><p>服务端和小程序端都有获取到文件下载链接的方法，小程序可以通过 fileid 直接在 image、video 等标签中直接显示</p>
-<ul>
-<li>服务端获取文件下载链接</li>
-</ul>
-<p>如果之前给的下载链接未失效，那么此图片修改后，对应的下载链接的图片也会更新</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getFileLinkResponse = <span class="keyword">await</span> axios.<span class="title function_">post</span>(</span><br><span class="line">  <span class="string">&quot;http://api.weixin.qq.com/tcb/batchdownloadfile&quot;</span>,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">env</span>: <span class="string">&quot;微信云托管环境ID&quot;</span>,</span><br><span class="line">    <span class="attr">file_list</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">fileid</span>: result.<span class="property">file_id</span>,</span><br><span class="line">        <span class="attr">max_age</span>: <span class="number">7200</span>, <span class="comment">//失效时间</span></span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"><span class="keyword">const</span> [fileInfo = &#123;&#125;] = getFileLinkResponse.<span class="property">data</span>?.<span class="property">file_list</span> || [];</span><br><span class="line"><span class="keyword">const</span> download_url = fileInfo.<span class="property">download_url</span>;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">FileInfo</span> = &#123;</span><br><span class="line">  <span class="attr">fileid</span>: <span class="built_in">string</span>; <span class="comment">// 文件ID</span></span><br><span class="line">  <span class="attr">download_url</span>: <span class="built_in">string</span>; <span class="comment">// 下载链接</span></span><br><span class="line">  <span class="attr">status</span>: <span class="built_in">number</span>; <span class="comment">// 状态码</span></span><br><span class="line">  <span class="attr">errmsg</span>: <span class="built_in">string</span>; <span class="comment">// 该文件错误信息</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h2 id="储存数据库"><a href="#储存数据库" class="headerlink" title="储存数据库"></a>储存数据库</h2><p>依据 unionid，fileid 储存到数据库中</p>
-<h3 id="定义数据表"><a href="#定义数据表" class="headerlink" title="定义数据表"></a>定义数据表</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// db.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; <span class="title class_">Sequelize</span>, <span class="title class_">DataTypes</span> &#125; = <span class="built_in">require</span>(<span class="string">&quot;sequelize&quot;</span>);</span><br><span class="line"><span class="comment">// 从环境变量中读取数据库配置</span></span><br><span class="line"><span class="keyword">const</span> &#123; <span class="variable constant_">MYSQL_USERNAME</span>, <span class="variable constant_">MYSQL_PASSWORD</span>, <span class="variable constant_">MYSQL_ADDRESS</span> = <span class="string">&quot;&quot;</span> &#125; = process.<span class="property">env</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> [host, port] = <span class="variable constant_">MYSQL_ADDRESS</span>.<span class="title function_">split</span>(<span class="string">&quot;:&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sequelize = <span class="keyword">new</span> <span class="title class_">Sequelize</span>(<span class="string">&quot;nodejs_demo&quot;</span>, <span class="variable constant_">MYSQL_USERNAME</span>, <span class="variable constant_">MYSQL_PASSWORD</span>, &#123;</span><br><span class="line">  host,</span><br><span class="line">  port,</span><br><span class="line">  <span class="attr">dialect</span>: <span class="string">&quot;mysql&quot;</span> <span class="comment">/* one of &#x27;mysql&#x27; | &#x27;mariadb&#x27; | &#x27;postgres&#x27; | &#x27;mssql&#x27; */</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义新的数据模型</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">UserShareStyle</span> = sequelize.<span class="title function_">define</span>(<span class="string">&quot;UserShareStyle&quot;</span>, &#123;</span><br><span class="line">  <span class="attr">unionid</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">DataTypes</span>.<span class="property">STRING</span>,</span><br><span class="line">    <span class="attr">allowNull</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">unique</span>: <span class="literal">true</span>, <span class="comment">// 确保每个 unionid 是唯一的</span></span><br><span class="line">    <span class="attr">index</span>: <span class="literal">true</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">fileId</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">DataTypes</span>.<span class="property">STRING</span>,</span><br><span class="line">    <span class="attr">allowNull</span>: <span class="literal">false</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据库初始化方法</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">init</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="title class_">UserShareStyle</span>.<span class="title function_">sync</span>(&#123; <span class="attr">alter</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导出初始化方法和模型</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">initDB</span>: init,</span><br><span class="line">  <span class="title class_">UserShareStyle</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>入口文件声明</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">bootstrap</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">initDB</span>();</span><br><span class="line">  app.<span class="title function_">listen</span>(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;启动成功&quot;</span>, port);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取到用户unionid</span></span><br><span class="line"><span class="keyword">const</span> unionid = req.<span class="property">headers</span>?.[<span class="string">&quot;x-wx-openid&quot;</span>];</span><br><span class="line"><span class="keyword">const</span> [record, created] = <span class="keyword">await</span> <span class="title class_">UserShareStyle</span>.<span class="title function_">upsert</span>(</span><br><span class="line">  &#123; unionid, <span class="attr">fileId</span>: result.<span class="property">file_id</span> &#125;, <span class="comment">// 更新或插入的数据</span></span><br><span class="line">  &#123; <span class="attr">where</span>: &#123; unionid &#125; &#125; <span class="comment">// 根据 unionid 操作</span></span><br><span class="line">);</span><br><span class="line"><span class="keyword">if</span> (created) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;插入新记录成功&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;更新记录成功&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" class="post-title-link" itemprop="url">记录</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-07-04 15:17:58" itemprop="dateModified" datetime="2025-07-04T15:17:58+08:00">2025-07-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="如何固定安装依赖时所有依赖用到某个包的版本"><a href="#如何固定安装依赖时所有依赖用到某个包的版本" class="headerlink" title="如何固定安装依赖时所有依赖用到某个包的版本"></a>如何固定安装依赖时所有依赖用到某个包的版本</h3><p>使用<code>yarn</code>，在<code>package.json</code>中添加<code>resolutions</code>字段，并添加需要固定版本依赖的包名及版本号</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;dependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;vue&quot;</span><span class="punctuation">:</span> &#x27;<span class="number">2.0</span><span class="number">.0</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;vue-router&quot;</span><span class="punctuation">:</span> &#x27;<span class="number">3.0</span><span class="number">.0</span>&#x27;</span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;resolutions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;vue&quot;</span><span class="punctuation">:</span> &#x27;<span class="number">2.0</span><span class="number">.0</span>&#x27;<span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>这样安装后，即使vue-router依赖的vue版本不是<code>2.0.0</code>,但可以强制其使用vue对应的版本</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u010494753/article/details/139534853?spm=1001.2014.3001.5501">package.json中resolutions的使用场景</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/%E5%89%8D%E7%AB%AF/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/" class="post-title-link" itemprop="url">性能指标</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-07-04 15:11:11" itemprop="dateModified" datetime="2025-07-04T15:11:11+08:00">2025-07-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="基于用户的性能指标"><a href="#基于用户的性能指标" class="headerlink" title="基于用户的性能指标"></a>基于用户的性能指标</h2><h3 id="FCP：白屏时间"><a href="#FCP：白屏时间" class="headerlink" title="FCP：白屏时间"></a>FCP：白屏时间</h3><h1></h1>
-
-<table>
-<thead>
-<tr>
-<th>FCP 时长</th>
-<th>颜色编码</th>
-<th>FCP 分数(HTTP 存档百分位数)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0-2s</td>
-<td><font color=green>快速</font></td>
-<td>75-100</td>
-</tr>
-<tr>
-<td>2-4s</td>
-<td><font color=yellow>中等</font></td>
-<td>50-74</td>
-</tr>
-<tr>
-<td>&gt;4s</td>
-<td><font color=red>慢</font></td>
-<td>0-49</td>
-</tr>
-</tbody></table>
-<h3 id="LCP：主要内容可见时间"><a href="#LCP：主要内容可见时间" class="headerlink" title="LCP：主要内容可见时间"></a>LCP：主要内容可见时间</h3><p>(可视区域最大-资源较大 元素到屏幕上的间隔时间)</p>
-<h1></h1>
-
-<p>并不是只初始加载页面的，而是指页面元素变化的时候</p>
-<blockquote>
-<p>LCP 考虑的元素</p>
-</blockquote>
-<ul>
-<li><code>&lt;img&gt;</code>元素</li>
-<li><code>&lt;image&gt;</code>元素的<code>&lt;svg&gt;</code></li>
-<li><code>&lt;video&gt;</code></li>
-<li>通过<code>[url()](https://developer.mozilla.org/en-US/docs/Web/CSS/url())</code>函数加载背景图片的元素</li>
-<li>包含文本节点或者其他内联文字元素子级的块级元素</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>LCP 时长</th>
-<th>颜色编码</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0-2.5s</td>
-<td><font color=green>快速</font></td>
-</tr>
-<tr>
-<td>2.5-4s</td>
-<td><font color=yellow>中等</font></td>
-</tr>
-<tr>
-<td>&gt;4s</td>
-<td><font color=red>慢</font></td>
-</tr>
-</tbody></table>
-<h3 id="FID：首次输入延迟"><a href="#FID：首次输入延迟" class="headerlink" title="FID：首次输入延迟"></a>FID：首次输入延迟</h3><p>第一次与页面交互(点击按钮链接等)到浏览器实际能够响应这次交互的时间</p>
-<h1></h1>
-
-<blockquote>
-<p>输入延迟是因为浏览器的主线程处于繁忙状态(比如忙于解析和执行程序加载的大量计算的 js)，导致无法及时响应用户。</p>
-</blockquote>
-<blockquote>
-<p>第一次的输入延迟通常发生在 FCP 和 TTI 之间，因为页面虽然已经呈现了，但是还无法可靠交互</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>FID 时长</th>
-<th>颜色编码</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0-0.1s</td>
-<td><font color=green>快速</font></td>
-</tr>
-<tr>
-<td>0.1-0.3s</td>
-<td><font color=yellow>中等</font></td>
-</tr>
-<tr>
-<td>&gt;0.3s</td>
-<td><font color=red>慢</font></td>
-</tr>
-</tbody></table>
-<h3 id="TTI：第一次完全达到可交互状态"><a href="#TTI：第一次完全达到可交互状态" class="headerlink" title="TTI：第一次完全达到可交互状态"></a>TTI：第一次完全达到可交互状态</h3><p>浏览器可以持续性的响应用户的交互事件。完全达到可交互的状态时间点是在最后一个长文物(50ms 以上才能完成的任务)完成的事件，并且在随后的 5s 内网络和主线程是空闲的</p>
-<h1></h1>
-
-<table>
-<thead>
-<tr>
-<th>TTI 时长</th>
-<th>颜色编码</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0-3.8s</td>
-<td><font color=green>快速</font></td>
-</tr>
-<tr>
-<td>3.8-7.3s</td>
-<td><font color=yellow>中等</font></td>
-</tr>
-<tr>
-<td>&gt;7.3s</td>
-<td><font color=red>慢</font></td>
-</tr>
-</tbody></table>
-<h3 id="TBT：总阻塞时间"><a href="#TBT：总阻塞时间" class="headerlink" title="TBT：总阻塞时间"></a>TBT：总阻塞时间</h3><p>即 FCP 和 TTI 之间的间隔时长，在改时间范围内，主线程被阻塞足够长的时间以防止用户的输入事件。</p>
-<h1></h1>
-
-<blockquote>
-<p>长任务，执行时长超过了 50ms</p>
-</blockquote>
-<blockquote>
-<p>页面总阻塞时间&#x3D;FCP 和 TTI 之间发生的每个长任务的阻塞时间总和</p>
-</blockquote>
-<blockquote>
-<p>长任务的阻塞时间&#x3D;长任务的实际执行时长-50ms</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>TBT 时长</th>
-<th>颜色编码</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0-0.3s</td>
-<td><font color=green>快速</font></td>
-</tr>
-<tr>
-<td>0.3-0.6s</td>
-<td><font color=yellow>中等</font></td>
-</tr>
-<tr>
-<td>&gt;0.6s</td>
-<td><font color=red>慢</font></td>
-</tr>
-</tbody></table>
-<h3 id="CLS：累计布局偏移"><a href="#CLS：累计布局偏移" class="headerlink" title="CLS：累计布局偏移"></a>CLS：累计布局偏移</h3><p>在整个生命周期中发生的每个意外的布局移位(即在不是预计的位置偏移或者样式错乱)的所有单独布局。</p>
-<p>保证页面的视觉稳定性</p>
-<h1></h1>
-
-<blockquote>
-<p>元素的意外移动通常是由于异步加载资源或者 DOM 元素动态添加到现有内容商法的页面而发生的</p>
-</blockquote>
-<blockquote>
-<p>可能是由于尺寸未知的多媒体资源，字体变化或者动态调整自身大小的第三方广告、小部件</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>TBT 时长</th>
-<th>颜色编码</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0-0.1ms</td>
-<td><font color=green>快速</font></td>
-</tr>
-<tr>
-<td>0.1-0.25ms</td>
-<td><font color=yellow>中等</font></td>
-</tr>
-<tr>
-<td>&gt;0.25ms</td>
-<td><font color=red>慢</font></td>
-</tr>
-</tbody></table>
-<h3 id="速度指数-SI-：页面可视区域中内容的填充速度"><a href="#速度指数-SI-：页面可视区域中内容的填充速度" class="headerlink" title="速度指数(SI)：页面可视区域中内容的填充速度"></a>速度指数(SI)：页面可视区域中内容的填充速度</h3><p>计算页面可见区域内容显示的平均时间来衡量</p>
-<h1></h1>
-
-<blockquote>
-<p>捕获浏览器加载页面过程的视频，然后对每 100ms 间隔的页面截图计算页面内容的填充百分比</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>TBT 时长</th>
-<th>颜色编码</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0-4.3s</td>
-<td><font color=green>快速</font></td>
-</tr>
-<tr>
-<td>4.3-5.8ms</td>
-<td><font color=yellow>中等</font></td>
-</tr>
-<tr>
-<td>&gt;5.8ms</td>
-<td><font color=red>慢</font></td>
-</tr>
-</tbody></table>
-<h2 id="RAIL-性能模型"><a href="#RAIL-性能模型" class="headerlink" title="RAIL 性能模型"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/422402515">RAIL 性能模型</a></h2><blockquote>
-<p>RAIL</p>
-</blockquote>
-<ul>
-<li>R(响应)：应该尽可能快速的响应用户，应该在 100ms 内相应用户</li>
-<li>A(Animation)：在展示动画的时候，每一帧应该以 16ms 进行渲染，这样可以保持动画的一致性，避免卡顿</li>
-<li>I(空闲)：当使用 JS 主线程的时候，应该把任务划分到执行时间小于 50ms 的片段中，这样可以释放线程以进行用户交互</li>
-<li>L(加载)：应该在小于 1s 的时间内完成加载网页，且可以进行用户交互</li>
-</ul>
-<blockquote>
-<p>感知延迟的时间窗口</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>延迟时长</th>
-<th>用户反映</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0-16ms</td>
-<td>人眼可以感知每秒 60 帧的动画，即每帧 16ms，除了浏览器将一帧画面绘制到屏幕上的时间，网站应用大约需要 10ms 生成一帧</td>
-</tr>
-<tr>
-<td>0-100ms</td>
-<td>在该范围内相应用户的操作，属于流畅的体验</td>
-</tr>
-<tr>
-<td>100-1000ms</td>
-<td>能够感知明显延迟</td>
-</tr>
-<tr>
-<td>&gt;1s</td>
-<td>用户注意力将离开对执行任务的关注</td>
-</tr>
-<tr>
-<td>&gt;10s</td>
-<td>感到过于长以至于失望，可能回放弃任务</td>
-</tr>
-</tbody></table>
-<h2 id="Web-Vitals"><a href="#Web-Vitals" class="headerlink" title="Web Vitals"></a>Web Vitals</h2><h3 id="Core-Web-Vitals"><a href="#Core-Web-Vitals" class="headerlink" title="Core Web Vitals"></a>Core Web Vitals</h3><p>应用于所有 web 页面的 Web Vitals 子集，为其最重要的核心</p>
-<p>主要指标</p>
-<ul>
-<li>LCP：加载性能</li>
-<li>FID：交互性</li>
-<li>CLS：视觉稳定性</li>
-</ul>
-<h2 id="测试工具"><a href="#测试工具" class="headerlink" title="测试工具"></a>测试工具</h2><ul>
-<li>LightHouse</li>
-<li><a target="_blank" rel="noopener" href="https://www.webpagetest.org/">WebPageTest</a></li>
-<li>DevTools</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/npm%E3%80%81npx%E4%B8%8Epnpm/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/%E5%89%8D%E7%AB%AF/npm%E3%80%81npx%E4%B8%8Epnpm/" class="post-title-link" itemprop="url">npm、npx与pnpm</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-07-04 15:11:00" itemprop="dateModified" datetime="2025-07-04T15:11:00+08:00">2025-07-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="npm、npx-与-pnpm"><a href="#npm、npx-与-pnpm" class="headerlink" title="npm、npx 与 pnpm"></a>npm、npx 与 pnpm</h1><h2 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h2><h3 id="npm-i与npm-update"><a href="#npm-i与npm-update" class="headerlink" title="npm i与npm update"></a><code>npm i</code>与<code>npm update</code></h3><ul>
-<li><p><code>npm i</code>：先检查 node_modules 模块是否有对应的指定模块，如果存在，就不再进行安装，即使远程有新版本也不会重新获取</p>
-<p>npm i在安装包的依赖包时，包的依赖包会安装符合规则的<font color=red>最高</font>版本</p>
-<blockquote>
-<p>npm 都要强制重新安装，可以使用-f 或–force 参数。</p>
-</blockquote>
-</li>
-<li><p><code>npm update</code>：每次安装都会先请求远程仓库的最新版本，然后查询本地版本。</p>
-<blockquote>
-<p>如果本地版本不存在或者远程版本较新，那么更新版本</p>
-</blockquote>
-</li>
-</ul>
-<h4 id="安装非发布的包"><a href="#安装非发布的包" class="headerlink" title="安装非发布的包"></a>安装非发布的包</h4><p><a target="_blank" rel="noopener" href="https://docs.npmjs.com/about-packages-and-modules/">官网</a>表明了如下几个情况可以直接使用</p>
-<ul>
-<li>a:包含一个由 package.json 文件描述的程序的文件夹。</li>
-<li>b:包含（a）的 gzipped tarball 。</li>
-<li>c:解析为（b）的 URL。</li>
-<li>d:&lt;name&gt;@&lt;version&gt;: 在 registry 上发布的(c)</li>
-<li>e:&lt;name&gt;@&lt;tag&gt; : 能指向（d）。</li>
-<li>f:&lt;name&gt; 具有 latest 标签，且满足（e）。</li>
-<li>g:git url，当 clone 时，得到（a）</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git://github.com/user/project.git#commit-ish</span><br><span class="line">git+ssh://user@hostname:project.git#commit-ish</span><br><span class="line">git+http://user@hostname/project/blah.git#commit-ish</span><br><span class="line">git+https://user@hostname/project/blah.git#commit-ish</span><br></pre></td></tr></table></figure>
-
-<p>commit-ish 可以是任何 tag、分支或者 sha，可以用<code>git checkout</code>切换的，默认是<code>master</code></p>
-<h1></h1>
-
-<h3 id="npm-缓存"><a href="#npm-缓存" class="headerlink" title="npm 缓存"></a>npm 缓存</h3><p>由于安装时，即使本地有缓存，但是也不会进行读取，那么这就导致在弱网或者无网情况下，无法安装依赖包或者安装速度极低</p>
-<ul>
-<li><p><code>--cache-min</code>：参数指定了一个时间(以分钟为单位)，只有超过这个时间的模块，才会从远程进行下载安装</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --cache-min <span class="number">9999999</span> &lt;package-name&gt;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1></h1>
-
-<h3 id="npm-i流程"><a href="#npm-i流程" class="headerlink" title="npm i流程"></a><code>npm i</code>流程</h3><ul>
-<li><p>发出<code>npm i</code>命令</p>
-</li>
-<li><p>执行工程自身 preinstall</p>
-<blockquote>
-<p>如果当前工程定义了 preintsall 钩子，那么会调用这个钩子函数</p>
-</blockquote>
-</li>
-<li><p>确定首层依赖</p>
-<blockquote>
-<p>确定当前项目中<code>package.json</code>中的<code>dependencies</code>和<code>devDependencies</code>指定的模块</p>
-</blockquote>
-<blockquote>
-<p>当前项目中的每个依赖包是每个依赖树的根节点，所以 npm 开启多线程对每个依赖包进行更深层级的节点</p>
-</blockquote>
-</li>
-<li><p>获取模块</p>
-<blockquote>
-<p>确定下载的模块版本</p>
-</blockquote>
-<blockquote>
-<p>如果版本描述文件（<code>npm-shrinkwrap.json</code> 或 <code>package-lock. json</code>）有对应模块的信息，那么直接依据对应的信息获取</p>
-</blockquote>
-<blockquote>
-<p>如果没有，向<a target="_blank" rel="noopener" href="https://registry.npmjs.org/">registry</a>查询模块压缩 包的网址，然后依据<code>package.json</code>文件中的版本去仓库中获取。</p>
-</blockquote>
-<blockquote>
-<p>获取到模块的 resloved 字段，即压缩包的地址后。获取到后，npm 依据此地址检查本地缓存，如果缓存中有，那么直接从缓存中(只会检查<code>node_modules</code>目录，而不会检查<code>~/.npm</code>目录)拿；如果没有，那么从仓库中进行下载</p>
-</blockquote>
-<blockquote>
-<p>查找该模块的依赖，如果有依赖则回到第一步，没有则停止</p>
-</blockquote>
-</li>
-<li><p>扁平化模块</p>
-<blockquote>
-<p>获取到完整的依赖树后，里面可能包含大量的重复模块，npm3 之前会严格按照依赖树的结构进行安装，这样会造成大量的模块冗余；</p>
-</blockquote>
-<blockquote>
-<p>npm3 之后默认加入了一个<code>dedupe</code>的过程，遍历所有节点，将模块放在根节点下面（node_modules 下），当发现有了重复模块时，将其丢弃</p>
-<blockquote>
-<p>重复模块：<strong>模块名</strong>相同且<strong>semver</strong>兼容。每个 semver 基本都对应一段<em>版本允许范围</em>，如果两个模块的版本允许范围有<strong>交集</strong>，那么可以得到一个<strong>兼容</strong>版本。这样就不需要版本号完全一致了，减少更多的冗余模块在这个阶段中直接去掉</p>
-<blockquote>
-<p>比如 A 模块依赖 package@^1.0.0，B 模块依赖 package@^1.1.0，则 1.1.0 为兼容版本<br /> node_modules–A<br /> node_modules–B<br /> node_modules--package@^1.1.0<br /><br /> 比如 A 模块依赖 package@^1.0.0，B 模块依赖 package@^2.1.0，则没有兼容版本，会将一个版本放在 node_modules，一个继续保留在依赖树中<br /> node_modules--A--package@^1.0.0<br /> node_modules--B--package@^1.1.0<br /></p>
-</blockquote>
-</blockquote>
-</blockquote>
-</li>
-<li><p>安装模块</p>
-<blockquote>
-<p>下载压缩包，存放在~&#x2F;.npm 目录</p>
-</blockquote>
-<blockquote>
-<p>解压到当前项目的 node_modules 目录</p>
-</blockquote>
-<blockquote>
-<p>执行模块中的生命周期函数（按照 preinstall、install、postinstall 的顺序）。</p>
-</blockquote>
-</li>
-<li><p>执行当前项目自身的生命周期</p>
-<blockquote>
-<p>当前 npm 工程如果定义了钩子此时会被执行（按照 install、postinstall、prepublish、prepare 的顺序）。</p>
-</blockquote>
-</li>
-<li><p>生成或者更新版本描述文件（<code>npm-shrinkwrap.json</code> 或 <code>package-lock. json</code>）</p>
-</li>
-</ul>
-<h2 id="npx"><a href="#npx" class="headerlink" title="npx"></a>npx</h2><p><code>npx</code>是<code>npm@5.25.2</code>增加的命令，如果 npm 版本低于这个版本，那么用<code>npm i -g npx</code>安装即可</p>
-<h3 id="与-npm-的不同"><a href="#与-npm-的不同" class="headerlink" title="与 npm 的不同"></a>与 npm 的不同</h3><ul>
-<li><p>npx 是下载到一个临时目录中，然后使用完成之后，进行删除。没有 npm 一样的缓存</p>
-</li>
-<li><p>npx 还可以运行可执行文件(远程的也可以)，比如只安装 webpack 了，那么用<code>npm run webpack</code>会报错，用<code>npx run webpack</code>就可以成功运行</p>
-</li>
-<li><p>npx 会检查 node_modules 和系统变量<code>$PATH</code>的命令是否存在</p>
-</li>
-<li><p><code>--no-install</code>: 如果本地不存在该模块，那么会报错。可以用于强制使用本地模块</p>
-</li>
-<li><p><code>--ignore-existing</code>: 不管是否本地存在，都强制安装使用远程模块。可以用于获取最新的包，即用即删</p>
-</li>
-</ul>
-<h2 id="pnpm"><a href="#pnpm" class="headerlink" title="pnpm"></a><a target="_blank" rel="noopener" href="https://pnpm.io/zh/motivation">pnpm</a></h2><h3 id="硬连接与符号连接"><a href="#硬连接与符号连接" class="headerlink" title="硬连接与符号连接"></a><a target="_blank" rel="noopener" href="https://juejin.cn/post/7032116303737389086/">硬连接与符号连接</a></h3><ul>
-<li><p>硬连接：使用 inode 指向源文件，即使源文件目录地址变化了，但是依旧能进行访问。因为其 inode 仍指向该文件。没有对原始文件的引用。</p>
-</li>
-<li><p>符号连接：指向的源文件地址，如果源文件目的地址修改了，那么就无法再访问；如果有一个新的文件名字与源文件一致，那么再次访问时，访问的是新文件</p>
-</li>
-</ul>
-<h1></h1>
-
-<h3 id="pnpm-1"><a href="#pnpm-1" class="headerlink" title="pnpm"></a>pnpm</h3><h4 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h4><p>pnpm 和 npm 一样，有一个缓存目录</p>
-<ul>
-<li><p>Mac&#x2F;linux 中默认会设置到{home dir}&gt;&#x2F;.pnpm-store&#x2F;v3；windows 下会设置到当前盘的根目录下，比如 C（C&#x2F;.pnpm-store&#x2F;v3）、D 盘（D&#x2F;.pnpm-store&#x2F;v3）。</p>
-</li>
-<li><p>pnpm 可以在一个电脑上不同的磁盘设置<a target="_blank" rel="noopener" href="https://pnpm.io/zh/workspaces">同一个分区</a>，在这种情况下，pnpm 将复制包而不是硬链接它们，因为硬链接只能发生在同一文件系统同一分区上</p>
-</li>
-<li><p>npm 在安装时，不会去检查缓存；而 pnpm 在安装时，会先检查是否有对应包及其版本的缓存，如果有的话，直接硬链接到这个缓存地址</p>
-</li>
-</ul>
-<h1></h1>
-
-<h4 id="模块依赖"><a href="#模块依赖" class="headerlink" title="模块依赖"></a>模块依赖</h4><ul>
-<li><p>pnpm 使用平铺的方式，类似于<code>npm2</code>的结构，但是增加了一个<code>.pnpm</code>目录，其中的包命名格式如下：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> .<span class="property">pnpm</span>/&lt;organization-name&gt;+&lt;package-name&gt;@&lt;version&gt;<span class="regexp">/node_modules/</span>&lt;name&gt;</span><br><span class="line"><span class="comment">// 组织名(若无会省略)+包名@版本号/node_modules/名称(项目名称)</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>对于 <a target="_blank" rel="noopener" href="https://pnpm.io/zh/how-peers-are-resolved">PeerDependencies</a> 来说，命名规则稍许不同</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.<span class="property">pnpm</span>/&lt;organization-name&gt;+&lt;package-name&gt;@&lt;version&gt;_&lt;organization-name&gt;+&lt;package-name&gt;@&lt;version&gt;<span class="regexp">/node_modules/</span>&lt;name&gt;</span><br><span class="line"><span class="comment">// peerDep组织名(若无会省略)+包名@版本号_组织名(若无会省略)+包名@版本号/node_modules/名称(项目名称)</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>pnpm 使用硬链接，将 node_modules 的包地址硬链接到 pnpm 的缓存中；对于同包同版本使用符号连接.</p>
-<p><img src="https://pnpm.io/zh/assets/images/node-modules-structure-8ab301ddaed3b7530858b233f5b3be57.jpg" alt="image"></p>
-</li>
-</ul>
-<h1></h1>
-
-<h4 id="npm-与-pnpm-差别"><a href="#npm-与-pnpm-差别" class="headerlink" title="npm 与 pnpm 差别"></a><a target="_blank" rel="noopener" href="https://pnpm.io/zh/feature-comparison">npm 与 pnpm 差别</a></h4><table>
-<thead>
-<tr>
-<th>功能</th>
-<th>pnpm</th>
-<th>npm</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>隔离的 node_modules</td>
-<td>✅</td>
-<td>❌</td>
-</tr>
-<tr>
-<td>自动安装 peers</td>
-<td>✅ 通过 auto-install-peers&#x3D;true</td>
-<td>✅</td>
-</tr>
-<tr>
-<td>Plug’n’Play(即插即用)</td>
-<td>✅</td>
-<td>❌</td>
-</tr>
-<tr>
-<td>管理 Node.js 版本</td>
-<td>✅ <code>pnpm env &lt;cmd&gt;</code></td>
-<td>❌</td>
-</tr>
-<tr>
-<td>内容可寻址存储</td>
-<td>✅</td>
-<td>❌</td>
-</tr>
-<tr>
-<td>Side-effects cache(缓存的副作用)</td>
-<td>✅</td>
-<td>❌</td>
-</tr>
-<tr>
-<td>有锁文件</td>
-<td><code>pnpm-lock.yaml</code></td>
-<td><code>package-lock.json</code></td>
-</tr>
-<tr>
-<td>即用即删</td>
-<td><code>pnpm dlx</code></td>
-<td><code>npx</code></td>
-</tr>
-</tbody></table>
-<h2 id="npm缺点"><a href="#npm缺点" class="headerlink" title="npm缺点"></a>npm缺点</h2><h3 id="重复安装"><a href="#重复安装" class="headerlink" title="重复安装"></a>重复安装</h3><p>npm3.0是把所有的依赖包拉平的，但是如果依赖包A里面的子依赖包和主项目的依赖包一致但版本冲突时，npm会在依赖包A的<code>node_modules</code>中安装该子依赖包，如果这个时候主项目的依赖包B和依赖包B的子依赖包版本也一致的情况下，npm3也会在依赖包B中再次安装一次子依赖包，这样导致重复安装，从而导致安装包体积变大</p>
-<p>例如：</p>
-<p>主项目依赖subPackA1.0，packA、packB</p>
-<p>packA和packB依赖subPackA2.0</p>
-<p>那么安装结果就是：</p>
-<p>主项目node_modules: packA、packB、subPackA1.0</p>
-<p>packA的node_modules: subPackA2.0</p>
-<p>packB的node_modules: subPackA2.0</p>
-<p>这样造成了subPackA2.0的重复安装</p>
-<h3 id="幽灵依赖"><a href="#幽灵依赖" class="headerlink" title="幽灵依赖"></a>幽灵依赖</h3><p>由于npm3.0为了减轻依赖包（<code>node_modules</code>）的大小，因此是主项目依赖包和依赖包的子依赖包所有拉平放入<code>node_modules</code></p>
-<p>因此就会出现明明主项目没有声明某个包，但是主项目也可以直接引入使用这个依赖包</p>
-<p>例如：主项目依赖了packA，packA依赖subPackA</p>
-<p>主项目可以直接引入subPackA</p>
-<p>而pnpm由于使用软连接的方式访问文件，因此解决了npm的以上两个问题</p>
-<h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><blockquote>
-<p>npm</p>
-</blockquote>
-<ul>
-<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40988677/article/details/125364305">npm 模块安装机制与实现原理 </a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903702063480846">npm 和 package.json 那些不为常人所知的小秘密 </a></p>
-</li>
-</ul>
-<blockquote>
-<p>npx</p>
-</blockquote>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/269419296">npx 简介 </a></li>
-<li><a target="_blank" rel="noopener" href="https://newsn.net/say/npx.html#npx--ignore-existing">npx 是什么命令？npx 和 npm 有什么区别？ </a></li>
-</ul>
-<blockquote>
-<p>pnpm</p>
-</blockquote>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/457698236">pnpm</a></li>
-</ul>
-<blockquote>
-<p>npm缺点</p>
-</blockquote>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_59816940/article/details/131395326">幽灵依赖是什么，pnpm出现的意义，使用pnpm创建一个vue3项目</a></li>
-<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7456649142510682146">💻《npm 进阶指南📖：掌握机制、规避幽灵依赖，开启高效开发》</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91SSR%E5%92%8CCSR/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91SSR%E5%92%8CCSR/" class="post-title-link" itemprop="url">SSR和CSR</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="SSR"><a href="#SSR" class="headerlink" title="SSR"></a>SSR</h2><h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><ul>
-<li><p>浏览器向网站发起请求</p>
-</li>
-<li><p>服务器接收到请求后，先查询数据库中的动态数据(如用户数据)，然后将数据通过模板引擎编译为HTML字符串，然后再返回给浏览器</p>
-</li>
-<li><p>浏览器接收到HTML文档后，将其渲染为可视的UI</p>
-</li>
-</ul>
-<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>有利于SEO，首屏渲染快</p>
-<h2 id="CSR"><a href="#CSR" class="headerlink" title="CSR"></a>CSR</h2><h3 id="工作流程-1"><a href="#工作流程-1" class="headerlink" title="工作流程"></a>工作流程</h3><ul>
-<li><p>浏览器发起请求</p>
-</li>
-<li><p>服务器接收到请求后，立即返回静态的HTML部分，这部分内容通常是与用户无关的静态数据</p>
-</li>
-<li><p>浏览器解析html文档，待js脚本加载完成后发起异步请求，获取动态数据</p>
-</li>
-<li><p>服务器接收到异步请求后，查询数据库并将动态数据返回给网络浏览器</p>
-</li>
-<li><p>浏览器接收到动态数据后，使用js将数据编译为html字符串并渲染为可视的UI</p>
-</li>
-</ul>
-<h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><p>更好支持离线场景和前后端分离等</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1970,7 +1602,7 @@
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2025</span>
+    <span itemprop="copyrightYear">2026</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>

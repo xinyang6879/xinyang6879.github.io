@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">110</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -154,6 +154,1057 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/React/%E3%80%90React%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/React/%E3%80%90React%E3%80%91%E8%AE%B0%E5%BD%95%E5%B0%8F%E7%82%B9/" class="post-title-link" itemprop="url">记录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-07-25 16:31:30" itemprop="dateModified" datetime="2025-07-25T16:31:30+08:00">2025-07-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/react/" itemprop="url" rel="index"><span itemprop="name">react</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="useMemo-和-React-memo-优化组件的区别"><a href="#useMemo-和-React-memo-优化组件的区别" class="headerlink" title="useMemo 和 React.memo 优化组件的区别"></a>useMemo 和 React.memo 优化组件的区别</h2><p>react 中，如果父组件的状态更新了，那么也会导致子组件也会重新渲染，从头开始渲染一次子组件（若无其他优化手段的情况下</p>
+<p>useMemo 和 React.memo 都可以用于缓存组件，当父组件的状态变化时，如果不涉及到其子组件对应条件修改时，对应的子组件是会重新跳过渲染的</p>
+<p>React.memo 缓存的是组件渲染结果，useMemo 缓存的是计算结果。</p>
+<ul>
+<li><p>React.memo</p>
+<p>包装组件，在 props 未变化时跳过重新渲染</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">MemoizedComponent</span> = <span class="title class_">React</span>.<span class="title function_">memo</span>(</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">MyComponent</span>(<span class="params">props</span>) &#123;</span><br><span class="line">    <span class="comment">/* 使用 props 渲染 */</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">/* 可选的自定义比较函数 */</span></span><br><span class="line">  <span class="function">(<span class="params">prevProps, nextProps</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 返回 true 表示 props 相等（跳过渲染）</span></span><br><span class="line">    <span class="comment">// 返回 false 表示 props 不同（需要渲染）</span></span><br><span class="line">    <span class="keyword">return</span> prevProps.<span class="property">value</span> === nextProps.<span class="property">value</span>;</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>useMemo</p>
+<p>缓存计算结果，只有当依赖项变化时才重新计算</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> memoizedValue = <span class="title function_">useMemo</span>(</span><br><span class="line">  <span class="function">() =&gt;</span> <span class="language-xml"><span class="tag">&lt;<span class="name">Text</span>&gt;</span>&#123;a&#125;<span class="tag">&lt;/<span class="name">Text</span>&gt;</span></span>,</span><br><span class="line">  [a, b] <span class="comment">// 依赖项数组</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
+<li><p>对比</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>React.memo</th>
+<th>useMemo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>本质</td>
+<td>缓存 JSX 元素</td>
+<td>包装组件</td>
+</tr>
+<tr>
+<td>类型</td>
+<td>高阶组件 (HOC)</td>
+<td>React Hook</td>
+</tr>
+<tr>
+<td>作用对象</td>
+<td>整个组件</td>
+<td>单个值&#x2F;计算结果</td>
+</tr>
+<tr>
+<td>优化级别</td>
+<td>父组件内部优化</td>
+<td>子组件自身优化</td>
+</tr>
+<tr>
+<td>主要用途</td>
+<td>防止不必要的组件重新渲染</td>
+<td>避免昂贵的重复计算</td>
+</tr>
+<tr>
+<td>触发条件</td>
+<td>当 props 改变时</td>
+<td>当依赖项改变时</td>
+</tr>
+<tr>
+<td>返回值</td>
+<td>记忆化组件</td>
+<td>记忆化值</td>
+</tr>
+<tr>
+<td>使用位置</td>
+<td>组件定义处</td>
+<td>组件内部</td>
+</tr>
+<tr>
+<td>优化级别</td>
+<td>组件级别</td>
+<td>计算级别</td>
+</tr>
+<tr>
+<td>重新执行是否状态重置</td>
+<td>❌（不会导致状态重置</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>影响范围</td>
+<td>仅影响当前使用位置</td>
+<td>影响所有使用该组件的地方</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>场景推荐</p>
+<ul>
+<li>useMemo<ul>
+<li>避免大规模组件树重复渲染</li>
+<li>保持组件引用稳定</li>
+<li>条件渲染优化</li>
+</ul>
+</li>
+<li>React.memo<ul>
+<li>纯展示组件优化</li>
+<li>防止props未变的重新渲染</li>
+<li>自定义比较逻辑</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐方式</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>纯展示组件</td>
+<td>React.memo</td>
+<td>保持状态，响应props变化</td>
+</tr>
+<tr>
+<td>大型列表项渲染</td>
+<td>useMemo(() &#x3D;&gt; &lt;&gt;)</td>
+<td>避免重复创建大量元素</td>
+</tr>
+<tr>
+<td>需要保持内部状态的组件</td>
+<td>React.memo</td>
+<td>防止状态意外重置</td>
+</tr>
+<tr>
+<td>需要稳定引用的组件（如动画）</td>
+<td>useMemo(() &#x3D;&gt; &lt;&gt;)</td>
+<td>确保组件引用不变</td>
+</tr>
+<tr>
+<td>条件渲染的昂贵组件</td>
+<td>useMemo(() &#x3D;&gt; &lt;&gt;)</td>
+<td>避免重复挂载&#x2F;卸载开销</td>
+</tr>
+<tr>
+<td>需要深度比较props的组件</td>
+<td>React.memo + 比较函数</td>
+<td>自定义比较逻辑更灵活</td>
+</tr>
+</tbody></table>
+<p>  优化组件的创建过程时 → 使用 useMemo(() &#x3D;&gt; <Component />)</p>
+<p>  想优化组件的渲染行为时 → 使用 React.memo(Component)</p>
+</li>
+<li><p>useMemo会导致状态重置</p>
+</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// React 内部伪代码</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">reconcileChildren</span>(<span class="params">parentFiber</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (parentFiber.<span class="property">alternate</span> === <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="comment">// 首次渲染：挂载新组件</span></span><br><span class="line">    <span class="keyword">const</span> newFiber = <span class="title function_">createFiberFromElement</span>(element);</span><br><span class="line">    parentFiber.<span class="property">child</span> = newFiber;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 更新：比较新旧元素</span></span><br><span class="line">    <span class="keyword">const</span> oldFiber = parentFiber.<span class="property">alternate</span>.<span class="property">child</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (oldFiber.<span class="property">elementType</span> === element.<span class="property">type</span>) &#123;</span><br><span class="line">      <span class="comment">// 类型相同：复用 Fiber（保持状态）</span></span><br><span class="line">      <span class="title function_">reuseFiber</span>(oldFiber, element);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 类型不同：创建新 Fiber（重置状态）</span></span><br><span class="line">      <span class="keyword">const</span> newFiber = <span class="title function_">createFiberFromElement</span>(element);</span><br><span class="line">      parentFiber.<span class="property">child</span> = newFiber;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当依赖项变化时，返回的是新 React 元素</li>
+<li>React 比较新旧元素时发现 element.type 相同但 element !&#x3D;&#x3D; oldFiber.element</li>
+<li>React 将其视为新组件实例，创建新 Fiber 节点 → 状态重置</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/React/%E3%80%90React%E3%80%91hooks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/React/%E3%80%90React%E3%80%91hooks/" class="post-title-link" itemprop="url">hooks</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-10-30 18:12:09" itemprop="dateModified" datetime="2025-10-30T18:12:09+08:00">2025-10-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/react/" itemprop="url" rel="index"><span itemprop="name">react</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ul>
+<li><p>缓存相关</p>
+<ul>
+<li>useEffect&#x2F;useLayoutEffect </li>
+<li>useCallback</li>
+<li>useMemo</li>
+</ul>
+</li>
+<li><p>react相关</p>
+<ul>
+<li>useContext</li>
+<li>useDebugValue</li>
+<li>useId</li>
+<li>useImperativeHandle</li>
+<li>useReducer</li>
+<li>useSyncExternalStore</li>
+</ul>
+</li>
+<li><p>数据相关</p>
+<ul>
+<li>useDeferredValue</li>
+<li>useRef</li>
+<li>useState</li>
+<li>useTransition</li>
+</ul>
+</li>
+</ul>
+<h2 id="useCallback"><a href="#useCallback" class="headerlink" title="useCallback"></a>useCallback</h2><h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul>
+<li><p>参数：<code>useCallback(fn, dependencies)</code></p>
+<ul>
+<li><p><code>fn: function</code>: 缓存的函数。此函数可以接受任何参数并且返回任何值。React 将会在初次渲染而非调用时返回该函数。当进行下一次渲染时，如果 dependencies 相比于上一次渲染时没有改变，那么 React 将会返回相同的函数。否则，React 将返回在最新一次渲染中传入的函数，并且将其缓存以便之后使用。React 不会调用此函数，而是返回此函数。你可以自己决定何时调用以及是否调用。</p>
+</li>
+<li><p><code>dependencies: array</code>: 依赖项，当依赖项发生变化时，fn会重新执行。响应式值包括 props、state，和所有在你组件内部直接声明的变量和函数。如果你的代码检查工具 配置了 React，那么它将校验每一个正确指定为依赖的响应式值。依赖列表必须具有确切数量的项，并且必须像 [dep1, dep2, dep3] 这样编写。React 使用 <code>Object.is</code> 比较每一个依赖和它的之前的值。</p>
+</li>
+<li><p>返回值：<code>function</code>: 缓存的函数在初次渲染时，useCallback 返回你已经传入的 fn 函数。在之后的渲染中, 如果依赖没有改变，useCallback 返回上一次渲染中缓存的 fn 函数；否则返回这一次渲染传入的 fn。</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="useRef"><a href="#useRef" class="headerlink" title="useRef"></a>useRef</h2><p>返回一个 ref 对象。这个 ref 对象在组件的整个生命周期内保持不变，但是修改这个值的时候不会触发组件的更新</p>
+<ul>
+<li><p>与定义一个普通变量的区别是</p>
+<ul>
+<li>useRef：</li>
+</ul>
+<p>  在组件重新渲染时保持其值</p>
+<p>  修改.current属性不会触发重新渲染</p>
+<p>  适合存储需要在渲染间保持但不影响渲染逻辑的值</p>
+<ul>
+<li>普通变量：</li>
+</ul>
+<p>  每次组件重新渲染时都会重新初始化</p>
+<p>  无法在多次渲染之间保持状态</p>
+<p>  适合存储临时计算值或单次渲染所需数据</p>
+</li>
+</ul>
+<h2 id="useTransition"><a href="#useTransition" class="headerlink" title="useTransition"></a>useTransition</h2><p>返回一个过渡（transition）状态的布尔值和一个用于启动过渡的函数。使用useTransition可以让你在组件内部标记一个更新为“非紧急”，并且可以获取到该过渡的 pending 状态。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useTransition &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">MyComponent</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [isPending, startPending] = <span class="title function_">useTransition</span>();</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handleClick</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="title function_">startPending</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 非紧急的 state 更新</span></span><br><span class="line">      <span class="title function_">setState</span>(newValue);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClick&#125;</span>&gt;</span>更新<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;isPending ? &#x27;加载中...&#x27; : &#x27;完成&#x27;&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当点击按钮时，执行到<code>startPending</code>时，会先将<code>isPending</code>设置为true，然后执行<code>setState</code>，等数据更新完成后，才会将<code>isPending</code>设置为false</p>
+<p>但是，如果当数据已经更新了，这个时候又进入了其他的高优先级的任务（如用户界面交互、动画等，不包括开发者代码），是会等这些高优先级的任务执行完成后，才会去修改isPending为true</p>
+<p>如果有多个状态更新，那么把整个回调里的所有状态更新都归为同一个“过渡”，统一调度和跟踪</p>
+<p>React 是通过“批处理”机制来实现的：</p>
+<ul>
+<li>在 startPending 回调执行期间，所有的 setState 都会被收集到同一个过渡批次。</li>
+<li>只有当这个批次里的所有更新都完成、渲染结束，并且没有高优先级任务插入时，isPending 才会变为 false。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/PWA/%E3%80%90pwa%E3%80%91Service%20Worker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/PWA/%E3%80%90pwa%E3%80%91Service%20Worker/" class="post-title-link" itemprop="url">【pwa】Service Worker</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-08-14 11:18:06 / Modified: 11:19:54" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/PWA/" itemprop="url" rel="index"><span itemprop="name">PWA</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="service-worker"><a href="#service-worker" class="headerlink" title="service worker"></a>service worker</h1><h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><ul>
+<li><p>是一个独立的worker线程，有自己的上下文，独立于当前网页的进程</p>
+</li>
+<li><p>安装成功后，只能手动卸载，否则将永远存在</p>
+</li>
+<li><p>service worker节省性能，使用时自动唤醒，不使用时自动休眠</p>
+<p>属于事件驱动型Worker，Service Worker在空闲时进入空闲状态节省内存和处理器使用；当有onfetch&#x2F;onasync&#x2F;onmessage&#x2F;onpush等事件时才会激活线程</p>
+</li>
+<li><p>必须运行在https下或者localhost下</p>
+</li>
+<li><p>注册时必须是当前域名下</p>
+</li>
+</ul>
+<h2 id="相关接口"><a href="#相关接口" class="headerlink" title="相关接口"></a>相关接口</h2><h3 id="ServiceWorker"><a href="#ServiceWorker" class="headerlink" title="ServiceWorker"></a>ServiceWorker</h3><p>对ServiceWorker线程的引用，可用于获取线程信息和向线程发送信息</p>
+<h3 id="ServiceWorkerRegistration"><a href="#ServiceWorkerRegistration" class="headerlink" title="ServiceWorkerRegistration"></a>ServiceWorkerRegistration</h3><ul>
+<li><p>对于ServiceWorker注册实例的引用，可用于注册同步消息，推送消息，通知等</p>
+</li>
+<li><p>Service Worker注册成功后的实例，可以控制共享相同源的一个或者多个页面</p>
+</li>
+<li><p>该对象的持久化列表由浏览器维护</p>
+</li>
+<li><p>ServiceWorkerContainer和ServiceWorkerGlobalScope可以通过<code>await navigator.serviceWorker.ready</code>、<code>navigator.serviceWorker.getRegistration()</code>、<code>self.registration</code>获取</p>
+</li>
+</ul>
+<h3 id="ServiceWorkerContaine"><a href="#ServiceWorkerContaine" class="headerlink" title="ServiceWorkerContaine"></a>ServiceWorkerContaine</h3><ul>
+<li><p>window环境下用于注册、注销Service Worker线程的容器</p>
+</li>
+<li><p>对Service Worker从注册到卸载的整个流程进行控制</p>
+</li>
+<li><p>通过window.navigator.serviceWorker访问Service WorkerRegistration和Service Worker接口</p>
+</li>
+</ul>
+<h3 id="ServiceWorkerGlobalScope"><a href="#ServiceWorkerGlobalScope" class="headerlink" title="ServiceWorkerGlobalScope"></a>ServiceWorkerGlobalScope</h3><ul>
+<li><p>Service Worker线程中的Context</p>
+</li>
+<li><p>不支持处理同步请求，只能处理异步</p>
+</li>
+</ul>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><h3 id="脚本生命周期"><a href="#脚本生命周期" class="headerlink" title="脚本生命周期"></a>脚本生命周期</h3><ul>
+<li>parsed（解析成功）</li>
+</ul>
+<p> 当ServiceWorkerContainer.register执行成功后，并不意味着注册的Service Worker文件已经安装或者激活了，而是注册的Service Worker文件解析完成了，符合文件同源及https协议等</p>
+<ul>
+<li><p>installing（正在安装）</p>
+<p>ServiceWorkerGlobalScope.oninstall事件被触发，可以在这个事件中做一些静态资源的缓存等操作</p>
+</li>
+<li><p>installed（安装成功）</p>
+<p>ServiceWorkerGlobalScope.oninstall处理完成后，状态即为installed，此时新的Service Worker线程处于等待状态，可以手动调用self.skipWating或者重新打开页面进行激活</p>
+<p>网站第一次安装时会自动触发激活</p>
+</li>
+<li><p>activating（正在激活）</p>
+</li>
+</ul>
+<p> 触发ServiceWorkerGlobalScope.onactivate事件，可以在这个事件中处理一些旧版本的资源删除操作。</p>
+<p> 此状态手动调用self.clients.claim()，相关页面会立刻被新的Service Worker线程控制，并触发ServiceWorkerContainer.oncontrollerchange事件</p>
+<ul>
+<li><p>activated（激活成功）</p>
+<p>ServiceWorkerGlobalScope.onactivate事件中的处理逻辑完成后，状态变为已激活</p>
+</li>
+<li><p>redundant（废弃）</p>
+<p>安装失败、激活失败会导致当前注册的Service Worker线程废弃。</p>
+<p>新的Service Worker线程激活成功会导致旧的Service Worker线程废弃</p>
+</li>
+</ul>
+<h3 id="线程的生命周期"><a href="#线程的生命周期" class="headerlink" title="线程的生命周期"></a>线程的生命周期</h3><ul>
+<li><p>STARTING（正在启动）</p>
+</li>
+<li><p>RUNNING（正在运行）</p>
+</li>
+<li><p>STOPPING（正在停止）</p>
+</li>
+<li><p>STOPPED（已停止）</p>
+</li>
+</ul>
+<h3 id="线程退出条件"><a href="#线程退出条件" class="headerlink" title="线程退出条件"></a>线程退出条件</h3><ul>
+<li><p>Service Worker文件中存在异常情况（Js语法错误、worker安装失败&#x2F;激活失败、Service Worker线程执行时存在未捕获的异常）</p>
+</li>
+<li><p>Service Worker线程监听事件函数是否处理完成，变为空闲状态时，Service Worker线程会自动退出</p>
+</li>
+<li><p>Service Worker Js执行时间过长（js执行时间超过30s，fetch请求超过5min）</p>
+</li>
+<li><p>启动Service Worker线程的30s后，浏览器会周期性检查线程是否可以退出，关掉超过30s的线程</p>
+</li>
+</ul>
+<h3 id="更新Service-Worker文件的条件"><a href="#更新Service-Worker文件的条件" class="headerlink" title="更新Service Worker文件的条件"></a>更新Service Worker文件的条件</h3><ul>
+<li><p>线上运行的文件与浏览器运行的文件有一个字节不同</p>
+</li>
+<li><p>注册的Service Worker文件发生变化时，即使只是换了一个名字，也会认为这是一个新的文件，会触发更新</p>
+</li>
+<li><p>手动调用ServiceWorkerRegistration.update()时，浏览器会主动拉去新的Service Worker文件进行比对，比如发现不一致，那么会触发更新</p>
+</li>
+<li><p>importScripts包含进来的js文件内容发生变化时，默认情况下遵循http缓存规则，也可以通过设置updateViaCache配置不走缓存</p>
+</li>
+<li><p>当安装24h后，浏览器会主动无缓存地拉取相关文件进行比较</p>
+</li>
+</ul>
+<h4 id="触发更新后"><a href="#触发更新后" class="headerlink" title="触发更新后"></a>触发更新后</h4><ul>
+<li><p>更新的线程和现在的线程一起启动，并且都有自己的install事件</p>
+</li>
+<li><p>如果新的Service Worker线程出现不正常的状态码(4xx&#x2F;5xx)、解析失败、执行过程中发生错误等，浏览器会丢弃新的Service Worker线程，但当前的Service Worker线程仍处于活跃状态</p>
+</li>
+<li><p>新的Service Worker安装成功后将处于waiting状态，直到当前的Service Worker控制的client为0</p>
+</li>
+<li><p>可以使用self.skipWaiting()防止等待状态，将其立即激活</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/PWA/%E3%80%90pwa%E3%80%91pwa%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/PWA/%E3%80%90pwa%E3%80%91pwa%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/" class="post-title-link" itemprop="url">【pwa】pwa功能模块</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-08-14 11:18:06 / Modified: 11:20:00" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/PWA/" itemprop="url" rel="index"><span itemprop="name">PWA</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="pwa-功能模块"><a href="#pwa-功能模块" class="headerlink" title="pwa 功能模块"></a>pwa 功能模块</h1><h2 id="fetch"><a href="#fetch" class="headerlink" title="fetch"></a>fetch</h2><p>对 http 接口进行抽象，包含<code>Request</code>、<code>Response</code>、<code>Headers</code>、<code>Body</code>模块。Fetch Api 是异步化接口，所有请求接口都以<code>Promise</code>结果返回</p>
+<p><code>fetch()</code>方法由<code>Content Security Policy</code>的<code>connect-src</code>指令控制，而不是他请求的资源。fetch()接收到一个错误的 http 状态码时（如 4xx、5xx），并不会标记为<code>Promise.reject</code>，而是<code>Promise.reslove</code>，但返回的 Response 接口对象的 ok 属性会被置为<code>false</code>。</p>
+<p>仅在网络出现故障或者请求被浏览器取消时才会返回<code>Promise.reject</code></p>
+<h1></h1>
+
+<h3 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h3><p>Fetch Api 的 Request 接口表示资源请求，和 fetch()方法拥有相同的构造器</p>
+<ul>
+<li><p>构造器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> req = <span class="keyword">new</span> <span class="title class_">Request</span>(url, options);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法</p>
+<blockquote>
+<p><code>clone()</code>: 用于创建请求对象的副本</p>
+</blockquote>
+</li>
+<li><p>例子</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Request</span>(<span class="string">&quot;xxx&quot;</span>, &#123;</span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&quot;no-cors&quot;</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1></h1>
+
+<h3 id="Headers"><a href="#Headers" class="headerlink" title="Headers"></a>Headers</h3><p>用于构造 Request 的 headers 属性，主要用于 http 请求和响应头的各种操作，可以通过 Request.headers 和 Response.headers 属性获取 Headers 对象</p>
+<ul>
+<li><p>构造器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> headers = <span class="keyword">new</span> <span class="title class_">Headers</span>(options);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法</p>
+<ul>
+<li><p>append(name, value)</p>
+<p>将新值附加到 Headers 接口对象上，主要用于为一个属性添加多个值，如果没有，则添加该字段及值</p>
+</li>
+<li><p>delete(name):</p>
+<p>删除 Header 接口对象上的标头字段</p>
+</li>
+<li><p>entries():</p>
+<p>返回一个包含 Header 接口对象字段和值的迭代器</p>
+</li>
+<li><p>forEach(callback(values, name)):</p>
+<p>为 Header 接口对象的遍历器增加回调函数</p>
+</li>
+<li><p>get(name):</p>
+<p>获取 Header 中键为 name 的值</p>
+</li>
+<li><p>has(name):</p>
+<p>判断 Header 是否有键为 name 的</p>
+</li>
+<li><p>keys():</p>
+<p>返回 Header 接口对象所有字段的迭代器</p>
+</li>
+<li><p>set(name, value):</p>
+<p>为 Headers 接口对象设置字段和值</p>
+</li>
+<li><p>values():</p>
+<p>返回 Header 接口对象所有值的迭代器</p>
+</li>
+</ul>
+</li>
+<li><p>例子</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Request</span>(<span class="string">&quot;xxx&quot;</span>, &#123;</span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&quot;no-cors&quot;</span>,</span><br><span class="line">    <span class="attr">headers</span>: <span class="keyword">new</span> <span class="title class_">Headers</span>(&#123;</span><br><span class="line">      <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;xxx&quot;</span>,</span><br><span class="line">    &#125;),</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1></h1>
+
+<h3 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h3><p>请求响应类型为 Reponse，通过 Reponse 接口可以直接创建一个新的 Reponse 接口对象</p>
+<p>Reponse 接口对象的正文信息只能使用一次，多次使用需要进行复制</p>
+<ul>
+<li><p>构造器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> res = <span class="keyword">new</span> <span class="title class_">Response</span>(<span class="attr">body</span>: <span class="title class_">TBody</span>, options)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">TBody</span> =</span><br><span class="line">  | <span class="string">&quot;Blob&quot;</span></span><br><span class="line">  | <span class="string">&quot;BufferSource&quot;</span></span><br><span class="line">  | <span class="string">&quot;FormData&quot;</span></span><br><span class="line">  | <span class="string">&quot;ReadableStream&quot;</span></span><br><span class="line">  | <span class="string">&quot;URLSearchParams&quot;</span></span><br><span class="line">  | <span class="built_in">string</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法</p>
+<ul>
+<li><p>clone()</p>
+<p>创建响应对象的副本，响应内容完全一样</p>
+</li>
+<li><p>error()</p>
+<p>用于返回与网络错误关联的新的 Response 对象</p>
+</li>
+<li><p>redirect(url, status)</p>
+<p>用于返回一个重定向到指定的 Url 的 Response 对象</p>
+</li>
+</ul>
+</li>
+<li><p>例子</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="title class_">Response</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123; <span class="attr">data</span>: <span class="number">1</span> &#125;), &#123;</span><br><span class="line">  <span class="attr">headers</span>: <span class="keyword">new</span> <span class="title class_">Headers</span>(&#123;&#125;),</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1></h1>
+
+<h3 id="Body"><a href="#Body" class="headerlink" title="Body"></a>Body</h3><p>由 Response 和 Request 接口对象实现，为这些接口对象提供了主体流和是否使用标志及 MIME 类型</p>
+<ul>
+<li><p>方法</p>
+<ul>
+<li><p>arrayBuffer():</p>
+<p>将 Response 流读完并返回一个 ArrayBuffer 类型的 Promise 对象</p>
+</li>
+<li><p>blob():</p>
+<p>将 Response 流读取完成并返回一个 blob 类型的 Promise 对象。当 Response.type&#x3D;opaque 时，则生成的 Blob.size&#x3D;0，Blob.type 为空，使用 URL.createObjectURL 会报错</p>
+</li>
+<li><p>formData():</p>
+<p>将 Response 流读取完成并返回一个 FormData 类型的 Promise 对象。</p>
+</li>
+<li><p>json():</p>
+<p>将 Response 流读取完成并返回一个 json 类型的 Promise 对象。如果 Response 流的内容不符合 json 字符串规则，报错</p>
+</li>
+<li><p>text():</p>
+<p>将 Response 流读取完成并返回一个字符串类型的 Promise 对象，使用 UTF-8 解码</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1></h1>
+
+<h2 id="Notification"><a href="#Notification" class="headerlink" title="Notification"></a>Notification</h2><p>用于配置和显示用户的桌面通知。</p>
+<ul>
+<li>必须在 https 或者本地域名下使用<h1></h1></li>
+</ul>
+<h3 id="消息展示流程"><a href="#消息展示流程" class="headerlink" title="消息展示流程"></a>消息展示流程</h3><ul>
+<li><p>判断是否支持 Notification</p>
+</li>
+<li><p>支持的情况下判断是否授权，未授权会进行授权确认</p>
+</li>
+<li><p>授权成功后就可以展示通知信息</p>
+<h1></h1></li>
+</ul>
+<h3 id="构造"><a href="#构造" class="headerlink" title="构造"></a>构造</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> not = <span class="keyword">new</span> <span class="title class_">Notification</span>(title, options);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>options:</p>
+<ul>
+<li><p>actions: TNotificationActions[]，表示在显示通知用户可用的操作选项</p>
+<p>当用户选择这些操作项后，Service Worker 会通过 onnotificationclick 事件获取用户的选择操作，此属性只在 Service Worker 下有效。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">TNotificationActions</span> = &#123;</span><br><span class="line">  <span class="attr">action</span>: <span class="built_in">string</span>; <span class="comment">//显示在通知上的action标志</span></span><br><span class="line">  <span class="attr">title</span>: <span class="built_in">string</span>; <span class="comment">//显示在通知上的action标题</span></span><br><span class="line">  <span class="attr">icon</span>: <span class="built_in">string</span>; <span class="comment">//显示在action上的icon Url</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>badge: 在没有足够空间显示消息时，显示 badge 设置的图片</p>
+</li>
+<li><p>body： 通知中显示的内容消息</p>
+</li>
+<li><p>data：用于消息通知的数据传递。通过 e.currentTarget.data 获取</p>
+</li>
+<li><p>dir：设置显示通知的方向</p>
+</li>
+<li><p>icon：消息通知中显示的图标的 url</p>
+</li>
+<li><p>lang：设置通知中的语言，必须是有效 bcp 47 语言标记</p>
+</li>
+<li><p>renotify：Boolean，新通知替换旧通知时是否通知用户，默认为 false，表示不会通知</p>
+</li>
+<li><p>requireInteraction：通知应该保持活动状态，直到用户单击或者关闭它，而不是自动关闭。必须带 tag 才有效果</p>
+</li>
+<li><p>silent：消息是否是静默通知</p>
+</li>
+<li><p>tag：给消息 tag，用于进行消息分组</p>
+</li>
+<li><p>timestamp：设置创建通知的时机</p>
+</li>
+<li><p>vibrate：收到消息通知时的震动模式。以毫秒为单位的时间数组。如[100,200,300]表示震动 100ms，暂停 200ms，然后震动 300ms</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1></h1>
+
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.html</span></span><br><span class="line">navigator.<span class="property">serviceWorker</span>.<span class="property">ready</span>.<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;ready&quot;</span>);</span><br><span class="line">  <span class="comment">//   打开授权</span></span><br><span class="line">  <span class="title class_">Notification</span>.<span class="title function_">requestPermission</span>().<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> not = <span class="keyword">new</span> <span class="title class_">Notification</span>(<span class="string">&quot;test&quot;</span>, &#123;</span><br><span class="line">      <span class="attr">body</span>: <span class="string">&quot;测试内容内容11111&quot;</span>,</span><br><span class="line">      <span class="attr">icon</span>: <span class="string">&quot;qr-code-fill.png&quot;</span>,</span><br><span class="line">      <span class="attr">requireInteraction</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">navigator.<span class="property">serviceWorker</span>.<span class="property">ready</span>.<span class="title function_">then</span>(<span class="function">(<span class="params">swReg</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;ready&quot;</span>);</span><br><span class="line">  <span class="title class_">Notification</span>.<span class="title function_">requestPermission</span>().<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 使用actions属性，不能用new来创建了</span></span><br><span class="line">    swReg.<span class="title function_">showNotification</span>(<span class="string">&quot;test&quot;</span>, &#123;</span><br><span class="line">      <span class="attr">body</span>: <span class="string">&quot;测试内容内容11111&quot;</span>,</span><br><span class="line">      <span class="attr">icon</span>: <span class="string">&quot;qr-code-fill.png&quot;</span>,</span><br><span class="line">      <span class="attr">requireInteraction</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">actions</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">action</span>: <span class="string">&quot;1&quot;</span>,</span><br><span class="line">          <span class="attr">title</span>: <span class="string">&quot;傻狗&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">action</span>: <span class="string">&quot;2&quot;</span>,</span><br><span class="line">          <span class="attr">title</span>: <span class="string">&quot;laoto&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      ],</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h1></h1>
+
+<h2 id="Sync后台同步"><a href="#Sync后台同步" class="headerlink" title="Sync后台同步"></a>Sync后台同步</h2><p>Sync Api可以在用户处理一些数据上传的操作时，无需关心网络环境，所有相关操作均会在合适的时机去完成数据同步</p>
+<h3 id="SyncManager"><a href="#SyncManager" class="headerlink" title="SyncManager"></a>SyncManager</h3><ul>
+<li><p>获取</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">navigator.<span class="property">serviceWorker</span>.<span class="property">ready</span>.<span class="title function_">then</span>(<span class="function"><span class="params">swReg</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="title class_">SyncManager</span> = swReg.<span class="property">sync</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><ul>
+<li><p>register(tag)</p>
+<p>注册一个Sync tag。tag值自定义，注册成功后，当网络成功时，会立即触发onsync事件</p>
+</li>
+<li><p>getTags()</p>
+<p>获取已注册但未完成的Sync tag</p>
+</li>
+</ul>
+<h1></h1>
+
+<h3 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h3><p>Sync注册成功后，当前网络会立即触发onsync事件，可在该事件里处理Sync tag是否完成。此事件需要在ServiceWorkerGlobalScope中监听</p>
+<h1></h1>
+
+<h3 id="Sync流程"><a href="#Sync流程" class="headerlink" title="Sync流程"></a>Sync流程</h3><ul>
+<li><p>Registered sync: 注册sync</p>
+</li>
+<li><p>Dispatched sync event：发出event事件</p>
+</li>
+<li><p>Sync completed： Sync完成</p>
+</li>
+</ul>
+<p>Sync tag是否完成取决于SyncEvent.waitUntil中的Promise是否返回reject。如果不是reject则立即完成；如果是reject，目前chrome浏览器会最多尝试3此onsync事件的触发，每次周期间隔至少5min</p>
+<h1></h1>
+
+<h2 id="Cache"><a href="#Cache" class="headerlink" title="Cache"></a>Cache</h2><ul>
+<li><p>Cache Api与其他存储的主要区别</p>
+<ul>
+<li><p>Cache存储虽然也是键值对进行存储，主要存储流式数据，但键是Request，值为Response。</p>
+</li>
+<li><p>Cache存储是异步化的</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Cache主要涉及CacheStorage接口和Cache接口</p>
+<h1></h1>
+
+<h3 id="CacheStorage"><a href="#CacheStorage" class="headerlink" title="CacheStorage"></a>CacheStorage</h3><ul>
+<li><p>用于管理Cache接口对象</p>
+</li>
+<li><p>一个域名浏览器指挥创建一个CacheStorage，底层会创建相应的目录，相关的Cache会被存储在该目录下。</p>
+<h1></h1></li>
+</ul>
+<h3 id="Cache-1"><a href="#Cache-1" class="headerlink" title="Cache"></a>Cache</h3><ul>
+<li><p>键是Request，值为Response</p>
+</li>
+<li><p>Cache数据生成后，缓存数据会一直存在，修改删除操作需要api方法调用</p>
+</li>
+<li><p>Cache只能存储Get请求的Request，Cache的添加方法进行相同的请求时会覆盖之前的</p>
+<h1></h1></li>
+</ul>
+<h3 id="opaque响应缓存问题"><a href="#opaque响应缓存问题" class="headerlink" title="opaque响应缓存问题"></a>opaque响应缓存问题</h3><p>不透明响应：采用mode:no-cors的不允许跨域的跨域请求，Response的类型为opaque</p>
+<p>这类响应的status为0，body长度不可读，因此不能确认响应完整性及正确性，所以缓存下来无法查看其长度和内容</p>
+<p>Chrome浏览器对这种响应做了一层数据填充，来保证不透明响应的数据安全性</p>
+<h1></h1>
+
+<h2 id="Push消息推送"><a href="#Push消息推送" class="headerlink" title="Push消息推送"></a>Push消息推送</h2><h3 id="涉及接口"><a href="#涉及接口" class="headerlink" title="涉及接口"></a>涉及接口</h3><ul>
+<li><p>PushManager：推送服务器的订阅和订阅信息的获取等</p>
+</li>
+<li><p>PushSubscription：订阅成功后的对象，主要用于获取订阅信息</p>
+</li>
+<li><p>PushMessageData：push事件推送的消息对象</p>
+</li>
+</ul>
+<h1></h1>
+
+<h3 id="推送"><a href="#推送" class="headerlink" title="推送"></a>推送</h3><h4 id="浏览器订阅"><a href="#浏览器订阅" class="headerlink" title="浏览器订阅"></a>浏览器订阅</h4><p>需要应用服务器的公钥，通过公钥和浏览器的用户通知得到授权，然后由浏览器向关联的消息推送服务器进行订阅，获取包含消息推送服务器的信息，最后将这些信息发送到应用服务器进行保存。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">nagigator.<span class="property">serviceWorker</span>.<span class="property">ready</span>.<span class="title function_">then</span>(<span class="function"><span class="params">swReg</span>=&gt;</span>&#123;</span><br><span class="line">    swReg.<span class="property">pushManager</span>.<span class="title function_">subscribe</span>(&#123;</span><br><span class="line">        <span class="attr">userVisibleOnly</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">applicationServerKey</span>: <span class="title function_">urlB64ToUint8Array</span>(<span class="string">&quot;xx&quot;</span>)</span><br><span class="line">    &#125;).<span class="title function_">then</span>(<span class="function"><span class="params">pushSub</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="title function_">fetch</span>(<span class="string">&quot;https://server-address&quot;</span>, &#123;</span><br><span class="line">            <span class="attr">method</span>: <span class="string">&quot;post&quot;</span>,</span><br><span class="line">            <span class="attr">bdy</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(pushSub.<span class="title function_">toJSON</span>())</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h1></h1>
+
+<h4 id="应用服务器推送"><a href="#应用服务器推送" class="headerlink" title="应用服务器推送"></a>应用服务器推送</h4><p>应用服务器安装web push协议将消息发送到订阅信息中的消息推送服务器即可，无需关心浏览器端</p>
+<h1></h1>
+
+<h4 id="浏览器端接收"><a href="#浏览器端接收" class="headerlink" title="浏览器端接收"></a>浏览器端接收</h4><p>消息推送服务器接收到消息后会进行校验，通过后会向订阅的浏览器客户端进行消息推送。</p>
+<p>此时将收到的消息通过Ntification Api进行展示</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">self.<span class="title function_">addEventListener</span>(<span class="string">&quot;push&quot;</span>, <span class="function"><span class="params">e</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> data = e.<span class="property">data</span>.<span class="title function_">json</span>()</span><br><span class="line">    self.<span class="property">registration</span>.<span class="title function_">showNotification</span>(data.<span class="property">title</span>, &#123;</span><br><span class="line">        <span class="attr">body</span>: data.<span class="property">body</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/PWA/%E3%80%90pwa%E3%80%91mainifest/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/14/PWA/%E3%80%90pwa%E3%80%91mainifest/" class="post-title-link" itemprop="url">【pwa】mainifest</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/PWA/" itemprop="url" rel="index"><span itemprop="name">PWA</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="mainifest-json"><a href="#mainifest-json" class="headerlink" title="mainifest.json"></a>mainifest.json</h1><h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><p>通过 manifest.json 可以实现自定义启动画面、打开 url、设置界面颜色、设置桌面图标等</p>
+<h2 id="常用字段"><a href="#常用字段" class="headerlink" title="常用字段"></a>常用字段</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;short_name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pwa1&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pwa-测试用例1&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;icons&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;src&quot;</span><span class="punctuation">:</span> <span class="string">&quot;qr-code-fill-144.png&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;sizes&quot;</span><span class="punctuation">:</span> <span class="string">&quot;144x144&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;image/png&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;start_url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/test1&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;display&quot;</span><span class="punctuation">:</span> <span class="string">&quot;standalone&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;theme_color&quot;</span><span class="punctuation">:</span> <span class="string">&quot;blue&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;background_color&quot;</span><span class="punctuation">:</span> <span class="string">&quot;black&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>name: string</code></li>
+</ul>
+<p>描述应用的名称，会显示在桌面图标的标题位置和启动画面中</p>
+<ul>
+<li><p><code>short_name: string</code></p>
+<p>描述应用的短名称。当应用名字过长，在桌面图标无法全部显示时，会显示 shortname</p>
+</li>
+<li><p><code>scope：string</code></p>
+<p>设置 manifest 对于网站的作用范围。</p>
+</li>
+<li><p><code>start_url: string</code></p>
+<p>描述用户从设备主屏幕点击图标进入时的第一个地址，start_url 必须在 scope 的作用范围内</p>
+<ul>
+<li><p>如果为空，则以 manifest.json 作为 url</p>
+</li>
+<li><p>如果 url 打开失败，则和正常显示的网页打开错误的样式一样</p>
+</li>
+<li><p>如果设置的 url 和当前的项目不在一个域下，无法正常显示</p>
+</li>
+<li><p>如果 starturl 为相对地址，那么根路径基于 manifest 的路径</p>
+</li>
+<li><p>如果 starturl 为绝对路径，那么根路径为将</p>
+</li>
+</ul>
+</li>
+<li><p><code>icon：TIcon</code></p>
+<p>设置 webapp 图标集合。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">TIcon</span> = &#123;</span><br><span class="line">  <span class="attr">src</span>: <span class="built_in">string</span>; <span class="comment">//图标地址</span></span><br><span class="line">  <span class="attr">type</span>: <span class="built_in">string</span>; <span class="comment">//图标mime类型，只能为image/png</span></span><br><span class="line">  <span class="attr">sizes</span>: <span class="built_in">string</span>; <span class="comment">//图标大小，用来表示width x height，单位为px，如果图标要适配多个尺寸，则多个尺寸用空格隔开。与真实图片大小要一致</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>适配规则：</p>
+<ul>
+<li><p>将 webapp 添加到桌面时，浏览器会适配最合适尺寸的图标。浏览器会首先去找与显示密度想匹配且尺寸调整为 48dp 屏幕密度的图标。例如在 2 倍像素的设备上使用 96px，3 倍像素的设备上使用 144px 的</p>
+</li>
+<li><p>如果没有找到合适的图标，那么会查找与设备特性匹配度最高的图标</p>
+</li>
+<li><p>如果图标路径错误，那么将显示浏览器的默认图标</p>
+</li>
+</ul>
+</li>
+<li><p><code>background_color: string</code></p>
+<p>启动画面的背景颜色。rgbs、hsl、hsla 等写法浏览器不支持。未设置时，默认白色</p>
+</li>
+<li><p><code>theme_color: string</code></p>
+<p>显示 web app 的主题色，显示在 banner 位置</p>
+</li>
+<li><p><code>display: &#39;fullscreen&#39;|&#39;standalone&#39;|&#39;minimal-ui&#39;|&#39;browser&#39;</code></p>
+<p>webapp 被启动时显示的类型</p>
+</li>
+<li><p><code>orientation</code>: <code>&#39;landscape-primary&#39;|&#39;landscape-secondary&#39;|&#39;landscape&#39;|&#39;portrait-primary&#39;|&#39;portrait-secondary&#39;|&#39;portrait&#39;|&#39;natural&#39;|&#39;any&#39;</code></p>
+<p>webapp 在屏幕上的显示方向</p>
+</li>
+<li><p><code>dir: &#39;ltr&#39;|&#39;rtl&#39;|&#39;auto&#39;</code></p>
+<p>文字的显示方向</p>
+</li>
+<li><p><code>related_applications: &#39;platform&#39;|&#39;id&#39;</code></p>
+<p>用于定义对应的原生应用，类似应用安装横幅提示的形式去推广、引流原生应用</p>
+</li>
+<li><p><code>prefer_related_applications: Boolean</code></p>
+<p>设置是否只允许用户安装原生应用</p>
+</li>
+</ul>
+<h2 id="生效条件"><a href="#生效条件" class="headerlink" title="生效条件"></a>生效条件</h2><ul>
+<li><p>必须是 https 或者 localhost</p>
+</li>
+<li><p>必须注册运行 service worker，且有 fetch 事件监听</p>
+</li>
+<li><p>manifest 必须要有 icons,且必须要至少有尺寸为144x144的</p>
+</li>
+<li><p>diaplay 设置为 standalone 或者 fullscreen</p>
+</li>
+<li><p>必须有 name 或者 short_name，start_url</p>
+</li>
+<li><p>prefer_related_applications 未设置或者为 false</p>
+</li>
+</ul>
+<h2 id="引导安装"><a href="#引导安装" class="headerlink" title="引导安装"></a>引导安装</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&quot;beforeinstallprompt&quot;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;beforeinstallprompt&quot;</span>);</span><br><span class="line">  e.<span class="title function_">preventDefault</span>();</span><br><span class="line">  e.<span class="title function_">prompt</span>();<span class="comment">//显示安装弹窗</span></span><br><span class="line">&#125;);</span><br><span class="line">navigator.<span class="property">serviceWorker</span></span><br><span class="line">  .<span class="title function_">register</span>(<span class="string">&quot;pwa1.js&quot;</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;service-pwa1注册成功&quot;</span>, res);</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;service-pwa1注册失败&quot;</span>, err);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1010,1010 +2061,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/HTTP/%E5%B0%8F%E7%82%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/HTTP/%E5%B0%8F%E7%82%B9/" class="post-title-link" itemprop="url">小点</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2025-08-14 11:18:06 / Modified: 20:56:44" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/http/" itemprop="url" rel="index"><span itemprop="name">http</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h3><ul>
-<li>1xx：信息<ul>
-<li>100: 继续请求，初始请求已经接收，客户端继续发送剩余部分</li>
-<li>101：切换协议，要求服务器切换协议，服务端已确认切换</li>
-</ul>
-</li>
-<li>2xx：成功<ul>
-<li>201：服务器创建了新的资源</li>
-<li>202：服务器已接受请求，但未完成处理</li>
-<li>203：服务器成功处理，但返回的信息可能来自另一个来源</li>
-<li>204：服务器成功处理，但无返回内容</li>
-<li>205： 用户终端应该重置文档</li>
-<li>206：处理了部分get请求</li>
-</ul>
-</li>
-<li>3xx：重定向<ul>
-<li>301： 请求页面<strong>永久</strong>跳转到新的url</li>
-<li>302：服务器目前从不同位置的网页响应，但请求仍然继续使用原有位置来进行以后处理，即<strong>临时</strong>移动。请求方法可能会改变，比如post改为get</li>
-<li>304：自从上次请求后，请求网页未修改过</li>
-<li>305：请求者只能使用代理访问</li>
-<li>307：服务器目前从不同位置的网页响应，但请求仍然继续使用原有位置来进行以后处理，即<strong>临时</strong>移动。请求方法不需要改变</li>
-</ul>
-</li>
-<li>4xx：客户端错误<ul>
-<li>400：请求错误，服务端不理解请求语法</li>
-<li>401：未授权</li>
-<li>403：服务器拒绝请求</li>
-<li>404：未找到</li>
-<li>405：禁用请求的方法</li>
-<li>406：无法使用请求的内容特性响应请求的页面</li>
-<li>407：请求需要代理的身份验证</li>
-<li>408：请求超时</li>
-<li>409：请求的网页冲突，服务器无法完成请求</li>
-<li>410：已删除</li>
-<li>411：服务器无法处理请求，因为请求缺少一个或多个必要请求头字段</li>
-<li>412：服务器未满足请求者的前提条件</li>
-<li>413：请求实体过大</li>
-<li>414：请求的URI过长</li>
-<li>415：服务器不支持请求的格式</li>
-<li>416：请求范围不符合要求</li>
-<li>417：服务器无法满足表头字段要求</li>
-</ul>
-</li>
-<li>5xx：服务端错误<ul>
-<li>500：服务器内部错误</li>
-<li>501：服务器不具备完全请求的功能</li>
-<li>502：网关错误，服务器作为网关或代理出现错误</li>
-<li>503：服务器当前无法使用</li>
-<li>504：网关超时，服务器作为网关或代理出现超时</li>
-<li>505：服务器不支持请求的http版本</li>
-</ul>
-</li>
-</ul>
-<h3 id="http请求方式"><a href="#http请求方式" class="headerlink" title="http请求方式"></a>http请求方式</h3><ul>
-<li><p>ajax,axios</p>
-</li>
-<li><p>EventSource: SSE技术(服务端推送)</p>
-</li>
-<li><p>WebSocket</p>
-</li>
-<li><p>navigator.sendBeacon: 异步数据上报api,用于做数据采集,浏览器会在何时的时间进行数据上报.</p>
-<ul>
-<li>navigator.sendBeacon只能进行发送，无法接收到服务端返回的数据</li>
-<li>在页面卸载时也不会中断此次请求</li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1956250">[译] 用 sendBeacon 发送分析信息的优点</a></li>
-<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7449402571187683343">Navigator.sendBeacon：前端数据发送的得力助手</a></li>
-</ul>
-</li>
-<li><p>SSE(服务器向浏览器发送数据)</p>
-<p>  浏览器通过<code>EventSource</code>的api去监听服务器是否有推送消息给客户端</p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/HTTP/%E3%80%90http%E3%80%91%E9%98%9F%E5%A4%B4%E9%98%BB%E5%A1%9E/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/HTTP/%E3%80%90http%E3%80%91%E9%98%9F%E5%A4%B4%E9%98%BB%E5%A1%9E/" class="post-title-link" itemprop="url">【Htpp】队头阻塞</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-03-21 17:20:25" itemprop="dateModified" datetime="2025-03-21T17:20:25+08:00">2025-03-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/http/" itemprop="url" rel="index"><span itemprop="name">http</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="http1队头阻塞"><a href="#http1队头阻塞" class="headerlink" title="http1队头阻塞"></a>http1队头阻塞</h2><p>除了TCP的本身限制外，http1的先进先出（FIFO）的设计导致的。即浏览器在发送了请求后，必须按照发送顺序获取到相应的响应结果。例如请求A、请求B按顺序发送，请求A需要1s响应，请求B需要0.1s响应，即使B请求响应更加快速，但是浏览器依旧需要等待A的响应才能获取到B的响应。这就是http1的队头阻塞</p>
-<h3 id="FIFO"><a href="#FIFO" class="headerlink" title="FIFO"></a>FIFO</h3><h4 id="使用原因"><a href="#使用原因" class="headerlink" title="使用原因"></a>使用原因</h4><ul>
-<li><p>简化协议实现</p>
-<p>  http1设计在早期互联网，顺序处理模型更加简单，减少协议复杂性</p>
-</li>
-<li><p>避免资源竞争</p>
-<p>  顺序处理可以避免服务器或客户端因并发处理多个请求导致数据混乱</p>
-</li>
-<li><p>兼容性</p>
-<p>  早期浏览器和服务器对并发有限制，因此使用FIFO是权衡之后的结果</p>
-</li>
-</ul>
-<h4 id="表现"><a href="#表现" class="headerlink" title="表现"></a>表现</h4><p>请求顺序化和相应顺序化</p>
-<h4 id="导致问题"><a href="#导致问题" class="headerlink" title="导致问题"></a>导致问题</h4><ul>
-<li><p>队头阻塞</p>
-</li>
-<li><p>性能问题</p>
-<p>  高并发情况下，FIFO机制会导致连接利用率低下，无法充分利用带宽</p>
-</li>
-</ul>
-<h4 id="改进尝试"><a href="#改进尝试" class="headerlink" title="改进尝试"></a>改进尝试</h4><p>管道化：允许客户端在未接受响应是连续发送多个请求</p>
-<ul>
-<li><p>缺点</p>
-<ul>
-<li>响应必须按顺序返回</li>
-<li>服务器实现复杂，且易因队头阻塞导致性能问题</li>
-<li>浏览器默认禁用管道话</li>
-</ul>
-</li>
-</ul>
-<p>因此管道化实际并未解决队头阻塞问题</p>
-<h2 id="http2"><a href="#http2" class="headerlink" title="http2"></a>http2</h2><h3 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h3><ul>
-<li><p>二进制分帧</p>
-<p>  http2中引入了二进制分帧的概念，即将请求的参数及数据全部分解为一个一个的二进制格式帧，这样可以提升传输和解析的效率。</p>
-</li>
-<li><p>多路复用</p>
-<p>  流是一组双向的帧序列，每个流都有一个唯一的标识符，并且可以在同一个连接中并发传输多个流，可以最大程度实现多路复用</p>
-<p>  一个流可以由多个帧组成，这些帧按顺序发送，接收方根据流标识符将其重新组合为完整的请求或响应</p>
-</li>
-</ul>
-<p>因此多个http可以同时并发传输或者交错传输，从而减少队头阻塞</p>
-<h3 id="帧"><a href="#帧" class="headerlink" title="帧"></a>帧</h3><h4 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h4><p>每个帧有一个固定头部（9字节），包括：</p>
-<ul>
-<li><p>长度：Length</p>
-<p>  帧负载长度，由24位3个字节大小表示</p>
-</li>
-<li><p>类型：Type</p>
-<p>  帧类型，说明格式及其语义，用8位1个字节表示</p>
-</li>
-<li><p>标志：Flags</p>
-<p>  指示帧的特定属性或状态，用8位1个字节表示</p>
-</li>
-<li><p>流标识符：Stream Identifier</p>
-<p>  表示该帧关联的流，用31为表示，上限为2^31</p>
-</li>
-<li><p>帧数据</p>
-<p>  传输的数据内容Payload由帧类型决定</p>
-</li>
-<li><p>R<br>  1位保留字段，未定义，以0x0结尾</p>
-</li>
-</ul>
-<h4 id="帧类型"><a href="#帧类型" class="headerlink" title="帧类型"></a>帧类型</h4><p>Pad Length：填充字节长度<br>E：标识流是否为独占，设置PRIORITY时才有值<br>Stream Dependency：流的依赖流，设置PRIORITY时才有值<br>Weight：流优先级权重，设置PRIORITY时才有值<br>Header Block Fragment：Header块片段<br>Padding：填充字节长度</p>
-<ul>
-<li><p>DATA帧</p>
-<p>  数据帧主要存储http2数据报文，包含8位填充字节+填充字节长度（PADDED）标记位true时说明由填充字节+Data具体传输的数据</p>
-</li>
-<li><p>HEADER帧</p>
-<p>  包含Pad Length（填充字节长度）+E（标识流是否为独占，设置PRIORITY时才有值）+Stream Dependency（流的依赖流，设置PRIORITY时才有值）+ Weight（流优先级权重，设置PRIORITY时才有值）+ Header Block Fragment（Header块片段）+ Padding（填充字节长度）</p>
-</li>
-<li><p>PROIRITY帧</p>
-<p>  发送流的优先级，包含E+Stream Dependency+Weight</p>
-</li>
-<li><p>RST_STREAM帧</p>
-<p>  当发送错误或取消时，用于终止一个流，包含Error Code，32位错误代码，说明错误原因</p>
-</li>
-<li><p>SETTINGS帧</p>
-<p>  用于传达连接端点之间的配置参数，标为ACK&#x3D;0表示被对等的SETTINGS帧使用，不为0时表示FRAME_SIZE_ERROR连接错误</p>
-</li>
-<li><p>PUSH_PROMISE帧</p>
-<p>  服务端向客户端推送的帧，客户端可以返回RST_STREAM拒绝</p>
-</li>
-<li><p>PING帧</p>
-<p>  心跳监测，测量发送往还时间，确定连接是否正常，ACK&#x3D;0表示PING帧响应，1表示PING帧</p>
-</li>
-<li><p>GOAWAY帧</p>
-<p>  用于关闭连接或发出错误，允许停止接受新的流并完成前面的流处理</p>
-<p>  包括R+Last Stream Id + Error Code + Addictional Debug Data</p>
-</li>
-<li><p>WINDOW_UPDATE帧</p>
-<p>  用于连接和流的流量控制</p>
-</li>
-<li><p>CONTINUATION帧</p>
-<p>  一种持续帧，用于继续传输Header头块片段。通常Header块比较大，在HEADERS、PUSH_PROMISE、CONTINUATION帧之后继续传输</p>
-</li>
-</ul>
-<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>http2只解决了应用层的问题，但是由于其还是基于tcp的，因此tcp硬伤的队头阻塞依旧存在</p>
-<p>tcp由于“可靠传输”而包含的按序到达的机制，使得http2的队头阻塞问题仍然存在</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/huansky/p/14420723.html">HTTP 1.x 学习笔记 —— Web 性能权威指南</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/330300133">关于队头阻塞（Head-of-Line blocking），看这一篇就足够了</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_63951768/article/details/144917352">HTTP1.1 对头阻塞和 HTTP2 中对其的解决措施</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/HTML/%E5%B0%8F%E7%82%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/HTML/%E5%B0%8F%E7%82%B9/" class="post-title-link" itemprop="url">【HTML】记录小点</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-05-09 16:47:55" itemprop="dateModified" datetime="2025-05-09T16:47:55+08:00">2025-05-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/HTML/" itemprop="url" rel="index"><span itemprop="name">HTML</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="如何区分H5、HTML、XHTML"><a href="#如何区分H5、HTML、XHTML" class="headerlink" title="如何区分H5、HTML、XHTML"></a>如何区分H5、HTML、XHTML</h3><p>基本概念：</p>
-<ul>
-<li><p>H5：是html、xhtml和html dom的新标准，h5最先是由web’超文本应用技术工作组命名的一种超文本标记语言，随后与w3c的xhtml2.0结合，产生了现在的h5。可以理解为h5&#x3D;html+css3+HTML+JS+API</p>
-</li>
-<li><p>HTML：超文本标记语言，是一种基本的web网页设计语言</p>
-</li>
-<li><p>XHTML：可扩展的文本标记语言，是一种置标语言，表现方式和HTML类似，不过语法更加严格。本质上讲，XHTML是一个过度技术，结合了XML的强大功能及大多数HTML的简单特性</p>
-</li>
-</ul>
-<p>特性区别</p>
-<ul>
-<li><p>H5：</p>
-<ul>
-<li>用于绘画的canvas</li>
-<li>用于媒介的video和audio元素</li>
-<li>对本地离线储存有更好的支持</li>
-<li>新的特殊内容元素：article、aside、footer、header、hgroup、nav、section</li>
-<li>新的表单控件：calendar、date、time、email、url、search</li>
-<li>语义化标签，例如header、h1、footer等，有利于SEO</li>
-</ul>
-</li>
-<li><p>HTML</p>
-<ul>
-<li>标识文本，例如定义标题文本、段落文本、列表文本等</li>
-<li>建立超链接，便于页面链接的跳转</li>
-<li>创建列表，把信息有序地组织在一起以方便预览</li>
-<li>在网页中显示图像、声音、视频、动画等多媒体信息</li>
-<li>可以制作表格、表单</li>
-<li>无语义化标签</li>
-</ul>
-</li>
-<li><p>XHTML：</p>
-<ul>
-<li>要求正确嵌套</li>
-<li>所有元素必须关闭</li>
-<li>区分大小写</li>
-<li>属性要用双引号</li>
-<li>用id属性替代name</li>
-<li>特殊字符处理</li>
-<li>处理各大浏览器的兼容问题</li>
-</ul>
-</li>
-</ul>
-<h3 id="W3C"><a href="#W3C" class="headerlink" title="W3C"></a>W3C</h3><ul>
-<li>W3C标准规范要求：书写标签必须闭合、标签小写、不乱嵌套，可以提高机器人对网页的搜索概率</li>
-<li>建议使用CSS和JS脚本，从而达到结构与行为、结构与表现的分离，提高页面渲染速度，可以更快显示页面内容</li>
-<li>不需要变动页面内容，可以提供打印版本而不需要复制内容，提高网站易用性。</li>
-<li>标签样式分离，合理语义化标签，使内容能被更多用户访问和更广泛的设备访问，使用更少的代码和组件，从而降低维护成本，且改版容易</li>
-</ul>
-<h3 id="HTML的DOCTYPE作用"><a href="#HTML的DOCTYPE作用" class="headerlink" title="HTML的DOCTYPE作用"></a>HTML的DOCTYPE作用</h3><ul>
-<li><p>定义</p>
-<p>  是Document Type的简写，不是HTML标签，也没有结束标签，只用于告诉浏览器当前HTML是用什么版本编写的，是一种标记语言的文档类型声明</p>
-<p>  必须在html第一行，在html标签前面，其会影响代码验证，并决定了浏览器应该如何显示用户的web文档</p>
-</li>
-<li><p>作用</p>
-<p>  用于声明文档类型，浏览器通过这个可以了解预期的文档类型，这样可以知道用哪一种规范（DTD）解析文档（html或xhtml）</p>
-</li>
-</ul>
-<h3 id="HTML的DOCTYPE的种类"><a href="#HTML的DOCTYPE的种类" class="headerlink" title="HTML的DOCTYPE的种类"></a>HTML的DOCTYPE的种类</h3><ul>
-<li><p>严格版本Strict、过渡版本Transitional和基于框架Frameset</p>
-</li>
-<li><p>严格版本&#x2F;标准模式：呈现遵循最新标准的网页</p>
-</li>
-<li><p>松散&#x2F;兼容&#x2F;包容模式：为传统浏览器设计的网页</p>
-</li>
-</ul>
-<h3 id="Quirks是什么，与标准模式区别"><a href="#Quirks是什么，与标准模式区别" class="headerlink" title="Quirks是什么，与标准模式区别"></a>Quirks是什么，与标准模式区别</h3><ul>
-<li><p>Quirks&#x2F;包容模式</p>
-<p>  IE6之前的页面不会写DTD，所以ie6假定了如果写了DTD，那么就意味着这个页面采用对css支持更好的布局，如果没有，就采用兼容之前的布局方式，这就是quirks模式</p>
-</li>
-<li><p>区别</p>
-<ul>
-<li><p>盒模型</p>
-<p>  标准模式：宽度&#x3D;width</p>
-<p>  quirks模式：宽度&#x3D;padding+width+border</p>
-</li>
-<li><p>设置百分比的高度：</p>
-<p>  标准模式：元素高度是由内容来决定的。如果父元素没有设置高度，那么子元素设置的高度百分比是无效的</p>
-</li>
-<li><p>设置行内元素高度</p>
-<p>  标准模式：行内元素高度设置是无效的</p>
-<p>  quirks模式：行内元素可以设置高度</p>
-</li>
-<li><p>设置水平居中</p>
-<p>  标准模式：margin&#x3D;auto是有效的</p>
-<p>  quirks模式：auto是无效的</p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="h5新特性"><a href="#h5新特性" class="headerlink" title="h5新特性"></a>h5新特性</h3><ul>
-<li>离线缓存：关闭浏览器后再次打开时恢复数据，减少网络流量</li>
-<li>音视频、调用摄像头、手机相册、通讯录等</li>
-<li>地理定位</li>
-<li>canvas绘图</li>
-<li>拖拽、撤销历史、文本选择等</li>
-<li>开发和维护成本低于app，页面内存占用小，减少用户不必要支出</li>
-<li>css3支持字体嵌入、版面排版</li>
-<li>figure: 规定独立的流内容(图片,代码等),figure的内容应该与主内容相关,同时元素位置相对于主内容是独立的,如果被删除不会造成影响</li>
-</ul>
-<h3 id="元素alt和title"><a href="#元素alt和title" class="headerlink" title="元素alt和title"></a>元素alt和title</h3><ul>
-<li>相同处：都属于提示类文案</li>
-<li>不同<ul>
-<li>alt在图片中，加载失败时显示alt，而title是会出现一个小浮窗</li>
-<li>alt是img必要属性，只能用在img、area和input元素中，title不是img必要属性，任何元素都可以使用</li>
-<li>alt只能是元素属性，title可以作为属性，也可以作为标签&lt;title&gt;使用</li>
-<li>a标签嵌套img标签时，起作用的是img的title属性</li>
-<li>无障碍：alt可以触发阅读器，title不行</li>
-<li>SEO：alt可以作为图片的SEO优化，title对于元素的SEO优化较小</li>
-</ul>
-</li>
-</ul>
-<h3 id="background-image和img设置图片有什么区别"><a href="#background-image和img设置图片有什么区别" class="headerlink" title="background-image和img设置图片有什么区别"></a>background-image和img设置图片有什么区别</h3><p>相同点：</p>
-<ul>
-<li>都可以显示图片</li>
-<li>可以设置图片大小</li>
-</ul>
-<p>不同点: </p>
-<ul>
-<li>background-image是css属性，img是html标签</li>
-<li>background-image设置宽高需要配合background-position、background-size等属性，img标签与width、height配合</li>
-<li>img可以设置alt属性，用于优化seo和图片加载失败的描述，background-image不行</li>
-<li>img可以使用srcset属性用于响应式图片（srcset&#x3D;”image-1x.jpg 1x, image-2x.jpg 2x” ）</li>
-<li>img是作为独立元素，影响文档流；background-image是作为背景图，不影响文档流</li>
-<li>加载时机:<ul>
-<li>img：html渲染到img标签时就会进行图片加载</li>
-<li>background-image：<ul>
-<li>内联（style&#x3D;”background-image:url(image.jpg)”: 和img标签类似，解析到则进行加载</li>
-<li>外部css：css文件下载并解析后执行</li>
-<li>当页面内容加载过多时，可能会降低background-image的加载优先级，因此会被认为是装饰性图片</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>懒加载<ul>
-<li>img：loading&#x3D;”lazy”，chrome76+，firefox75+</li>
-<li>background-image：只能通过js或css实现</li>
-</ul>
-</li>
-<li>大图时导致页面延迟渲染<ul>
-<li>img：<ul>
-<li>在解析html时，若未加上loading&#x3D;”lazy”，那么就会立马进行图片加载，这个时候会占用带宽，因此会导致关键资源加载延迟</li>
-<li>未设置宽高时，由于图片加载后，会导致其余元素位置变化，而触发回流</li>
-</ul>
-</li>
-<li>background-image：<ul>
-<li>对图片的加载是在css解析过程中进行的</li>
-<li>背景图的加载一般会触发重绘，通常不会导致回流（除非元素尺寸依赖于背景图</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>优缺点：</p>
-<ul>
-<li><p>img：</p>
-<ul>
-<li>优点：<ul>
-<li>语义化</li>
-<li>利于seo和无障碍优化</li>
-<li>响应式：loading&#x3D;”lazy”（有兼容性</li>
-<li>打印支持：在打印时显示图片</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>影响其他元素</li>
-<li>图片较大会影响页面渲染，图片过多会增加http请求</li>
-</ul>
-</li>
-<li>场景<ul>
-<li>内容性图片：如文章配图、产品展示图、用户头像等。</li>
-<li>需要 SEO 优化的图片：如商品图片、图表等。</li>
-<li>需要可访问性支持的图片：如信息图、图表等。</li>
-<li>需要打印的图片：如报告、文档中的插图。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>background-image：</p>
-<ul>
-<li>优点：<ul>
-<li>利用雪碧图可以减少http请求</li>
-<li>不占用文档流</li>
-<li>图片加载失败不会影响页面结构</li>
-</ul>
-</li>
-<li>缺点：<ul>
-<li>不利于seo和无障碍</li>
-<li>默认不打印背景图片</li>
-<li>响应式：需要手动写</li>
-</ul>
-</li>
-<li>场景：<ul>
-<li>装饰性图片：如按钮图标、背景纹理、边框装饰等。</li>
-<li>CSS 雪碧图：合并多个小图标减少请求。</li>
-<li>全屏背景或遮罩：如页面背景图、模态框遮罩层。</li>
-<li>动态效果控制：通过 CSS 动画或过渡实现背景图变化。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="乱码原因"><a href="#乱码原因" class="headerlink" title="乱码原因"></a>乱码原因</h3><ul>
-<li>不同编码内容混杂：html乱码是由html编码问题造成的</li>
-<li>未设置html编码，设置meta头text&#x2F;html;charset&#x3D;utf-8</li>
-<li>编辑工具的编码问题，例如使用记事本直接写html可能会造成乱码</li>
-<li>浏览器不能自动检测网页编码，造成网页乱码</li>
-</ul>
-<h3 id="js放在html不同位置有什么区别"><a href="#js放在html不同位置有什么区别" class="headerlink" title="js放在html不同位置有什么区别"></a>js放在html不同位置有什么区别</h3><ul>
-<li>如果使用<code>window.</code>，将js放在里面，则在哪儿都一样，因为都是需要等body之后再加载</li>
-<li>如果不使用<code>window.</code>，放在head中，代码不会执行。因为html执行顺序不同，html从开始运行到进入index.js文件，其中被function包围起来的代码不会被运行，直接执行最后一句代码。如果html页面没有加载完，找不到元素会报错</li>
-</ul>
-<h3 id="什么是列表及列表分类"><a href="#什么是列表及列表分类" class="headerlink" title="什么是列表及列表分类"></a>什么是列表及列表分类</h3><p>列表定义：</p>
-<ul>
-<li>是一种信息资源的展示方式</li>
-<li>可以使得信息结构化和条理化，并以列表的样式显示出来，便于阅读者快速方便的获取信息</li>
-<li>ul、ol、dl不能嵌套其他标签，但是li可以</li>
-</ul>
-<p>列表分类</p>
-<ul>
-<li>ol：有序列表<ul>
-<li>有顺序，每个li独占一行</li>
-<li>一般用于排序类型的列表</li>
-<li>默认li标签前面有顺序标记</li>
-</ul>
-</li>
-<li>ul：无序列表<ul>
-<li>无顺序，每个li独占一行</li>
-<li>一般用于无序类型的列表，例如导航栏等</li>
-<li>默认li标签前面有·标记</li>
-</ul>
-</li>
-<li>dl：自定义列表<ul>
-<li>无顺序，dt、dd标签独占一行</li>
-<li>一般用于一个标题下有一个或多个列表项</li>
-<li>默认无标记</li>
-</ul>
-</li>
-</ul>
-<h3 id="常见表单元素"><a href="#常见表单元素" class="headerlink" title="常见表单元素"></a>常见表单元素</h3><ul>
-<li><p>input</p>
-<p>  type类型包括：password、text、image、hidden、file</p>
-</li>
-<li><p>textarea</p>
-<p>  可设置行列数</p>
-</li>
-<li><p>button</p>
-</li>
-<li><p>select</p>
-<p>  option、label</p>
-</li>
-<li><p>radio</p>
-</li>
-<li><p>checkbox</p>
-</li>
-</ul>
-<h3 id="表单提交方式"><a href="#表单提交方式" class="headerlink" title="表单提交方式"></a>表单提交方式</h3><ul>
-<li><p>submit提交</p>
-<p>  在form表单加上action属性，且input加上type&#x3D;submit</p>
-</li>
-<li><p>axios提交</p>
-</li>
-</ul>
-<h3 id="为什么使用h5标签布局网页"><a href="#为什么使用h5标签布局网页" class="headerlink" title="为什么使用h5标签布局网页"></a>为什么使用h5标签布局网页</h3><p>对h5来说，网页结构与使用更加语义化，利于seo</p>
-<p>section和article标签相似，且和nav也类似</p>
-<p>nav：非常常见的标签，本身无任何语义，用作布局及样式话标签</p>
-<p>section：用作一段有专题性的内容，一般在这个标签里面会带有标题。典型场景包括文章章节、标签对话框的标签页或论文中有编号的部分</p>
-<p>article：特殊的section标签，代表一个独立完整的相关内容块</p>
-<h3 id="如何达到表单的初步验证"><a href="#如何达到表单的初步验证" class="headerlink" title="如何达到表单的初步验证"></a>如何达到表单的初步验证</h3><p>验证属性</p>
-<ul>
-<li><code>required</code>：必填<ul>
-<li><code>valueMissing</code>: 判断当前元素是否为空，配合<code>required</code>使用</li>
-</ul>
-</li>
-<li><code>pattern</code>：正则验证当前元素值是否匹配<ul>
-<li><code>patternMismatch</code>: 判断当前元素是否符合正则，配合<code>pattern</code>使用</li>
-</ul>
-</li>
-<li><code>max</code>和<code>min</code>：验证当前元素最大或最小值，一般用于染个&#x2F;number类型的元素<ul>
-<li>rangeUnderflow：判断当前元素值是否小于min属性值，配合min属性使用</li>
-</ul>
-</li>
-<li><code>minlength</code>和<code>maxlength</code>：验证内容最大长度和最小长度<ul>
-<li><code>tooLong</code>: 判断当前元素长度是否符合，配合<code>maxlength</code>使用</li>
-</ul>
-</li>
-<li><code>validity</code>：h5表单提供的一种有效状态，有效状态通过<code>validityState</code>获取，<code>validityState</code>通过<code>validity</code>获取</li>
-</ul>
-<p>验证状态</p>
-<ul>
-<li><code>typeMismatch</code>: 判断当前元素值的类型是否匹配，配合email&#x2F;number&#x2F;url使用</li>
-<li><code>stepMismatch</code>: 判断当前元素是否与step设置相同，配合step使用，并不与min、max属性值比较</li>
-<li><code>valid</code>: 判断当前元素是否正确，返回true标识验证成功</li>
-<li><code>customError</code>: 配合<code>setCustomValidity()</code>方法使用</li>
-<li>setCustomValidity(message)：设置自定义错误信息，一旦使用该方法修改默认错误提示后，即使输入正确也会有提示</li>
-</ul>
-<h3 id="iframe优缺点"><a href="#iframe优缺点" class="headerlink" title="iframe优缺点"></a>iframe优缺点</h3><p>优点:</p>
-<ul>
-<li>解决加载缓慢的第三方内容</li>
-<li>iframe跨域通信(postMessage)</li>
-<li>iframe无刷新文件上传</li>
-</ul>
-<p>缺点</p>
-<ul>
-<li>阻塞主页面的onLoad事件</li>
-<li>不利于seo</li>
-<li>页面产生多,不利于管理</li>
-<li>增加服务器请求</li>
-<li>可能会导致资源无法共用<ul>
-<li>同源+缓存策略(未过期&#x2F;不需要重新请求)会从缓存中读取</li>
-<li>同源 + 缓存过期但有 ETag	⚠️ 发送条件请求（可能返回 304）</li>
-<li>跨域 + 无 CORS 缓存策略	✅ 重新请求</li>
-<li>请求头或方法不同	✅ 重新请求</li>
-</ul>
-</li>
-</ul>
-<h3 id="页面性能优化"><a href="#页面性能优化" class="headerlink" title="页面性能优化"></a>页面性能优化</h3><ul>
-<li>内容方面<ul>
-<li>减少http请求</li>
-<li>使用http2&#x2F;3</li>
-<li>减少dom元素数量</li>
-<li>请求缓存</li>
-<li>使用多域名负载网页内的多个文件,图片</li>
-<li>使用gzip压缩</li>
-</ul>
-</li>
-<li>css<ul>
-<li>css放到页面上端</li>
-<li>把js和css分离开</li>
-<li>精简js和css</li>
-<li>避免css表达式</li>
-</ul>
-</li>
-<li>js<ul>
-<li>tree shanking</li>
-<li>放到页面底部</li>
-<li>减少重复代码</li>
-</ul>
-</li>
-<li>图片<ul>
-<li>优化图片</li>
-<li>不缩放图片</li>
-<li>使用恰当的图片格式(webp更好)</li>
-<li>css雪碧图优化</li>
-</ul>
-</li>
-</ul>
-<h3 id="图片懒加载和预加载"><a href="#图片懒加载和预加载" class="headerlink" title="图片懒加载和预加载"></a>图片懒加载和预加载</h3><p>懒加载: 滚动到了图片的位置,才进行加载.</p>
-<p>减少不必要的访问数据库或延迟访问数据的次数,减少服务器端的压力</p>
-<p>预加载: 在还没到图片位置的时候,就开始加载图片</p>
-<p>在网页全部加载之前加载图片,那么当用户查看时,可以之间从缓存中渲染图片,减少等待时间</p>
-<p>当图片过大时,可能会导致页面白屏时间加长</p>
-<h3 id="a标签作用"><a href="#a标签作用" class="headerlink" title="a标签作用"></a>a标签作用</h3><ul>
-<li><p>外部页面连接</p>
-</li>
-<li><p>本地页面链接</p>
-<p>  href指向相对路径,就可以打开当前目录下对应的文件</p>
-</li>
-<li><p>锚点链接</p>
-</li>
-<li><p>其他</p>
-<ul>
-<li>打开email: <code>&lt;a href=&#39;mailto:邮件接收人&#39;&gt;&lt;/a&gt;</code></li>
-<li>短链,打开小程序,qq等</li>
-<li>打电话: <code>&lt;a href=&#39;tel: 180xxx&#39;&gt;&lt;/a&gt;</code></li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/HTML/%E3%80%90HTML%E3%80%91%E8%AE%B0%E5%BD%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/HTML/%E3%80%90HTML%E3%80%91%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">【HTML】记录</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2025-08-14 11:18:06 / Modified: 11:19:28" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/HTML/" itemprop="url" rel="index"><span itemprop="name">HTML</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="input-type-file的cancel事件"><a href="#input-type-file的cancel事件" class="headerlink" title="input type&#x3D;file的cancel事件"></a>input type&#x3D;file的cancel事件</h3><p>mdn并未写明当前的<code>input</code>标签支持cancel事件</p>
-<h4 id="触发条件"><a href="#触发条件" class="headerlink" title="触发条件"></a>触发条件</h4><p>在pc端中，点击上传的输入框，然后在弹出的文件选择器中点击取消按钮，即可触发当前这个事件</p>
-<h4 id="表现"><a href="#表现" class="headerlink" title="表现"></a>表现</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 子组件 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">id</span>=<span class="string">&quot;ipt1&quot;</span> @<span class="attr">cancel</span>=<span class="string">&quot;cancle2&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;上传123&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">input</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 父组件 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">childComp</span> @<span class="attr">cancel</span>=<span class="string">&quot;cancle1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">childComp</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>在vue3项目中，会触发子组件的<code>cancle2</code>事件</p>
-<p>若在子组件中没有<code>cancle2</code>事件，那么这个事件会冒泡到父组件中，执行<code>cancle1</code>事件。因此若父组件有监听子组件的cancel事件，那么在这个情况下会直接执行，可能会导致触发其他问题</p>
-<p>浏览器：谷歌、火狐都支持</p>
-<h4 id="监听"><a href="#监听" class="headerlink" title="监听"></a>监听</h4><blockquote>
-<p>vue</p>
-</blockquote>
-<ul>
-<li>组件直接监听</li>
-<li>子组件未监听，父组件监听</li>
-<li>window.addEventListener(‘cancel’): 会执行两次，触发元素是window</li>
-<li>document.getElementById(‘’).addEventListener(‘cancel’): 不执行</li>
-</ul>
-<blockquote>
-<p>普通html</p>
-</blockquote>
-<ul>
-<li>window.addEventListener(‘cancel’): 只执行一次，触发元素是window</li>
-<li>document.getElementById(‘’).addEventListener(‘cancel’): 只执行一次，触发元素是对应的元素</li>
-</ul>
-<p>技术栈：vue3+ts+pinia+vite+vantui<br>项目介绍：PC+H5，支持多种资料类型上传，可配置资料留资，悬浮码等功能，增加内容分发等功能，企业微信侧边栏可快速发送</p>
-<p>● 负责核心复杂功能模块的设计与实现<br>1、资料上传：支持pdf、图片、公众号等5种资料类型上传，可配置资料留资，悬浮码等功能，增加内容分发等功能，企业微信侧边栏可快速发送</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/14/HTML/%E3%80%90HTML%E3%80%91templates%20and%20slots/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="yangxin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/14/HTML/%E3%80%90HTML%E3%80%91templates%20and%20slots/" class="post-title-link" itemprop="url">【HTML】templates and slots</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-14 11:18:06" itemprop="dateCreated datePublished" datetime="2025-08-14T11:18:06+08:00">2025-08-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-03-06 17:08:26" itemprop="dateModified" datetime="2025-03-06T17:08:26+08:00">2025-03-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/HTML/" itemprop="url" rel="index"><span itemprop="name">HTML</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="【HTML】templates-and-slots"><a href="#【HTML】templates-and-slots" class="headerlink" title="【HTML】templates and slots"></a>【HTML】templates and slots</h1><h2 id="概况"><a href="#概况" class="headerlink" title="概况"></a><h1>概况</h1></h2><p>可以用来灵活填充 Web 组件的 shadow DOM 的模板。可以复用相同的标记结构。</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ul>
-<li><p>编写一个 template</p>
-<p>直接在页面中编写一个 template 不会直接在页面中显示出来</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span> <span class="attr">id</span>=<span class="string">&quot;test&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-tag">p</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">color</span>: white;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">background-color</span>: <span class="number">#666</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">padding</span>: <span class="number">5px</span>;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">  </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>测试template<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>注册自定义模板</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">customElements.<span class="title function_">define</span>(</span><br><span class="line">  <span class="string">&quot;test-template&quot;</span>,</span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">extends</span> <span class="title class_">HTMLElement</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">super</span>();</span><br><span class="line">      <span class="keyword">let</span> template = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;test&quot;</span>);</span><br><span class="line">      <span class="keyword">let</span> templateContent = template.<span class="property">content</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">const</span> shadowRoot = <span class="variable language_">this</span>.<span class="title function_">attachShadow</span>(&#123; <span class="attr">mode</span>: <span class="string">&quot;open&quot;</span> &#125;);</span><br><span class="line">      shadowRoot.<span class="title function_">appendChild</span>(templateContent.<span class="title function_">cloneNode</span>(<span class="literal">true</span>));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>组件显示</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">test-template</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>页面显示</p>
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pC4aUiV"><img src="https://s1.ax1x.com/2023/07/14/pC4aUiV.png" alt="pC4aUiV.png"></a></p>
-<p>template 的元素的样式也是独立的，并不会因为父级定义的同一个样式而影响内部。</p>
-<p>虽然 template 和使用在同一个页面，但是如果直接在 Elements 面板里面修改 template 的内容，<strong>不会</strong>影响到渲染的地方。</p>
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pC4aWRO"><img src="https://s1.ax1x.com/2023/07/14/pC4aWRO.png" alt="pC4aWRO.png"></a></p>
-</li>
-<li><p>添加 slot</p>
-<p>添加的slot的样式只收到父级的影响，并不会受到template中定义的样式影响</p>
-<p>如果是template中并没有定义对于的slot，那么传入的slot并不会被渲染</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span> <span class="attr">id</span>=<span class="string">&quot;test&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-tag">p</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">color</span>: white;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">background-color</span>: <span class="number">#666</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">padding</span>: <span class="number">5px</span>;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">  </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">&quot;text1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>测试template<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">test-template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>默认slot的内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">slot</span>=<span class="string">&quot;text1&quot;</span>&gt;</span>具名插槽的内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">test-template</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pC4azLj"><img src="https://s1.ax1x.com/2023/07/14/pC4azLj.png" alt="pC4azLj.png"></a></p>
-<ul>
-<li>获取slot名</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> el = <span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;test-template p&#x27;</span>)</span><br><span class="line">  el.<span class="title function_">forEach</span>(<span class="function"><span class="params">ele</span>=&gt;</span>&#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(ele.<span class="property">slot</span>)</span><br><span class="line">  &#125;)</span><br><span class="line"><span class="comment">//  输出：&quot;&quot;, &quot;text1&quot;, &quot;text2&quot;</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="参链"><a href="#参链" class="headerlink" title="参链"></a>参链</h2><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_components/Using_templates_and_slots#%E4%BD%BF%E7%94%A8%E6%A7%BD_slots_%E6%B7%BB%E5%8A%A0%E7%81%B5%E6%B4%BB%E5%BA%A6">使用 templates and slots</a></p>
-<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1009633?areaSource=106001.5">shadow dom解析</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/10/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -2026,7 +2073,7 @@
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2025</span>
+    <span itemprop="copyrightYear">2026</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>

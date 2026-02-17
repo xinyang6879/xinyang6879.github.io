@@ -27,7 +27,7 @@
 <meta property="og:description" content="缓存相关  useEffect&#x2F;useLayoutEffect  useCallback useMemo   react相关  useContext useDebugValue useId useImperativeHandle useReducer useSyncExternalStore   数据相关  useDeferredValue useRef useState useTra">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-08-14T03:18:06.413Z">
-<meta property="article:modified_time" content="2025-08-29T02:50:58.357Z">
+<meta property="article:modified_time" content="2025-10-30T10:12:09.881Z">
 <meta property="article:author" content="yangxin">
 <meta property="article:tag" content="react">
 <meta name="twitter:card" content="summary">
@@ -121,7 +121,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#useCallback"><span class="nav-number">1.</span> <span class="nav-text">useCallback</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">用法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useRef"><span class="nav-number">2.</span> <span class="nav-text">useRef</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#useCallback"><span class="nav-number">1.</span> <span class="nav-text">useCallback</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">用法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useRef"><span class="nav-number">2.</span> <span class="nav-text">useRef</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useTransition"><span class="nav-number">3.</span> <span class="nav-text">useTransition</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -134,7 +134,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">110</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -206,7 +206,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-08-29 10:50:58" itemprop="dateModified" datetime="2025-08-29T10:50:58+08:00">2025-08-29</time>
+      <time title="Modified: 2025-10-30 18:12:09" itemprop="dateModified" datetime="2025-10-30T18:12:09+08:00">2025-10-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -285,6 +285,17 @@
 <p>  适合存储临时计算值或单次渲染所需数据</p>
 </li>
 </ul>
+<h2 id="useTransition"><a href="#useTransition" class="headerlink" title="useTransition"></a>useTransition</h2><p>返回一个过渡（transition）状态的布尔值和一个用于启动过渡的函数。使用useTransition可以让你在组件内部标记一个更新为“非紧急”，并且可以获取到该过渡的 pending 状态。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useTransition &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">MyComponent</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [isPending, startPending] = <span class="title function_">useTransition</span>();</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handleClick</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="title function_">startPending</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 非紧急的 state 更新</span></span><br><span class="line">      <span class="title function_">setState</span>(newValue);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClick&#125;</span>&gt;</span>更新<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;isPending ? &#x27;加载中...&#x27; : &#x27;完成&#x27;&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当点击按钮时，执行到<code>startPending</code>时，会先将<code>isPending</code>设置为true，然后执行<code>setState</code>，等数据更新完成后，才会将<code>isPending</code>设置为false</p>
+<p>但是，如果当数据已经更新了，这个时候又进入了其他的高优先级的任务（如用户界面交互、动画等，不包括开发者代码），是会等这些高优先级的任务执行完成后，才会去修改isPending为true</p>
+<p>如果有多个状态更新，那么把整个回调里的所有状态更新都归为同一个“过渡”，统一调度和跟踪</p>
+<p>React 是通过“批处理”机制来实现的：</p>
+<ul>
+<li>在 startPending 回调执行期间，所有的 setState 都会被收集到同一个过渡批次。</li>
+<li>只有当这个批次里的所有更新都完成、渲染结束，并且没有高优先级任务插入时，isPending 才会变为 false。</li>
+</ul>
 
     </div>
 
@@ -328,7 +339,7 @@
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2025</span>
+    <span itemprop="copyrightYear">2026</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>

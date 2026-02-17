@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.24.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="浏览器任务执行顺序浏览器任务分为微任务（Promise、）、宏任务（同步任务也算宏任务的一种、setTimeout等定时器）、页面更新  执行当前同步代码（当前调用栈）。 进入循环后，取一个 task（宏任务）执行完。例如：setTimeout 回调、点击事件回调、script。 做一次 microtask checkpoint：清空所有微任务。例如：Promise.then、queueMicro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器任务队列">
+<meta property="og:url" content="http://example.com/2026/02/17/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="浏览器任务执行顺序浏览器任务分为微任务（Promise、）、宏任务（同步任务也算宏任务的一种、setTimeout等定时器）、页面更新  执行当前同步代码（当前调用栈）。 进入循环后，取一个 task（宏任务）执行完。例如：setTimeout 回调、点击事件回调、script。 做一次 microtask checkpoint：清空所有微任务。例如：Promise.then、queueMicro">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-02-17T01:15:39.145Z">
+<meta property="article:modified_time" content="2026-02-17T02:37:38.615Z">
+<meta property="article:author" content="yangxin">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2026/02/17/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2026/02/17/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/","path":"2026/02/17/前端/【前端】任务队列/","title":"浏览器任务队列"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>浏览器任务队列 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="nav-number">1.</span> <span class="nav-text">浏览器任务执行顺序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#js%E6%89%A7%E8%A1%8C"><span class="nav-number">1.1.</span> <span class="nav-text">js执行</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ui%E6%9B%B4%E6%96%B0%E4%B8%8E%E6%B8%B2%E6%9F%93"><span class="nav-number">2.</span> <span class="nav-text">ui更新与渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pc%E3%80%81ios%E3%80%81%E5%AE%89%E5%8D%93%E5%8C%BA%E5%88%AB"><span class="nav-number">3.</span> <span class="nav-text">pc、ios、安卓区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">4.</span> <span class="nav-text">例子</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yangxin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/02/17/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yangxin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="浏览器任务队列 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浏览器任务队列
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2026-02-17 09:15:39 / Modified: 10:37:38" itemprop="dateCreated datePublished" datetime="2026-02-17T09:15:39+08:00">2026-02-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="浏览器任务执行顺序"><a href="#浏览器任务执行顺序" class="headerlink" title="浏览器任务执行顺序"></a>浏览器任务执行顺序</h3><p>浏览器任务分为微任务（Promise、）、宏任务（同步任务也算宏任务的一种、setTimeout等定时器）、页面更新</p>
+<ol>
+<li>执行当前同步代码（当前调用栈）。</li>
+<li>进入循环后，取一个 task（宏任务）执行完。<br>例如：setTimeout 回调、点击事件回调、script。</li>
+<li>做一次 microtask checkpoint：清空所有微任务。<br>例如：Promise.then、queueMicrotask、MutationObserver。<br>微任务里新加的微任务也要继续执行，直到队列为空。</li>
+<li>如果到渲染时机，浏览器进行渲染：<br>requestAnimationFrame 回调 -&gt; 样式计算 -&gt; 布局 -&gt; 绘制 -&gt; 合成（UI 更新在这里发生）。</li>
+<li>如有空闲时间，可能执行 requestIdleCallback</li>
+<li>再取下一个宏任务，重复 2-4。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">┌───────────────────────────┐</span><br><span class="line">│ 取一个 task（宏任务）       │</span><br><span class="line">└─────────────┬─────────────┘</span><br><span class="line">              │ 执行完</span><br><span class="line">              v</span><br><span class="line">┌───────────────────────────┐</span><br><span class="line">│ 清空 microtask（微任务）   │</span><br><span class="line">└─────────────┬─────────────┘</span><br><span class="line">              │</span><br><span class="line">              v</span><br><span class="line">┌───────────────────────────┐</span><br><span class="line">│ （可能）渲染 / rAF 回调     │</span><br><span class="line">└─────────────┬─────────────┘</span><br><span class="line">              │</span><br><span class="line">              v</span><br><span class="line">        回到下一轮</span><br></pre></td></tr></table></figure>
+
+<p>不是按照同步任务、微任务队列、渲染任务、宏任务的顺序执行，</p>
+<p>而是先取一个宏任务（同步任务是放在宏任务队列的），然后再执行微任务、渲染任务。</p>
+<h4 id="js执行"><a href="#js执行" class="headerlink" title="js执行"></a>js执行</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> t0 = performance.<span class="title function_">now</span>();</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">log</span> = (<span class="params">msg</span>) =&gt;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`<span class="subst">$&#123;(performance.now() - t0).toFixed(<span class="number">1</span>)&#125;</span>ms | <span class="subst">$&#123;msg&#125;</span>`</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 连续观察帧间隔（正常约16.7ms）</span></span><br><span class="line"><span class="keyword">let</span> last = performance.<span class="title function_">now</span>();</span><br><span class="line"><span class="keyword">let</span> n = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">frame</span>(<span class="params">now</span>) &#123;</span><br><span class="line">  <span class="title function_">log</span>(<span class="string">`rAF #<span class="subst">$&#123;++n&#125;</span>, dt=<span class="subst">$&#123;(now - last).toFixed(<span class="number">1</span>)&#125;</span>ms`</span>);</span><br><span class="line">  last = now;</span><br><span class="line">  <span class="keyword">if</span> (n &lt; <span class="number">20</span>) <span class="title function_">requestAnimationFrame</span>(frame);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">requestAnimationFrame</span>(frame);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 宏任务1：内部塞入微任务 + 长阻塞</span></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">log</span>(<span class="string">&quot;宏任务1 开始&quot;</span>);</span><br><span class="line">  <span class="title class_">Promise</span>.<span class="title function_">resolve</span>().<span class="title function_">then</span>(<span class="function">() =&gt;</span> <span class="title function_">log</span>(<span class="string">&quot;微任务A（来自宏任务1）&quot;</span>));</span><br><span class="line">  <span class="title function_">queueMicrotask</span>(<span class="function">() =&gt;</span> <span class="title function_">log</span>(<span class="string">&quot;微任务B（来自宏任务1）&quot;</span>));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> s = performance.<span class="title function_">now</span>();</span><br><span class="line">  <span class="keyword">while</span> (performance.<span class="title function_">now</span>() - s &lt; <span class="number">120</span>) &#123;&#125; <span class="comment">// 阻塞主线程120ms</span></span><br><span class="line"></span><br><span class="line">  <span class="title function_">log</span>(<span class="string">&quot;宏任务1 结束（阻塞120ms）&quot;</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 宏任务2</span></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">log</span>(<span class="string">&quot;宏任务2 开始&quot;</span>);</span><br><span class="line">  <span class="title function_">log</span>(<span class="string">&quot;宏任务2 结束&quot;</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1.0ms | rAF #1, dt=-15.8ms</span><br><span class="line">2.0ms | 宏任务1 开始</span><br><span class="line">120ms | 宏任务2结束</span><br><span class="line">122.6ms | 微任务A（来自宏任务1）</span><br><span class="line">122.7ms | 微任务B（来自宏任务1）</span><br><span class="line">122.9ms | rAF #2, dt=16.4ms</span><br><span class="line">123.3ms | 宏任务2 开始</span><br><span class="line">123.3ms | 宏任务2 结束</span><br><span class="line">126.3ms | rAF #3, dt=116.7ms</span><br><span class="line">134.7ms | rAF #4, dt=16.7ms</span><br></pre></td></tr></table></figure>
+
+<h3 id="ui更新与渲染"><a href="#ui更新与渲染" class="headerlink" title="ui更新与渲染"></a>ui更新与渲染</h3><ol>
+<li>“16ms&#x2F;60Hz”与任务队列</li>
+</ol>
+<p>浏览器刷新频率通常为60Hz，对应16.67ms一帧，但不同设备如120Hz刷新率</p>
+<p>如果宏任务或微任务执行时间超过16ms，会错过当前帧，导致帧率下降甚至掉帧。微任务队列无限长会导致渲染和rAF回调一直被延迟（饥饿现象）。</p>
+<p>requestAnimationFrame一般每帧调用一次，隐藏页面时会被节流或暂停。若执行时间超过下次垂直同步(vsync)时机，浏览器无法及时绘制，渲染延后。</p>
+<p>也就是说最好的情况是每16ms执行一次，但浏览器无法保证。</p>
+<ol start="2">
+<li><code>requestAnimationFrame</code></li>
+</ol>
+<ul>
+<li>requestAnimationFrame会在“下一次重绘”之前执行，通常是每帧一次</li>
+<li>前台可见时，即使 UI 没有变化，rAF 也*_可能继续执行_。并不是执行requestAnimationFrame后就一定会有ui更新</li>
+<li>如果页面后台&#x2F;不可见，<strong>rAF 往往会暂停</strong>。</li>
+<li>raf<strong>最少</strong>的执行时间间隔是一帧</li>
+</ul>
+<h3 id="pc、ios、安卓区别"><a href="#pc、ios、安卓区别" class="headerlink" title="pc、ios、安卓区别"></a>pc、ios、安卓区别</h3><p><strong>高层顺序一致</strong></p>
+<ul>
+<li>PC &#x2F; Android &#x2F; iOS 都遵循 <strong>task → microtask →（可能渲染）</strong> 的顺序。</li>
+</ul>
+<p><strong>实现与策略差异</strong></p>
+<ul>
+<li><strong>PC&#x2F;Android Chrome</strong>：使用 <strong>Blink&#x2F;V8</strong>（Chromium 事件循环实现）。</li>
+<li><strong>iOS Chrome</strong>：使用 <strong>WebKit&#x2F;JSC</strong>（苹果要求），实现代码完全不同。</li>
+<li><strong>Android&#x2F;PC 的后台&#x2F;省电策略</strong>比前台更激进，任务队列可能被节流或冻结。</li>
+<li><strong>iOS</strong> 更倾向于<strong>后台挂起</strong>，导致后台任务几乎停止。</li>
+</ul>
+<p><strong>场景区别</strong></p>
+<ol>
+<li>前台可见（Active&#x2F;Visible）</li>
+</ol>
+<ul>
+<li>PC &#x2F; Android &#x2F; iOS：rAF、定时器、microtask、渲染均正常执行。</li>
+</ul>
+<ol start="2">
+<li>后台但未冻结&#x2F;挂起（Hidden but not frozen&#x2F;suspended）</li>
+</ol>
+<ul>
+<li><strong>PC&#x2F;Android</strong>：<ul>
+<li>rAF 通常停止。</li>
+<li>定时器被节流&#x2F;预算限制。</li>
+<li>microtask 随 task 被节流而变慢。</li>
+<li>渲染通常停止或极少发生。</li>
+</ul>
+</li>
+<li><strong>iOS</strong>：<ul>
+<li>后台往往直接挂起，任务基本不执行。</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>冻结 &#x2F; 挂起（Frozen &#x2F; Suspended）</li>
+</ol>
+<ul>
+<li><strong>PC&#x2F;Android</strong>：<ul>
+<li>进入冻结后，计时器&#x2F;事件回调&#x2F;Promise 回调暂停。</li>
+<li>Energy Saver 可能冻结 CPU 密集后台页。</li>
+</ul>
+</li>
+<li><strong>iOS</strong>：<ul>
+<li>WebKit 挂起后台页面，任务基本不执行。</li>
+</ul>
+</li>
+</ul>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">log</span> = (<span class="params">msg</span>) =&gt; <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`<span class="subst">$&#123;performance.now().toFixed(<span class="number">2</span>)&#125;</span>ms`</span>, msg);</span><br><span class="line"><span class="title function_">log</span>(<span class="string">&quot;sync start&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_">requestAnimationFrame</span>(<span class="function">() =&gt;</span> <span class="title function_">log</span>(<span class="string">&quot;rAF callback&quot;</span>));</span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">resolve</span>().<span class="title function_">then</span>(<span class="function">() =&gt;</span> <span class="title function_">log</span>(<span class="string">&quot;microtask: Promise.then&quot;</span>));</span><br><span class="line"><span class="title function_">queueMicrotask</span>(<span class="function">() =&gt;</span> <span class="title function_">log</span>(<span class="string">&quot;microtask: queueMicrotask&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="title function_">log</span>(<span class="string">&quot;task: setTimeout 0&quot;</span>), <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_">log</span>(<span class="string">&quot;sync end&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>执行结果（有两种情况：</p>
+<ul>
+<li><p>浏览器空闲时，setTimeout在raf前</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">230ms sync start</span><br><span class="line"><span class="number">2187175.</span>70ms sync end</span><br><span class="line"><span class="number">2187175.</span>70ms <span class="attr">microtask</span>: <span class="title class_">Promise</span>.<span class="property">then</span></span><br><span class="line"><span class="number">2187175.</span>90ms <span class="attr">task</span>: <span class="built_in">setTimeout</span> <span class="number">0</span></span><br><span class="line"><span class="number">2187176.</span>00ms rAF callback</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>浏览器没有空闲时，setTimeout在raf后</p>
+<p>可以在代码加一个<code>const s = performance.now();                                                                            while (performance.now() - s &lt; 120) &#123;&#125;</code> 用于阻塞主线程120ms</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">230ms sync start</span><br><span class="line"><span class="number">2187175.</span>70ms sync end</span><br><span class="line"><span class="number">2187175.</span>70ms <span class="attr">microtask</span>: <span class="title class_">Promise</span>.<span class="property">then</span></span><br><span class="line"><span class="number">2187176.</span>00ms rAF callback</span><br><span class="line"><span class="number">2187175.</span>90ms <span class="attr">task</span>: <span class="built_in">setTimeout</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/01/09/%E5%89%8D%E7%AB%AF/%E3%80%90%E5%89%8D%E7%AB%AF%E3%80%91%E5%BE%AE%E5%89%8D%E7%AB%AF/" rel="prev" title="微前端">
+                  <i class="fa fa-angle-left"></i> 微前端
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">yangxin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
